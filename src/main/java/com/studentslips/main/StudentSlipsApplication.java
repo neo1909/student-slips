@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class StudentSlipsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OneTouchApplication.class, args);
+		SpringApplication.run(StudentSlipsApplication.class, args);
 	}
 
 }

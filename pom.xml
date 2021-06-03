@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.studentslips</groupId>
-	<artifactId>one-touch</artifactId>
+	<artifactId>student-slips</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>student-slips</name>
 	<description>Student Slips Web App</description>
