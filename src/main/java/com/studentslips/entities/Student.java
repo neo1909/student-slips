@@ -1,4 +1,4 @@
-package com.vn.studentslips.entitys;
+package com.studentslips.entities;
 
 import java.sql.Timestamp;
 

@@ -1,4 +1,4 @@
-package com.studentslips.main;
+package com.studentslips;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

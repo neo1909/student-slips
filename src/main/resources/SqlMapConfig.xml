@@ -4,11 +4,11 @@
 <configuration>
 
     <typeAliases>
-        <typeAlias alias="Student" type="com.vn.studentslips.entitys.Student" />
+        <typeAlias alias="Student" type="com.studentslips.entities.Student" />
     </typeAliases>
 
     <mappers>
-        <mapper resource="Students.xml" />
+        <mapper resource="mapper/Student.xml" />
     </mappers>
 
 </configuration>

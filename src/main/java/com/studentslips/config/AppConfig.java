@@ -1,9 +1,8 @@
-package com.vn.studentslips.config;
+package com.studentslips.config;
 
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -14,7 +13,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = { "com.vn.studentslips.service" })
 public class AppConfig {
     // Create bean dataSource
     @Bean
@@ -44,7 +42,7 @@ public class AppConfig {
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setBasePackage("com.vn.studentslips.mapper");
+        mapperScannerConfigurer.setBasePackage("com.studentslips.dao");
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
         return mapperScannerConfigurer;
     }

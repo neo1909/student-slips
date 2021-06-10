@@ -1,7 +1,7 @@
-package com.vn.studentslips.service;
+package com.studentslips.services;
 
-import com.vn.studentslips.entitys.Student;
-import com.vn.studentslips.mapper.StudentMapper;
+import com.studentslips.entities.Student;
+import com.studentslips.dao.StudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,20 +10,20 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService{
 
     @Autowired
-    StudentMapper studentMapper;
+    StudentDao studentDao;
 
     @Override
     public int insertStudent(Student student) {
-        return studentMapper.insertStudent(student);
+        return studentDao.insertStudent(student);
     }
 
     @Override
     public List<Student> selectAllStudent() {
-        return studentMapper.selectAllStudent();
+        return studentDao.selectAllStudent();
     }
 
     @Override
     public Student selectStudentById(int studentId) {
-        return studentMapper.selectStudentById(studentId);
+        return studentDao.selectStudentById(studentId);
     }
 }

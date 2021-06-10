@@ -1,10 +1,10 @@
-package com.vn.studentslips.service;
+package com.studentslips.dao;
 
-import com.vn.studentslips.entitys.Student;
+import com.studentslips.entities.Student;
 
 import java.util.List;
 
-public interface StudentService {
+public interface StudentDao {
     public int insertStudent(Student student);
 //    public int updateStudent(Student student);
 //    public int deleteStudentById(int studentId);

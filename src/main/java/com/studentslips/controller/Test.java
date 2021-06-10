@@ -1,8 +1,8 @@
-package com.vn.studentslips.controller;
+package com.studentslips.controller;
 
-import com.vn.studentslips.config.AppConfig;
-import com.vn.studentslips.entitys.Student;
-import com.vn.studentslips.service.StudentService;
+import com.studentslips.config.AppConfig;
+import com.studentslips.entities.Student;
+import com.studentslips.services.StudentService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 

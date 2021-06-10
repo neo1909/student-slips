@@ -1,10 +1,10 @@
-package com.vn.studentslips.mapper;
+package com.studentslips.services;
 
-import com.vn.studentslips.entitys.Student;
+import com.studentslips.entities.Student;
 
 import java.util.List;
 
-public interface StudentMapper {
+public interface StudentService {
     public int insertStudent(Student student);
 //    public int updateStudent(Student student);
 //    public int deleteStudentById(int studentId);
