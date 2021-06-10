@@ -6,7 +6,7 @@ public class Student {
     private int id;
     private String name;
     private int schoolId;
-    private int delYn;
+    private String delYn;
     private int insertId;
     private Timestamp insertDate;
     private int updateId;
@@ -15,7 +15,7 @@ public class Student {
     public Student() {
     }
 
-    public Student(int id, String name, int schoolId, int delYn, int insertId, Timestamp insertDate, int updateId, Timestamp updateDate) {
+    public Student(int id, String name, int schoolId, String delYn, int insertId, Timestamp insertDate, int updateId, Timestamp updateDate) {
         this.id = id;
         this.name = name;
         this.schoolId = schoolId;
@@ -35,6 +35,7 @@ public class Student {
         this.updateId = std.updateId;
         this.updateDate = std.updateDate;
     }
+
     public int getId() {
         return id;
     }
@@ -59,11 +60,11 @@ public class Student {
         this.schoolId = schoolId;
     }
 
-    public int getDelYn() {
+    public String getDelYn() {
         return delYn;
     }
 
-    public void setDelYn(int delYn) {
+    public void setDelYn(String delYn) {
         this.delYn = delYn;
     }
 

@@ -15,7 +15,7 @@ public class Test {
 
         // create student
         Student student1 = new Student();
-        student1.setDelYn(1);
+        student1.setDelYn("Y");
         student1.setName("Jame");
         student1.setSchoolId(1);
         student1.setInsertId(1);

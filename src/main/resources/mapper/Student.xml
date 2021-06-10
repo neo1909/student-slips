@@ -7,19 +7,23 @@
         VALUES (#{id}, #{name}, #{schoolId}, #{delYn}, #{insertDate}, #{insertId});
     </insert>
 
-<!--    <update id="updateStudent" parameterType="Student">-->
-<!--        UPDATE STUDENT SET EMAIL = #{email}, NAME = #{name}, BRANCH = #{branch}, PERCENTAGE = #{percentage}, PHONE = #{phone} WHERE ID = #{id};-->
-<!--    </update>-->
+    <update id="updateStudent" parameterType="Student">
+        UPDATE PS_Students SET  NAME = #{name}, update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id};
+    </update>
 
-<!--    <delete id="deleteStudentById" parameterType="int">-->
-<!--        DELETE from STUDENT WHERE ID = #{id};-->
-<!--    </delete>-->
+    <delete id="deleteStudentById" parameterType="int">
+        UPDATE PS_Students SET  del_yn = 'Y' WHERE ID = #{id};
+    </delete>
 
     <select id="selectAllStudent" resultMap="result">
         SELECT * FROM PS_Students;
     </select>
 
     <select id="selectStudentById" parameterType="int" resultType="Student">
+        SELECT * FROM PS_Students WHERE ID = #{id};
+    </select>
+
+    <select id="search" parameterType="Student" resultType="Student">
         SELECT * FROM PS_Students WHERE ID = #{id};
     </select>
 
