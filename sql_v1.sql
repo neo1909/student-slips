@@ -3,6 +3,8 @@
 CREATE TABLE `PS_Students` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255) ,
+    `grade` INT NOT NULL,
+    `class` INT NOT NULL,
 	`school_id` INT NOT NULL,
 	`del_yn` INT NOT NULL,
 	`insert_date` DATETIME ,
@@ -15,7 +17,7 @@ CREATE TABLE `PS_Students` (
 CREATE TABLE `PS_Head_Teachers` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`grade` INT NOT NULL,
-	`classs` INT NOT NULL,
+	`class` INT NOT NULL,
 	`name` VARCHAR(255),
 	`school_id` INT NOT NULL,
 	`del_yn` INT NOT NULL,
@@ -40,6 +42,7 @@ CREATE TABLE `PS_Service` (
 CREATE TABLE `PS_Suppliers` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(255)  ,
+    `school_id` INT NOT NULL,
 	`del_yn` INT NOT NULL,
 	`insert_date` DATETIME  ,
 	`insert_id` INT  ,
@@ -48,15 +51,6 @@ CREATE TABLE `PS_Suppliers` (
 	PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `PS_HTeachers_Students` (
-	`student_id` INT NOT NULL,
-	`teachers_id` INT NOT NULL,
-	`del_yn` INT NOT NULL,
-	`insert_date` DATETIME  ,
-	`insert_id` INT  ,
-	`update_date` DATETIME  ,
-	`update_id` INT  
-);
 
 CREATE TABLE `PS_Suppliers_Service` (
 	`suppliers_id` INT NOT NULL ,
@@ -103,10 +97,6 @@ CREATE TABLE `PS_School` (
 ALTER TABLE `PS_Students` ADD CONSTRAINT `PS_Students_fk0` FOREIGN KEY (`school_id`) REFERENCES `PS_School`(`id`);
 
 ALTER TABLE `PS_Head_Teachers` ADD CONSTRAINT `PS_Head_Teachers_fk0` FOREIGN KEY (`school_id`) REFERENCES `PS_School`(`id`);
-
-ALTER TABLE `PS_HTeachers_Students` ADD CONSTRAINT `PS_HTeachers_Students_fk0` FOREIGN KEY (`student_id`) REFERENCES `PS_Students`(`id`);
-
-ALTER TABLE `PS_HTeachers_Students` ADD CONSTRAINT `PS_HTeachers_Students_fk1` FOREIGN KEY (`teachers_id`) REFERENCES `PS_Head_Teachers`(`id`);
 
 ALTER TABLE `PS_Suppliers_Service` ADD CONSTRAINT `PS_Suppliers_Service_fk0` FOREIGN KEY (`suppliers_id`) REFERENCES `PS_Suppliers`(`id`);
 

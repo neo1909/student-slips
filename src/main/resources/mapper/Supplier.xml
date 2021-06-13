@@ -10,16 +10,16 @@
     <update id="updateStudent" parameterType="Student">
         UPDATE PS_Students SET
         <if test="name!= null ">
-        NAME = #{name},
+            NAME = #{name},
         </if>
         <if test="grade!=0 ">
-        grade = #{grade},
+            grade = #{grade},
         </if>
         <if test="sClass!=0 ">
-        class = #{sClass},
+            class = #{sClass},
         </if>
         <if test="delYn != null ">
-        del_yn = #{delYn},
+            del_yn = #{delYn},
         </if>
         update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id};
     </update>
@@ -33,16 +33,16 @@
         FROM PS_Students S
         where  S.del_yn='N'
         <if test="schoolId!=0 ">
-        AND  S.school_id = #{schoolId}
+            AND  S.school_id = #{schoolId}
         </if>
         <if test="name!=null ">
-         AND   S.name = #{name}
+            AND   S.name = #{name}
         </if>
         <if test="grade!=0 ">
-         AND   S.grade = #{grade}
+            AND   S.grade = #{grade}
         </if>
         <if test="sClass!=0 ">
-         AND   S.class = #{sClass}
+            AND   S.class = #{sClass}
         </if>
     </select>
 

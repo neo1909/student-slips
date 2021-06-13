@@ -2,45 +2,26 @@ package com.studentslips.entities;
 
 import java.sql.Timestamp;
 
-public class Student {
+public class Services {
     private int id;
     private String name;
-    private int schoolId;
-    private int sClass;
-    private int grade;
     private String delYn;
     private int insertId;
     private Timestamp insertDate;
     private int updateId;
     private Timestamp updateDate;
 
-    public Student() {
+    public Services() {
     }
 
-    public Student(int id, String name, int schoolId, int sClass, int grade, String delYn, int insertId, Timestamp insertDate, int updateId, Timestamp updateDate) {
+    public Services(int id, String name, String delYn, int insertId, Timestamp insertDate, int updateId, Timestamp updateDate) {
         this.id = id;
         this.name = name;
-        this.schoolId = schoolId;
-        this.sClass = sClass;
-        this.grade = grade;
         this.delYn = delYn;
         this.insertId = insertId;
         this.insertDate = insertDate;
         this.updateId = updateId;
         this.updateDate = updateDate;
-    }
-
-    public Student(Student std) {
-        this.id = std.id;
-        this.name = std.name;
-        this.schoolId = std.schoolId;
-        this.delYn = std.delYn;
-        this.insertId = std.insertId;
-        this.insertDate = std.insertDate;
-        this.updateId = std.updateId;
-        this.updateDate = std.updateDate;
-        this.sClass = std.sClass;
-        this.grade = std.grade;
     }
 
     public int getId() {
@@ -57,14 +38,6 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getSchoolId() {
-        return schoolId;
-    }
-
-    public void setSchoolId(int schoolId) {
-        this.schoolId = schoolId;
     }
 
     public String getDelYn() {
@@ -105,21 +78,5 @@ public class Student {
 
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
-    }
-
-    public int getsClass() {
-        return sClass;
-    }
-
-    public void setsClass(int sClass) {
-        this.sClass = sClass;
-    }
-
-    public int getGrade() {
-        return grade;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
     }
 }

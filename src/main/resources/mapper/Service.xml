@@ -1,0 +1,47 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.studentslips.dao.ServicesDao">
+    <insert id="insertService" parameterType="Service">
+        INSERT INTO PS_Service (NAME, del_yn, insert_date, insert_id)
+        VALUES (#{name}, #{delYn}, #{insertDate}, #{insertId});
+    </insert>
+
+    <update id="updateService" parameterType="Services">
+        UPDATE PS_Service SET
+        <if test="name!= null ">
+            NAME = #{name},
+        </if>
+        <if test="delYn != null ">
+            del_yn = #{delYn},
+        </if>
+        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id};
+    </update>
+
+    <delete id="deleteServiceById" parameterType="int">
+        UPDATE PS_Service SET  del_yn = 'Y' WHERE ID = #{id};
+    </delete>
+
+    <select id="selectAllService" parameterType="Services" resultMap="result">
+        SELECT S.*
+        FROM PS_Service S
+        where  S.del_yn='N'
+        <if test="name!=null ">
+            AND   S.name = #{name}
+        </if>
+    </select>
+
+    <select id="selectServiceById" parameterType="int" resultType="Services">
+        SELECT * FROM PS_Service WHERE ID = #{id};
+    </select>
+
+    <resultMap id = "result" type = "Service">
+        <result property = "id" column = "ID"/>
+        <result property = "name" column = "NAME"/>
+        <result property = "delYn" column = "del_yn"/>
+        <result property = "insertId" column = "insert_id"/>
+        <result property = "insertDate" column = "insert_date"/>
+        <result property = "updateId" column = "update_id"/>
+        <result property = "updateDate" column = "update_date"/>
+    </resultMap>
+</mapper>

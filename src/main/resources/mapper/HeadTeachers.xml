@@ -1,56 +1,56 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.studentslips.dao.StudentDao">
-    <insert id="insertStudent" parameterType="Student">
-        INSERT INTO PS_Students (NAME, grade, class, school_id, del_yn, insert_date, insert_id)
+<mapper namespace="com.studentslips.dao.HeadTeachersDao">
+    <insert id="insertHeadTeachers" parameterType="HeadTeachers">
+        INSERT INTO PS_Head_Teachers (NAME, grade, class, school_id, del_yn, insert_date, insert_id)
         VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, #{delYn}, #{insertDate}, #{insertId});
     </insert>
 
-    <update id="updateStudent" parameterType="Student">
-        UPDATE PS_Students SET
+    <update id="updateHeadTeachers" parameterType="HeadTeachers">
+        UPDATE PS_Head_Teachers SET
         <if test="name!= null ">
-        NAME = #{name},
+            NAME = #{name},
         </if>
         <if test="grade!=0 ">
-        grade = #{grade},
+            grade = #{grade},
         </if>
         <if test="sClass!=0 ">
-        class = #{sClass},
+            class = #{sClass},
         </if>
         <if test="delYn != null ">
-        del_yn = #{delYn},
+            del_yn = #{delYn},
         </if>
         update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id};
     </update>
 
-    <delete id="deleteStudentById" parameterType="int">
-        UPDATE PS_Students SET  del_yn = 'Y' WHERE ID = #{id};
+    <delete id="deleteHeadTeachersById" parameterType="int">
+        UPDATE PS_Head_Teachers SET  del_yn = 'Y' WHERE ID = #{id};
     </delete>
 
-    <select id="selectAllStudent" parameterType="Student" resultMap="result">
-        SELECT S.*
-        FROM PS_Students S
-        where  S.del_yn='N'
+    <select id="selectAllHeadTeachers" parameterType="HeadTeachers" resultMap="result">
+        SELECT HT.*
+        FROM PS_Head_Teachers HT
+        where  HT.del_yn='N'
         <if test="schoolId!=0 ">
-        AND  S.school_id = #{schoolId}
+            AND  HT.school_id = #{schoolId}
         </if>
         <if test="name!=null ">
-         AND   S.name = #{name}
+            AND   HT.name = #{name}
         </if>
         <if test="grade!=0 ">
-         AND   S.grade = #{grade}
+            AND   HT.grade = #{grade}
         </if>
         <if test="sClass!=0 ">
-         AND   S.class = #{sClass}
+            AND   HT.class = #{sClass}
         </if>
     </select>
 
-    <select id="selectStudentById" parameterType="int" resultType="Student">
-        SELECT * FROM PS_Students WHERE ID = #{id};
+    <select id="selectHeadTeachersById" parameterType="int" resultType="HeadTeachers">
+        SELECT * FROM PS_Head_Teachers WHERE ID = #{id};
     </select>
 
-    <resultMap id = "result" type = "Student">
+    <resultMap id = "result" type = "HeadTeachers">
         <result property = "id" column = "ID"/>
         <result property = "name" column = "NAME"/>
         <result property = "schoolId" column = "school_id"/>
