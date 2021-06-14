@@ -16,9 +16,9 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/students")
-public class StudentController {
-    private static final Logger logger = LoggerFactory.getLogger(StudentController.class);
+@RequestMapping("api")
+public class StudentRestController {
+    private static final Logger logger = LoggerFactory.getLogger(StudentRestController.class);
 
     @Autowired
     private StudentService studentService;

@@ -15,15 +15,15 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/services")
-public class ServicesController {
+@RequestMapping("api")
+public class ServicesRestController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ServicesController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ServicesRestController.class);
 
     @Autowired
     private ServicesService servicesService;
 
-    @RequestMapping(value = "/S_R_01", method = RequestMethod.GET)
+    @RequestMapping(value = "/SV_R_01", method = RequestMethod.GET)
     public ResponseEntity<List<Services>> getAll(@RequestBody Services std){
         List<Services> list = servicesService.selectAllServices(std);
         if(list.isEmpty()){
@@ -32,7 +32,7 @@ public class ServicesController {
         return new ResponseEntity<List<Services>>(list, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/S_R_02", method = RequestMethod.GET)
+    @RequestMapping(value = "/SV_R_02", method = RequestMethod.GET)
     public ResponseEntity<Services> getServices(@RequestBody Services std) {
 
         Services services = servicesService.selectServicesById(std.getId());
@@ -42,7 +42,7 @@ public class ServicesController {
         return new ResponseEntity<Services>(services, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/S_C_01", method = RequestMethod.POST)
+    @RequestMapping(value = "/SV_C_01", method = RequestMethod.POST)
     public ResponseEntity<?> addServices(@RequestBody Services std){
         int dataStd = servicesService.insertServices(std);
         if (dataStd == 1) {
@@ -52,7 +52,7 @@ public class ServicesController {
         return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(value = "/S_U_01", method = RequestMethod.POST)
+    @RequestMapping(value = "/SV_U_01", method = RequestMethod.POST)
     public ResponseEntity<?> updateServices(@RequestBody Services std){
         Services dataStd = servicesService.selectServicesById(std.getId());
         if (dataStd == null) {
@@ -67,7 +67,7 @@ public class ServicesController {
         }
     }
 
-    @RequestMapping(value = "/S_D_01", method = RequestMethod.POST)
+    @RequestMapping(value = "/SV_D_01", method = RequestMethod.POST)
     public ResponseEntity<?> deleteServices(@RequestBody Services std) {
 
         Services services = servicesService.selectServicesById(std.getId());
