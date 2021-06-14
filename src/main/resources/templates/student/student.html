@@ -7,12 +7,14 @@
     <title>Student Slips</title>
 
     <link rel="stylesheet" href="/lib/styles/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="/lib/styles/bootstrap-theme.min.css" type="text/css">
+   <!-- <link rel="stylesheet" href="/lib/styles/bootstrap-theme.min.css" type="text/css">-->
     <link rel="stylesheet" href="/lib/styles/font-awesome.min.css" type="text/css" >
     <link rel="stylesheet" href="/lib/styles/ionicons.min.css" type="text/css" >
     <link rel="stylesheet" href="/lib/styles/jqx.base.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/jqx.bootstrap.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/app.css" type="text/css">
+
+    <link rel="stylesheet" href="/app/styles/student/student.css" type="text/css">
 
 </head>
 
@@ -31,13 +33,11 @@
         <aside class="right-side">
             <section class="content-header">
                 <h1>
-                    Home
-                    <small>
-                        Quick link
-                    </small>
+                    Students
                 </h1>
                 <ol class="breadcrumb">
-                    <li></i> Home</a></li>
+                    <li></i> Data Entry</a></li>
+                    <li class="active">Students</li>
                 </ol>
             </section>
 
@@ -45,10 +45,28 @@
             <section class="content">
                 <div class="container">
                     <div class="div-search">
-
+                        <form role="form" class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-md-2">Name and surname</label>
+                                <div class="col-md-6">
+                                    <input id="iptStudentNm" type="text" class="form-control" placeholder=" Enter..."/>
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="btnSearch" class="btn btn-primary" type="button" value="Search">Search</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
 
-                    <div class="div-grid"></div>
+                    <div class="div-grid">
+                        <button id="btnCreate" class="btn btn-success" type="button" value="Create Student" style="margin-bottom: 10px;">
+                            Create Student
+                        </button>
+
+                        <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; width: 100%">
+                            <div id="jqxgrid"></div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </aside>
@@ -61,6 +79,8 @@
 <script type="text/javascript" src="/lib/scripts/jqxcore.js"></script>
 <script type="text/javascript" src="/lib/scripts/jqx-all.js"></script>
 <script type="text/javascript" src="/lib/scripts/app.js"></script>
+
+<script type="text/javascript" src="/app/scripts/student/student.js"></script>
 
 </body>
 </html>
