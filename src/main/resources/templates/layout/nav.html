@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<aside class="left-side sidebar-offcanvas" th:fragment="nav">
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="/lib/images/avatar5.png" class="img-circle" alt="User Image" />
+            </div>
+            <div class="pull-left info">
+                <p>
+                    Hello, Neo <br/>
+                    ( ID: 99999999 )
+                </p>
+            </div>
+        </div>
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                <span class="input-group-btn">
+                                    <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                                </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <ul class="sidebar-menu">
+            <li class="active">
+                <a href="index.html">
+                    <i class="fa fa-home"></i> <span>Home</span>
+                </a>
+            </li>
+
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-info-circle"></i>
+                    <span>Data Entry</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="/student"><i class="fa fa-angle-double-right"></i> Students</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Head teachers</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Suppliers</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> School data</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-credit-card"></i>
+                    <span>Posting</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Students debts</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Posting payments</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa fa-list"></i> <span>Overview</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Student</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Class</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> School</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-archive"></i> <span>Archive</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Task archive</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Bank statements archive</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-users"></i> <span>Admin</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> User management</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Role management</a></li>
+                    <li><a href="#"><i class="fa fa-angle-double-right"></i> Log management</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+</body>
+</html>
