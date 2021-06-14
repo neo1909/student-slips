@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/SV")
 public class ServicesRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(ServicesRestController.class);
