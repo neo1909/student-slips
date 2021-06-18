@@ -2,7 +2,6 @@ package com.studentslips.dao;
 
 import com.studentslips.entities.Student;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

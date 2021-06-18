@@ -24,13 +24,9 @@ public class StudentRestController {
     @Autowired
     private StudentService studentService;
 
-    @Autowired
-    DataSource dataSource;
-
     @RequestMapping(value = "/ST_R_01", method = RequestMethod.GET)
     public ResponseEntity<List<Student>> getAll(@RequestBody Student std){
 
-        System.out.println(dataSource.toString());
         List<Student> listStudent = studentService.selectAllStudent(std);
         if(listStudent.isEmpty()){
             return new ResponseEntity<List<Student>>(HttpStatus.NO_CONTENT);
