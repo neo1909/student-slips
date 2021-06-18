@@ -1,24 +1,24 @@
 package com.studentslips.services;
 
+import com.studentslips.dao.StudentsDao;
 import com.studentslips.entities.Student;
-import com.studentslips.dao.StudentDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 
 import java.sql.Timestamp;
 import java.util.List;
-@Service(value = "StudentService")
+@Component(value = "StudentService")
 public class StudentServiceImpl implements StudentService{
 
     @Autowired
-    StudentDao studentDao;
+    StudentsDao studentDao;
 
     @Override
     public int insertStudent(Student student) {
         student.setInsertId(100);
         student.setInsertDate(new Timestamp(System.currentTimeMillis()));
-        return studentDao.insertStudent(student);
+       return studentDao.insertStudent(student);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public Student selectStudentById(int studentId) {
-        return studentDao.selectStudentById(studentId);
+       return studentDao.selectStudentById(studentId);
     }
 
 }

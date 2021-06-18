@@ -1,7 +1,7 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.studentslips.dao.StudentDao">
+<mapper namespace="com.studentslips.dao.StudentsDao">
     <insert id="insertStudent" parameterType="Student">
         INSERT INTO PS_Students (NAME, grade, class, school_id, del_yn, insert_date, insert_id)
         VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, #{delYn}, #{insertDate}, #{insertId});
@@ -47,7 +47,7 @@
     </select>
 
     <select id="selectStudentById" parameterType="int" resultType="Student">
-        SELECT * FROM PS_Students WHERE ID = #{id};
+        SELECT * FROM PS_Students WHERE ID = #{id} AND del_yn='N';
     </select>
 
     <resultMap id = "result" type = "Student">

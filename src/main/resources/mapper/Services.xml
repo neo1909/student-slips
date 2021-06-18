@@ -32,7 +32,7 @@
     </select>
 
     <select id="selectServiceById" parameterType="int" resultType="Services">
-        SELECT * FROM PS_Service WHERE ID = #{id};
+        SELECT * FROM PS_Service WHERE ID = #{id} AND del_yn='N';
     </select>
 
     <resultMap id = "result" type = "Service">

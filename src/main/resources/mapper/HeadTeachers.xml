@@ -47,7 +47,7 @@
     </select>
 
     <select id="selectHeadTeachersById" parameterType="int" resultType="HeadTeachers">
-        SELECT * FROM PS_Head_Teachers WHERE ID = #{id};
+        SELECT * FROM PS_Head_Teachers WHERE ID = #{id} AND del_yn='N';
     </select>
 
     <resultMap id = "result" type = "HeadTeachers">

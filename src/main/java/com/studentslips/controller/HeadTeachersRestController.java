@@ -1,5 +1,6 @@
 package com.studentslips.controller;
 
+import com.mysql.jdbc.Driver;
 import com.studentslips.common.ErrorCode;
 import com.studentslips.common.ResultEntity;
 import com.studentslips.entities.HeadTeachers;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sql.DataSource;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -20,6 +22,12 @@ public class HeadTeachersRestController {
     private static final Logger logger = LoggerFactory.getLogger(HeadTeachersRestController.class);
     @Autowired
     private HeadTeachersService headTeachersService;
+
+    @Autowired
+    DataSource dataSource;
+
+
+
 
     @RequestMapping(value = "/HT_R_01", method = RequestMethod.GET)
     public ResponseEntity<List<HeadTeachers>> getAll(@RequestBody HeadTeachers std){

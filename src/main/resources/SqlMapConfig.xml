@@ -7,9 +7,8 @@
     </typeAliases>
 
     <mappers>
-        <mapper resource="mapper/Student.xml" />
-        <mapper resource="mapper/Service.xml" />
+        <mapper resource="mapper/Students.xml" />
+        <mapper resource="mapper/Services.xml" />
         <mapper resource="mapper/HeadTeachers.xml" />
     </mappers>
-
 </configuration>
