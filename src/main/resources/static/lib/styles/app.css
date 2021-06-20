@@ -3402,3 +3402,28 @@ fieldset[disabled] .btn-vk.active {
   color: #587ea3;
   background-color: #ffffff;
 }
+.ss-content button {
+    min-width: 110px;
+}
+
+.ss-popup {
+  display: none !important;
+}
+
+.ss-popup-content h3 {
+  margin: 10px 20px 20px 20px;
+}
+
+.ss-popup-content form {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.div-grid {
+  margin-top: 20px;
+}
+
+.ss-grid {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

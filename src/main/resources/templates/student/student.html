@@ -29,7 +29,7 @@
     <div class="nav" th:replace="/layout/nav :: nav"> </div>
 
     <!-- Main  -->
-    <div class="div-content">
+    <div class="div-content ss-content">
         <aside class="right-side">
             <section class="content-header">
                 <h1>
@@ -49,7 +49,7 @@
                             <div class="form-group">
                                 <label class="col-md-2">Name and surname</label>
                                 <div class="col-md-6">
-                                    <input id="iptStudentNm" type="text" class="form-control" placeholder=" Enter..."/>
+                                    <input name="iptStudentNmSearch" id="iptStudentNmSearch" style="padding-left: 12px;"/>
                                 </div>
                                 <div class="col-md-2">
                                     <button id="btnSearch" class="btn btn-primary" type="button" value="Search">Search</button>
@@ -57,13 +57,12 @@
                             </div>
                         </form>
                     </div>
-
                     <div class="div-grid">
-                        <button id="btnCreate" class="btn btn-success" type="button" value="Create Student" style="margin-bottom: 10px;">
+                        <button id="btnCreate" class="btn btn-success" type="button" value="Create Student" >
                             Create Student
                         </button>
 
-                        <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; width: 100%">
+                        <div id='jqxWidget' class="ss-grid" style="font-size: 13px; width: 100%">
                             <div id="jqxgrid"></div>
                         </div>
                     </div>
@@ -72,6 +71,32 @@
         </aside>
     </div>
 
+</div>
+
+<div class="ss-popup ">
+    <div class="ss-popup-content" id="popupStudent">
+        <div >
+            <h3>Create Student</h3>
+            <form >
+                <div class="form-group">
+                    <label>Name and surname</label>
+                    <input name="iptStdNm" id="iptStdNm" style="padding-left: 12px;"/>
+                </div>
+                <div class="form-group">
+                    <label>Grade</label>
+                    <div id="cmbStdGrade" style="padding-left: 12px;"></div>
+                </div>
+                <div class="form-group">
+                    <label>Class</label>
+                    <div id="cmbStdClass" style="padding-left: 12px;"></div>
+                </div>
+                <div style="margin-top: 30px;">
+                    <button id="btnSave" class="btn btn-primary" type="button" value="Save">Save</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript" src="/lib/scripts/jquery-1.12.4.min.js"></script>
