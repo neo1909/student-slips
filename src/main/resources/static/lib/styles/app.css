@@ -3402,7 +3402,7 @@ fieldset[disabled] .btn-vk.active {
   color: #587ea3;
   background-color: #ffffff;
 }
-.ss-content button {
+.btn-str {
     min-width: 110px;
 }
 
@@ -3426,4 +3426,8 @@ fieldset[disabled] .btn-vk.active {
 .ss-grid {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+button.btn-icon {
+  /*height: 29px;*/
 }

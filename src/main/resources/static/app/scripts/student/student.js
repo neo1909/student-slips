@@ -16,12 +16,20 @@ let fn = {
         let studentName = [
             "Black Tea", "Green Tea", "Caffe Espresso", "Doubleshot Espresso"
         ];
+        let studentClass = [
+            "1", "2", "3", "4"
+        ];
+        let studentGrade = [
+            "1", "2", "3", "4"
+        ];
 
         for (let i = 0; i < 4; i++) {
             let row = {};
             row["number"] = number[i];
             row["studentId"] = studentId[i];
             row["studentName"] = studentName[i];
+            row["studentClass"] = studentClass[i];
+            row["studentGrade"] = studentGrade[i];
             data[i] = row;
         }
         let source = {
@@ -38,17 +46,30 @@ let fn = {
             {
                 source: dataAdapter,
                 columns: [
-                    { text: 'No.', datafield: 'number', align: 'center', cellsalign:'center', width: '100'},
-                    { text: 'ID Number', datafield: 'studentId', align: 'center', cellsalign:'center', width: '150'},
-                    { text: 'Name and surname', datafield: 'studentName', align: 'center', cellsalign:'left'}
+                    { text: 'No.', datafield: 'number', align: 'center', cellsalign:'center', width: '8%'},
+                    { text: 'ID Number', datafield: 'studentId', align: 'center', cellsalign:'center', width: '19%'},
+                    { text: 'Name and surname', datafield: 'studentName', align: 'center', cellsalign:'left', width: '48%,'},
+                    { text: 'Class', datafield: 'studentClass', align: 'center', cellsalign:'center', width: '8%,'},
+                    { text: 'Grade', datafield: 'studentGrade', align: 'center', cellsalign:'center', width: '8%,'},
+                    { text: '', cellsalign:'center', width: '9%,'
+                        , cellsrenderer: function (row, column, value) {
+
+                            return '<div style="text-align: center; margin-top: 5px;">'
+                                + '<button alt="Edit" class="btn btn-info btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + row +')"><span class="glyphicon glyphicon-edit"></span></button>'
+                                + '<button alt="Delete" class="btn btn-danger btn-sm" onclick="fn.onDelete(' + row +')"><span class="glyphicon glyphicon-trash"></span></button>'
+                                + '</div>';
+                        }
+                    }
                 ],
                 theme: 'bootstrap',
                 width: '95%',
-                height: 600
+                height: 600,
+                rowsheight: 40
             }
         );
+
         $('#btnCreate').click(function () {
-            $("#popupStudent").jqxWindow('open');
+            $("#popupStudent").jqxWindow('open', fn.popupStudent.create());
         });
 
 
@@ -58,7 +79,7 @@ let fn = {
         $("#popupStudent").jqxWindow({
             isModal: true,
             autoOpen: false,
-            height: 550,
+            height: 380,
             width: 700,
             theme: 'bootstrap',
             title: 'Student',
@@ -78,9 +99,23 @@ let fn = {
 
     },
 
-    popupStudent: {
-        create: function () {
+    onDelete: function (row) {
+        let data = $("#jqxgrid").jqxGrid('getrowdata', row);
 
+        if (confirm("Delete students ?")) {
+            alert("Delete: " + data.studentName);
+        }
+    },
+
+    onUpdate: function (row) {
+        let data = $("#jqxgrid").jqxGrid('getrowdata', row);
+        $("#popupStudent").jqxWindow('open', fn.popupStudent.create(data.studentId));
+        alert("Update: " + data.studentName);
+    },
+
+    popupStudent: {
+        create: function (id) {
+            alert(id);
         }
     }
 
