@@ -4,7 +4,7 @@
 <mapper namespace="StudentsDao">
     <insert id="insertStudent" parameterType="Student">
         INSERT INTO PS_Students (NAME, grade, class, school_id, del_yn, insert_date, insert_id)
-        VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, #{delYn}, #{insertDate}, #{insertId});
+        VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, 'N', #{insertDate}, #{insertId});
     </insert>
 
     <update id="updateStudent" parameterType="Student">
@@ -21,11 +21,11 @@
         <if test="delYn != null ">
         del_yn = #{delYn},
         </if>
-        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id};
+        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </update>
 
-    <delete id="deleteStudentById" parameterType="int">
-        UPDATE PS_Students SET  del_yn = 'Y' WHERE ID = #{id};
+    <delete id="deleteStudentById" parameterType="Student">
+        UPDATE PS_Students SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </delete>
 
     <select id="selectAllStudent" parameterType="Student" resultMap="result">
@@ -47,7 +47,7 @@
     </select>
 
     <select id="selectStudentById" parameterType="int" resultType="Student">
-        SELECT * FROM PS_Students WHERE ID = #{id} AND del_yn='N';
+        SELECT * FROM PS_Students WHERE ID = #{id} AND del_yn='N'AND school_id=#{schoolId};
     </select>
 
     <resultMap id = "result" type = "Student">

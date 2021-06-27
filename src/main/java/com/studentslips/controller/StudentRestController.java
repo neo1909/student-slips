@@ -61,13 +61,8 @@ public class StudentRestController {
             ResultEntity re = new ResultEntity(ErrorCode.NOT_FOUND,"Not found student id: "+ std.getId());
             return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
         } else {
-            dataStd.setName(std.getName());
-            dataStd.setsClass(std.getsClass());
-            dataStd.setGrade(std.getGrade());
-            dataStd.setUpdateId(100);
-            dataStd.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-            studentService.updateStudent(dataStd);
-            return new ResponseEntity<Student>(dataStd, HttpStatus.OK);
+            studentService.updateStudent(std);
+            return new ResponseEntity<Student>(std, HttpStatus.OK);
         }
     }
 
@@ -79,10 +74,7 @@ public class StudentRestController {
             ResultEntity re = new ResultEntity(ErrorCode.NOT_FOUND,"Not found student id: "+ std.getId());
             return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
         }
-        std.setDelYn("Y");
-        std.setUpdateId(100);
-        std.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-        studentService.updateStudent(std);
+        studentService.deleteStudentById(std);
         return new ResponseEntity<Student>(HttpStatus.OK);
     }
 }

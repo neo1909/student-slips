@@ -59,9 +59,6 @@ public class ServicesRestController {
             ResultEntity re = new ResultEntity(ErrorCode.NOT_FOUND,"Not found Services id: "+ std.getId());
             return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
         } else {
-            dataStd.setName(std.getName());
-            dataStd.setUpdateId(100);
-            dataStd.setUpdateDate(new Timestamp(System.currentTimeMillis()));
             servicesService.updateServices(dataStd);
             return new ResponseEntity<Services>(dataStd, HttpStatus.OK);
         }
@@ -75,10 +72,7 @@ public class ServicesRestController {
             ResultEntity re = new ResultEntity(ErrorCode.NOT_FOUND,"Not found services id: "+ std.getId());
             return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
         }
-        std.setDelYn("Y");
-        std.setUpdateId(100);
-        std.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-        servicesService.updateServices(std);
+        servicesService.deleteServicesById(std);
         return new ResponseEntity<Services>(HttpStatus.OK);
     }
 }

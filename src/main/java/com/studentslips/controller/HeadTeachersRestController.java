@@ -67,11 +67,6 @@ public class HeadTeachersRestController {
             ResultEntity re = new ResultEntity(ErrorCode.NOT_FOUND,"Not found Head Teachers id: "+ std.getId());
             return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
         } else {
-            dataStd.setName(std.getName());
-            dataStd.setsClass(std.getsClass());
-            dataStd.setGrade(std.getGrade());
-            dataStd.setUpdateId(100);
-            dataStd.setUpdateDate(new Timestamp(System.currentTimeMillis()));
             headTeachersService.updateHeadTeachers(dataStd);
             return new ResponseEntity<HeadTeachers>(dataStd, HttpStatus.OK);
         }
@@ -86,10 +81,7 @@ public class HeadTeachersRestController {
             ResultEntity re = new ResultEntity(ErrorCode.NOT_FOUND,"Not found Head Teachers id: "+ std.getId());
             return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
         }
-        std.setDelYn("Y");
-        std.setUpdateId(100);
-        std.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-        headTeachersService.updateHeadTeachers(std);
+        headTeachersService.deleteHeadTeachersById(std);
         return new ResponseEntity<HeadTeachers>(HttpStatus.OK);
     }
 }

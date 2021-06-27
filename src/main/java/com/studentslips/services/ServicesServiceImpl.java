@@ -5,6 +5,7 @@ import com.studentslips.entities.Services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 @Service(value = "ServicesService")
 public class ServicesServiceImpl implements ServicesService{
@@ -14,17 +15,23 @@ public class ServicesServiceImpl implements ServicesService{
 
     @Override
     public int insertServices(Services services) {
+        services.setInsertId(100);
+        services.setInsertDate(new Timestamp(System.currentTimeMillis()));
         return servicesDao.insertServices(services);
     }
 
     @Override
     public int updateServices(Services services) {
+        services.setUpdateId(100);
+        services.setUpdateDate(new Timestamp(System.currentTimeMillis()));
         return servicesDao.updateServices(services);
     }
 
     @Override
-    public int deleteServicesById(int id) {
-        return servicesDao.deleteServicesById(id);
+    public int deleteServicesById(Services services) {
+        services.setUpdateId(100);
+        services.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        return servicesDao.deleteServicesById(services);
     }
 
     @Override

@@ -16,13 +16,13 @@ public class HeadTeachersDao {
     }
 
     public int insertHeadTeachers(HeadTeachers headTeachers){
-        return this.sqlSession.selectOne("insertHeadTeachers", headTeachers);
+        return this.sqlSession.insert("insertHeadTeachers", headTeachers);
     }
     public int updateHeadTeachers(HeadTeachers headTeachers){
-        return this.sqlSession.selectOne("updateHeadTeachers", headTeachers);
+        return this.sqlSession.update("updateHeadTeachers", headTeachers);
     }
-    public int deleteHeadTeachersById(int id){
-        return this.sqlSession.selectOne("deleteHeadTeachersById", id);
+    public int deleteHeadTeachersById(HeadTeachers headTeachers){
+        return this.sqlSession.delete("deleteHeadTeachersById", headTeachers);
     }
     public List<HeadTeachers> selectAllHeadTeachers(HeadTeachers headTeachers){
         return this.sqlSession.selectList("selectAllHeadTeachers", headTeachers);

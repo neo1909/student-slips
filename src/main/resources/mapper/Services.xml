@@ -4,7 +4,7 @@
 <mapper namespace="ServicesDao">
     <insert id="insertService" parameterType="Services">
         INSERT INTO PS_Service (NAME, del_yn, insert_date, insert_id)
-        VALUES (#{name}, #{delYn}, #{insertDate}, #{insertId});
+        VALUES (#{name}, 'N', #{insertDate}, #{insertId});
     </insert>
 
     <update id="updateService" parameterType="Services">
@@ -18,8 +18,8 @@
         update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id};
     </update>
 
-    <delete id="deleteServiceById" parameterType="int">
-        UPDATE PS_Service SET  del_yn = 'Y' WHERE ID = #{id};
+    <delete id="deleteServiceById" parameterType="Services">
+        UPDATE PS_Service SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id};
     </delete>
 
     <select id="selectAllService" parameterType="Services" resultMap="result">

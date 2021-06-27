@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public class StudentsDao {
+
     private final SqlSession sqlSession;
 
     public StudentsDao(SqlSession sqlSession) {
@@ -23,12 +24,12 @@ public class StudentsDao {
     }
 
     public int insertStudent(Student student){
-        return this.sqlSession.selectOne("insertStudent", student);
+        return this.sqlSession.insert("insertStudent", student);
     }
     public int updateStudent(Student student){
-        return this.sqlSession.selectOne("updateStudent", student);
+        return this.sqlSession.update("updateStudent", student);
     }
-    public int deleteStudentById(int studentId){
-        return this.sqlSession.selectOne("deleteStudentById", studentId);
+    public int deleteStudentById(Student student){
+        return this.sqlSession.delete("deleteStudentById", student);
     }
 }

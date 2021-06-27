@@ -2,27 +2,138 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="SupplierDao">
-
-    <select id="selectAllSupplier" parameterType="SupplierDTO"  resultMap="result">
+    <insert id="insertSupplier" parameterType="Supplier"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO onetouch.ps_suppliers (NAME, school_id, del_yn, insert_date, insert_id)
+        VALUES (#{name}, #{schoolId}, 'N', #{insertDate}, #{insertId});
+    </insert>
+    <insert id="insertSupplierService" parameterType="SupplierDTO">
+        INSERT INTO onetouch.ps_suppliers_service (suppliers_id, service_id,school_id,price,no_payment,amount_1,amount_2,amount_3,amount_4,amount_5,
+                                                   amount_6,amount_7,amount_8,amount_9,amount_10,amount_11,amount_12,grade,del_yn, insert_date, insert_id)
+        VALUES (#{id}, #{serviceId},#{schoolId},#{price},#{noPayment},#{amount1},#{amount2},#{amount3},#{amount4},#{amount5},#{amount6},#{amount7},
+                #{amount8},#{amount9},#{amount10},#{amount11},#{amount12},#{gradeList},'N', #{insertDate}, #{insertId});
+    </insert>
+    <update id="updateSupplier" parameterType="Supplier">
+        UPDATE onetouch.ps_suppliers  SET
+        <if test="name!= null ">
+            NAME = #{name},
+        </if>
+        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
+    </update>
+    <update id="updateSupplierService" parameterType="SupplierDTO">
+        UPDATE onetouch.ps_suppliers_service  SET
+        <if test="name!= null ">
+            NAME = #{name},
+        </if>
+        <if test="serviceId!= null ">
+        service_id=#{serviceId},
+        </if>
+        <if test="price!= 0 ">
+            price=#{price},
+        </if>
+        <if test="noPayment!= 0 ">
+            no_payment=#{noPayment},
+        </if>
+        <if test="amount1!= 0 ">
+            amount_1=#{amount1},
+        </if>
+        <if test="amount2!= 0 ">
+            amount_2=#{amount2},
+        </if>
+        <if test="amount3!= 0 ">
+            amount_3=#{amount3},
+        </if>
+        <if test="amount4!= 0 ">
+            amount_4=#{amount4},
+        </if>
+        <if test="amount5!= 0 ">
+            amount_5=#{amount5},
+        </if>
+        <if test="amount6!= 0 ">
+            amount_6=#{amount6},
+        </if>
+        <if test="amount7!= 0 ">
+            amount_7=#{amount7},
+        </if>
+        <if test="amount8!= 0 ">
+            amount_8=#{amount8},
+        </if>
+        <if test="amount9!= 0 ">
+            amount_9=#{amount},
+        </if>
+        <if test="amount10!= 0 ">
+            amount_10=#{amount10},
+        </if>
+        <if test="amount2!= 0 ">
+            amount_2=#{amount2},
+        </if>
+        <if test="amount11!= 0 ">
+            amount_11=#{amount11},
+        </if>
+        <if test="amount12!= 0 ">
+            amount_12=#{amount12},
+        </if>
+        <if test="gradeList!= 0 ">
+            grade=#{gradeList},
+        </if>
+        <if test="delYn!= 0 ">
+            del_yn=#{delYn},
+        </if>
+        update_id = #{updateId}, update_date = #{updateDate} WHERE suppliers_id = #{suppliersId} AND service_id=#{serviceId} AND school_id=#{schoolId};
+    </update>
+    <delete id="deleteSupplier" parameterType="Supplier">
+        UPDATE onetouch.ps_suppliers  SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
+    </delete>
+    <delete id="deleteSupplierService" parameterType="SupplierService">
+        UPDATE onetouch.ps_suppliers_service   SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE suppliers_id = #{suppliersId} AND service_id=#{serviceId} AND school_id=#{schoolId};
+    </delete>
+    <select id="selectSupplierDetail" parameterType="SupplierService"  resultMap="result">
         SELECT SS.suppliers_id,S.name,SS.service_id,(select name from onetouch.ps_service where SS.service_id=id) AS service_name
              ,SS.price,SS.no_payment,SS.amount_1,SS.amount_2,SS.amount_3,SS.amount_4,SS.amount_5,SS.amount_6,SS.amount_7
-             ,SS.amount_8,SS.amount_9,SS.amount_10,SS.amount_11,SS.amount_12,SS.grade
-             ,S.insert_date,S.insert_id,S.update_date,S.update_id
+             ,SS.amount_8,SS.amount_9,SS.amount_10,SS.amount_11,SS.amount_12,SS.grade,SS.school_id
+             ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn
         FROM onetouch.ps_suppliers S
                  left outer join onetouch.ps_suppliers_service SS
                                  on S.id=SS.suppliers_id
         where S.del_yn='N'
           AND SS.del_yn='N'
+        <if test="schoolId != 0">
           AND SS.school_id=#{schoolId}
+        </if>
+        <if test="suppliersId != 0">
+          AND SS.suppliers_id = #{suppliersId}
+        </if>
+        <if test="serviceId != 0">
+            AND SS.service_id = #{serviceId}
+        </if>
     </select>
+    <select id="selectAllSupplier" parameterType="Supplier"  resultMap="resultSupplier">
+        SELECT SS.id,S.name,S.school_id
+        ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn
+        FROM onetouch.ps_suppliers S
 
-
-    <resultMap id = "result" type = "SupplierDTO">
-        <result property = "id" column = "ID"/>
-        <result property = "name" column = "NAME"/>
+        where S.del_yn='N'
+        <if test="schoolId != 0">
+            AND S.school_id=#{schoolId}
+        </if>
+    </select>
+    <resultMap id = "resultSupplier" type = "Supplier">
+        <result property = "id" column = "id"/>
+        <result property = "name" column = "name"/>
         <result property = "schoolId" column = "school_id"/>
         <result property = "delYn" column = "del_yn"/>
         <result property = "insertId" column = "insert_id"/>
+        <result property = "insertDate" column = "insert_date"/>
+        <result property = "updateId" column = "update_id"/>
+        <result property = "updateDate" column = "update_date"/>
+    </resultMap>
+
+    <resultMap id = "result" type = "SupplierService">
+        <result property = "id" column = "suppliers_id"/>
+        <result property = "name" column = "NAME"/>
+        <result property = "schoolId" column = "school_id"/>
+        <result property = "delYn" column = "del_yn"/>
+        <result property = "serviceId" column = "service_id"/>
+        <result property = "serviceName" column = "service_name"/>
         <result property = "price" column = "price"/>
         <result property = "noPayment" column = "no_payment"/>
         <result property = "amount1" column = "amount_1"/>
@@ -38,9 +149,9 @@
         <result property = "amount11" column = "amount_11"/>
         <result property = "amount12" column = "amount_12"/>
         <result property = "gradeList" column = "grade"/>
+        <result property = "insertId" column = "insert_id"/>
         <result property = "insertDate" column = "insert_date"/>
         <result property = "updateId" column = "update_id"/>
         <result property = "updateDate" column = "update_date"/>
-        <result property = "serviceId" column = "service_id"/>
     </resultMap>
 </mapper>

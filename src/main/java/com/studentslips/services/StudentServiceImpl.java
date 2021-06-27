@@ -12,7 +12,7 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService{
 
     @Autowired
-    StudentsDao studentDao;
+    private StudentsDao studentDao;
 
     @Override
     public int insertStudent(Student student) {
@@ -23,12 +23,17 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public int updateStudent(Student student) {
+        student.setUpdateId(100);
+        student.setUpdateDate(new Timestamp(System.currentTimeMillis()));
         return studentDao.updateStudent(student);
     }
 
     @Override
-    public int deleteStudentById(int studentId) {
-        return studentDao.deleteStudentById(studentId);
+    public int deleteStudentById(Student student) {
+
+        student.setUpdateId(100);
+        student.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        return studentDao.deleteStudentById(student);
     }
 
     @Override

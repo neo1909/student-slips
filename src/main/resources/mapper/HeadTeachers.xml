@@ -4,7 +4,7 @@
 <mapper namespace="com.studentslips.dao.HeadTeachersDao">
     <insert id="insertHeadTeachers" parameterType="HeadTeachers">
         INSERT INTO PS_Head_Teachers (NAME, grade, class, school_id, del_yn, insert_date, insert_id)
-        VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, #{delYn}, #{insertDate}, #{insertId});
+        VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, 'N', #{insertDate}, #{insertId});
     </insert>
 
     <update id="updateHeadTeachers" parameterType="HeadTeachers">
@@ -21,11 +21,11 @@
         <if test="delYn != null ">
             del_yn = #{delYn},
         </if>
-        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id};
+        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </update>
 
-    <delete id="deleteHeadTeachersById" parameterType="int">
-        UPDATE PS_Head_Teachers SET  del_yn = 'Y' WHERE ID = #{id};
+    <delete id="deleteHeadTeachersById" parameterType="HeadTeachers">
+        UPDATE PS_Head_Teachers SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </delete>
 
     <select id="selectAllHeadTeachers" parameterType="HeadTeachers" resultMap="result">
@@ -47,7 +47,7 @@
     </select>
 
     <select id="selectHeadTeachersById" parameterType="int" resultType="HeadTeachers">
-        SELECT * FROM PS_Head_Teachers WHERE ID = #{id} AND del_yn='N';
+        SELECT * FROM PS_Head_Teachers WHERE ID = #{id} AND del_yn='N' AND school_id=#{schoolId};
     </select>
 
     <resultMap id = "result" type = "HeadTeachers">

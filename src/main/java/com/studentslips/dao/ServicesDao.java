@@ -16,13 +16,13 @@ public class ServicesDao {
     }
 
     public int insertServices(Services services){
-        return this.sqlSession.selectOne("insertService", services);
+        return this.sqlSession.insert("insertService", services);
     }
     public int updateServices(Services services){
-        return this.sqlSession.selectOne("updateService", services);
+        return this.sqlSession.update("updateService", services);
     }
-    public int deleteServicesById(int id){
-        return this.sqlSession.selectOne("deleteServiceById", id);
+    public int deleteServicesById(Services services){
+        return this.sqlSession.delete("deleteServiceById", services);
     }
     public List<Services> selectAllServices(Services services){
         return this.sqlSession.selectList("selectAllService", services);

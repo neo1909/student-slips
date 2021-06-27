@@ -5,6 +5,7 @@ import com.studentslips.entities.HeadTeachers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service(value = "HeadTeachersService")
@@ -15,17 +16,23 @@ public class HeadTeachersServiceImpl implements HeadTeachersService{
 
     @Override
     public int insertHeadTeachers(HeadTeachers headTeachers) {
+        headTeachers.setInsertId(100);
+        headTeachers.setInsertDate(new Timestamp(System.currentTimeMillis()));
         return headTeachersDao.insertHeadTeachers(headTeachers);
     }
 
     @Override
     public int updateHeadTeachers(HeadTeachers headTeachers) {
+        headTeachers.setUpdateId(100);
+        headTeachers.setUpdateDate(new Timestamp(System.currentTimeMillis()));
         return headTeachersDao.updateHeadTeachers(headTeachers);
     }
 
     @Override
-    public int deleteHeadTeachersById(int id) {
-        return headTeachersDao.deleteHeadTeachersById(id);
+    public int deleteHeadTeachersById(HeadTeachers headTeachers) {
+        headTeachers.setUpdateId(100);
+        headTeachers.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        return headTeachersDao.deleteHeadTeachersById(headTeachers);
     }
 
     @Override

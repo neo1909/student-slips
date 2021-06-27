@@ -12,4 +12,5 @@
         <mapper resource="mapper/HeadTeachers.xml" />
         <mapper resource="mapper/Supplier.xml" />
     </mappers>
+
 </configuration>
