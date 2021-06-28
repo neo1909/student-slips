@@ -118,14 +118,10 @@ let fn = {
             params,
 
             function onSuccess(data) {
-                alert(data.lst);
             },
 
             function onError(err) {
                 alert('Error');
-            },
-
-            function onComplete() {
             }
         );
 
