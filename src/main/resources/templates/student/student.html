@@ -43,27 +43,41 @@
 
             <!-- Main content -->
             <section class="content">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="div-search">
-                        <form role="form" class="form-horizontal">
-                            <div class="form-group">
-                                <label class="col-md-2">Name and surname</label>
-                                <div class="col-md-6">
-                                    <input name="iptStudentNmSearch" id="iptStudentNmSearch" style="padding-left: 12px;"/>
+                        <form role="form">
+                            <div class="row">
+                                <div class="form-group col-md-5">
+                                    <label >Name and surname</label>
+                                    <div >
+                                        <input id="iptStdNmSrch" style="padding-left: 12px;"/>
+                                    </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <button id="btnSearch" class="btn btn-primary btn-str" type="button" value="Search">Search</button>
+                                <div class="form-group col-md-2">
+                                    <label >Grade</label>
+                                    <div >
+                                        <input id="cmbStdGradeSrch" style="padding-left: 12px;"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label >Class</label>
+                                    <div >
+                                        <input id="cmbStdClazzSrch" style="padding-left: 12px;"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <button id="btnStdSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search">Search</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="div-grid">
-                        <button id="btnCreate" class="btn btn-success btn-str" type="button" value="Create Student" >
+                        <button id="btnStdCreate" class="btn btn-success btn-str" type="button" value="Create Student" >
                             Create Student
                         </button>
 
-                        <div id='jqxWidget' class="ss-grid" style="font-size: 13px; width: 100%">
-                            <div id="jqxgrid"></div>
+                        <div class="ss-grid">
+                            <div id="grdStudents"></div>
                         </div>
                     </div>
                 </div>
@@ -79,17 +93,26 @@
             <h3>Create Student</h3>
             <form >
                 <div class="form-group">
-                    <label>Name and surname</label>
+                    <label>
+                        Name and surname <span class="lb-requried"> *</span>
+                    </label>
                     <input name="iptStdNm" id="iptStdNm" style="padding-left: 12px;"/>
                 </div>
-                <div class="form-group">
-                    <label>Grade</label>
-                    <div id="cmbStdGrade" style="padding-left: 12px;"></div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label>
+                            Grade <span class="lb-requried"> *</span>
+                        </label>
+                        <div id="cmbStdGrade" style="padding-left: 12px;"></div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label>
+                            Class <span class="lb-requried"> *</span>
+                        </label>
+                        <div id="cmbStdClass" style="padding-left: 12px;"></div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Class</label>
-                    <div id="cmbStdClass" style="padding-left: 12px;"></div>
-                </div>
+
                 <div style="margin-top: 30px; text-align: right">
                     <button id="btnSave" class="btn btn-primary btn-str" type="button" style="margin-right: 10px" value="Save">Save</button>
                     <button id="btnCancel" class="btn btn-success btn-str" type="button" value="Cancel">Cancel</button>
@@ -106,6 +129,7 @@
 <script type="text/javascript" src="/lib/scripts/jqx-all.js"></script>
 <script type="text/javascript" src="/lib/scripts/app.js"></script>
 
+<script type="text/javascript" src="/app/scripts/common.js"></script>
 <script type="text/javascript" src="/app/scripts/student/student.js"></script>
 
 </body>

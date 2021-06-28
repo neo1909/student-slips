@@ -37,7 +37,7 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public List<Student> selectAllStudent(Student student) {
+    public List<Student> selectAllStudent(Student student) throws Exception {
         return studentDao.selectAllStudent(student);
     }
 

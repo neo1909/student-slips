@@ -1,6 +1,7 @@
 package com.studentslips.controller;
 
 
+import com.studentslips.common.Common;
 import com.studentslips.common.ErrorCode;
 import com.studentslips.common.ResultEntity;
 import com.studentslips.entities.Student;
@@ -12,26 +13,31 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sql.DataSource;
-import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("api/ST")
+@RequestMapping("api")
 public class StudentRestController {
     private static final Logger logger = LoggerFactory.getLogger(StudentRestController.class);
 
     @Autowired
     private StudentService studentService;
 
-    @RequestMapping(value = "/ST_R_01", method = RequestMethod.GET)
-    public ResponseEntity<List<Student>> getAll(@RequestBody Student std){
+    @RequestMapping(value = "/ST_R_01", method = RequestMethod.POST)
+    public Map<String, ?> getAll(@RequestBody(required = false) Student std) {
+        Map<String, Object> result = new HashMap<>();
 
-        List<Student> listStudent = studentService.selectAllStudent(std);
-        if(listStudent.isEmpty()){
-            return new ResponseEntity<List<Student>>(HttpStatus.NO_CONTENT);
+        try {
+            result.put(Common.LIST, studentService.selectAllStudent(std));
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
         }
-        return new ResponseEntity<List<Student>>(listStudent, HttpStatus.OK);
+
+        return result;
     }
 
     @RequestMapping(value = "/ST_R_02", method = RequestMethod.GET)

@@ -15,7 +15,7 @@ public class StudentsDao {
         this.sqlSession = sqlSession;
     }
 
-    public List<Student> selectAllStudent(Student student) {
+    public List<Student> selectAllStudent(Student student) throws Exception {
         return this.sqlSession.selectList("selectAllStudent", student);
     }
 

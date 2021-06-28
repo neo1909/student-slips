@@ -3403,7 +3403,10 @@ fieldset[disabled] .btn-vk.active {
   background-color: #ffffff;
 }
 .btn-str {
-    min-width: 110px;
+  font-weight: bold;
+  height: 32px;
+  min-width: 110px;
+  padding: 2px;
 }
 
 .ss-popup {
@@ -3419,15 +3422,27 @@ fieldset[disabled] .btn-vk.active {
   margin-right: 20px;
 }
 
+
 .div-grid {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .ss-grid {
+  font-size: 13px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-button.btn-icon {
-  /*height: 29px;*/
+.btn-icon {
+  font-size: 10px;
 }
+
+.btn-search {
+  margin-top: 25px;
+}
+
+.lb-requried {
+  color: red;
+  font-weight: bold;
+}
+

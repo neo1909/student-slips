@@ -6,7 +6,7 @@
         INSERT INTO onetouch.ps_suppliers (NAME, school_id, del_yn, insert_date, insert_id)
         VALUES (#{name}, #{schoolId}, 'N', #{insertDate}, #{insertId});
     </insert>
-    <insert id="insertSupplierService" parameterType="SupplierDTO">
+    <insert id="insertSupplierService" parameterType="Supplier">
         INSERT INTO onetouch.ps_suppliers_service (suppliers_id, service_id,school_id,price,no_payment,amount_1,amount_2,amount_3,amount_4,amount_5,
                                                    amount_6,amount_7,amount_8,amount_9,amount_10,amount_11,amount_12,grade,del_yn, insert_date, insert_id)
         VALUES (#{id}, #{serviceId},#{schoolId},#{price},#{noPayment},#{amount1},#{amount2},#{amount3},#{amount4},#{amount5},#{amount6},#{amount7},
@@ -19,7 +19,7 @@
         </if>
         update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </update>
-    <update id="updateSupplierService" parameterType="SupplierDTO">
+    <update id="updateSupplierService" parameterType="Supplier">
         UPDATE onetouch.ps_suppliers_service  SET
         <if test="name!= null ">
             NAME = #{name},
@@ -83,10 +83,10 @@
     <delete id="deleteSupplier" parameterType="Supplier">
         UPDATE onetouch.ps_suppliers  SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </delete>
-    <delete id="deleteSupplierService" parameterType="SupplierService">
+    <delete id="deleteSupplierService" parameterType="SupplierServiceDTO">
         UPDATE onetouch.ps_suppliers_service   SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE suppliers_id = #{suppliersId} AND service_id=#{serviceId} AND school_id=#{schoolId};
     </delete>
-    <select id="selectSupplierDetail" parameterType="SupplierService"  resultMap="result">
+    <select id="selectSupplierDetail" parameterType="SupplierServiceDTO"  resultMap="result">
         SELECT SS.suppliers_id,S.name,SS.service_id,(select name from onetouch.ps_service where SS.service_id=id) AS service_name
              ,SS.price,SS.no_payment,SS.amount_1,SS.amount_2,SS.amount_3,SS.amount_4,SS.amount_5,SS.amount_6,SS.amount_7
              ,SS.amount_8,SS.amount_9,SS.amount_10,SS.amount_11,SS.amount_12,SS.grade,SS.school_id
@@ -127,7 +127,7 @@
         <result property = "updateDate" column = "update_date"/>
     </resultMap>
 
-    <resultMap id = "result" type = "SupplierService">
+    <resultMap id = "result" type = "SupplierServiceDTO">
         <result property = "id" column = "suppliers_id"/>
         <result property = "name" column = "NAME"/>
         <result property = "schoolId" column = "school_id"/>
