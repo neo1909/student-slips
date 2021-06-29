@@ -1,5 +1,5 @@
 var SS = {
-  API: 'http://localhost:5000/api/',  // dev
+  API: 'http://localhost:8080/api/',  // dev
   clazz: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
   grade: [ 1, 2, 3, 4, 5, 6, 7, 8 ],
 

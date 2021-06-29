@@ -1,13 +1,13 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.studentslips.dao.HeadTeachersDao">
-    <insert id="insertHeadTeachers" parameterType="HeadTeachers">
+<mapper namespace="HeadTeachersDao">
+    <insert id="insertHeadTeachers" parameterType="com.studentslips.entities.HeadTeachers">
         INSERT INTO PS_Head_Teachers (NAME, grade, class, school_id, del_yn, insert_date, insert_id)
         VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, 'N', #{insertDate}, #{insertId});
     </insert>
 
-    <update id="updateHeadTeachers" parameterType="HeadTeachers">
+    <update id="updateHeadTeachers" parameterType="com.studentslips.entities.HeadTeachers">
         UPDATE PS_Head_Teachers SET
         <if test="name!= null ">
             NAME = #{name},
@@ -24,11 +24,11 @@
         update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </update>
 
-    <delete id="deleteHeadTeachersById" parameterType="HeadTeachers">
+    <delete id="deleteHeadTeachersById" parameterType="com.studentslips.entities.HeadTeachers">
         UPDATE PS_Head_Teachers SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </delete>
 
-    <select id="selectAllHeadTeachers" parameterType="HeadTeachers" resultMap="result">
+    <select id="selectAllHeadTeachers" parameterType="com.studentslips.entities.HeadTeachers" resultMap="result">
         SELECT HT.*
         FROM PS_Head_Teachers HT
         where  HT.del_yn='N'
@@ -46,11 +46,11 @@
         </if>
     </select>
 
-    <select id="selectHeadTeachersById" parameterType="int" resultType="HeadTeachers">
+    <select id="selectHeadTeachersById" parameterType="int" resultType="com.studentslips.entities.HeadTeachers">
         SELECT * FROM PS_Head_Teachers WHERE ID = #{id} AND del_yn='N' AND school_id=#{schoolId};
     </select>
 
-    <resultMap id = "result" type = "HeadTeachers">
+    <resultMap id = "result" type = "com.studentslips.entities.HeadTeachers">
         <result property = "id" column = "ID"/>
         <result property = "name" column = "NAME"/>
         <result property = "schoolId" column = "school_id"/>

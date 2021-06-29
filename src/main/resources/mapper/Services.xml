@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ServicesDao">
-    <insert id="insertService" parameterType="Services">
+    <insert id="insertService" parameterType="com.studentslips.entities.Services">
         INSERT INTO PS_Service (NAME, del_yn, insert_date, insert_id)
         VALUES (#{name}, 'N', #{insertDate}, #{insertId});
     </insert>
 
-    <update id="updateService" parameterType="Services">
+    <update id="updateService" parameterType="com.studentslips.entities.Services">
         UPDATE PS_Service SET
         <if test="name!= null ">
             NAME = #{name},
@@ -18,11 +18,11 @@
         update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id};
     </update>
 
-    <delete id="deleteServiceById" parameterType="Services">
+    <delete id="deleteServiceById" parameterType="com.studentslips.entities.Services">
         UPDATE PS_Service SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id};
     </delete>
 
-    <select id="selectAllService" parameterType="Services" resultMap="result">
+    <select id="selectAllService" parameterType="com.studentslips.entities.Services" resultMap="result">
         SELECT S.*
         FROM PS_Service S
         where  S.del_yn='N'
@@ -31,11 +31,11 @@
         </if>
     </select>
 
-    <select id="selectServiceById" parameterType="int" resultType="Services">
+    <select id="selectServiceById" parameterType="int" resultType="com.studentslips.entities.Services">
         SELECT * FROM PS_Service WHERE ID = #{id} AND del_yn='N';
     </select>
 
-    <resultMap id = "result" type = "Services">
+    <resultMap id = "result" type = "com.studentslips.entities.Services">
         <result property = "id" column = "ID"/>
         <result property = "name" column = "NAME"/>
         <result property = "delYn" column = "del_yn"/>

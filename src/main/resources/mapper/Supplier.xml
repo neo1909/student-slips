@@ -2,24 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="SupplierDao">
-    <insert id="insertSupplier" parameterType="Supplier"  useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSupplier" parameterType="com.studentslips.entities.Supplier"  useGeneratedKeys="true" keyProperty="id">
         INSERT INTO onetouch.ps_suppliers (NAME, school_id, del_yn, insert_date, insert_id)
         VALUES (#{name}, #{schoolId}, 'N', #{insertDate}, #{insertId});
     </insert>
-    <insert id="insertSupplierService" parameterType="Supplier">
+    <insert id="insertSupplierService" parameterType="com.studentslips.entities.Supplier">
         INSERT INTO onetouch.ps_suppliers_service (suppliers_id, service_id,school_id,price,no_payment,amount_1,amount_2,amount_3,amount_4,amount_5,
                                                    amount_6,amount_7,amount_8,amount_9,amount_10,amount_11,amount_12,grade,del_yn, insert_date, insert_id)
         VALUES (#{id}, #{serviceId},#{schoolId},#{price},#{noPayment},#{amount1},#{amount2},#{amount3},#{amount4},#{amount5},#{amount6},#{amount7},
                 #{amount8},#{amount9},#{amount10},#{amount11},#{amount12},#{gradeList},'N', #{insertDate}, #{insertId});
     </insert>
-    <update id="updateSupplier" parameterType="Supplier">
+    <update id="updateSupplier" parameterType="com.studentslips.entities.Supplier">
         UPDATE onetouch.ps_suppliers  SET
         <if test="name!= null ">
             NAME = #{name},
         </if>
         update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </update>
-    <update id="updateSupplierService" parameterType="Supplier">
+    <update id="updateSupplierService" parameterType="com.studentslips.entities.Supplier">
         UPDATE onetouch.ps_suppliers_service  SET
         <if test="name!= null ">
             NAME = #{name},
@@ -80,13 +80,13 @@
         </if>
         update_id = #{updateId}, update_date = #{updateDate} WHERE suppliers_id = #{suppliersId} AND service_id=#{serviceId} AND school_id=#{schoolId};
     </update>
-    <delete id="deleteSupplier" parameterType="Supplier">
+    <delete id="deleteSupplier" parameterType="com.studentslips.entities.Supplier">
         UPDATE onetouch.ps_suppliers  SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </delete>
-    <delete id="deleteSupplierService" parameterType="SupplierServiceDTO">
+    <delete id="deleteSupplierService" parameterType="com.studentslips.entities.SupplierServiceDTO">
         UPDATE onetouch.ps_suppliers_service   SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE suppliers_id = #{suppliersId} AND service_id=#{serviceId} AND school_id=#{schoolId};
     </delete>
-    <select id="selectSupplierDetail" parameterType="SupplierServiceDTO"  resultMap="result">
+    <select id="selectSupplierDetail" parameterType="com.studentslips.entities.SupplierServiceDTO"  resultMap="result">
         SELECT SS.suppliers_id,S.name,SS.service_id,(select name from onetouch.ps_service where SS.service_id=id) AS service_name
              ,SS.price,SS.no_payment,SS.amount_1,SS.amount_2,SS.amount_3,SS.amount_4,SS.amount_5,SS.amount_6,SS.amount_7
              ,SS.amount_8,SS.amount_9,SS.amount_10,SS.amount_11,SS.amount_12,SS.grade,SS.school_id
@@ -106,7 +106,7 @@
             AND SS.service_id = #{serviceId}
         </if>
     </select>
-    <select id="selectAllSupplier" parameterType="Supplier"  resultMap="resultSupplier">
+    <select id="selectAllSupplier" parameterType="com.studentslips.entities.Supplier"  resultMap="resultSupplier">
         SELECT SS.id,S.name,S.school_id
         ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn
         FROM onetouch.ps_suppliers S
@@ -116,7 +116,7 @@
             AND S.school_id=#{schoolId}
         </if>
     </select>
-    <resultMap id = "resultSupplier" type = "Supplier">
+    <resultMap id = "resultSupplier" type = "com.studentslips.entities.Supplier">
         <result property = "id" column = "id"/>
         <result property = "name" column = "name"/>
         <result property = "schoolId" column = "school_id"/>
@@ -127,7 +127,7 @@
         <result property = "updateDate" column = "update_date"/>
     </resultMap>
 
-    <resultMap id = "result" type = "SupplierServiceDTO">
+    <resultMap id = "result" type = "com.studentslips.entities.SupplierServiceDTO">
         <result property = "id" column = "suppliers_id"/>
         <result property = "name" column = "NAME"/>
         <result property = "schoolId" column = "school_id"/>

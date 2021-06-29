@@ -1,20 +1,23 @@
 package com.studentslips.controller;
 
-import com.mysql.jdbc.Driver;
-import com.studentslips.common.ErrorCode;
-import com.studentslips.common.ResultEntity;
-import com.studentslips.entities.HeadTeachers;
-import com.studentslips.services.HeadTeachersService;
+import java.util.List;
+
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.sql.DataSource;
-import java.sql.Timestamp;
-import java.util.List;
+import com.studentslips.common.ErrorCode;
+import com.studentslips.common.ResultEntity;
+import com.studentslips.entities.HeadTeachers;
+import com.studentslips.services.HeadTeachersService;
 
 @RestController
 @RequestMapping("api/HT")

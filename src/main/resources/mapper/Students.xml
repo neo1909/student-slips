@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="StudentsDao">
-    <insert id="insertStudent" parameterType="Student">
+    <insert id="insertStudent" parameterType="com.studentslips.entities.Student">
         INSERT INTO PS_Students (NAME, grade, class, school_id, del_yn, insert_date, insert_id)
         VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, 'N', #{insertDate}, #{insertId});
     </insert>
 
-    <update id="updateStudent" parameterType="Student">
+    <update id="updateStudent" parameterType="com.studentslips.entities.Student">
         UPDATE PS_Students SET
         <if test="name!= null ">
         NAME = #{name},
@@ -24,11 +24,11 @@
         update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </update>
 
-    <delete id="deleteStudentById" parameterType="Student">
+    <delete id="deleteStudentById" parameterType="com.studentslips.entities.Student">
         UPDATE PS_Students SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </delete>
 
-    <select id="selectAllStudent" parameterType="Student" resultMap="result">
+    <select id="selectAllStudent" parameterType="com.studentslips.entities.Student" resultMap="result">
         SELECT S.*
         FROM PS_Students S
         where  S.del_yn='N'
@@ -46,11 +46,11 @@
         </if>
     </select>
 
-    <select id="selectStudentById" parameterType="int" resultType="Student">
+    <select id="selectStudentById" parameterType="int" resultType="com.studentslips.entities.Student">
         SELECT * FROM PS_Students WHERE ID = #{id} AND del_yn='N'AND school_id=#{schoolId};
     </select>
 
-    <resultMap id = "result" type = "Student">
+    <resultMap id = "result" type = "com.studentslips.entities.Student">
         <result property = "id" column = "ID"/>
         <result property = "name" column = "NAME"/>
         <result property = "schoolId" column = "school_id"/>
