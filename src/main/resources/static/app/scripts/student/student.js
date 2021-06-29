@@ -3,38 +3,56 @@
 const IPT_HEIGHT = 32;
 
 let fn = {
+    resultSearch: null,
 
     init: function() {
 
-        let data = new Array();
-        let number = [
-            "1", "2", "3", "4"
-        ];
-        let studentId = [
-            "001", "002", "003", "004"
-        ];
-        let studentName = [
-            "Black Tea", "Green Tea", "Caffe Espresso", "Doubleshot Espresso"
-        ];
-        let studentClass = [
-            "1", "2", "3", "4"
-        ];
-        let studentGrade = [
-            "1", "2", "3", "4"
-        ];
+        let resultSearch = new Array();
+        // let number = [
+        //     "1", "2", "3", "4"
+        // ];
+        // let studentId = [
+        //     "001", "002", "003", "004"
+        // ];
+        // let studentName = [
+        //     "Black Tea", "Green Tea", "Caffe Espresso", "Doubleshot Espresso"
+        // ];
+        // let studentClass = [
+        //     "1", "2", "3", "4"
+        // ];
+        // let studentGrade = [
+        //     "1", "2", "3", "4"
+        // ];
+        //
+        // for (let i = 0; i < 4; i++) {
+        //     let row = {};
+        //     row["number"] = number[i];
+        //     row["studentId"] = studentId[i];
+        //     row["studentName"] = studentName[i];
+        //     row["studentClass"] = studentClass[i];
+        //     row["studentGrade"] = studentGrade[i];
+        //     data[i] = row;
+        // }
 
-        for (let i = 0; i < 4; i++) {
-            let row = {};
-            row["number"] = number[i];
-            row["studentId"] = studentId[i];
-            row["studentName"] = studentName[i];
-            row["studentClass"] = studentClass[i];
-            row["studentGrade"] = studentGrade[i];
-            data[i] = row;
-        }
         let source = {
-            localdata: data,
-            datatype: "array"
+            datafields: [
+                { name: 'id', type: 'int'},
+                { name: 'name', type: 'string'},
+                { name: 'schoolId', type: 'int'},
+                { name: 'sClass', type: 'int'},
+                { name: 'grade', type: 'int'},
+                { name: 'delYn', type: 'string'},
+                { name: 'insertId', type: 'int'},
+                { name: 'insertDate', type: 'string'},
+                { name: 'updateId', type: 'int'},
+                { name: 'updateDate', type: 'string'},
+
+            ],
+            datatype: "array",
+            localdata: fn.resultSearch,
+            url: SS.API + 'ST_R_01',
+            type: 'POST'
+
         };
         let dataAdapter = new $.jqx.dataAdapter(source, {
             autoBind: true,
@@ -42,23 +60,20 @@ let fn = {
             loadError: function (xhr, status, error) { }
         });
 
-        $("#iptStdNmSrch").jqxInput({ height: IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
-        $("#cmbStdGradeSrch").jqxInput({ height: IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
-        $("#cmbStdClazzSrch").jqxInput({ height: IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
 
         $("#grdStudents").jqxGrid(
             {
                 source: dataAdapter,
                 columns: [
-                    { text: 'No.', datafield: 'number', align: 'center', cellsalign:'center', width: '8%'},
-                    { text: 'ID Number', datafield: 'studentId', align: 'center', cellsalign:'center', width: '18%'},
-                    { text: 'Name and surname', datafield: 'studentName', align: 'center', cellsalign:'left', width: '48%,'},
-                    { text: 'Grade', datafield: 'studentGrade', align: 'center', cellsalign:'center', width: '8%,'},
-                    { text: 'Class', datafield: 'studentClass', align: 'center', cellsalign:'center', width: '8%,'},
-                    { text: '', cellsalign:'center', width: '10%,'
+                    { text: 'No.', datafield: '', align: 'center', cellsalign:'center', width: '8%'},
+                    { text: 'ID Number', datafield: 'id', align: 'center', cellsalign:'center', width: '18%'},
+                    { text: 'Name and surname', datafield: 'name', align: 'center', cellsalign:'left', width: '50%,'},
+                    { text: 'Grade', datafield: 'grade', align: 'center', cellsalign:'center', width: '8%,'},
+                    { text: 'Class', datafield: 'sClass', align: 'center', cellsalign:'center', width: '8%,'},
+                    { text: '', cellsalign:'center', width: '8%,'
                         , cellsrenderer: function (row, column, value) {
 
-                            return '<div style="text-align: center; margin-top: 5px;">'
+                            return '<div style="text-align: center; margin-top: 4px;">'
                                 + '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + row +')"><span class="glyphicon glyphicon-edit"></span></button>'
                                 + '<button alt="Delete" class="btn btn-danger btn-icon btn-sm" onclick="fn.onDelete(' + row +')"><span class="glyphicon glyphicon-trash"></span></button>'
                                 + '</div>';
@@ -67,18 +82,22 @@ let fn = {
                 ],
                 theme: 'bootstrap',
                 width: '100%',
-                height: 600,
-                rowsheight: 36
+                height: 400,
+                rowsheight: 33
             }
         );
+
+        $("#iptStdNmSrch").jqxInput({ height: IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
+        $("#cmbStdGradeSrch").jqxInput({ height: IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
+        $("#cmbStdClazzSrch").jqxInput({ height: IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
 
         $('#btnStdCreate').click(function () {
             $("#popupStudent").jqxWindow('open', fn.popupStudent.create());
         });
 
         $('#btnStdSrch').click(function () {
-            data = new Array();
-            source.localdata = data;
+            // resultSearch = new Array();
+            // source.localdata = resultSearch;
             $('#grdStudents').jqxGrid('refresh');
             fn.onSearch();
         });
@@ -104,6 +123,16 @@ let fn = {
 
         $("#cmbStdClass").jqxComboBox({ enableBrowserBoundsDetection: true, source: SS.clazz, selectedIndex: 0, height: IPT_HEIGHT, width: '100%' });
 
+        $('#frmStudent').jqxValidator({
+            hintType: 'label',
+            rules: [
+                { input: '#iptStdNm', message: 'Name is required!', action: 'keyup, blur', rule: 'required' },
+                { input: '#iptStdNm', message: 'Name is invalid!', action: 'keyup, blur', rule: 'length=1,150' },
+                { input: '#cmbStdGrade', message: 'Grade is required!', action: 'keyup, blur', rule: 'required' },
+                { input: '#cmbStdClass', message: 'Class is required!', action: 'keyup, blur', rule: 'required' }
+            ]
+        });
+
     },
 
     onSearch: function () {
@@ -115,9 +144,10 @@ let fn = {
 
         SS.sendToServer(
             'ST_R_01',
+            false,
             params,
-
             function onSuccess(data) {
+                fn.resultSearch = data.lst;
             },
 
             function onError(err) {
@@ -137,7 +167,7 @@ let fn = {
 
     onUpdate: function (row) {
         let data = $("#grdStudents").jqxGrid('getrowdata', row);
-        $("#popupStudent").jqxWindow('open', fn.popupStudent.create(data.studentId));
+        $("#popupStudent").jqxWindow('open', fn.popupStudent.create(data.id));
         alert("Update: " + data.studentName);
     },
 
@@ -151,6 +181,7 @@ let fn = {
 
 $(document).ready(function() {
     $.jqx.theme = "bootstrap";
+    fn.onSearch();
     fn.init();
 });
 

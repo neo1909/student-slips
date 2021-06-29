@@ -3,8 +3,9 @@ var SS = {
   clazz: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
   grade: [ 1, 2, 3, 4, 5, 6, 7, 8 ],
 
-  sendToServer: function (url, param, onSuccess, onError) {
+  sendToServer: function (url, async, param, onSuccess, onError) {
     $.ajax({
+      async: async,
       contentType: 'application/json',
       url: SS.API + url,
       type: 'POST',
@@ -23,7 +24,9 @@ var SS = {
       },
 
       complete: function (b, f) {
+        setTimeout(function () {
           $('#ssApp').waitMe('hide');
+        }, 5000);
       }
 
     });
