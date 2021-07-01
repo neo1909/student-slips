@@ -3,13 +3,13 @@
 
 <mapper namespace="StudentsDao">
     <insert id="insertStudent" parameterType="com.studentslips.entities.Student">
-        INSERT INTO PS_Students (NAME, grade, class, school_id, del_yn, insert_date, insert_id)
+        INSERT INTO PS_Students (NAME,grade, class, school_id, del_yn, insert_date, insert_id)
         VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, 'N', #{insertDate}, #{insertId});
     </insert>
 
     <update id="updateStudent" parameterType="com.studentslips.entities.Student">
         UPDATE PS_Students SET
-        <if test="name!= null ">
+        <if test="name!= null and name !=''">
         NAME = #{name},
         </if>
         <if test="grade!=0 ">
@@ -18,25 +18,31 @@
         <if test="sClass!=0 ">
         class = #{sClass},
         </if>
-        <if test="delYn != null ">
-        del_yn = #{delYn},
+        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id}
+        <if test="schoolId!=0 ">
+            AND  S.school_id = #{schoolId}
         </if>
-        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
     </update>
 
     <delete id="deleteStudentById" parameterType="com.studentslips.entities.Student">
-        UPDATE PS_Students SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
+        UPDATE PS_Students SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate}
+        WHERE ID = #{id}
+        AND del_yn = 'N'
+        <if test="schoolId!=0 ">
+            AND  S.school_id = #{schoolId}
+        </if>
     </delete>
 
     <select id="selectAllStudent" parameterType="com.studentslips.entities.Student" resultMap="result">
-        SELECT S.*
+        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
         FROM PS_Students S
         where  S.del_yn='N'
         <if test="schoolId!=0 ">
         AND  S.school_id = #{schoolId}
         </if>
-        <if test="name!=null ">
-         AND   S.name = #{name}
+        <if test="name!=null and name !=''">
+            <bind name="nameLike" value="'%' + name + '%'" />
+         AND   S.name like #{nameLike}
         </if>
         <if test="grade!=0 ">
          AND   S.grade = #{grade}
@@ -47,12 +53,13 @@
     </select>
 
     <select id="selectStudentById" parameterType="int" resultType="com.studentslips.entities.Student">
-        SELECT * FROM PS_Students WHERE ID = #{id} AND del_yn='N'AND school_id=#{schoolId};
+        SELECT *,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName FROM PS_Students WHERE ID = #{id} AND del_yn='N'
     </select>
 
     <resultMap id = "result" type = "com.studentslips.entities.Student">
         <result property = "id" column = "ID"/>
         <result property = "name" column = "NAME"/>
+        <result property = "schoolName" column = "schoolName"/>
         <result property = "schoolId" column = "school_id"/>
         <result property = "grade" column = "grade"/>
         <result property = "sClass" column = "class"/>

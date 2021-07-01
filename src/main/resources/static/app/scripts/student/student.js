@@ -21,7 +21,7 @@ let fn = {
                 { name: 'insertDate', type: 'string'},
                 { name: 'updateId', type: 'int'},
                 { name: 'updateDate', type: 'string'},
-
+                { name: 'schoolName', type: 'string'},
             ],
             datatype: "array",
             localdata: fn.dataset
@@ -38,18 +38,19 @@ let fn = {
         $("#grdStudents").jqxGrid({
             source: dataAdapter,
             columns: [
-                { text: 'No.', datafield: '', align: 'center', cellsalign:'center', width: '8%'
+                { text: 'No.', datafield: '', align: 'center', cellsalign:'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
                         return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">'+
                             + (rowIndex + 1)
                             + '</div>';
                     }
                 },
-                { text: 'ID Number', datafield: 'id', align: 'center', cellsalign:'center', width: '18%'},
-                { text: 'Name and surname', datafield: 'name', align: 'center', cellsalign:'left', width: '50%,'},
-                { text: 'Grade', datafield: 'grade', align: 'center', cellsalign:'center', width: '8%,'},
-                { text: 'Class', datafield: 'sClass', align: 'center', cellsalign:'center', width: '8%,'},
-                { text: '', cellsalign:'center', width: '8%,'
+                { text: 'ID Number', datafield: 'id', align: 'center', cellsalign:'center', width: '15%'},
+                { text: 'Name and surname', datafield: 'name', align: 'center', cellsalign:'left', width: '30%,'},
+                { text: 'Grade', datafield: 'grade', align: 'center', cellsalign:'center', width: '5%,'},
+                { text: 'Class', datafield: 'sClass', align: 'center', cellsalign:'center', width: '5%,'},
+                { text: 'School', datafield: 'schoolName', align: 'center', cellsalign:'center', width: '35%,'},
+                { text: '', cellsalign:'center', width: '5%,'
                     , cellsrenderer: function (rowIndex, column, value) {
                         return '<div style="text-align: center; margin-top: 4px;">'
                             + '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + rowIndex +')"><span class="glyphicon glyphicon-edit"></span></button>'

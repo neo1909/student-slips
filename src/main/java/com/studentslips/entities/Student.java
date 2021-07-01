@@ -13,34 +13,17 @@ public class Student {
     private Timestamp insertDate;
     private int updateId;
     private Timestamp updateDate;
+    private String schoolName;
 
     public Student() {
     }
 
-    public Student(int id, String name, int schoolId, int sClass, int grade, String delYn, int insertId, Timestamp insertDate, int updateId, Timestamp updateDate) {
-        this.id = id;
-        this.name = name;
-        this.schoolId = schoolId;
-        this.sClass = sClass;
-        this.grade = grade;
-        this.delYn = delYn;
-        this.insertId = insertId;
-        this.insertDate = insertDate;
-        this.updateId = updateId;
-        this.updateDate = updateDate;
+    public String getSchoolName() {
+        return schoolName;
     }
 
-    public Student(Student std) {
-        this.id = std.id;
-        this.name = std.name;
-        this.schoolId = std.schoolId;
-        this.delYn = std.delYn;
-        this.insertId = std.insertId;
-        this.insertDate = std.insertDate;
-        this.updateId = std.updateId;
-        this.updateDate = std.updateDate;
-        this.sClass = std.sClass;
-        this.grade = std.grade;
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 
     public int getId() {

@@ -29,8 +29,9 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public int deleteStudentById(Student student) {
-
+    public int deleteStudentById(int id) {
+        Student student = new Student();
+        student.setId(id);
         student.setUpdateId(100);
         student.setUpdateDate(new Timestamp(System.currentTimeMillis()));
         return studentDao.deleteStudentById(student);

@@ -43,47 +43,67 @@ public class StudentRestController {
         return result;
     }
 
-    @RequestMapping(value = "/ST_R_02", method = RequestMethod.GET)
-    public ResponseEntity<Student> getStudent(@RequestBody Student std) {
+    @RequestMapping(value = "/ST_R_02", method = RequestMethod.POST)
+    public Map<String, ?> getStudent(@RequestBody Integer id) {
+        Map<String, Object> result = new HashMap<>();
 
-        Student student = studentService.selectStudentById(std.getId());
-        if (student == null) {
-            return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+        try {
+            result.put(Common.OBJECT, studentService.selectStudentById(id));
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
         }
-        return new ResponseEntity<Student>(student, HttpStatus.OK);
+
+        return result;
     }
 
     @RequestMapping(value = "/ST_C_01", method = RequestMethod.POST)
-    public ResponseEntity<?> addStudent(@RequestBody Student std){
-        int dataStd = studentService.insertStudent(std);
-        if (dataStd == 1) {
-            return new ResponseEntity<Integer>(dataStd, HttpStatus.OK);
+    public Map<String,?> addStudent(@RequestBody Student std){
+        Map<String, Object> result = new HashMap<>();
+        try {
+            int dataStd = studentService.insertStudent(std);
+            if (dataStd == 1) {
+                result.put(Common.STATUS, HttpStatus.OK.value());
+            }
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
         }
-        ResultEntity re = new ResultEntity(ErrorCode.INSERT_FAIL,"Can not create student");
-        return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
+
+        return result;
     }
 
     @RequestMapping(value = "/ST_U_01", method = RequestMethod.POST)
-    public ResponseEntity<?> updateStudent(@RequestBody Student std){
-        Student dataStd = studentService.selectStudentById(std.getId());
-        if (dataStd == null) {
-            ResultEntity re = new ResultEntity(ErrorCode.NOT_FOUND,"Not found student id: "+ std.getId());
-            return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
-        } else {
-            studentService.updateStudent(std);
-            return new ResponseEntity<Student>(std, HttpStatus.OK);
+    public Map<String,?> updateStudent(@RequestBody Student std){
+        Map<String, Object> result = new HashMap<>();
+        try {
+            int dataStd = studentService.updateStudent(std);
+            if (dataStd == 1) {
+                result.put(Common.STATUS, HttpStatus.OK.value());
+            }
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
         }
+
+        return result;
     }
 
     @RequestMapping(value = "/ST_D_01", method = RequestMethod.POST)
-    public ResponseEntity<?> deleteStudent(@RequestBody Student std) {
+    public Map<String,?> deleteStudent(@RequestBody Integer id) {
 
-        Student student = studentService.selectStudentById(std.getId());
-        if (student == null) {
-            ResultEntity re = new ResultEntity(ErrorCode.NOT_FOUND,"Not found student id: "+ std.getId());
-            return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
+        Map<String, Object> result = new HashMap<>();
+        try {
+            int dataStd = studentService.deleteStudentById(id);
+            if (dataStd == 1) {
+                result.put(Common.STATUS, HttpStatus.OK.value());
+            }
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
         }
-        studentService.deleteStudentById(std);
-        return new ResponseEntity<Student>(HttpStatus.OK);
+
+        return result;
     }
 }
