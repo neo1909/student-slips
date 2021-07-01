@@ -1,7 +1,28 @@
-var SS = {
+;
+
+$.jqx.theme = "bootstrap";
+
+let SS = {
   API: 'http://localhost:8080/api/',  // dev
+
+  IPT_HEIGHT: 32,
+
+  // Literal
+  title: {
+    CONFIRM: "Confirm",
+    ERROR: "Error",
+    INFO: "Info",
+    WARNING: "Warning",
+  },
+
+  message: {
+    ERROR: "Contact admin!"
+  },
+
   clazz: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
+  clazzEmpty: [ '', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
   grade: [ 1, 2, 3, 4, 5, 6, 7, 8 ],
+  gradeEmpty: [ '', 1, 2, 3, 4, 5, 6, 7, 8 ],
 
   sendToServer: function (url, async, param, onSuccess, onError) {
     $.ajax({
@@ -24,11 +45,28 @@ var SS = {
       },
 
       complete: function (b, f) {
-        setTimeout(function () {
-          $('#ssApp').waitMe('hide');
-        }, 5000);
+        $('#ssApp').waitMe('hide');
       }
 
+    });
+
+  },
+
+  alert: function (title, message) {
+    bootbox.alert({
+      size: "small",
+      title: title,
+      message: message,
+      callback: function () {}
+    });
+  },
+
+  confirm: function (title, message, callback) {
+    bootbox.confirm({
+      size: "small",
+      title: title,
+      message: message,
+      callback: callback
     });
   }
 };

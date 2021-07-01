@@ -18,6 +18,7 @@ body {
   -webkit-font-smoothing: antialiased;
   min-height: 100%;
   background: #f9f9f9;
+  padding: 0 !important;
 }
 a {
   color: #3c8dbc;
@@ -3403,7 +3404,7 @@ fieldset[disabled] .btn-vk.active {
   background-color: #ffffff;
 }
 .btn-str {
-  font-weight: bold;
+  /*font-weight: bold;*/
   height: 32px;
   min-width: 110px;
   padding: 2px;
@@ -3445,5 +3446,23 @@ fieldset[disabled] .btn-vk.active {
 .lb-requried {
   color: red;
   font-weight: bold;
+}
+
+.modal-header {
+  padding: 10px 15px;
+}
+
+.modal-title {
+  font-weight: bold;
+}
+
+.btn-left {
+  margin-right: 10px;
+}
+
+.bootbox.modal {z-index: 99999 !important;}
+
+.modal-dialog {
+  margin-top: 16%;
 }
 

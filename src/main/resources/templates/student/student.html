@@ -10,8 +10,8 @@
    <!-- <link rel="stylesheet" href="/lib/styles/bootstrap-theme.min.css" type="text/css">-->
     <link rel="stylesheet" href="/lib/styles/font-awesome.min.css" type="text/css" >
     <link rel="stylesheet" href="/lib/styles/ionicons.min.css" type="text/css" >
-    <link rel="stylesheet" href="/lib/styles/jqx.base.css" type="text/css">
-    <link rel="stylesheet" href="/lib/styles/jqx.bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="/lib/styles/jqx.base.min.css" type="text/css">
+    <link rel="stylesheet" href="/lib/styles/jqx.bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/app.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/waitMe.min.css" type="text/css">
 
@@ -57,13 +57,13 @@
                                 <div class="form-group col-md-2">
                                     <label >Grade</label>
                                     <div >
-                                        <input id="cmbStdGradeSrch" style="padding-left: 12px;"/>
+                                        <div id="cmbStdGradeSrch" style="padding-left: 12px;"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label >Class</label>
                                     <div >
-                                        <input id="cmbStdClazzSrch" style="padding-left: 12px;"/>
+                                        <div id="cmbStdClazzSrch" style="padding-left: 12px;"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
@@ -114,9 +114,9 @@
                     </div>
                 </div>
 
-                <div style="margin-top: 30px; text-align: right">
-                    <button id="btnSave" class="btn btn-primary btn-str" type="button" style="margin-right: 10px" value="Save">Save</button>
-                    <button id="btnCancel" class="btn btn-success btn-str" type="button" value="Cancel">Cancel</button>
+                <div style="margin-top: 15px; text-align: right">
+                    <button id="btnCancel" class="btn btn-default btn-str btn-left" type="button" value="Cancel">Cancel</button>
+                    <button id="btnSave" class="btn btn-primary btn-str" type="button" value="Save">Save</button>
                 </div>
             </form>
 
@@ -125,10 +125,13 @@
 </div>
 
 <script type="text/javascript" src="/lib/scripts/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/lib/scripts/popper.min.js"></script>
 <script type="text/javascript" src="/lib/scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="/lib/scripts/jqxcore.js"></script>
-<script type="text/javascript" src="/lib/scripts/jqx-all.js"></script>
+<script type="text/javascript" src="/lib/scripts/jqxcore.min.js"></script>
+<script type="text/javascript" src="/lib/scripts/jqx-all.min.js"></script>
 <script type="text/javascript" src="/lib/scripts/waitMe.min.js"></script>
+<script type="text/javascript" src="/lib/scripts/bootbox.min.js"></script>
+<script type="text/javascript" src="/lib/scripts/bootbox.locales.min.js"></script>
 <script type="text/javascript" src="/lib/scripts/app.js"></script>
 
 <script type="text/javascript" src="/app/scripts/common.js"></script>
