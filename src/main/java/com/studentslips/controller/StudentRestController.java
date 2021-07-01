@@ -44,11 +44,11 @@ public class StudentRestController {
     }
 
     @RequestMapping(value = "/ST_R_02", method = RequestMethod.POST)
-    public Map<String, ?> getStudent(@RequestBody Integer id) {
+    public Map<String, ?> getStudent(@RequestBody Student student) {
         Map<String, Object> result = new HashMap<>();
 
         try {
-            result.put(Common.OBJECT, studentService.selectStudentById(id));
+            result.put(Common.OBJECT, studentService.selectStudentById(student.getId()));
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -91,11 +91,11 @@ public class StudentRestController {
     }
 
     @RequestMapping(value = "/ST_D_01", method = RequestMethod.POST)
-    public Map<String,?> deleteStudent(@RequestBody Integer id) {
+    public Map<String,?> deleteStudent(@RequestBody Student student) {
 
         Map<String, Object> result = new HashMap<>();
         try {
-            int dataStd = studentService.deleteStudentById(id);
+            int dataStd = studentService.deleteStudentById(student.getId());
             if (dataStd == 1) {
                 result.put(Common.STATUS, HttpStatus.OK.value());
             }

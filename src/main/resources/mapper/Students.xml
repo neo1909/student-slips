@@ -18,19 +18,18 @@
         <if test="sClass!=0 ">
         class = #{sClass},
         </if>
-        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id}
-        <if test="schoolId!=0 ">
-            AND  S.school_id = #{schoolId}
-        </if>
+        update_id = #{updateId}
+        , update_date = #{updateDate}
+
+        WHERE ID = #{id}
     </update>
 
     <delete id="deleteStudentById" parameterType="com.studentslips.entities.Student">
-        UPDATE PS_Students SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate}
+        UPDATE PS_Students SET
+            del_yn = 'Y'
+            , update_id = #{updateId}
+            , update_date = #{updateDate}
         WHERE ID = #{id}
-        AND del_yn = 'N'
-        <if test="schoolId!=0 ">
-            AND  S.school_id = #{schoolId}
-        </if>
     </delete>
 
     <select id="selectAllStudent" parameterType="com.studentslips.entities.Student" resultMap="result">
@@ -52,8 +51,8 @@
         </if>
     </select>
 
-    <select id="selectStudentById" parameterType="int" resultType="com.studentslips.entities.Student">
-        SELECT *,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName FROM PS_Students WHERE ID = #{id} AND del_yn='N'
+    <select id="selectStudentById" parameterType="int" resultMap="result">
+        SELECT *,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName FROM PS_Students S WHERE S.ID = #{id} AND S.del_yn='N'
     </select>
 
     <resultMap id = "result" type = "com.studentslips.entities.Student">

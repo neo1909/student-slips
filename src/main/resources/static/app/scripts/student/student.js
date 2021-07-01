@@ -14,14 +14,14 @@ let fn = {
                 { name: 'id', type: 'int'},
                 { name: 'name', type: 'string'},
                 { name: 'schoolId', type: 'int'},
+                { name: 'schoolName', type: 'string'},
                 { name: 'sClass', type: 'int'},
                 { name: 'grade', type: 'int'},
                 { name: 'delYn', type: 'string'},
                 { name: 'insertId', type: 'int'},
                 { name: 'insertDate', type: 'string'},
                 { name: 'updateId', type: 'int'},
-                { name: 'updateDate', type: 'string'},
-                { name: 'schoolName', type: 'string'},
+                { name: 'updateDate', type: 'string'}
             ],
             datatype: "array",
             localdata: fn.dataset
@@ -45,12 +45,12 @@ let fn = {
                             + '</div>';
                     }
                 },
-                { text: 'ID Number', datafield: 'id', align: 'center', cellsalign:'center', width: '15%'},
-                { text: 'Name and surname', datafield: 'name', align: 'center', cellsalign:'left', width: '30%,'},
-                { text: 'Grade', datafield: 'grade', align: 'center', cellsalign:'center', width: '5%,'},
-                { text: 'Class', datafield: 'sClass', align: 'center', cellsalign:'center', width: '5%,'},
-                { text: 'School', datafield: 'schoolName', align: 'center', cellsalign:'center', width: '35%,'},
-                { text: '', cellsalign:'center', width: '5%,'
+                // { text: 'ID Number', datafield: 'id', align: 'center', cellsalign:'center', display: false},
+                { text: 'Name and surname', datafield: 'name', align: 'center', cellsalign:'left', width: '35%,'},
+                { text: 'School', datafield: 'schoolName', align: 'center', cellsalign:'left', width: '35%,'},
+                { text: 'Grade', datafield: 'grade', align: 'center', cellsalign:'center', width: '9%,'},
+                { text: 'Class', datafield: 'sClass', align: 'center', cellsalign:'center', width: '9%,'},
+                { text: '', cellsalign:'center', width: '7%,'
                     , cellsrenderer: function (rowIndex, column, value) {
                         return '<div style="text-align: center; margin-top: 4px;">'
                             + '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + rowIndex +')"><span class="glyphicon glyphicon-edit"></span></button>'
@@ -77,7 +77,7 @@ let fn = {
             height: 380,
             width: 700,
             theme: 'bootstrap',
-            title: 'Student',
+            title: 'Student detail',
             position: 'center',
             resizable: false
         });
@@ -156,47 +156,88 @@ let fn = {
 
     onSave: function () {
         let data = {
+            id: $('#iptStdId').val(),
             name: $('#iptStdNm').val().trim(),
             grade: $('#cmbStdGrade').val(),
             sClass: $('#cmbStdClass').val(),
-            schoolId: 1
+            schoolId: 1,
         };
 
-        SS.sendToServer(
-            'ST_C_01',
-            false,
-            data,
-            function onSuccess(data) {
-                $("#popupStudent").jqxWindow('close');
-                fn.onSearch();
-            }
-        );
+        if (data.id) {  // Update
+            SS.sendToServer(
+                'ST_U_01',
+                false,
+                data,
+                function onSuccess(data) {
+                    $("#popupStudent").jqxWindow('close');
+                    fn.onSearch();
+                }
+            );
+        } else {    // Insert
+            SS.sendToServer(
+                'ST_C_01',
+                false,
+                data,
+                function onSuccess(data) {
+                    $("#popupStudent").jqxWindow('close');
+                    fn.onSearch();
+                }
+            );
+        }
+
     },
 
-    onDelete: function (row) {
-        let data = $("#grdStudents").jqxGrid('getrowdata', row);
-        SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
-            if (result) {
-                SS.alert(SS.title.INFO, "Delete");
-            } else {
-                SS.alert(SS.title.INFO, "Not delete");
-            }
-        });
+    onDelete: function (rowIndex) {
+        let data = $("#grdStudents").jqxGrid('getrowdata', rowIndex);
+        let studentId = data.id;
+        if (studentId) {
+            SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
+                if (result ) {
+                    SS.sendToServer(
+                        'ST_D_01',
+                        false,
+                        { id : studentId },
+                        function onSuccess(data) {
+                            fn.onSearch();
+                        }
+                    );
+                }
+            });
+        }
     },
 
-    onUpdate: function (row) {
-        let data = $("#grdStudents").jqxGrid('getrowdata', row);
-        $("#popupStudent").jqxWindow('open', fn.popup.open(data.id));
+    onUpdate: function (rowIndex) {
+        let data = $("#grdStudents").jqxGrid('getrowdata', rowIndex);
+        let studentId = data.id;
+        if (studentId != null) {
+            $("#popupStudent").jqxWindow('open', fn.popup.open(studentId));
+        }
     },
 
     popup: {
         reset: function () {
             $('#iptStdNm').val('');
-            $('#cmbStdGrade').val('');
-            $('#cmbStdClass').val('');
+            $('#cmbStdGrade').jqxDropDownList('selectIndex', 0 );
+            $('#cmbStdClass').jqxDropDownList('selectIndex', 0 );
+            $('#iptStdId').val(null);
         },
-        open: function (id) {
+
+        open: function (studentId) {
             fn.popup.reset();
+
+            if (studentId != null) { // Update
+                SS.sendToServer(
+                    'ST_R_02',
+                    false,
+                    { id : studentId },
+                    function onSuccess(data) {
+                        $('#iptStdId').val(data.obj.id);
+                        $('#iptStdNm').val(data.obj.name);
+                        $('#cmbStdGrade').val(data.obj.grade);
+                        $('#cmbStdClass').val(data.obj.sClass);
+                    }
+                );
+            }
         }
     }
 
