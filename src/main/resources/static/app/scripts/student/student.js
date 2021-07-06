@@ -116,11 +116,11 @@ let fn = {
                 return;
             }
 
-            SS.confirm(SS.title.CONFIRM, "Do you want save ? ", function (result) {
-                if (result) {
+            // SS.confirm(SS.title.CONFIRM, "Do you want save ? ", function (result) {
+            //     if (result) {
                     fn.onSave();
-                }
-            });
+            //     }
+            // });
 
         });
     },
