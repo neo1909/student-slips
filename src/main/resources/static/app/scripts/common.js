@@ -3,8 +3,8 @@
 $.jqx.theme = "bootstrap";
 
 let SS = {
- // API: 'http://localhost:8080/api/',  // dev
-  API: 'http://onetouchv1-env.eba-eiixuayp.ap-southeast-1.elasticbeanstalk.com/api/', //production
+ // API: 'http://localhost:8080/api/',  // local
+  API: 'http://13.213.107.220/api/',    // test
   IPT_HEIGHT: 32,
 
   // Literal
