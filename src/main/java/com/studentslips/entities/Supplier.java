@@ -14,8 +14,17 @@ public class Supplier {
     private Timestamp updateDate;
     private String delYn;
     private List<SupplierServiceDTO> lstSupplierServiceDTOS;
+    private String schoolName;
 
     public Supplier() {
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 
     public int getId() {

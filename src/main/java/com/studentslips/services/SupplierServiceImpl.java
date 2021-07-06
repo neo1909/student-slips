@@ -45,15 +45,25 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     @Transactional
     public void updateSupplier(Supplier supplier) {
-        supplier.setUpdateId(1000);
-        supplier.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-        supplierDao.updateSupplier(supplier);
-        List<SupplierServiceDTO> lstSupplierServiceDTO =supplier.getLstSupplierServiceDTOS();
-        if (!lstSupplierServiceDTO.isEmpty()){
-            for (SupplierServiceDTO entity: lstSupplierServiceDTO) {
-                entity.setUpdateId(1000);
-                entity.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-                supplierDao.updateSupplierService(entity);
+        Supplier ObjSupp = supplierDao.selectSupplierById(supplier.getId());
+        if (ObjSupp != null && !ObjSupp.getName().equals(supplier.getName())){
+            supplier.setUpdateId(1000);
+            supplier.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+            supplierDao.updateSupplier(supplier);
+        }
+        //delete all supplier service
+        SupplierServiceDTO dto = new SupplierServiceDTO();
+        dto.setSuppliersId(supplier.getId());
+        dto.setUpdateId(1000);
+        dto.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        supplierDao.deleteSupplierService(dto);
+        //add new
+        List<SupplierServiceDTO> lst =supplier.getLstSupplierServiceDTOS();
+        if (!lst.isEmpty()){
+            for (SupplierServiceDTO entity: lst) {
+                entity.setInsertId(1000);
+                entity.setInsertDate(new Timestamp(System.currentTimeMillis()));
+                supplierDao.insertSupplierService(entity);
             }
         }
     }
@@ -63,14 +73,13 @@ public class SupplierServiceImpl implements SupplierService {
     public void deleteSupplier(Supplier supplier) {
         supplier.setUpdateId(1000);
         supplier.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-        supplierDao.updateSupplier(supplier);
-        List<SupplierServiceDTO> lstSupplierServiceDTO =supplier.getLstSupplierServiceDTOS();
-        if (!lstSupplierServiceDTO.isEmpty()){
-            for (SupplierServiceDTO entity: lstSupplierServiceDTO) {
-                entity.setUpdateId(1000);
-                entity.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-                supplierDao.updateSupplierService(entity);
-            }
-        }
+        supplierDao.deleteSupplier(supplier);
+
+        SupplierServiceDTO entity = new SupplierServiceDTO();
+        entity.setSuppliersId(supplier.getId());
+        entity.setUpdateId(1000);
+        entity.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        supplierDao.deleteSupplierService(entity);
+
     }
 }

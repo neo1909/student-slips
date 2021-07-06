@@ -13,21 +13,17 @@ public class HeadTeachers {
     private Timestamp insertDate;
     private int updateId;
     private Timestamp updateDate;
+    private String schoolName;
 
     public HeadTeachers() {
     }
 
-    public HeadTeachers(int id, String name, int schoolId, int sClass, int grade, String delYn, int insertId, Timestamp insertDate, int updateId, Timestamp updateDate) {
-        this.id = id;
-        this.name = name;
-        this.schoolId = schoolId;
-        this.sClass = sClass;
-        this.grade = grade;
-        this.delYn = delYn;
-        this.insertId = insertId;
-        this.insertDate = insertDate;
-        this.updateId = updateId;
-        this.updateDate = updateDate;
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 
     public int getId() {
