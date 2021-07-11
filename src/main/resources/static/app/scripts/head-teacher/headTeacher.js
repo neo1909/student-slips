@@ -35,7 +35,7 @@ let fn = {
             }
         });
 
-        $("#grdStudents").jqxGrid({
+        $("#grdHeadTeacher").jqxGrid({
             source: dataAdapter,
             columns: [
                 { text: 'No.', datafield: '', align: 'center', cellsalign:'center', width: '5%'
@@ -65,31 +65,31 @@ let fn = {
         });
 
         // Search
-        $("#iptStdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
-        $("#cmbStdGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.gradeEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
-        $("#cmbStdClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazzEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#iptHTdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
+        $("#cmbHTGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.gradeEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbHTClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazzEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
 
-        // Popup Student
-        $("#popupStudent").jqxWindow({
+        // Popup Head Teacher
+        $("#popupHeadTeacher").jqxWindow({
             isModal: true,
             autoOpen: false,
             height: 380,
             width: 700,
             theme: 'bootstrap',
-            title: 'Student detail',
+            title: 'Head teacher detail',
             position: 'center',
             resizable: false
         });
 
-        $('#iptStdNm').jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter name...' });
-        $("#cmbStdGrade").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.grade, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
-        $("#cmbStdClass").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazz, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
+        $('#iptHTNm').jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter name...' });
+        $("#cmbHTGrade").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.grade, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
+        $("#cmbHTClass").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazz, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
 
-        $('#frmStudent').jqxValidator({
+        $('#frmHeadTeacher').jqxValidator({
             hintType: 'label',
             rules: [
-                { input: '#iptStdNm', message: 'Name is required!', action: 'keyup, blur', rule: 'required' },
-                { input: '#iptStdNm', message: 'Name is invalid!', action: 'keyup, blur', rule: 'length=1,150' },
+                { input: '#iptHTNm', message: 'Name is required!', action: 'keyup, blur', rule: 'required' },
+                { input: '#iptHTNm', message: 'Name is invalid!', action: 'keyup, blur', rule: 'length=1,150' },
             ]
         });
 
@@ -97,21 +97,21 @@ let fn = {
         /*
         * Init Component Event
         * */
-        $('#btnStdSrch').click(function () {
-            $('#grdStudents').jqxGrid('refresh');
+        $('#btnHTSrch').click(function () {
+            $('#grdHeadTeacher').jqxGrid('refresh');
             fn.onSearch();
         });
 
-        $('#btnStdCreate').click(function () {
-            $("#popupStudent").jqxWindow('open', fn.popup.open());
+        $('#btnHTCreate').click(function () {
+            $("#popupHeadTeacher").jqxWindow('open', fn.popup.open());
         });
 
         $('#btnCancel').click(function () {
-            $("#popupStudent").jqxWindow('close');
+            $("#popupHeadTeacher").jqxWindow('close');
         });
 
         $('#btnSave').click(function () {
-            if (!$('#frmStudent').jqxValidator('validate')) {
+            if (!$('#frmHeadTeacher').jqxValidator('validate')) {
                 return;
             }
 
@@ -120,26 +120,26 @@ let fn = {
     },
 
     onSearch: function () {
-        let stdNm = $('#iptStdNmSrch').val();
-        let stdGrade = $('#cmbStdGradeSrch').val();
-        let stdClazz = $('#cmbStdClazzSrch').val();
-        if (stdNm) {
-            stdNm = stdNm.trim();
+        let headTeacherNm = $('#iptHTdNmSrch').val();
+        let htGrade = $('#cmbHTGradeSrch').val();
+        let htClazz = $('#cmbHTClazzSrch').val();
+        if (headTeacherNm) {
+            headTeacherNm = headTeacherNm.trim();
         }
 
         let params = {
-            name: stdNm,
-            grade: stdGrade,
-            sClass: stdClazz
+            name: headTeacherNm,
+            grade: htGrade,
+            sClass: htClazz
         };
 
         SS.sendToServer(
-            'ST_R_01',
+            'HT_R_01',
             false,
             params,
             function onSuccess(data) {
                 fn.gridSource.localdata = data.lst;
-                $("#grdStudents").jqxGrid({ source: fn.gridSource });
+                $("#grdHeadTeacher").jqxGrid({ source: fn.gridSource });
             },
 
             function onError(err) {
@@ -150,30 +150,30 @@ let fn = {
 
     onSave: function () {
         let data = {
-            id: $('#iptStdId').val(),
-            name: $('#iptStdNm').val().trim(),
-            grade: $('#cmbStdGrade').val(),
-            sClass: $('#cmbStdClass').val(),
+            id: $('#iptHTId').val(),
+            name: $('#iptHTNm').val().trim(),
+            grade: $('#cmbHTGrade').val(),
+            sClass: $('#cmbHTClass').val(),
             schoolId: 1,
         };
 
         if (data.id) {  // Update
             SS.sendToServer(
-                'ST_U_01',
+                'HT_U_01',
                 false,
                 data,
                 function onSuccess(data) {
-                    $("#popupStudent").jqxWindow('close');
+                    $("#popupHeadTeacher").jqxWindow('close');
                     fn.onSearch();
                 }
             );
         } else {    // Insert
             SS.sendToServer(
-                'ST_C_01',
+                'HT_C_01',
                 false,
                 data,
                 function onSuccess(data) {
-                    $("#popupStudent").jqxWindow('close');
+                    $("#popupHeadTeacher").jqxWindow('close');
                     fn.onSearch();
                 }
             );
@@ -182,15 +182,15 @@ let fn = {
     },
 
     onDelete: function (rowIndex) {
-        let data = $("#grdStudents").jqxGrid('getrowdata', rowIndex);
-        let studentId = data.id;
-        if (studentId) {
+        let data = $("#grdHeadTeacher").jqxGrid('getrowdata', rowIndex);
+        let headTeacherId = data.id;
+        if (headTeacherId) {
             SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
                 if (result ) {
                     SS.sendToServer(
-                        'ST_D_01',
+                        'HT_D_01',
                         false,
-                        { id : studentId },
+                        { id : headTeacherId },
                         function onSuccess(data) {
                             fn.onSearch();
                         }
@@ -201,34 +201,34 @@ let fn = {
     },
 
     onUpdate: function (rowIndex) {
-        let data = $("#grdStudents").jqxGrid('getrowdata', rowIndex);
-        let studentId = data.id;
-        if (studentId != null) {
-            $("#popupStudent").jqxWindow('open', fn.popup.open(studentId));
+        let data = $("#grdHeadTeacher").jqxGrid('getrowdata', rowIndex);
+        let headTeacherId = data.id;
+        if (headTeacherId != null) {
+            $("#popupHeadTeacher").jqxWindow('open', fn.popup.open(headTeacherId));
         }
     },
 
     popup: {
         reset: function () {
-            $('#iptStdNm').val('');
-            $('#cmbStdGrade').jqxDropDownList('selectIndex', 0 );
-            $('#cmbStdClass').jqxDropDownList('selectIndex', 0 );
-            $('#iptStdId').val(null);
+            $('#iptHTNm').val('');
+            $('#cmbHTGrade').jqxDropDownList('selectIndex', 0 );
+            $('#cmbHTClass').jqxDropDownList('selectIndex', 0 );
+            $('#iptHTId').val(null);
         },
 
-        open: function (studentId) {
+        open: function (headTeacherId) {
             fn.popup.reset();
 
-            if (studentId != null) { // Update
+            if (headTeacherId != null) { // Update
                 SS.sendToServer(
-                    'ST_R_02',
+                    'HT_R_02',
                     false,
-                    { id : studentId },
+                    { id : headTeacherId },
                     function onSuccess(data) {
-                        $('#iptStdId').val(data.obj.id);
-                        $('#iptStdNm').val(data.obj.name);
-                        $('#cmbStdGrade').val(data.obj.grade);
-                        $('#cmbStdClass').val(data.obj.sClass);
+                        $('#iptHTId').val(data.obj.id);
+                        $('#iptHTNm').val(data.obj.name);
+                        $('#cmbHTGrade').val(data.obj.grade);
+                        $('#cmbHTClass').val(data.obj.sClass);
                     }
                 );
             }
