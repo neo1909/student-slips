@@ -6,22 +6,25 @@
         INSERT INTO onetouch.ps_suppliers (NAME, school_id, del_yn, insert_date, insert_id)
         VALUES (#{name}, #{schoolId}, 'N', #{insertDate}, #{insertId});
     </insert>
-    <insert id="insertSupplierService" parameterType="com.studentslips.entities.Supplier">
+    <insert id="insertSupplierService" parameterType="com.studentslips.entities.SupplierServiceDTO">
         INSERT INTO onetouch.ps_suppliers_service (suppliers_id, service_id,school_id,price,no_payment,amount_1,amount_2,amount_3,amount_4,amount_5,
                                                    amount_6,amount_7,amount_8,amount_9,amount_10,amount_11,amount_12,grade,del_yn, insert_date, insert_id)
-        VALUES (#{id}, #{serviceId},#{schoolId},#{price},#{noPayment},#{amount1},#{amount2},#{amount3},#{amount4},#{amount5},#{amount6},#{amount7},
+        VALUES (#{suppliersId}, #{serviceId},#{schoolId},#{price},#{noPayment},#{amount1},#{amount2},#{amount3},#{amount4},#{amount5},#{amount6},#{amount7},
                 #{amount8},#{amount9},#{amount10},#{amount11},#{amount12},#{gradeList},'N', #{insertDate}, #{insertId});
     </insert>
     <update id="updateSupplier" parameterType="com.studentslips.entities.Supplier">
         UPDATE onetouch.ps_suppliers  SET
-        <if test="name!= null ">
+        <if test="name!= null and name != ''">
             NAME = #{name},
         </if>
-        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
+        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id}
+        <if test="schoolId!=0 ">
+            AND  school_id = #{schoolId}
+        </if>
     </update>
-    <update id="updateSupplierService" parameterType="com.studentslips.entities.Supplier">
+    <update id="updateSupplierService" parameterType="com.studentslips.entities.SupplierServiceDTO">
         UPDATE onetouch.ps_suppliers_service  SET
-        <if test="name!= null ">
+        <if test="name!= null and name!=''">
             NAME = #{name},
         </if>
         <if test="serviceId!= null ">
@@ -72,19 +75,25 @@
         <if test="amount12!= 0 ">
             amount_12=#{amount12},
         </if>
-        <if test="gradeList!= 0 ">
+        <if test="gradeList!= null and  gradeList !=''">
             grade=#{gradeList},
         </if>
-        <if test="delYn!= 0 ">
-            del_yn=#{delYn},
+        update_id = #{updateId}, update_date = #{updateDate} WHERE suppliers_id = #{suppliersId} AND service_id=#{serviceId}
+        <if test="schoolId!=0 ">
+            AND  school_id = #{schoolId}
         </if>
-        update_id = #{updateId}, update_date = #{updateDate} WHERE suppliers_id = #{suppliersId} AND service_id=#{serviceId} AND school_id=#{schoolId};
     </update>
     <delete id="deleteSupplier" parameterType="com.studentslips.entities.Supplier">
-        UPDATE onetouch.ps_suppliers  SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} AND school_id=#{schoolId};
+        UPDATE onetouch.ps_suppliers  SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate}
+        WHERE ID = #{id} AND del_yn = 'N';
     </delete>
     <delete id="deleteSupplierService" parameterType="com.studentslips.entities.SupplierServiceDTO">
-        UPDATE onetouch.ps_suppliers_service   SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE suppliers_id = #{suppliersId} AND service_id=#{serviceId} AND school_id=#{schoolId};
+        UPDATE onetouch.ps_suppliers_service   SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate}
+        WHERE suppliers_id = #{suppliersId}
+        <if test="serviceId != 0">
+          AND service_id=#{serviceId}
+        </if>
+          AND del_yn = 'N';
     </delete>
     <select id="selectSupplierDetail" parameterType="com.studentslips.entities.SupplierServiceDTO"  resultMap="result">
         SELECT SS.suppliers_id,S.name,SS.service_id,(select name from onetouch.ps_service where SS.service_id=id) AS service_name
@@ -107,18 +116,38 @@
         </if>
     </select>
     <select id="selectAllSupplier" parameterType="com.studentslips.entities.Supplier"  resultMap="resultSupplier">
-        SELECT SS.id,S.name,S.school_id
+        SELECT S.id,S.name,S.school_id, (Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
         ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn
         FROM onetouch.ps_suppliers S
-
         where S.del_yn='N'
         <if test="schoolId != 0">
             AND S.school_id=#{schoolId}
         </if>
     </select>
+    <select id="selectSupplierById" parameterType="int"  resultMap="resultSupplier">
+        SELECT S.id,S.name,S.school_id, (Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
+        ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn
+        FROM onetouch.ps_suppliers S
+        where S.del_yn='N' and S.id =#{id}
+    </select>
+    <select id="selectSupplierDetailById" parameterType="com.studentslips.entities.SupplierServiceDTO"  resultMap="result">
+        SELECT SS.*,(select name from onetouch.ps_service where SS.service_id=id) AS service_name
+        FROM  onetouch.ps_suppliers_service SS
+        where SS.del_yn='N'
+        <if test="schoolId != 0">
+            AND SS.school_id=#{schoolId}
+        </if>
+        <if test="suppliersId != 0">
+            AND SS.suppliers_id = #{suppliersId}
+        </if>
+        <if test="serviceId != 0">
+            AND SS.service_id = #{serviceId}
+        </if>
+    </select>
     <resultMap id = "resultSupplier" type = "com.studentslips.entities.Supplier">
         <result property = "id" column = "id"/>
         <result property = "name" column = "name"/>
+        <result property = "schoolName" column = "schoolName"/>
         <result property = "schoolId" column = "school_id"/>
         <result property = "delYn" column = "del_yn"/>
         <result property = "insertId" column = "insert_id"/>

@@ -29,7 +29,9 @@ public class HeadTeachersServiceImpl implements HeadTeachersService{
     }
 
     @Override
-    public int deleteHeadTeachersById(HeadTeachers headTeachers) {
+    public int deleteHeadTeachersById(int id) {
+        HeadTeachers headTeachers = new HeadTeachers();
+        headTeachers.setId(id);
         headTeachers.setUpdateId(100);
         headTeachers.setUpdateDate(new Timestamp(System.currentTimeMillis()));
         return headTeachersDao.deleteHeadTeachersById(headTeachers);

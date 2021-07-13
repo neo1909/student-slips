@@ -3466,3 +3466,7 @@ fieldset[disabled] .btn-vk.active {
   margin-top: 16%;
 }
 
+.breadcrumb>.active {
+  color: #468dbc;
+}
+

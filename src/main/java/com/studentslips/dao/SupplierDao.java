@@ -43,4 +43,10 @@ public class SupplierDao {
     public int deleteSupplierService(SupplierServiceDTO supplierServiceDTO) {
         return this.sqlSession.update("deleteSupplierService", supplierServiceDTO);
     }
+    public Supplier selectSupplierById(int supplierId) {
+        return this.sqlSession.selectOne("selectSupplierById", supplierId);
+    }
+    public SupplierServiceDTO selectSupplierServiceById(SupplierServiceDTO supplierServiceDTO) {
+        return this.sqlSession.selectOne("selectSupplierDetailById", supplierServiceDTO);
+    }
 }

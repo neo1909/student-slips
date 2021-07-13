@@ -1,90 +1,110 @@
 package com.studentslips.controller;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.sql.DataSource;
 
+import com.studentslips.common.Common;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.studentslips.common.ErrorCode;
-import com.studentslips.common.ResultEntity;
 import com.studentslips.entities.HeadTeachers;
 import com.studentslips.services.HeadTeachersService;
 
 @RestController
-@RequestMapping("api/HT")
+@RequestMapping("api")
 public class HeadTeachersRestController {
     private static final Logger logger = LoggerFactory.getLogger(HeadTeachersRestController.class);
     @Autowired
     private HeadTeachersService headTeachersService;
 
-    @Autowired
-    DataSource dataSource;
 
+    @RequestMapping(value = "/HT_R_01", method = RequestMethod.POST)
+    public Map<String, ?> getAll(@RequestBody HeadTeachers std){
+        Map<String, Object> result = new HashMap<>();
 
-
-
-    @RequestMapping(value = "/HT_R_01", method = RequestMethod.GET)
-    public ResponseEntity<List<HeadTeachers>> getAll(@RequestBody HeadTeachers std){
-        List<HeadTeachers> listHeadTeachers = headTeachersService.selectAllHeadTeachers(std);
-        if(listHeadTeachers.isEmpty()){
-            return new ResponseEntity<List<HeadTeachers>>(HttpStatus.NO_CONTENT);
+        try {
+            result.put(Common.LIST, headTeachersService.selectAllHeadTeachers(std));
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
         }
-        return new ResponseEntity<List<HeadTeachers>>(listHeadTeachers, HttpStatus.OK);
+
+        return result;
     }
 
 
-    @RequestMapping(value = "/HT_R_02", method = RequestMethod.GET)
-    public ResponseEntity<HeadTeachers> getHeadTeachers(@RequestBody HeadTeachers std) {
+    @RequestMapping(value = "/HT_R_02", method = RequestMethod.POST)
+    public Map<String, ?> getHeadTeachers(@RequestBody HeadTeachers std) {
 
-        HeadTeachers headTeachers = headTeachersService.selectHeadTeachersById(std.getId());
-        if (headTeachers == null) {
-            return new ResponseEntity<HeadTeachers>(HttpStatus.NOT_FOUND);
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            result.put(Common.OBJECT, headTeachersService.selectHeadTeachersById(std.getId()));
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
         }
-        return new ResponseEntity<HeadTeachers>(headTeachers, HttpStatus.OK);
+
+        return result;
     }
 
 
     @RequestMapping(value = "/HT_C_01", method = RequestMethod.POST)
-    public ResponseEntity<?> addHeadTeachers(@RequestBody HeadTeachers std){
-        int dataStd = headTeachersService.insertHeadTeachers(std);
-        if (dataStd == 1) {
-            return new ResponseEntity<Integer>(dataStd, HttpStatus.OK);
+    public Map<String, ?> addHeadTeachers(@RequestBody HeadTeachers std){
+
+        Map<String, Object> result = new HashMap<>();
+        try {
+            int dataStd = headTeachersService.insertHeadTeachers(std);
+            if (dataStd == 1) {
+                result.put(Common.STATUS, HttpStatus.OK.value());
+            }
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
         }
-        ResultEntity re = new ResultEntity(ErrorCode.INSERT_FAIL,"Can not create Head Teachers");
-        return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
+
+        return result;
     }
 
     @RequestMapping(value = "/HT_U_01", method = RequestMethod.POST)
-    public ResponseEntity<?> updateHeadTeachers(@RequestBody HeadTeachers std){
-        HeadTeachers dataStd = headTeachersService.selectHeadTeachersById(std.getId());
-        if (dataStd == null) {
-            ResultEntity re = new ResultEntity(ErrorCode.NOT_FOUND,"Not found Head Teachers id: "+ std.getId());
-            return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
-        } else {
-            headTeachersService.updateHeadTeachers(dataStd);
-            return new ResponseEntity<HeadTeachers>(dataStd, HttpStatus.OK);
+    public  Map<String, ?> updateHeadTeachers(@RequestBody HeadTeachers std){
+        Map<String, Object> result = new HashMap<>();
+        try {
+            int dataStd = headTeachersService.updateHeadTeachers(std);
+            if (dataStd == 1) {
+                result.put(Common.STATUS, HttpStatus.OK.value());
+            }
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
         }
+
+        return result;
     }
 
 
     @RequestMapping(value = "/HT_D_01", method = RequestMethod.POST)
-    public ResponseEntity<?> deleteHeadTeachers(@RequestBody HeadTeachers std) {
-
-        HeadTeachers headTeachers = headTeachersService.selectHeadTeachersById(std.getId());
-        if (headTeachers == null) {
-            ResultEntity re = new ResultEntity(ErrorCode.NOT_FOUND,"Not found Head Teachers id: "+ std.getId());
-            return new ResponseEntity<ResultEntity>(re, HttpStatus.NOT_FOUND);
+    public Map<String, ?> deleteHeadTeachers(@RequestBody HeadTeachers std) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            int dataStd = headTeachersService.deleteHeadTeachersById(std.getId());
+            if (dataStd == 1) {
+                result.put(Common.STATUS, HttpStatus.OK.value());
+            }
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
         }
-        headTeachersService.deleteHeadTeachersById(std);
-        return new ResponseEntity<HeadTeachers>(HttpStatus.OK);
+
+        return result;
     }
 }

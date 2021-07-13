@@ -1,0 +1,68 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SchoolDao">
+    <insert id="insertSchool" parameterType="com.studentslips.entities.School">
+        INSERT INTO PS_School (NAME,address, zipcode, city,municipality,bank_account_number, del_yn, insert_date, insert_id)
+        VALUES (#{schoolName}, #{address}, #{zipcode}, #{city},#{municipality},#{backAccountNumber}, 'N', #{insertDate}, #{insertId});
+    </insert>
+
+    <update id="updateSchool" parameterType="com.studentslips.entities.School">
+        UPDATE PS_School SET
+        <if test="schoolName!= null and schoolName !=''">
+            NAME = #{schoolName},
+        </if>
+        <if test="address!=null and address!='' ">
+            address = #{address},
+        </if>
+        <if test="zipcode!=null and  zipcode!=''">
+            zipcode = #{zipcode},
+        </if>
+        <if test="city!=null and  city!=''">
+            city = #{city},
+        </if>
+        <if test="municipality!=null and  municipality!=''">
+            municipality = #{municipality},
+        </if>
+        <if test="backAccountNumber!=null and  backAccountNumber!=''">
+            bank_account_number = #{backAccountNumber},
+        </if>
+        update_id = #{updateId}
+        , update_date = #{updateDate}
+
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="deleteSchoolById" parameterType="com.studentslips.entities.School">
+        UPDATE PS_School SET
+            del_yn = 'Y'
+                             , update_id = #{updateId}
+                             , update_date = #{updateDate}
+        WHERE ID = #{id} AND del_yn = 'N'
+    </delete>
+
+    <select id="selectAllSchool" parameterType="com.studentslips.entities.School" resultMap="result">
+        SELECT S.*
+        FROM PS_School S
+        where  S.del_yn='N'
+    </select>
+
+    <select id="selectSchoolById" parameterType="int" resultMap="result">
+        SELECT S.* FROM PS_School S WHERE S.ID = #{id} AND S.del_yn='N'
+    </select>
+
+    <resultMap id = "result" type = "com.studentslips.entities.School">
+        <result property = "id" column = "ID"/>
+        <result property = "schoolName" column = "NAME"/>
+        <result property = "address" column = "address"/>
+        <result property = "zipcode" column = "zipcode"/>
+        <result property = "city" column = "city"/>
+        <result property = "municipality" column = "municipality"/>
+        <result property = "backAccountNumber" column = "bank_account_number"/>
+        <result property = "delYn" column = "del_yn"/>
+        <result property = "insertId" column = "insert_id"/>
+        <result property = "insertDate" column = "insert_date"/>
+        <result property = "updateId" column = "update_id"/>
+        <result property = "updateDate" column = "update_date"/>
+    </resultMap>
+</mapper>

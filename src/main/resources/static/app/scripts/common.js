@@ -3,8 +3,8 @@
 $.jqx.theme = "bootstrap";
 
 let SS = {
- // API: 'http://localhost:8080/api/',  // local
-  API: 'http://13.213.107.220/api/',    // test
+  API: 'http://localhost:5000/api/',  // local
+ //  API: 'http://13.213.107.220/api/',    // test
   IPT_HEIGHT: 32,
 
   // Literal
@@ -19,8 +19,8 @@ let SS = {
     ERROR: "Contact admin!"
   },
 
-  clazz: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
-  clazzEmpty: [ '', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
+  clazz: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
+  clazzEmpty: [ '', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
   grade: [ 1, 2, 3, 4, 5, 6, 7, 8 ],
   gradeEmpty: [ '', 1, 2, 3, 4, 5, 6, 7, 8 ],
 
@@ -45,7 +45,9 @@ let SS = {
       },
 
       complete: function (b, f) {
-        $('#ssApp').waitMe('hide');
+        setTimeout(function () {
+          $('#ssApp').waitMe('hide');
+        }, 100);
       }
 
     });

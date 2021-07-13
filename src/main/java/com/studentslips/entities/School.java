@@ -2,34 +2,21 @@ package com.studentslips.entities;
 
 import java.sql.Timestamp;
 
-public class Services {
+public class School {
     private int id;
-    private String name;
+    private String schoolName;
+    private String address;
+    private String zipCode;
+    private String city;
+    private String municipality;
+    private String backAccountNumber;
     private String delYn;
     private int insertId;
     private Timestamp insertDate;
     private int updateId;
     private Timestamp updateDate;
-    private int schoolId;
-    private String schoolName;
 
-    public Services() {
-    }
-
-    public int getSchoolId() {
-        return schoolId;
-    }
-
-    public void setSchoolId(int schoolId) {
-        this.schoolId = schoolId;
-    }
-
-    public String getSchoolName() {
-        return schoolName;
-    }
-
-    public void setSchoolName(String schoolName) {
-        this.schoolName = schoolName;
+    public School() {
     }
 
     public int getId() {
@@ -40,12 +27,52 @@ public class Services {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getSchoolName() {
+        return schoolName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getMunicipality() {
+        return municipality;
+    }
+
+    public void setMunicipality(String municipality) {
+        this.municipality = municipality;
+    }
+
+    public String getBackAccountNumber() {
+        return backAccountNumber;
+    }
+
+    public void setBackAccountNumber(String backAccountNumber) {
+        this.backAccountNumber = backAccountNumber;
     }
 
     public String getDelYn() {

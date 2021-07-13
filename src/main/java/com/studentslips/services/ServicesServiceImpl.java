@@ -28,7 +28,9 @@ public class ServicesServiceImpl implements ServicesService{
     }
 
     @Override
-    public int deleteServicesById(Services services) {
+    public int deleteServicesById(int id) {
+        Services services = new Services();
+        services.setId(id);
         services.setUpdateId(100);
         services.setUpdateDate(new Timestamp(System.currentTimeMillis()));
         return servicesDao.deleteServicesById(services);
