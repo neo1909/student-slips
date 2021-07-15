@@ -15,8 +15,8 @@
         <if test="address!=null and address!='' ">
             address = #{address},
         </if>
-        <if test="zipcode!=null and  zipcode!=''">
-            zipcode = #{zipcode},
+        <if test="zipCode!=null and  zipCode!=''">
+            zipcode = #{zipCode},
         </if>
         <if test="city!=null and  city!=''">
             city = #{city},
@@ -55,7 +55,7 @@
         <result property = "id" column = "ID"/>
         <result property = "schoolName" column = "NAME"/>
         <result property = "address" column = "address"/>
-        <result property = "zipcode" column = "zipcode"/>
+        <result property = "zipCode" column = "zipcode"/>
         <result property = "city" column = "city"/>
         <result property = "municipality" column = "municipality"/>
         <result property = "backAccountNumber" column = "bank_account_number"/>
