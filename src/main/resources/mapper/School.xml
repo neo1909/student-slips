@@ -4,7 +4,7 @@
 <mapper namespace="SchoolDao">
     <insert id="insertSchool" parameterType="com.studentslips.entities.School">
         INSERT INTO PS_School (NAME,address, zipcode, city,municipality,bank_account_number, del_yn, insert_date, insert_id)
-        VALUES (#{schoolName}, #{address}, #{zipcode}, #{city},#{municipality},#{backAccountNumber}, 'N', #{insertDate}, #{insertId});
+        VALUES (#{schoolName}, #{address}, #{zipCode}, #{city},#{municipality},#{backAccountNumber}, 'N', #{insertDate}, #{insertId});
     </insert>
 
     <update id="updateSchool" parameterType="com.studentslips.entities.School">
@@ -15,8 +15,8 @@
         <if test="address!=null and address!='' ">
             address = #{address},
         </if>
-        <if test="zipcode!=null and  zipcode!=''">
-            zipcode = #{zipcode},
+        <if test="zipCode!=null and  zipCode!=''">
+            zipcode = #{zipCode},
         </if>
         <if test="city!=null and  city!=''">
             city = #{city},
@@ -55,7 +55,7 @@
         <result property = "id" column = "ID"/>
         <result property = "schoolName" column = "NAME"/>
         <result property = "address" column = "address"/>
-        <result property = "zipcode" column = "zipcode"/>
+        <result property = "zipCode" column = "zipcode"/>
         <result property = "city" column = "city"/>
         <result property = "municipality" column = "municipality"/>
         <result property = "backAccountNumber" column = "bank_account_number"/>

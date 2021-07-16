@@ -94,3 +94,19 @@ CREATE TABLE `PS_School` (
 	`update_id` INT  ,
 	PRIMARY KEY (`id`)
 );
+CREATE TABLE `PS_Students_Debts` (
+     `student_id` INT NOT NULL ,
+     `suppliers_id` INT NOT NULL ,
+     `service_id` INT NOT NULL  ,
+     `reference_no` VARCHAR(255)  ,
+     `quantity` INT  ,
+     `school_id` INT NOT NULL,
+     `purpose` longtext,
+     `debit_date` DATE  ,
+     `amount_debt` DECIMAL  ,
+     `del_yn` VARCHAR(1),
+     `insert_date` DATETIME ,
+     `insert_id` INT  ,
+     `update_date` DATETIME  ,
+     `update_id` INT
+);
