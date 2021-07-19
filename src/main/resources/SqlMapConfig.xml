@@ -12,6 +12,7 @@
         <mapper resource="mapper/HeadTeachers.xml" />
         <mapper resource="mapper/Supplier.xml" />
         <mapper resource="mapper/School.xml" />
+        <mapper resource="mapper/StudentDebts.xml" />
     </mappers>
 
 </configuration>
