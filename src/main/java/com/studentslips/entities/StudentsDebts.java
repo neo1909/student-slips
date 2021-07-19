@@ -14,6 +14,8 @@ public class StudentsDebts {
     private String purpose;
     private Date debitDate;
     private BigDecimal amountDebt;
+    private int grade;
+    private int sClass;
     private String delYn;
     private int insertId;
     private Timestamp insertDate;
@@ -133,5 +135,21 @@ public class StudentsDebts {
 
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
+    }
+
+    public int getsClass() {
+        return sClass;
+    }
+
+    public void setsClass(int sClass) {
+        this.sClass = sClass;
     }
 }

@@ -2,69 +2,96 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="StudentDebtsDao">
-    <insert id="insertStudent" parameterType="com.studentslips.entities.StudentsDebts">
-        INSERT INTO PS_Students (NAME,grade, class, school_id, del_yn, insert_date, insert_id)
-        VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, 'N', #{insertDate}, #{insertId});
+    <insert id="insertStudentDebts" parameterType="com.studentslips.entities.StudentsDebts">
+        INSERT INTO ps_students_debts (student_id,suppliers_id, service_id, school_id, reference_no, quantity, purpose,debit_date, amount_debt, del_yn, insert_date, insert_id)
+        VALUES (#{studentId}, #{suppliersId}, #{serviceId}, #{schoolId},#{referenceNo},#{quantity}, #{purpose}, #{debitDate},#{amountDebt}, 'N', #{insertDate}, #{insertId});
     </insert>
 
-    <update id="updateStudent" parameterType="com.studentslips.entities.StudentsDebts">
-        UPDATE PS_Students SET
-        <if test="name!= null and name !=''">
-            NAME = #{name},
+    <update id="updateStudentDebts" parameterType="com.studentslips.entities.StudentsDebts">
+        UPDATE ps_students_debts SET
+        quantity = #{quantity}
+        , update_id = #{updateId}
+        , update_date = #{updateDate}
+        WHERE del_yn = 'N'
+        <if test="schoolId!=0 ">
+            AND  service_id = #{serviceId}
+        </if>
+        <if test="schoolId!=0 ">
+            AND  school_id = #{schoolId}
         </if>
         <if test="grade!=0 ">
-            grade = #{grade},
+            AND   grade = #{grade}
         </if>
         <if test="sClass!=0 ">
-            class = #{sClass},
+            AND   class = #{sClass}
         </if>
-        update_id = #{updateId}
-        , update_date = #{updateDate}
-
-        WHERE ID = #{id}
-        <if test="schoolId!=0 ">
-            AND  S.school_id = #{schoolId}
+        <if test="suppliersId!=0 ">
+            AND   suppliers_id = #{suppliersId}
+        </if>
+        <if test="studentId!=0 ">
+            AND   student_id = #{studentId}
         </if>
     </update>
 
-    <delete id="deleteStudentById" parameterType="com.studentslips.entities.StudentsDebts">
-        UPDATE PS_Students SET
+    <delete id="deleteStudentDebtsById" parameterType="com.studentslips.entities.StudentsDebts">
+        UPDATE ps_students_debts  SET
             del_yn = 'Y'
                              , update_id = #{updateId}
                              , update_date = #{updateDate}
-        WHERE ID = #{id} AND del_yn = 'N'
-    </delete>
-
-    <select id="selectAllStudent" parameterType="com.studentslips.entities.StudentsDebts" resultMap="result">
-        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
-        FROM PS_Students S
-        where  S.del_yn='N'
+        WHERE del_yn = 'N'
         <if test="schoolId!=0 ">
-            AND  S.school_id = #{schoolId}
+            AND  service_id = #{serviceId}
         </if>
-        <if test="name!=null and name !=''">
-            <bind name="nameLike" value="'%' + name + '%'" />
-            AND   S.name like #{nameLike}
+        <if test="schoolId!=0 ">
+            AND  school_id = #{schoolId}
         </if>
         <if test="grade!=0 ">
-            AND   S.grade = #{grade}
+            AND   grade = #{grade}
         </if>
         <if test="sClass!=0 ">
-            AND   S.class = #{sClass}
+            AND   class = #{sClass}
         </if>
-    </select>
+        <if test="suppliersId!=0 ">
+            AND   suppliers_id = #{suppliersId}
+        </if>
+        <if test="studentId!=0 ">
+            AND   student_id = #{studentId}
+        </if>
+    </delete>
 
-    <select id="selectStudentById" parameterType="int" resultMap="result">
-        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName FROM PS_Students S WHERE S.ID = #{id} AND S.del_yn='N'
+    <select id="selectStudentDebts" parameterType="com.studentslips.entities.StudentsDebts" resultMap="result">
+        select sd.* from ps_students_debts sd, ps_students s
+        where sd.student_id=s.id
+        <if test="schoolId!=0 ">
+            AND  sd.service_id = #{serviceId}
+        </if>
+        <if test="schoolId!=0 ">
+            AND  sd.school_id = #{schoolId}
+        </if>
+        <if test="grade!=0 ">
+            AND   s.grade = #{grade}
+        </if>
+        <if test="sClass!=0 ">
+            AND   s.class = #{sClass}
+        </if>
+        <if test="suppliersId!=0 ">
+            AND   sd.suppliers_id = #{suppliersId}
+        </if>
+        <if test="studentId!=0 ">
+            AND   sd.student_id = #{studentId}
+        </if>
     </select>
 
     <resultMap id = "result" type = "com.studentslips.entities.StudentsDebts">
         <result property = "studentId" column = "student_id"/>
-        <result property = "name" column = "NAME"/>
-        <result property = "schoolName" column = "schoolName"/>
+        <result property = "suppliersId" column = "suppliers_id"/>
+        <result property = "serviceId" column = "service_id"/>
         <result property = "schoolId" column = "school_id"/>
-        <result property = "grade" column = "grade"/>
-        <result property = "sClass" column = "class"/>
+        <result property = "referenceNo" column = "reference_no"/>
+        <result property = "quantity" column = "quantity"/>
+        <result property = "purpose" column = "purpose"/>
+        <result property = "debitDate" column = "debit_date"/>
+        <result property = "amountDebt" column = "amount_debt"/>
         <result property = "delYn" column = "del_yn"/>
         <result property = "insertId" column = "insert_id"/>
         <result property = "insertDate" column = "insert_date"/>
