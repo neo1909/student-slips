@@ -22,6 +22,8 @@ public class StudentsDebts {
     private int updateId;
     private Timestamp updateDate;
 
+    private String nameStudent;
+
     public StudentsDebts() {
     }
 
@@ -151,5 +153,13 @@ public class StudentsDebts {
 
     public void setsClass(int sClass) {
         this.sClass = sClass;
+    }
+
+    public String getNameStudent() {
+        return nameStudent;
+    }
+
+    public void setNameStudent(String nameStudent) {
+        this.nameStudent = nameStudent;
     }
 }
