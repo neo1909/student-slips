@@ -30,7 +30,7 @@ public class SupplierRestController {
     @Autowired
     private SupplierService supplierService;
 
-    @RequestMapping(value = "/SL_R_01", method = RequestMethod.GET)
+    @RequestMapping(value = "/SL_R_01", method = RequestMethod.POST)
     public Map<String,?> getAll(@RequestBody Supplier std){
         Map<String, Object> result = new HashMap<>();
         try {
@@ -42,7 +42,7 @@ public class SupplierRestController {
         }
         return result;
     }
-    @RequestMapping(value = "/SL_R_02", method = RequestMethod.GET)
+    @RequestMapping(value = "/SL_R_02", method = RequestMethod.POST)
     public Map<String,?> getSupplierService(@RequestBody SupplierServiceDTO std){
         Map<String, Object> result = new HashMap<>();
         try {

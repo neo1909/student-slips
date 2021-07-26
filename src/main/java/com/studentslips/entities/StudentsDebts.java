@@ -23,6 +23,8 @@ public class StudentsDebts {
     private Timestamp updateDate;
 
     private String nameStudent;
+    private String nameService;
+    private BigDecimal price;
 
     public StudentsDebts() {
     }
@@ -161,5 +163,21 @@ public class StudentsDebts {
 
     public void setNameStudent(String nameStudent) {
         this.nameStudent = nameStudent;
+    }
+
+    public String getNameService() {
+        return nameService;
+    }
+
+    public void setNameService(String nameService) {
+        this.nameService = nameService;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }

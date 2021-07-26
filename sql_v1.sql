@@ -108,5 +108,6 @@ CREATE TABLE `PS_Students_Debts` (
      `insert_date` DATETIME ,
      `insert_id` INT  ,
      `update_date` DATETIME  ,
-     `update_id` INT
+     `update_id` INT,
+     `price` DECIMAL
 );

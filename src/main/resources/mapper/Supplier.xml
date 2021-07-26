@@ -157,7 +157,7 @@
     </resultMap>
 
     <resultMap id = "result" type = "com.studentslips.entities.SupplierServiceDTO">
-        <result property = "id" column = "suppliers_id"/>
+        <result property = "suppliersId" column = "suppliers_id"/>
         <result property = "name" column = "NAME"/>
         <result property = "schoolId" column = "school_id"/>
         <result property = "delYn" column = "del_yn"/>

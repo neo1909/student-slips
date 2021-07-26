@@ -1,6 +1,7 @@
 package com.studentslips.services;
 
 import com.studentslips.dao.StudentDebtsDao;
+import com.studentslips.entities.StudentDebtsObject;
 import com.studentslips.entities.StudentsDebts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,38 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
         studentsDebts.setUpdateId(100);
         studentsDebts.setUpdateDate(new Timestamp(System.currentTimeMillis()));
         return studentDebtsDao.deleteStudentsDebtsById(studentsDebts);
+    }
+
+    @Override
+    public List<StudentsDebts> search(StudentsDebts studentsDebts) throws Exception {
+
+        return studentDebtsDao.search(studentsDebts);
+    }
+
+    @Override
+    public void insertStudentsDebtsObj(StudentDebtsObject studentDebtsObject) {
+
+        List<StudentsDebts> studentsDebtsList = studentDebtsObject.getStudentsDebtsList();
+        if(!studentsDebtsList.isEmpty()){
+            for (StudentsDebts sd : studentsDebtsList){
+                sd.setPrice(studentDebtsObject.getPrice());
+                sd.setsClass(studentDebtsObject.getsClass());
+                sd.setGrade(studentDebtsObject.getGrade());
+                sd.setSuppliersId(studentDebtsObject.getSuppliersId());
+                sd.setServiceId(studentDebtsObject.getServiceId());
+                sd.setDebitDate(studentDebtsObject.getDebitDate());
+                studentDebtsDao.insertStudentsDebts(sd);
+            }
+        }
+    }
+
+    @Override
+    public void updateStudentsDebtsObj(StudentDebtsObject studentDebtsObject) {
+        List<StudentsDebts> updateStudentsDebtsList = studentDebtsObject.getStudentsDebtsList();
+        if(!updateStudentsDebtsList.isEmpty()){
+            for (StudentsDebts sd : updateStudentsDebtsList){
+                studentDebtsDao.updateStudentsDebts(sd);
+            }
+        }
     }
 }
