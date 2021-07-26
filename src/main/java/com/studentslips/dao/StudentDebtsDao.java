@@ -17,7 +17,9 @@ public class StudentDebtsDao {
     public List<StudentsDebts> selectStudentDebts(StudentsDebts studentsDebts) throws Exception {
         return this.sqlSession.selectList("selectStudentDebts", studentsDebts);
     }
-
+    public List<StudentsDebts> search(StudentsDebts studentsDebts) throws Exception {
+        return this.sqlSession.selectList("search", studentsDebts);
+    }
 
     public int insertStudentsDebts(StudentsDebts studentsDebts){
         return this.sqlSession.insert("insertStudentDebts", studentsDebts);
