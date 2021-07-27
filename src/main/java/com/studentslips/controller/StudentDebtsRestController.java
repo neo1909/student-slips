@@ -1,6 +1,7 @@
 package com.studentslips.controller;
 
 import com.studentslips.common.Common;
+import com.studentslips.entities.StudentDebtsObject;
 import com.studentslips.entities.StudentsDebts;
 import com.studentslips.services.StudentDebtsService;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ public class StudentDebtsRestController {
     private StudentDebtsService studentDebtsService;
 
     @RequestMapping(value = "/SD_R_01", method = RequestMethod.POST)
-    public Map<String, ?> getAll(@RequestBody StudentsDebts std){
+    public Map<String, ?> getSudentDebts(@RequestBody StudentsDebts std){
         Map<String, Object> result = new HashMap<>();
 
         try {
@@ -37,15 +38,26 @@ public class StudentDebtsRestController {
 
         return result;
     }
+    @RequestMapping(value = "/SD_R_02", method = RequestMethod.POST)
+    public Map<String, ?> search(@RequestBody StudentsDebts std){
+        Map<String, Object> result = new HashMap<>();
 
+        try {
+            result.put(Common.LIST, studentDebtsService.search(std));
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
+        }
+
+        return result;
+    }
     @RequestMapping(value = "/SD_C_01", method = RequestMethod.POST)
-    public Map<String, ?> addStudentsDebts(@RequestBody StudentsDebts std){
+    public Map<String, ?> addStudentsDebts(@RequestBody StudentDebtsObject std){
         Map<String, Object> result = new HashMap<>();
         try {
-            int dataStd = studentDebtsService.insertStudentsDebts(std);
-            if (dataStd == 1) {
-                result.put(Common.STATUS, HttpStatus.OK.value());
-            }
+            studentDebtsService.insertStudentsDebtsObj(std);
+            result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
             logger.error(ex.getMessage());
@@ -55,13 +67,11 @@ public class StudentDebtsRestController {
     }
 
     @RequestMapping(value = "/SD_U_01", method = RequestMethod.POST)
-    public Map<String, ?> updateStudentsDebts(@RequestBody StudentsDebts std){
+    public Map<String, ?> updateStudentsDebts(@RequestBody StudentDebtsObject std){
         Map<String, Object> result = new HashMap<>();
         try {
-            int dataStd = studentDebtsService.updateStudentsDebts(std);
-            if (dataStd == 1) {
+           studentDebtsService.updateStudentsDebtsObj(std);
                 result.put(Common.STATUS, HttpStatus.OK.value());
-            }
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
             logger.error(ex.getMessage());

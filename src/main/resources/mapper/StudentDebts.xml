@@ -10,26 +10,24 @@
     <update id="updateStudentDebts" parameterType="com.studentslips.entities.StudentsDebts">
         UPDATE ps_students_debts SET
         quantity = #{quantity}
+        ,amount_debt = #{amountDebt}
         , update_id = #{updateId}
         , update_date = #{updateDate}
         WHERE del_yn = 'N'
-        <if test="schoolId!=0 ">
+        <if test="serviceId!=0 ">
             AND  service_id = #{serviceId}
         </if>
         <if test="schoolId!=0 ">
             AND  school_id = #{schoolId}
-        </if>
-        <if test="grade!=0 ">
-            AND   grade = #{grade}
-        </if>
-        <if test="sClass!=0 ">
-            AND   class = #{sClass}
         </if>
         <if test="suppliersId!=0 ">
             AND   suppliers_id = #{suppliersId}
         </if>
         <if test="studentId!=0 ">
             AND   student_id = #{studentId}
+        </if>
+        <if test="debitDate!= null">
+            AND  debit_date = #{debitDate}
         </if>
     </update>
 
@@ -39,17 +37,11 @@
                              , update_id = #{updateId}
                              , update_date = #{updateDate}
         WHERE del_yn = 'N'
-        <if test="schoolId!=0 ">
+        <if test="serviceId!=0 ">
             AND  service_id = #{serviceId}
         </if>
         <if test="schoolId!=0 ">
             AND  school_id = #{schoolId}
-        </if>
-        <if test="grade!=0 ">
-            AND   grade = #{grade}
-        </if>
-        <if test="sClass!=0 ">
-            AND   class = #{sClass}
         </if>
         <if test="suppliersId!=0 ">
             AND   suppliers_id = #{suppliersId}
@@ -57,12 +49,44 @@
         <if test="studentId!=0 ">
             AND   student_id = #{studentId}
         </if>
+        <if test="debitDate!= null">
+            AND   debit_date = #{debitDate}
+        </if>
     </delete>
 
     <select id="selectStudentDebts" parameterType="com.studentslips.entities.StudentsDebts" resultMap="result">
-        select sd.*,s.name from ps_students_debts sd, ps_students s
+        select sd.*,s.name,(select name from ps_service where id= sd.service_id) as service_name , s.grade, s.class
+        from ps_students_debts sd, ps_students s
         where sd.student_id=s.id
+        <if test="serviceId!=0 ">
+            AND  sd.service_id = #{serviceId}
+        </if>
         <if test="schoolId!=0 ">
+            AND  sd.school_id = #{schoolId}
+        </if>
+        <if test="grade!=0 ">
+            AND   s.grade = #{grade}
+        </if>
+        <if test="sClass!=0 ">
+            AND   s.class = #{sClass}
+        </if>
+        <if test="suppliersId!=0 ">
+            AND   sd.suppliers_id = #{suppliersId}
+        </if>
+        <if test="studentId!=0 ">
+            AND   sd.student_id = #{studentId}
+        </if>
+        <if test="debitDate!= null">
+            AND  sd.debit_date = #{debitDate}
+        </if>
+    </select>
+
+    <select id="search" parameterType="com.studentslips.entities.StudentsDebts" resultMap="result">
+        select s.id as student_id,s.name,concat(concat(s.id , '-' , #{suppliersId}),'-',#{serviceId})  as reference_no, (select name from ps_service where id= #{serviceId}) as service_name, #{price} as price
+        ,sd.service_id,sd.school_id,s.grade,s.class,sd.suppliers_id,sd.student_id
+        from ps_students_debts sd, ps_students s
+        where sd.student_id=s.id
+        <if test="serviceId!=0 ">
             AND  sd.service_id = #{serviceId}
         </if>
         <if test="schoolId!=0 ">
@@ -98,5 +122,9 @@
         <result property = "updateId" column = "update_id"/>
         <result property = "updateDate" column = "update_date"/>
         <result property = "nameStudent" column = "name"/>
+        <result property = "nameService" column = "service_name"/>
+        <result property = "price" column = "price"/>
+        <result property = "grade" column = "grade"/>
+        <result property = "sClass" column = "class"/>
     </resultMap>
 </mapper>
