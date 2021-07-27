@@ -97,10 +97,8 @@ let fn = {
         /*
         * Init Component Event
         * */
-        $('#btnStdSrch').click(function () {
-            $('#grdStudents').jqxGrid('refresh');
-            fn.onSearch();
-        });
+
+
 
         $('#btnStdCreate').click(function () {
             $("#popupStudent").jqxWindow('open', fn.popup.open());
