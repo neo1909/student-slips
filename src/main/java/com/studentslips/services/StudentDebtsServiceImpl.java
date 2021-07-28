@@ -59,6 +59,7 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
                 sd.setSuppliersId(studentDebtsObject.getSuppliersId());
                 sd.setServiceId(studentDebtsObject.getServiceId());
                 sd.setDebitDate(studentDebtsObject.getDebitDate());
+                sd.setPurpose(studentDebtsObject.getPurpose());
                 studentDebtsDao.insertStudentsDebts(sd);
             }
         }

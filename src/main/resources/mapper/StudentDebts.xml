@@ -83,26 +83,16 @@
 
     <select id="search" parameterType="com.studentslips.entities.StudentsDebts" resultMap="result">
         select s.id as student_id,s.name,concat(concat(s.id , '-' , #{suppliersId}),'-',#{serviceId})  as reference_no, (select name from ps_service where id= #{serviceId}) as service_name, #{price} as price
-        ,sd.service_id,sd.school_id,s.grade,s.class,sd.suppliers_id,sd.student_id
-        from ps_students_debts sd, ps_students s
-        where sd.student_id=s.id
-        <if test="serviceId!=0 ">
-            AND  sd.service_id = #{serviceId}
-        </if>
+        from ps_students s
+        where del_yn='N'
         <if test="schoolId!=0 ">
-            AND  sd.school_id = #{schoolId}
+            AND  s.school_id = #{schoolId}
         </if>
         <if test="grade!=0 ">
             AND   s.grade = #{grade}
         </if>
         <if test="sClass!=0 ">
             AND   s.class = #{sClass}
-        </if>
-        <if test="suppliersId!=0 ">
-            AND   sd.suppliers_id = #{suppliersId}
-        </if>
-        <if test="studentId!=0 ">
-            AND   sd.student_id = #{studentId}
         </if>
     </select>
 

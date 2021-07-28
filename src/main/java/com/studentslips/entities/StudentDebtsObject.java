@@ -1,5 +1,7 @@
 package com.studentslips.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -11,7 +13,9 @@ public class StudentDebtsObject {
     private int grade;
     private int sClass;
     private BigDecimal price;
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date debitDate;
+    private String purpose;
     private List<StudentsDebts> studentsDebtsList;
 
     public StudentDebtsObject() {
@@ -63,6 +67,14 @@ public class StudentDebtsObject {
 
     public void setDebitDate(Date debitDate) {
         this.debitDate = debitDate;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
     }
 
     public List<StudentsDebts> getStudentsDebtsList() {

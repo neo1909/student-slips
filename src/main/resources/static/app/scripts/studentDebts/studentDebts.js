@@ -87,9 +87,7 @@ let source = {
     localdata: null,
     updaterow: function (rowid, rowdata, commit) {
         let beforeData = originalData[rowid];
-        console.log("a",beforeData);
         let selectedRowData = $('#grdStudentDebts').jqxGrid('getrowdata', rowid);
-        console.log('c',selectedRowData)
         if(Object.keys(beforeData).length > 0 && Object.keys(selectedRowData).length > 0) {
             if(beforeData.quantity ===  selectedRowData.quantity) {
                 isUpdate = false;
@@ -212,11 +210,24 @@ function init() {
 function onSearch () {
     let params = {
         grade: $("#cmbStdGradeSrch").val() ? $("#cmbStdGradeSrch").val() : "",
-        sclass: $("#cmbStdClazzSrch").val() ? $("#cmbStdClazzSrch").val() : "",
+        sClass: $("#cmbStdClazzSrch").val() ? $("#cmbStdClazzSrch").val() : "",
         serviceId: $("#cmbStdServiceSrch").val() ? $("#cmbStdServiceSrch").val() : "",
+        price : $("#iptPriceSrch").val(),
+        suppliersId : "1"
     };
     // source.localdata = data;
     // originalData = data
+    $("#grdStudentDebts").on('cellvaluechanged', function (event) {
+        let args = event.args;
+        let datafield = args.datafield;
+        let rowIndex = args.rowindex;
+        let value = +args.newvalue;
+        let selectedRowData = $('#grdStudentDebts').jqxGrid('getrowdata', rowIndex);
+        let price = +selectedRowData.price
+        if(datafield === 'quantity') {
+            $("#grdStudentDebts").jqxGrid('setcellvalue', rowIndex, "amountDebt", value* price);
+        }
+    });
     $('#grdStudentDebts').jqxGrid('updatebounddata');
     SS.sendToServer(
         'SD_R_02',
@@ -256,7 +267,7 @@ $(document).ready(function () {
             $("#cmbStdServiceSrch").jqxDropDownList({
                 enableBrowserBoundsDetection: true,
                 source:[{},...value.lst],
-                displayMember: "serviceName", valueMember: "suppliersId",
+                displayMember: "serviceName", valueMember: "serviceId",
                 selectedIndex: 0,
                 height: SS.IPT_HEIGHT,
                 width: '100%',
@@ -297,7 +308,7 @@ $(document).ready(function () {
                    sClass: $('#cmbStdClazzSrch').val(),
                    price:  $("#iptPriceSrch").val(),
                    debitDate:$("#iptDateSrch").val(),
-                   comment: $('#iptComment').val(),
+                   purpose: $('#iptComment').val(),
                    studentsDebtsList: tr_update
                }
                SS.sendToServer(
