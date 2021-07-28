@@ -1,25 +1,10 @@
+let originalData = [];
+let tr_update = [];
+let isUpdate = false;
+let arrService = [];
+let currentIndex = "";
 
-const data = [{
-    studentId: '1',
-    schoolId:2,
-    suppliersId: 1,
-    serviceId:1,
-    referenceNo: 'ABC',
-    quantity:1,
-    purpose: 'Eating',
-    debitDate:'19/9/2020',
-    amountDebt: '2,000,000',
-    sClass:1,
-    grade:1,
-    delYn: '',
-    insertId: 1,
-    insertDate:''   ,
-    updateId:0,
-    updateDate: '',
-    nameStudent: 'Teddy',
-}];
-
-var source = {
+let source = {
     datafields: [
         {
             name: 'studentId',
@@ -88,12 +73,38 @@ var source = {
         {
             name: 'nameStudent',
             type: 'string'
+        },
+        {
+            name: 'nameService',
+            type: 'string'
+        },
+        {
+            name: 'price',
+            type: 'string'
         }
     ],
     datatype: "array",
-    localdata: null, // đoạn này a fix cứng thì okie
+    localdata: null,
     updaterow: function (rowid, rowdata, commit) {
-        // synchronize with the server - send update command
+        let beforeData = originalData[rowid];
+        console.log("a",beforeData);
+        let selectedRowData = $('#grdStudentDebts').jqxGrid('getrowdata', rowid);
+        console.log('c',selectedRowData)
+        if(Object.keys(beforeData).length > 0 && Object.keys(selectedRowData).length > 0) {
+            if(beforeData.quantity ===  selectedRowData.quantity) {
+                isUpdate = false;
+                if(tr_update.length > 0) {
+                    tr_update = tr_update.filter(item => item.quantity !== selectedRowData.quantity);
+                }
+                return;
+            }
+            if(tr_update.length > 0) {
+                tr_update = tr_update.filter(item => item.quantity !== selectedRowData.quantity);
+            }
+            tr_update.push(selectedRowData);
+            isUpdate = true;
+        }
+
         commit(true);
     }
 };
@@ -104,14 +115,15 @@ function createGrid () {
         source: dataAdapter,
         selectionmode: 'singlecell',
         editable: true,
-        columns: [{
-            text: 'Name student',
-            datafield: 'nameStudent',
-            align: 'center',
-            cellsalign: 'left',
-            width: '16,6667%',
-            editable: false,
-        },
+        columns: [
+            {
+                text: 'Name student',
+                datafield: 'nameStudent',
+                align: 'center',
+                cellsalign: 'left',
+                width: '16,6667%',
+                editable: false,
+            },
             {
                 text: 'Reference No',
                 datafield: 'referenceNo',
@@ -121,8 +133,8 @@ function createGrid () {
                 editable: false,
             },
             {
-                text: 'ServiceId',
-                datafield: 'serviceId',
+                text: 'Service',
+                datafield: 'nameService',
                 align: 'center',
                 cellsalign: 'right',
                 width: '16,6667%',
@@ -139,7 +151,7 @@ function createGrid () {
             },
             {
                 text: 'Price',
-                datafield: '',
+                datafield: 'price',
                 align: 'center',
                 cellsalign: 'center',
                 width: '16,6667%',
@@ -201,25 +213,25 @@ function onSearch () {
     let params = {
         grade: $("#cmbStdGradeSrch").val() ? $("#cmbStdGradeSrch").val() : "",
         sclass: $("#cmbStdClazzSrch").val() ? $("#cmbStdClazzSrch").val() : "",
-        serviceId: $("#cmbStdServiceSrch").val() ? $("#cmbStdServiceSrch").val() : ""
+        serviceId: $("#cmbStdServiceSrch").val() ? $("#cmbStdServiceSrch").val() : "",
     };
-    source.localdata = data
+    // source.localdata = data;
+    // originalData = data
     $('#grdStudentDebts').jqxGrid('updatebounddata');
-    // SS.sendToServer(
-    //     'SD_R_01',
-    //     false,
-    //     params,
-    //     function onSuccess(data) {
-    //         fn.gridSource.localdata = data.lst;
-    //         $("#grdStudentDebts").jqxGrid({
-    //             source: fn.gridSource
-    //         });
-    //     },
-    //
-    //     function onError(err) {
-    //         SS.alert(SS.title.ERROR, SS.message.ERROR);
-    //     }
-    // );
+    SS.sendToServer(
+        'SD_R_02',
+        false,
+        params,
+        function onSuccess(data) {
+            source.localdata = data.lst;
+            originalData =  data.lst;
+            $('#grdStudentDebts').jqxGrid('updatebounddata');
+        },
+
+        function onError(err) {
+            SS.alert(SS.title.ERROR, SS.message.ERROR);
+        }
+    );
 }
 
 function onGetService() {
@@ -236,12 +248,11 @@ function onGetService() {
             }
         )
     })
-
 }
 
 $(document).ready(function () {
     onGetService().then(value =>{
-        if(value) {
+        if(value && value.lst) {
             $("#cmbStdServiceSrch").jqxDropDownList({
                 enableBrowserBoundsDetection: true,
                 source:[{},...value.lst],
@@ -251,6 +262,7 @@ $(document).ready(function () {
                 width: '100%',
                 dropDownHorizontalAlignment: 'right'
             });
+            arrService = [...value.lst]
             init();
             createGrid();
             $('#btnStdSrch').click(function () {
@@ -264,12 +276,40 @@ $(document).ready(function () {
                 let value = +args.newvalue;
                 let selectedRowData = $('#grdStudentDebts').jqxGrid('getrowdata', rowIndex);
                 let price = 2000
-                if(datafield == 'quantity') {
+                if(datafield === 'quantity') {
                     $("#grdStudentDebts").jqxGrid('setcellvalue', rowIndex, "amountDebt", value* price);
                 }
             });
             $('#cmbStdServiceSrch').on('change', function (event){
                 $("#iptPriceSrch").val(event.args.item.originalItem.price ?event.args.item.originalItem.price: "" );
+                currentIndex =  +$('#cmbStdServiceSrch').jqxDropDownList('selectedIndex');
+            })
+
+            $('#btnSave').on('click', function (){
+                if(!isUpdate) {
+                    SS.alert('Notification', 'No data update')
+                    return;
+                }
+               let data = {
+                   suppliersId: arrService[currentIndex-1] ? arrService[currentIndex-1].suppliersId : "",
+                   serviceId: $('#cmbStdServiceSrch').val(),
+                   grade : $('#cmbStdGradeSrch').val(),
+                   sClass: $('#cmbStdClazzSrch').val(),
+                   price:  $("#iptPriceSrch").val(),
+                   debitDate:$("#iptDateSrch").val(),
+                   comment: $('#iptComment').val(),
+                   studentsDebtsList: tr_update
+               }
+               SS.sendToServer(
+                   'SD_C_01',
+                   false,
+                   data,
+                   function onSuccess(data) {
+                      onSearch();
+                      isUpdate =  false;
+                   }
+               );
+
             })
         }
     })
