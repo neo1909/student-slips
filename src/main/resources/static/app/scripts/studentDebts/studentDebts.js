@@ -286,7 +286,7 @@ $(document).ready(function () {
                 let rowIndex = args.rowindex;
                 let value = +args.newvalue;
                 let selectedRowData = $('#grdStudentDebts').jqxGrid('getrowdata', rowIndex);
-                let price = 2000
+                let price = +selectedRowData.price
                 if(datafield === 'quantity') {
                     $("#grdStudentDebts").jqxGrid('setcellvalue', rowIndex, "amountDebt", value* price);
                 }
