@@ -3,6 +3,7 @@ package com.studentslips.controller;
 import com.studentslips.common.Common;
 import com.studentslips.entities.StudentDebtsObject;
 import com.studentslips.entities.StudentsDebts;
+import com.studentslips.entities.TaskArchiveSearch;
 import com.studentslips.services.StudentDebtsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,6 +89,21 @@ public class StudentDebtsRestController {
             if (dataStd == 1) {
                 result.put(Common.STATUS, HttpStatus.OK.value());
             }
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
+        }
+
+        return result;
+    }
+
+    @RequestMapping(value = "/TA_R_01", method = RequestMethod.POST)
+    public Map<String, ?> searchTaskArchive(@RequestBody TaskArchiveSearch std){
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            result.put(Common.LIST, studentDebtsService.searchTaskArchive(std));
+            result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
             logger.error(ex.getMessage());
