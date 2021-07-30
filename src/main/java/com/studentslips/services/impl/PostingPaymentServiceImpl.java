@@ -54,7 +54,7 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
             Path path = Paths.get(Common.UPLOADED_FOLDER + file.getOriginalFilename());
             Files.write(path, bytes);
             if(!result.toString().isEmpty()){
-                result.append(",");
+                result.append(", ");
             }
             result.append(file.getOriginalFilename());
 
@@ -209,7 +209,7 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
                 logPostPaymentHistory(statement);
 
                 if(!result.toString().isEmpty()){
-                    result.append(",");
+                    result.append(", ");
                 }
                 result.append(statement.getFilename());
             }
