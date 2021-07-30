@@ -1,6 +1,7 @@
 package com.studentslips.dao;
 
 import com.studentslips.entities.StudentsDebts;
+import com.studentslips.entities.TaskArchiveSearch;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -29,5 +30,9 @@ public class StudentDebtsDao {
     }
     public int deleteStudentsDebtsById(StudentsDebts studentsDebts){
         return this.sqlSession.delete("deleteStudentDebtsById", studentsDebts);
+    }
+
+    public List<StudentsDebts> searchTaskArchive(TaskArchiveSearch taskArchiveSearch) throws Exception {
+        return this.sqlSession.selectList("selectAllStudentDebts", taskArchiveSearch);
     }
 }
