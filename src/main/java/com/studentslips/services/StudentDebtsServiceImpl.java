@@ -3,6 +3,7 @@ package com.studentslips.services;
 import com.studentslips.dao.StudentDebtsDao;
 import com.studentslips.entities.StudentDebtsObject;
 import com.studentslips.entities.StudentsDebts;
+import com.studentslips.entities.TaskArchiveSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +60,12 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
                 sd.setSuppliersId(studentDebtsObject.getSuppliersId());
                 sd.setServiceId(studentDebtsObject.getServiceId());
                 sd.setDebitDate(studentDebtsObject.getDebitDate());
+                sd.setPurpose(studentDebtsObject.getPurpose());
+                sd.setsClass(studentDebtsObject.getsClass());
+                sd.setGrade(studentDebtsObject.getGrade());
+                sd.setInsertId(100);
+                sd.setInsertDate(new Timestamp(System.currentTimeMillis()));
+                sd.setSchoolId(2);
                 studentDebtsDao.insertStudentsDebts(sd);
             }
         }
@@ -69,8 +76,15 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
         List<StudentsDebts> updateStudentsDebtsList = studentDebtsObject.getStudentsDebtsList();
         if(!updateStudentsDebtsList.isEmpty()){
             for (StudentsDebts sd : updateStudentsDebtsList){
+                sd.setUpdateId(100);
+                sd.setUpdateDate(new Timestamp(System.currentTimeMillis()));
                 studentDebtsDao.updateStudentsDebts(sd);
             }
         }
+    }
+
+    @Override
+    public List<StudentsDebts> searchTaskArchive(TaskArchiveSearch taskArchiveSearch) throws Exception {
+        return studentDebtsDao.searchTaskArchive(taskArchiveSearch);
     }
 }

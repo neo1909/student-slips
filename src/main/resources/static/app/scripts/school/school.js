@@ -231,7 +231,6 @@ let fn = {
                     false,
                     { id : schoolId },
                     function onSuccess(data) {
-                        console.log(data)
                         $('#iptId').val(data.obj.id);
                         $('#iptSchoolName').val(data.obj.schoolName);
                         $('#iptAddress').val(data.obj.address);

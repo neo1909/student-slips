@@ -143,6 +143,9 @@
         <if test="serviceId != 0">
             AND SS.service_id = #{serviceId}
         </if>
+        <if test="gradeList != null and gradeList !=''">
+            AND concat(',', SS.grade, ',') like #{gradeList}
+        </if>
     </select>
     <resultMap id = "resultSupplier" type = "com.studentslips.entities.Supplier">
         <result property = "id" column = "id"/>

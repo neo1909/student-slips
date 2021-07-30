@@ -1,5 +1,7 @@
 package com.studentslips.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -12,6 +14,7 @@ public class StudentsDebts {
     private String referenceNo;
     private int quantity;
     private String purpose;
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date debitDate;
     private BigDecimal amountDebt;
     private int grade;
