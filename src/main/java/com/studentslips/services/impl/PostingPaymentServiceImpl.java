@@ -4,7 +4,9 @@ import com.studentslips.common.Common;
 import com.studentslips.common.CurrencyUtil;
 import com.studentslips.common.DateUtil;
 import com.studentslips.dao.BankStatementDao;
+import com.studentslips.dao.BankStatementUploadHistoryDao;
 import com.studentslips.entities.BankStatement;
+import com.studentslips.entities.BankStatementUploadHistory;
 import com.studentslips.services.PostingPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,10 +39,12 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
     @Autowired
     BankStatementDao bankStatementDao;
 
-    @Override
-    public void saveUploadedFiles(List<MultipartFile> files) throws Exception {
-        validateBeforeUpload(files);
+    @Autowired
+    BankStatementUploadHistoryDao bankStatementUploadHistoryDao;
 
+    @Override
+    public String saveUploadedFiles(List<MultipartFile> files) throws Exception {
+        StringBuffer result = new StringBuffer();
         for (MultipartFile file : files) {
             if (file.isEmpty()) {
                 continue;
@@ -48,20 +53,24 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(Common.UPLOADED_FOLDER + file.getOriginalFilename());
             Files.write(path, bytes);
+            if(!result.toString().isEmpty()){
+                result.append(",");
+            }
+            result.append(file.getOriginalFilename());
 
             processConvertAndSave(file);
         }
+        return result.toString();
     }
 
-    private void validateBeforeUpload(List<MultipartFile> files) throws Exception {
+    @Override
+    public boolean validateBeforeUpload(List<MultipartFile> files) {
 
         List<String> filenames = files.stream().map(MultipartFile::getOriginalFilename).collect(Collectors.toList());
 
         List<BankStatement> bankStatements = bankStatementDao.selectUploadedBankStatement(filenames);
 
-        if (!CollectionUtils.isEmpty(bankStatements)) {
-            throw new Exception();
-        }
+        return CollectionUtils.isEmpty(bankStatements);
     }
 
     private void processConvertAndSave(MultipartFile file) throws Exception {
@@ -88,12 +97,27 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
             e.printStackTrace();
         }
 
+        bankStatement.setSchoolId(1);
         bankStatement.setFilename(file.getOriginalFilename());
         bankStatement.setInsertDate(new Timestamp(System.currentTimeMillis()));
         bankStatement.setInsertId(100);
 
         bankStatementDao.insertBankStatement(bankStatement);
 
+        logUploadHistory(bankStatement);
+
+    }
+
+    private void logUploadHistory(BankStatement bankStatement) {
+
+        BankStatementUploadHistory bankStatementUploadHistory = new BankStatementUploadHistory();
+        bankStatementUploadHistory.setSchoolId(1);
+        bankStatementUploadHistory.setFilename(bankStatement.getFilename());
+        bankStatementUploadHistory.setPath(Common.UPLOADED_FOLDER + bankStatement.getFilename());
+        bankStatementUploadHistory.setUploadDate(new Timestamp(System.currentTimeMillis()));
+        bankStatementUploadHistory.setInsertDate(new Timestamp(System.currentTimeMillis()));
+        bankStatementUploadHistory.setInsertId(100);
+        bankStatementUploadHistoryDao.insertBankStatementUploadHistory(bankStatementUploadHistory);
     }
 
     private void setZaglavlje(BankStatement bankStatement, Document doc) throws ParseException {
@@ -125,12 +149,15 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
 
                 Element element = (Element) node;
 
+                String accountNumber = element.getElementsByTagName("RacunIzvoda").item(0).getTextContent();
+                String payer = element.getElementsByTagName("Naziv").item(0).getTextContent();
                 String noOfChanges = element.getElementsByTagName("BrNalogaPotrazuje").item(0).getTextContent();
                 String balance = element.getElementsByTagName("IznosPotrazuje").item(0).getTextContent();
                 String noOfBankStatement = element.getElementsByTagName("BrojIzvoda").item(0).getTextContent();
 
+                bankStatement.setAccountNumber(accountNumber);
+                bankStatement.setPayer(payer);
                 bankStatement.setNoOfChanges(Integer.parseInt(noOfChanges));
-
                 bankStatement.setBalance(CurrencyUtil.convertStringCommaToBigDecimal(balance));
                 bankStatement.setNoOfBankStatement(Integer.parseInt(noOfBankStatement));
             }
@@ -149,10 +176,12 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
 
                 String claims = element.getElementsByTagName("Iznos").item(0).getTextContent();
                 String referenceNo = element.getElementsByTagName("PozivOdobrenja").item(0).getTextContent();
+                String purpose = element.getElementsByTagName("SvrhaDoznake").item(0).getTextContent();
                 String currencyDate = element.getElementsByTagName("DatumValute").item(0).getTextContent();
 
                 bankStatement.setClaims(CurrencyUtil.convertStringCommaToBigDecimal(claims));
                 bankStatement.setReferenceNo(referenceNo);
+                bankStatement.setPurpose(purpose);
                 bankStatement.setCurrencyDate(DateUtil.converStringToTimeStamp(currencyDate));
             }
         }
@@ -166,7 +195,8 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
     }
 
     @Override
-    public void saveAndPostPayment() throws Exception {
+    public String saveAndPostPayment() throws Exception {
+        StringBuffer result = new StringBuffer();
         BankStatement bankStatement = new BankStatement();
         bankStatement.setPostPaymentYn(Common.VAL_N);
         List<BankStatement> bankStatements = bankStatementDao.selectAllBankStatement(bankStatement);
@@ -175,10 +205,28 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
             for (BankStatement statement: bankStatements) {
                 statement.setPostPaymentYn(Common.VAL_Y);
                 bankStatementDao.updateBankStatement(statement); // TO DO
+
+                logPostPaymentHistory(statement);
+
+                if(!result.toString().isEmpty()){
+                    result.append(",");
+                }
+                result.append(statement.getFilename());
             }
         }
+
+        return result.toString();
     }
 
+    private void logPostPaymentHistory(BankStatement bankStatement) {
+
+        BankStatementUploadHistory bankStatementUploadHistory = new BankStatementUploadHistory();
+        bankStatementUploadHistory.setFilename(bankStatement.getFilename());
+        bankStatementUploadHistory.setPostPaymentDate(new Timestamp(System.currentTimeMillis()));
+        bankStatementUploadHistory.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        bankStatementUploadHistory.setUpdateId(100);
+        bankStatementUploadHistoryDao.updateBankStatementUploadHistory(bankStatementUploadHistory);
+    }
 
 }
 

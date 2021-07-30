@@ -14,6 +14,7 @@
         <mapper resource="mapper/School.xml" />
         <mapper resource="mapper/StudentDebts.xml" />
         <mapper resource="mapper/BankStatement.xml" />
+        <mapper resource="mapper/BankStatementUploadHistory.xml" />
     </mappers>
 
 </configuration>

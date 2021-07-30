@@ -6,10 +6,21 @@ import java.sql.Timestamp;
 public class BankStatement {
     private int id;
 
+    private int schoolId;
+
     private String filename;
 
     // DatumIzvoda
     private Timestamp bankStatementDate;
+
+    // RacunIzvoda
+    private String accountNumber;
+
+    // Naziv
+    private String payer;
+
+    // SvrhaDoznake
+    private String purpose;
 
     // BrNalogaPotrazuje
     private int noOfChanges;
@@ -158,5 +169,37 @@ public class BankStatement {
 
     public void setPostPaymentYn(String postPaymentYn) {
         this.postPaymentYn = postPaymentYn;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public String getPayer() {
+        return payer;
+    }
+
+    public void setPayer(String payer) {
+        this.payer = payer;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    public int getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(int schoolId) {
+        this.schoolId = schoolId;
     }
 }

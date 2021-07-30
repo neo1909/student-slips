@@ -36,13 +36,19 @@ public class PostingPaymentRestController {
 
         if (StringUtils.isEmpty(uploadedFileName)) {
             result.put("errMsg", "Please select a file!");
-            result.put(Common.STATUS, HttpStatus.OK.value());
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            return result;
+        }
+
+        if (!postingPaymentService.validateBeforeUpload(Arrays.asList(uploadFiles))){
+            result.put("errMsg", "Bank Statement is existed!");
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
             return result;
         }
 
         try {
-            postingPaymentService.saveUploadedFiles(Arrays.asList(uploadFiles));
-            result.put("msg", "File uploaded");
+            String msg = postingPaymentService.saveUploadedFiles(Arrays.asList(uploadFiles));
+            result.put("msg", "Bank statement " + msg + " is uploaded" );
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,8 +85,8 @@ public class PostingPaymentRestController {
         Map<String, Object> result = new HashMap<>();
 
         try {
-            postingPaymentService.saveAndPostPayment();
-
+            String msg = postingPaymentService.saveAndPostPayment();
+            result.put("msg","Bank statement " + msg + " is saved and archived" );
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception e) {
             e.printStackTrace();

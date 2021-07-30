@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 public class BankStatementUploadHistory {
     private int id;
+    private int schoolId;
     private String filename;
     private String path;
     private Timestamp uploadDate;
@@ -96,5 +97,13 @@ public class BankStatementUploadHistory {
 
     public void setDelYn(String delYn) {
         this.delYn = delYn;
+    }
+
+    public int getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(int schoolId) {
+        this.schoolId = schoolId;
     }
 }

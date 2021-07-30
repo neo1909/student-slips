@@ -39,11 +39,10 @@ let fn = {
 
                 console.log(data);
                 if (data.status == "500") {
-                    SS.alert( SS.title.ERROR,"Cannot Upload File.");
+                    SS.alert( SS.title.ERROR,data.errMsg);
                 } else {
-                    SS.alert( SS.title.INFO, "Upload success!");
-                    $("#btnPostUploadBankStmt").prop("disabled", true);
-                    $("#customFile").prop("disabled", true);
+                    SS.alert( SS.title.INFO, data.msg);
+                    fn.disableUpload(true);
                 }
             },
             error: function (e) {
@@ -60,9 +59,8 @@ let fn = {
             '',
             function onSuccess(data) {
                 if (data.status == '200'){
-                    SS.alert( SS.title.INFO, "Upload success!");
-                    $("#btnPostUploadBankStmt").prop("disabled", false);
-                    $("#customFile").prop("disabled", false);
+                    SS.alert( SS.title.INFO, data.msg);
+                    fn.disableUpload(false);
                 }
             },
 
@@ -79,8 +77,7 @@ let fn = {
             '',
             function onSuccess(data) {
               if (data.isNotPostStatement){
-                  $("#btnPostUploadBankStmt").prop("disabled", true);
-                  $("#customFile").prop("disabled", true);
+                  fn.disableUpload(true);
               }
             },
 
@@ -88,6 +85,11 @@ let fn = {
                 SS.alert( SS.title.ERROR, SS.message.ERROR);
             }
         );
+    },
+
+    disableUpload: function(isDisable){
+        $("#btnPostUploadBankStmt").prop("disabled", isDisable);
+        $("#customFile").prop("disabled", isDisable);
     },
 }
 

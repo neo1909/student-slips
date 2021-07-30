@@ -12,6 +12,18 @@
             bank_statement_date,
         </if>
 
+        <if test="accountNumber != null">
+            account_number,
+        </if>
+
+        <if test="payer != null">
+            payer,
+        </if>
+
+        <if test="purpose != null">
+            purpose,
+        </if>
+
         <if test="noOfChanges != null">
             no_of_changes,
         </if>
@@ -50,6 +62,15 @@
         </if>
         <if test="bankStatementDate != null">
             #{bankStatementDate},
+        </if>
+        <if test="accountNumber != null">
+            #{accountNumber},
+        </if>
+        <if test="payer != null">
+            #{payer},
+        </if>
+        <if test="purpose != null">
+            #{purpose},
         </if>
         <if test="noOfChanges != null">
             #{noOfChanges},
@@ -147,8 +168,12 @@
 
     <resultMap id="result" type="com.studentslips.entities.BankStatement">
         <result property="id" column="id"/>
+        <result property="schoolId" column="school_id"/>
         <result property="filename" column="file_name"/>
         <result property="bankStatementDate" column="bank_statement_date"/>
+        <result property="accountNumber" column="account_number"/>
+        <result property="payer" column="payer"/>
+        <result property="purpose" column="purpose"/>
         <result property="noOfChanges" column="no_of_changes"/>
         <result property="balance" column="balance"/>
         <result property="noOfBankStatement" column="no_of_bank_statement"/>
