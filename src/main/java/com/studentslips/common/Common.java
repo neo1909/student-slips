@@ -4,4 +4,10 @@ public class Common {
     public static final String STATUS = "status";
     public static final String LIST = "lst";
     public static final String OBJECT = "obj";
+
+    //Save the uploaded file to this folder
+    public static final String UPLOADED_FOLDER = "D://Upload/";
+
+    public static final String VAL_Y = "Y";
+    public static final String VAL_N = "N";
 }

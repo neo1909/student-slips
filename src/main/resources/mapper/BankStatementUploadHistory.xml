@@ -1,0 +1,149 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BankStatementDao">
+    <insert id="insertBankStatement" parameterType="com.studentslips.entities.BankStatementUploadHistory">
+        INSERT INTO ps_bank_statement (
+        <if test="filename != null">
+            file_name,
+        </if>
+
+        <if test="bankStatementDate != null">
+            bank_statement_date,
+        </if>
+
+        <if test="noOfChanges != null">
+            no_of_changes,
+        </if>
+        <if test="balance != null">
+            balance,
+        </if>
+        <if test="noOfBankStatement != null">
+            no_of_bank_statement,
+        </if>
+        <if test="claims != null">
+            claims,
+        </if>
+        <if test="referenceNo != null">
+            reference_no,
+        </if>
+        <if test="currencyDate != null">
+            currency_date,
+        </if>
+        <if test="insertDate != null">
+            insert_date,
+        </if>
+        <if test="insertId != null">
+            insert_id,
+        </if>
+        <if test="updateDate != null">
+            update_date,
+        </if>
+        <if test="updateId != null">
+            update_id,
+        </if>
+        post_payment_yn,
+        del_yn)
+        VALUES (
+        <if test="filename != null">
+            #{filename},
+        </if>
+        <if test="bankStatementDate != null">
+            #{bankStatementDate},
+        </if>
+        <if test="noOfChanges != null">
+            #{noOfChanges},
+        </if>
+        <if test="balance != null">
+            #{balance},
+        </if>
+        <if test="noOfBankStatement != null">
+            #{noOfBankStatement},
+        </if>
+        <if test="claims != null">
+            #{claims},
+        </if>
+        <if test="referenceNo != null">
+            #{referenceNo},
+        </if>
+        <if test="currencyDate != null">
+            #{currencyDate},
+        </if>
+        <if test="insertDate != null">
+            #{insertDate},
+        </if>
+        <if test="insertId != null">
+            #{insertId},
+        </if>
+        <if test="updateDate != null">
+            #{updateDate},
+        </if>
+        <if test="updateId != null">
+            #{updateId},
+        </if>
+        'N',
+        'N')
+    </insert>
+
+    <update id="updateBankStatement" parameterType="com.studentslips.entities.BankStatementUploadHistory">
+        UPDATE ps_bank_statement
+        SET
+        <if test="updateDate!=null">
+            update_date = #{updateDate}
+        </if>
+        <if test="updateId != null">
+            update_id = #{updateId},
+        </if>
+
+        <if test="postPaymentYn != null">
+            post_payment_yn = #{postPaymentYn},
+        </if>
+
+        update_id = #{updateId}, update_date = #{updateDate}
+        WHERE ID = #{id}
+
+    </update>
+
+    <delete id="deleteBankStatementById" parameterType="com.studentslips.entities.BankStatementUploadHistory">
+        UPDATE ps_bank_statement
+        SET del_yn      = 'Y',
+            update_id   = #{updateId},
+            update_date = #{updateDate}
+        WHERE ID = #{id}
+          AND del_yn = 'N'
+
+    </delete>
+
+    <select id="selectAllBankStatement" parameterType="com.studentslips.entities.BankStatementUploadHistory" resultMap="result">
+        SELECT bst.*
+        FROM ps_bank_statement bst
+        where bst.del_yn = 'N'
+        <if test="filename != null">
+            and file_name = #{filename}
+        </if>
+        <if test="postPaymentYn != null">
+            and post_payment_yn = #{postPaymentYn}
+        </if>
+    </select>
+
+    <select id="selectBankStatementById" parameterType="int" resultType="com.studentslips.entities.BankStatementUploadHistory"
+            resultMap="result">>
+    SELECT
+    FROM ps_bank_statement bst
+    WHERE HT.ID = #{id}
+      AND HT.del_yn = 'N';
+    </select>
+
+    <resultMap id="result" type="com.studentslips.entities.BankStatementUploadHistory">
+        <result property="id" column="id"/>
+        <result property="filename" column="file_name"/>
+        <result property="path" column="path"/>
+        <result property="upload_date" column="upload_date"/>
+        <result property="post_payment_date" column="post_payment_date"/>
+        <result property="insertDate" column="insert_date"/>
+        <result property="insertId" column="insert_id"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="updateId" column="update_id"/>
+        <result property="delYn" column="del_Yn"/>
+    </resultMap>
+</mapper>

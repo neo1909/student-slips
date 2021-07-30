@@ -13,6 +13,7 @@
         <mapper resource="mapper/Supplier.xml" />
         <mapper resource="mapper/School.xml" />
         <mapper resource="mapper/StudentDebts.xml" />
+        <mapper resource="mapper/BankStatement.xml" />
     </mappers>
 
 </configuration>
