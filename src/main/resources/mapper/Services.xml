@@ -4,7 +4,7 @@
 <mapper namespace="ServicesDao">
     <insert id="insertService" parameterType="com.studentslips.entities.Services">
         INSERT INTO PS_Service (NAME, school_id, del_yn, insert_date, insert_id)
-        VALUES (#{name},#{schoolId}, 'N', #{insertDate}, #{insertId});
+        VALUES (#{name},#{schoolId}, 'N', SYSDATE(), #{insertId});
     </insert>
 
     <update id="updateService" parameterType="com.studentslips.entities.Services">
@@ -12,21 +12,21 @@
         <if test="name!= null ">
             NAME = #{name},
         </if>
-        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id}
+        update_id = #{updateId}, update_date = SYSDATE() WHERE ID = #{id}
         <if test="schoolId!=0 ">
-            AND  S.school_id = #{schoolId}
+            AND  school_id = #{schoolId}
         </if>
     </update>
 
     <delete id="deleteServiceById" parameterType="com.studentslips.entities.Services">
-        UPDATE PS_Service SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id} and del_yn='N';
+        UPDATE PS_Service SET  del_yn = 'Y',update_id = #{updateId}, update_date = SYSDATE() WHERE ID = #{id} and del_yn='N';
     </delete>
 
     <select id="selectAllService" parameterType="com.studentslips.entities.Services" resultMap="result">
         SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
         FROM PS_Service S
         where  S.del_yn='N'
-        <if test="name!=null and name !=''">
+        <if test="!''.equals(name)">
             <bind name="nameLike" value="'%' + name + '%'" />
             AND   S.name like #{nameLike}
         </if>
@@ -36,7 +36,7 @@
     </select>
 
     <select id="selectServiceById" parameterType="int" resultType="com.studentslips.entities.Services">
-        SELECT S.*,,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName FROM PS_Service S WHERE S.ID = #{id} AND S.del_yn='N';
+        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName FROM PS_Service S WHERE S.ID = #{id} AND S.del_yn='N';
     </select>
 
     <resultMap id = "result" type = "com.studentslips.entities.Services">

@@ -3,7 +3,7 @@ package com.studentslips.entities;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-public class SupplierServiceDTO {
+public class SupplierServiceDetail {
 
     private int suppliersId;
     private String name;
@@ -24,14 +24,14 @@ public class SupplierServiceDTO {
     private BigDecimal amount10;
     private BigDecimal amount11;
     private BigDecimal amount12;
-    private String gradeList;
+    private String grade;
     private String delYn;
     private int insertId;
     private Timestamp insertDate;
     private int updateId;
     private Timestamp updateDate;
 
-    public SupplierServiceDTO() {
+    public SupplierServiceDetail() {
     }
 
     public int getSuppliersId() {
@@ -219,11 +219,11 @@ public class SupplierServiceDTO {
     }
 
     public String getGradeList() {
-        return gradeList;
+        return grade;
     }
 
-    public void setGradeList(String gradeList) {
-        this.gradeList = gradeList;
+    public void setGradeList(String grade) {
+        this.grade = grade;
     }
 
     public BigDecimal getAmount11() {

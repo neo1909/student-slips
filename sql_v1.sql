@@ -54,6 +54,7 @@ CREATE TABLE `PS_Suppliers` (
 
 
 CREATE TABLE `PS_Suppliers_Service` (
+    `id` INT NOT NULL AUTO_INCREMENT,
 	`suppliers_id` INT NOT NULL ,
 	`service_id` INT NOT NULL,
 	`school_id` INT NOT NULL,
@@ -71,7 +72,7 @@ CREATE TABLE `PS_Suppliers_Service` (
 	`amount_10` DECIMAL  ,
 	`amount_11` DECIMAL  ,
 	`amount_12` DECIMAL  ,
-	`grade` VARCHAR(255) NOT NULL,
+	`grade` INT,
     `del_yn` VARCHAR(1),
 	`insert_date` DATETIME ,
 	`insert_id` INT  ,

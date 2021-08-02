@@ -2,7 +2,7 @@ package com.studentslips.services;
 
 import com.studentslips.dao.SupplierDao;
 import com.studentslips.entities.Supplier;
-import com.studentslips.entities.SupplierServiceDTO;
+import com.studentslips.entities.SupplierServiceDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +22,13 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public List<SupplierServiceDTO> selectAllSupplierDetail(SupplierServiceDTO supplierServiceDTO) {
-        return supplierDao.selectAllSupplierService(supplierServiceDTO);
+    public List<SupplierServiceDetail> selectAllSupplierDetail(SupplierServiceDetail supplierServiceDetail) {
+        return supplierDao.selectAllSupplierService(supplierServiceDetail);
+    }
+
+    @Override
+    public Supplier selectSupplierById(Supplier supplier) {
+        return supplierDao.selectSupplierById(supplier.getId());
     }
 
     @Override
@@ -32,54 +37,56 @@ public class SupplierServiceImpl implements SupplierService {
         supplier.setInsertId(1000);
         supplier.setInsertDate(new Timestamp(System.currentTimeMillis()));
         supplierDao.insertSupplier(supplier);
-        List<SupplierServiceDTO> lstSupplierServiceDTO =supplier.getLstSupplierServiceDTOS();
-        if (!lstSupplierServiceDTO.isEmpty()){
-            for (SupplierServiceDTO entity: lstSupplierServiceDTO) {
-                entity.setInsertId(1000);
-                entity.setInsertDate(new Timestamp(System.currentTimeMillis()));
-                supplierDao.insertSupplierService(entity);
-            }
-        }
+//        List<SupplierService> lstSupplierService =supplier.getLstSupplierServiceS();
+//        if (!lstSupplierService.isEmpty()){
+//            for (SupplierService entity: lstSupplierService) {
+//                entity.setInsertId(1000);
+//                entity.setInsertDate(new Timestamp(System.currentTimeMillis()));
+//                supplierDao.insertSupplierService(entity);
+//            }
+//        }
     }
 
     @Override
-    @Transactional
     public void updateSupplier(Supplier supplier) {
-        Supplier ObjSupp = supplierDao.selectSupplierById(supplier.getId());
-        if (ObjSupp != null && !ObjSupp.getName().equals(supplier.getName())){
-            supplier.setUpdateId(1000);
-            supplier.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-            supplierDao.updateSupplier(supplier);
-        }
+        supplier.setUpdateId(1000);
+        supplier.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        supplierDao.updateSupplier(supplier);
+
+//        Supplier ObjSupp = supplierDao.selectSupplierById(supplier.getId());
+//        if (ObjSupp != null && !ObjSupp.getName().equals(supplier.getName())){
+//            supplier.setUpdateId(1000);
+//            supplier.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+//            supplierDao.updateSupplier(supplier);
+//        }
         //delete all supplier service
-        SupplierServiceDTO dto = new SupplierServiceDTO();
-        dto.setSuppliersId(supplier.getId());
-        dto.setUpdateId(1000);
-        dto.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-        supplierDao.deleteSupplierService(dto);
-        //add new
-        List<SupplierServiceDTO> lst =supplier.getLstSupplierServiceDTOS();
-        if (!lst.isEmpty()){
-            for (SupplierServiceDTO entity: lst) {
-                entity.setInsertId(1000);
-                entity.setInsertDate(new Timestamp(System.currentTimeMillis()));
-                supplierDao.insertSupplierService(entity);
-            }
-        }
+//        SupplierService dto = new SupplierService();
+//        dto.setSuppliersId(supplier.getId());
+//        dto.setUpdateId(1000);
+//        dto.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+//        supplierDao.deleteSupplierService(dto);
+//        //add new
+//        List<SupplierService> lst =supplier.getLstSupplierServiceS();
+//        if (!lst.isEmpty()){
+//            for (SupplierService entity: lst) {
+//                entity.setInsertId(1000);
+//                entity.setInsertDate(new Timestamp(System.currentTimeMillis()));
+//                supplierDao.insertSupplierService(entity);
+//            }
+//        }
     }
 
     @Override
-    @Transactional
     public void deleteSupplier(Supplier supplier) {
         supplier.setUpdateId(1000);
         supplier.setUpdateDate(new Timestamp(System.currentTimeMillis()));
         supplierDao.deleteSupplier(supplier);
 
-        SupplierServiceDTO entity = new SupplierServiceDTO();
-        entity.setSuppliersId(supplier.getId());
-        entity.setUpdateId(1000);
-        entity.setUpdateDate(new Timestamp(System.currentTimeMillis()));
-        supplierDao.deleteSupplierService(entity);
+//        SupplierService entity = new SupplierService();
+//        entity.setSuppliersId(supplier.getId());
+//        entity.setUpdateId(1000);
+//        entity.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+//        supplierDao.deleteSupplierService(entity);
 
     }
 }
