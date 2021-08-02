@@ -5,7 +5,7 @@ import com.studentslips.common.Common;
 import com.studentslips.common.ErrorCode;
 import com.studentslips.common.ResultEntity;
 import com.studentslips.entities.Supplier;
-import com.studentslips.entities.SupplierServiceDTO;
+import com.studentslips.entities.SupplierServiceDetail;
 import com.studentslips.services.SupplierService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,11 +42,25 @@ public class SupplierRestController {
         }
         return result;
     }
+
+//    @RequestMapping(value = "/SL_R_02", method = RequestMethod.POST)
+//    public Map<String,?> getSupplierService(@RequestBody SupplierService std){
+//        Map<String, Object> result = new HashMap<>();
+//        try {
+//            result.put(Common.LIST, supplierService.selectAllSupplierDetail(std));
+//            result.put(Common.STATUS, HttpStatus.OK.value());
+//        } catch (Exception ex) {
+//            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+//            logger.error(ex.getMessage());
+//        }
+//        return result;
+//    }
+
     @RequestMapping(value = "/SL_R_02", method = RequestMethod.POST)
-    public Map<String,?> getSupplierService(@RequestBody SupplierServiceDTO std){
+    public Map<String,?> getSupplierById(@RequestBody Supplier std){
         Map<String, Object> result = new HashMap<>();
         try {
-            result.put(Common.LIST, supplierService.selectAllSupplierDetail(std));
+            result.put(Common.OBJECT, supplierService.selectSupplierById(std));
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -54,6 +68,7 @@ public class SupplierRestController {
         }
         return result;
     }
+
     @RequestMapping(value = "/SL_C_01", method = RequestMethod.POST)
     public Map<String,?> insertSupplier(@RequestBody Supplier std){
         Map<String, Object> result = new HashMap<>();

@@ -13,7 +13,7 @@ public class Supplier {
     private int updateId;
     private Timestamp updateDate;
     private String delYn;
-    private List<SupplierServiceDTO> lstSupplierServiceDTOS;
+    private List<SupplierServiceDetail> lstSupplierServiceDetail;
     private String schoolName;
 
     public Supplier() {
@@ -91,11 +91,11 @@ public class Supplier {
         this.delYn = delYn;
     }
 
-    public List<SupplierServiceDTO> getLstSupplierServiceDTOS() {
-        return lstSupplierServiceDTOS;
+    public List<SupplierServiceDetail> getLstSupplierServiceS() {
+        return lstSupplierServiceDetail;
     }
 
-    public void setLstSupplierServiceDTOS(List<SupplierServiceDTO> lstSupplierServiceDTOS) {
-        this.lstSupplierServiceDTOS = lstSupplierServiceDTOS;
+    public void setLstSupplierServiceS(List<SupplierServiceDetail> lstSupplierServiceDetail) {
+        this.lstSupplierServiceDetail = lstSupplierServiceDetail;
     }
 }

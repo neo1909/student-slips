@@ -4,25 +4,25 @@
 <mapper namespace="SupplierDao">
     <insert id="insertSupplier" parameterType="com.studentslips.entities.Supplier"  useGeneratedKeys="true" keyProperty="id">
         INSERT INTO onetouch.ps_suppliers (NAME, school_id, del_yn, insert_date, insert_id)
-        VALUES (#{name}, #{schoolId}, 'N', #{insertDate}, #{insertId});
+        VALUES (#{name}, #{schoolId}, 'N', SYSDATE(), #{insertId});
     </insert>
-    <insert id="insertSupplierService" parameterType="com.studentslips.entities.SupplierServiceDTO">
+    <insert id="insertSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail">
         INSERT INTO onetouch.ps_suppliers_service (suppliers_id, service_id,school_id,price,no_payment,amount_1,amount_2,amount_3,amount_4,amount_5,
                                                    amount_6,amount_7,amount_8,amount_9,amount_10,amount_11,amount_12,grade,del_yn, insert_date, insert_id)
         VALUES (#{suppliersId}, #{serviceId},#{schoolId},#{price},#{noPayment},#{amount1},#{amount2},#{amount3},#{amount4},#{amount5},#{amount6},#{amount7},
-                #{amount8},#{amount9},#{amount10},#{amount11},#{amount12},#{gradeList},'N', #{insertDate}, #{insertId});
+                #{amount8},#{amount9},#{amount10},#{amount11},#{amount12},#{gradeList},'N', SYSDATE(), #{insertId});
     </insert>
     <update id="updateSupplier" parameterType="com.studentslips.entities.Supplier">
         UPDATE onetouch.ps_suppliers  SET
         <if test="name!= null and name != ''">
             NAME = #{name},
         </if>
-        update_id = #{updateId}, update_date = #{updateDate} WHERE ID = #{id}
+        update_id = #{updateId}, update_date = SYSDATE() WHERE ID = #{id}
         <if test="schoolId!=0 ">
             AND  school_id = #{schoolId}
         </if>
     </update>
-    <update id="updateSupplierService" parameterType="com.studentslips.entities.SupplierServiceDTO">
+    <update id="updateSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail">
         UPDATE onetouch.ps_suppliers_service  SET
         <if test="name!= null and name!=''">
             NAME = #{name},
@@ -78,24 +78,24 @@
         <if test="gradeList!= null and  gradeList !=''">
             grade=#{gradeList},
         </if>
-        update_id = #{updateId}, update_date = #{updateDate} WHERE suppliers_id = #{suppliersId} AND service_id=#{serviceId}
+        update_id = #{updateId}, update_date = SYSDATE() WHERE suppliers_id = #{suppliersId} AND service_id=#{serviceId}
         <if test="schoolId!=0 ">
             AND  school_id = #{schoolId}
         </if>
     </update>
     <delete id="deleteSupplier" parameterType="com.studentslips.entities.Supplier">
-        UPDATE onetouch.ps_suppliers  SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate}
+        UPDATE onetouch.ps_suppliers  SET  del_yn = 'Y',update_id = #{updateId}, update_date = SYSDATE()
         WHERE ID = #{id} AND del_yn = 'N';
     </delete>
-    <delete id="deleteSupplierService" parameterType="com.studentslips.entities.SupplierServiceDTO">
-        UPDATE onetouch.ps_suppliers_service   SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate}
+    <delete id="deleteSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail">
+        UPDATE onetouch.ps_suppliers_service   SET  del_yn = 'Y',update_id = #{updateId}, update_date = SYSDATE()
         WHERE suppliers_id = #{suppliersId}
         <if test="serviceId != 0">
           AND service_id=#{serviceId}
         </if>
           AND del_yn = 'N';
     </delete>
-    <select id="selectSupplierDetail" parameterType="com.studentslips.entities.SupplierServiceDTO"  resultMap="result">
+    <select id="selectSupplierDetail" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="result">
         SELECT SS.suppliers_id,S.name,SS.service_id,(select name from onetouch.ps_service where SS.service_id=id) AS service_name
              ,SS.price,SS.no_payment,SS.amount_1,SS.amount_2,SS.amount_3,SS.amount_4,SS.amount_5,SS.amount_6,SS.amount_7
              ,SS.amount_8,SS.amount_9,SS.amount_10,SS.amount_11,SS.amount_12,SS.grade,SS.school_id
@@ -120,6 +120,10 @@
         ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn
         FROM onetouch.ps_suppliers S
         where S.del_yn='N'
+        <if test="!''.equals(name)">
+            <bind name="nameLike" value="'%' + name + '%'" />
+            AND   S.name like #{nameLike}
+        </if>
         <if test="schoolId != 0">
             AND S.school_id=#{schoolId}
         </if>
@@ -130,7 +134,7 @@
         FROM onetouch.ps_suppliers S
         where S.del_yn='N' and S.id =#{id}
     </select>
-    <select id="selectSupplierDetailById" parameterType="com.studentslips.entities.SupplierServiceDTO"  resultMap="result">
+    <select id="selectSupplierDetailById" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="result">
         SELECT SS.*,(select name from onetouch.ps_service where SS.service_id=id) AS service_name
         FROM  onetouch.ps_suppliers_service SS
         where SS.del_yn='N'
@@ -159,7 +163,7 @@
         <result property = "updateDate" column = "update_date"/>
     </resultMap>
 
-    <resultMap id = "result" type = "com.studentslips.entities.SupplierServiceDTO">
+    <resultMap id = "result" type = "com.studentslips.entities.SupplierServiceDetail">
         <result property = "suppliersId" column = "suppliers_id"/>
         <result property = "name" column = "NAME"/>
         <result property = "schoolId" column = "school_id"/>
@@ -180,7 +184,7 @@
         <result property = "amount10" column = "amount_10"/>
         <result property = "amount11" column = "amount_11"/>
         <result property = "amount12" column = "amount_12"/>
-        <result property = "gradeList" column = "grade"/>
+        <result property = "grade" column = "grade"/>
         <result property = "insertId" column = "insert_id"/>
         <result property = "insertDate" column = "insert_date"/>
         <result property = "updateId" column = "update_id"/>
