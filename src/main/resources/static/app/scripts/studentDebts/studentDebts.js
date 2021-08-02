@@ -5,8 +5,7 @@ let arrService = [];
 let currentIndex = "";
 
 let source = {
-    datafields: [
-        {
+    datafields: [{
             name: 'studentId',
             type: 'int'
         },
@@ -88,15 +87,15 @@ let source = {
     updaterow: function (rowid, rowdata, commit) {
         let beforeData = originalData[rowid];
         let selectedRowData = $('#grdStudentDebts').jqxGrid('getrowdata', rowid);
-        if(Object.keys(beforeData).length > 0 && Object.keys(selectedRowData).length > 0) {
-            if(beforeData.quantity ===  selectedRowData.quantity) {
+        if (Object.keys(beforeData).length > 0 && Object.keys(selectedRowData).length > 0) {
+            if (beforeData.quantity === selectedRowData.quantity) {
                 isUpdate = false;
-                if(tr_update.length > 0) {
+                if (tr_update.length > 0) {
                     tr_update = tr_update.filter(item => item.quantity !== selectedRowData.quantity);
                 }
                 return;
             }
-            if(tr_update.length > 0) {
+            if (tr_update.length > 0) {
                 tr_update = tr_update.filter(item => item.quantity !== selectedRowData.quantity);
             }
             tr_update.push(selectedRowData);
@@ -107,14 +106,13 @@ let source = {
     }
 };
 
-function createGrid () {
+function createGrid() {
     let dataAdapter = new $.jqx.dataAdapter(source);
     $("#grdStudentDebts").jqxGrid({
         source: dataAdapter,
         selectionmode: 'singlecell',
         editable: true,
-        columns: [
-            {
+        columns: [{
                 text: 'Name student',
                 datafield: 'nameStudent',
                 align: 'center',
@@ -184,7 +182,7 @@ function init() {
     });
     $("#cmbStdGradeSrch").jqxDropDownList({
         enableBrowserBoundsDetection: true,
-        source: SS.gradeEmpty,
+        source: SS.grade,
         selectedIndex: 0,
         height: SS.IPT_HEIGHT,
         width: '100%',
@@ -192,11 +190,18 @@ function init() {
     });
     $("#cmbStdClazzSrch").jqxDropDownList({
         enableBrowserBoundsDetection: true,
-        source: SS.clazzEmpty,
+        source: SS.clazz,
         selectedIndex: 0,
         height: SS.IPT_HEIGHT,
         width: '100%',
         dropDownHorizontalAlignment: 'right'
+    });
+    $("#cmbStdServiceSrch").jqxDropDownList({
+        enableBrowserBoundsDetection: true,
+        height: SS.IPT_HEIGHT,
+        width: '100%',
+        dropDownHorizontalAlignment: 'right',
+        disabled: true
     });
 
     $("#iptComment").jqxTextArea({
@@ -207,36 +212,28 @@ function init() {
 
 }
 
-function onSearch () {
+function onSearch() {
     let params = {
         grade: $("#cmbStdGradeSrch").val() ? $("#cmbStdGradeSrch").val() : "",
         sClass: $("#cmbStdClazzSrch").val() ? $("#cmbStdClazzSrch").val() : "",
         serviceId: $("#cmbStdServiceSrch").val() ? $("#cmbStdServiceSrch").val() : "",
-        price : $("#iptPriceSrch").val(),
-        suppliersId : "1"
+        price: $("#iptPriceSrch").val(),
+        suppliersId: $('#cmbSuplier').val()
     };
-    // source.localdata = data;
-    // originalData = data
-    $("#grdStudentDebts").on('cellvaluechanged', function (event) {
-        let args = event.args;
-        let datafield = args.datafield;
-        let rowIndex = args.rowindex;
-        let value = +args.newvalue;
-        let selectedRowData = $('#grdStudentDebts').jqxGrid('getrowdata', rowIndex);
-        let price = +selectedRowData.price
-        if(datafield === 'quantity') {
-            $("#grdStudentDebts").jqxGrid('setcellvalue', rowIndex, "amountDebt", value* price);
-        }
-    });
-    $('#grdStudentDebts').jqxGrid('updatebounddata');
+    if(!params.serviceId) {
+        SS.alert('Notification', 'Please select service')
+        return;
+    }
     SS.sendToServer(
         'SD_R_02',
         false,
         params,
         function onSuccess(data) {
-            source.localdata = data.lst;
-            originalData =  data.lst;
-            $('#grdStudentDebts').jqxGrid('updatebounddata');
+            if(data) {
+                source.localdata = data.lst;
+                originalData = data.lst;
+                $('#grdStudentDebts').jqxGrid('updatebounddata');
+            }
         },
 
         function onError(err) {
@@ -245,12 +242,11 @@ function onSearch () {
     );
 }
 
-function onGetService() {
+function onGetSupplier() {
     return new Promise(resolve => {
         SS.sendToServer(
-            'SL_R_02',
-            false,
-            {},
+            'SL_R_01',
+            false, {},
             function onSuccess(data) {
                 resolve(data)
             },
@@ -261,21 +257,67 @@ function onGetService() {
     })
 }
 
-$(document).ready(function () {
-    onGetService().then(value =>{
-        if(value && value.lst) {
+function onGetService(gradeId, suppliersId) {
+    SS.sendToServer(
+        'SL_R_02',
+        false, {
+            grade: gradeId,
+            suppliersId: suppliersId
+        },
+
+        function onSuccess(data) {
+            if (data && data.lst && data.lst.length > 0) {
+                $("#cmbStdServiceSrch").jqxDropDownList({
+                    source: [...data.lst],
+                    displayMember: "serviceName",
+                    valueMember: "serviceId",
+                    disabled: false,
+                    selectedIndex: 0
+                })
+                return
+            }
             $("#cmbStdServiceSrch").jqxDropDownList({
+                disabled: true,
+                source: [],
+            })
+            $("#iptPriceSrch").val("");
+
+        },
+        function onError(err) {
+            SS.alert(SS.title.ERROR, SS.message.ERROR);
+        }
+    )
+}
+
+
+$(document).ready(function () {
+    onGetSupplier().then(value => {
+        if (value && value.lst) {
+            $("#cmbSuplier").jqxDropDownList({
                 enableBrowserBoundsDetection: true,
-                source:[{},...value.lst],
-                displayMember: "serviceName", valueMember: "serviceId",
+                source: [{}, ...value.lst],
+                displayMember: "name",
+                valueMember: "id",
                 selectedIndex: 0,
                 height: SS.IPT_HEIGHT,
                 width: '100%',
                 dropDownHorizontalAlignment: 'right'
             });
-            arrService = [...value.lst]
             init();
             createGrid();
+            const dataLocalStoreage = JSON.parse( localStorage.getItem('task'));
+            if(dataLocalStoreage && Object.keys(dataLocalStoreage).length >0) {
+                $("#cmbStdGradeSrch").jqxDropDownList('val', dataLocalStoreage.grade);
+                $("#cmbStdClazzSrch").jqxDropDownList('val', dataLocalStoreage.sClass);
+                $("#cmbSuplier").jqxDropDownList('val', dataLocalStoreage.suppliersId);
+                onGetService(dataLocalStoreage.grade,dataLocalStoreage.suppliersId)
+                $("#cmbStdServiceSrch").jqxDropDownList('val', dataLocalStoreage.serviceId);
+                $("#iptDateSrch").jqxDateTimeInput('setDate', new Date(dataLocalStoreage.debitDate));
+                $("#iptPriceSrch").val(dataLocalStoreage.price)
+                $('#iptComment').val(dataLocalStoreage.purpose);
+                onSearch();
+
+            }
             $('#btnStdSrch').click(function () {
                 $('#grdStudentDebts').jqxGrid('refresh');
                 onSearch();
@@ -287,39 +329,78 @@ $(document).ready(function () {
                 let value = +args.newvalue;
                 let selectedRowData = $('#grdStudentDebts').jqxGrid('getrowdata', rowIndex);
                 let price = +selectedRowData.price
-                if(datafield === 'quantity') {
-                    $("#grdStudentDebts").jqxGrid('setcellvalue', rowIndex, "amountDebt", value* price);
+                if (datafield === 'quantity') {
+                    $("#grdStudentDebts").jqxGrid('setcellvalue', rowIndex, "amountDebt", value * price);
                 }
             });
-            $('#cmbStdServiceSrch').on('change', function (event){
-                $("#iptPriceSrch").val(event.args.item.originalItem.price ?event.args.item.originalItem.price: "" );
-                currentIndex =  +$('#cmbStdServiceSrch').jqxDropDownList('selectedIndex');
+            $('#cmbSuplier').on('change', function (event) {
+                if (event.args && event.args.item) {
+                    const suppliersId = event.args.item.originalItem.id;
+                    const gradeId = $('#cmbStdGradeSrch').val()
+                    onGetService(gradeId, suppliersId);
+                }
+            })
+            $('#cmbStdGradeSrch').on('change', function (event) {
+                if (event.args && event.args.item) {
+                    const suppliersId = $('#cmbSuplier').val();
+                    const gradeId = event.args.item.originalItem
+                    onGetService(gradeId, suppliersId);
+                }
             })
 
-            $('#btnSave').on('click', function (){
-                if(!isUpdate) {
+            $('#cmbStdServiceSrch').on('change', function (event) {
+                $("#iptPriceSrch").val(event.args.item.originalItem.price ? event.args.item.originalItem.price : "");
+                currentIndex = +$('#cmbStdServiceSrch').jqxDropDownList('selectedIndex');
+            })
+
+            $('#btnSave').on('click', function () {
+                if(dataLocalStoreage && dataLocalStoreage.isUpdate) {
+                    let params = {
+                        suppliersId: $('#cmbSuplier').val(),
+                        serviceId: $('#cmbStdServiceSrch').val(),
+                        grade: $('#cmbStdGradeSrch').val(),
+                        sClass: $('#cmbStdClazzSrch').val(),
+                        price: $("#iptPriceSrch").val(),
+                        debitDate: $("#iptDateSrch").val(),
+                        purpose: $('#iptComment').val(),
+                        studentsDebtsList: tr_update
+                    }
+                    SS.sendToServer(
+                        'SD_U_01',
+                        false,
+                        params,
+                        function onSuccess(data) {
+                            localStorage.removeItem('task');
+                            window.location.href = "/taskArchive";
+                            return;
+
+                        }
+                    );
+
+                }
+                if (!isUpdate) {
                     SS.alert('Notification', 'No data update')
                     return;
                 }
-               let data = {
-                   suppliersId: arrService[currentIndex-1] ? arrService[currentIndex-1].suppliersId : "",
-                   serviceId: $('#cmbStdServiceSrch').val(),
-                   grade : $('#cmbStdGradeSrch').val(),
-                   sClass: $('#cmbStdClazzSrch').val(),
-                   price:  $("#iptPriceSrch").val(),
-                   debitDate:$("#iptDateSrch").val(),
-                   purpose: $('#iptComment').val(),
-                   studentsDebtsList: tr_update
-               }
-               SS.sendToServer(
-                   'SD_C_01',
-                   false,
-                   data,
-                   function onSuccess(data) {
-                      onSearch();
-                      isUpdate =  false;
-                   }
-               );
+                let data = {
+                    suppliersId: $('#cmbSuplier').val(),
+                    serviceId: $('#cmbStdServiceSrch').val(),
+                    grade: $('#cmbStdGradeSrch').val(),
+                    sClass: $('#cmbStdClazzSrch').val(),
+                    price: $("#iptPriceSrch").val(),
+                    debitDate: $("#iptDateSrch").val(),
+                    purpose: $('#iptComment').val(),
+                    studentsDebtsList: tr_update
+                }
+                SS.sendToServer(
+                    'SD_C_01',
+                    false,
+                    data,
+                    function onSuccess(data) {
+                        isUpdate = false;
+                        window.location.href = "/taskArchive"
+                    }
+                );
 
             })
         }
