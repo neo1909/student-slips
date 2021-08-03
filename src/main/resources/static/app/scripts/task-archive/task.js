@@ -1,25 +1,3 @@
-const data = [{
-    studentId: '1',
-    schoolId:2,
-    suppliersId: 1,
-    serviceId:1,
-    referenceNo: 'ABC',
-    quantity:1,
-    purpose: 'Eating',
-    debitDate:'19/9/2020',
-    amountDebt: '2,000,000',
-    sClass:1,
-    grade:1,
-    delYn: '',
-    insertId: 1,
-    insertDate:''   ,
-    updateId:0,
-    updateDate: '',
-    nameStudent: 'Teddy',
-    price:2000
-}];
-
-
 let source = {
     datafields: [{
             name: 'studentId',
@@ -99,7 +77,7 @@ let source = {
         }
     ],
     datatype: "array",
-    localdata: data,
+    localdata: null,
 };
 
 function createGrid() {
