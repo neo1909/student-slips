@@ -75,8 +75,8 @@
         <if test="amount12!= 0 ">
             amount_12=#{amount12},
         </if>
-        <if test="gradeList!= null and  gradeList !=''">
-            grade=#{gradeList},
+        <if test="grade!= null and  grade !=''">
+            grade=#{grade},
         </if>
         update_id = #{updateId}, update_date = SYSDATE() WHERE suppliers_id = #{suppliersId} AND service_id=#{serviceId}
         <if test="schoolId!=0 ">
@@ -120,7 +120,7 @@
         ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn
         FROM onetouch.ps_suppliers S
         where S.del_yn='N'
-        <if test="!''.equals(name)">
+        <if test="name !=null and !''.equals(name)">
             <bind name="nameLike" value="'%' + name + '%'" />
             AND   S.name like #{nameLike}
         </if>
@@ -147,8 +147,8 @@
         <if test="serviceId != 0">
             AND SS.service_id = #{serviceId}
         </if>
-        <if test="gradeList != null and gradeList !=''">
-            AND concat(',', SS.grade, ',') like #{gradeList}
+        <if test="grade != null and grade !=''">
+            AND concat(',', SS.grade, ',') like #{grade}
         </if>
     </select>
     <resultMap id = "resultSupplier" type = "com.studentslips.entities.Supplier">

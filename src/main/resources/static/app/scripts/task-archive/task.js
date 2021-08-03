@@ -103,7 +103,7 @@ function createGrid() {
             },
             {
                 text: 'Class',
-                datafield: 'sclass',
+                datafield: 'sClass',
                 align: 'center',
                 cellsalign: 'right',
                 width: '10%',
@@ -208,6 +208,7 @@ function onDelete(rowIndex) {
 
 function onUpdate(rowIndex) {
     let data = $("#grdTask").jqxGrid('getrowdata', rowIndex);
+    console.log("----",data)
     const taskData = {
         isUpdate: true,
         grade: data.grade,
@@ -220,6 +221,7 @@ function onUpdate(rowIndex) {
         price: data.price,
         studentId: data.studentId
     }
+    console.log(data)
     localStorage.setItem('task', JSON.stringify(taskData));
     window.location.href = "/studentDebts";
 }

@@ -103,7 +103,7 @@
     </select>
 
     <select id="selectAllStudentDebts" parameterType="com.studentslips.entities.TaskArchiveSearch" resultMap="result">
-        select sd.debit_date,sd.grade,sd.class,(select name from onetouch.ps_service where sd.service_id=id) as service_name,sd.purpose
+        select sd.debit_date,sd.grade,sd.class,(select name from onetouch.ps_service where sd.service_id=id) as service_name,sd.purpose,sd.price
         ,sd.suppliers_id,sd.service_id,sd.school_id
         from onetouch.ps_students_debts sd
         where sd.debit_date between #{fromDate} and  #{toDate}

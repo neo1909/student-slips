@@ -182,7 +182,7 @@ function init() {
     });
     $("#cmbStdGradeSrch").jqxDropDownList({
         enableBrowserBoundsDetection: true,
-        source: SS.grade,
+        source: SS.gradeEmpty,
         selectedIndex: 0,
         height: SS.IPT_HEIGHT,
         width: '100%',
@@ -213,6 +213,7 @@ function init() {
 }
 
 function onSearch() {
+    const dataLocalStoreage = JSON.parse( localStorage.getItem('task'));
     let params = {
         grade: $("#cmbStdGradeSrch").val() ? $("#cmbStdGradeSrch").val() : "",
         sClass: $("#cmbStdClazzSrch").val() ? $("#cmbStdClazzSrch").val() : "",
@@ -225,7 +226,7 @@ function onSearch() {
         return;
     }
     SS.sendToServer(
-        'SD_R_02',
+        dataLocalStoreage && dataLocalStoreage.isUpdate ? 'SD_R_01' : 'SD_R_02',
         false,
         params,
         function onSuccess(data) {
@@ -259,7 +260,7 @@ function onGetSupplier() {
 
 function onGetService(gradeId, suppliersId) {
     SS.sendToServer(
-        'SL_R_02',
+        'SL_R_03',
         false, {
             grade: gradeId,
             suppliersId: suppliersId
@@ -354,6 +355,10 @@ $(document).ready(function () {
             })
 
             $('#btnSave').on('click', function () {
+                if (!isUpdate) {
+                    SS.alert('Notification', 'No data update')
+                    return;
+                }
                 if(dataLocalStoreage && dataLocalStoreage.isUpdate) {
                     let params = {
                         suppliersId: $('#cmbSuplier').val(),
@@ -378,10 +383,7 @@ $(document).ready(function () {
                     );
 
                 }
-                if (!isUpdate) {
-                    SS.alert('Notification', 'No data update')
-                    return;
-                }
+
                 let data = {
                     suppliersId: $('#cmbSuplier').val(),
                     serviceId: $('#cmbStdServiceSrch').val(),
