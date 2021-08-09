@@ -4,7 +4,7 @@
 <mapper namespace="SchoolDao">
     <insert id="insertSchool" parameterType="com.studentslips.entities.School">
         INSERT INTO PS_School (NAME,address, zipcode, city,municipality,bank_account_number, del_yn, insert_date, insert_id)
-        VALUES (#{schoolName}, #{address}, #{zipCode}, #{city},#{municipality},#{backAccountNumber}, 'N', #{insertDate}, #{insertId});
+        VALUES (#{schoolName}, #{address}, #{zipCode}, #{city},#{municipality},#{backAccountNumber}, 'N', SYSDATE(), #{insertId});
     </insert>
 
     <update id="updateSchool" parameterType="com.studentslips.entities.School">
@@ -28,7 +28,7 @@
             bank_account_number = #{backAccountNumber},
         </if>
         update_id = #{updateId}
-        , update_date = #{updateDate}
+        , update_date = SYSDATE()
 
         WHERE ID = #{id}
     </update>
@@ -37,7 +37,7 @@
         UPDATE PS_School SET
             del_yn = 'Y'
                              , update_id = #{updateId}
-                             , update_date = #{updateDate}
+                             , update_date = SYSDATE()
         WHERE ID = #{id} AND del_yn = 'N'
     </delete>
 
@@ -45,6 +45,10 @@
         SELECT S.*
         FROM PS_School S
         where  S.del_yn='N'
+        <if test="schoolName!=null and schoolName !=''">
+            <bind name="nameLike" value="'%' + schoolName + '%'" />
+        AND   name like #{nameLike}
+        </if>
     </select>
 
     <select id="selectSchoolById" parameterType="int" resultMap="result">

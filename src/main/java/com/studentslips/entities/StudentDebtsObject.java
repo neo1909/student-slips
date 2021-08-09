@@ -3,6 +3,7 @@ package com.studentslips.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class StudentDebtsObject {
     private int sClass;
     private BigDecimal price;
     @JsonFormat(pattern="dd/MM/yyyy")
-    private Date debitDate;
+    private Timestamp debitDate;
     private String purpose;
     private List<StudentsDebts> studentsDebtsList;
 
@@ -61,11 +62,11 @@ public class StudentDebtsObject {
         this.price = price;
     }
 
-    public Date getDebitDate() {
+    public Timestamp getDebitDate() {
         return debitDate;
     }
 
-    public void setDebitDate(Date debitDate) {
+    public void setDebitDate(Timestamp debitDate) {
         this.debitDate = debitDate;
     }
 

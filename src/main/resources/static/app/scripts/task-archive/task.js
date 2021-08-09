@@ -208,12 +208,11 @@ function onDelete(rowIndex) {
 
 function onUpdate(rowIndex) {
     let data = $("#grdTask").jqxGrid('getrowdata', rowIndex);
-    console.log("----",data)
     const taskData = {
         isUpdate: true,
         grade: data.grade,
         debitDate: data.debitDate,
-        sClass:data.class,
+        sClass:data.sClass,
         suppliersId: data.suppliersId,
         serviceId: data.serviceId,
         purpose: data.purpose,
@@ -221,7 +220,6 @@ function onUpdate(rowIndex) {
         price: data.price,
         studentId: data.studentId
     }
-    console.log(data)
     localStorage.setItem('task', JSON.stringify(taskData));
     window.location.href = "/studentDebts";
 }

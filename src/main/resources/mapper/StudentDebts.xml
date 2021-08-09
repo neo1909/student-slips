@@ -4,7 +4,7 @@
 <mapper namespace="StudentDebtsDao">
     <insert id="insertStudentDebts" parameterType="com.studentslips.entities.StudentsDebts">
         INSERT INTO ps_students_debts (student_id,suppliers_id, service_id, school_id, reference_no, quantity, purpose,debit_date, amount_debt,price,grade,class, del_yn, insert_date, insert_id)
-        VALUES (#{studentId}, #{suppliersId}, #{serviceId}, #{schoolId},#{referenceNo},#{quantity}, #{purpose}, #{debitDate},#{amountDebt},#{price},#{grade},#{sClass}, 'N', #{insertDate}, #{insertId});
+        VALUES (#{studentId}, #{suppliersId}, #{serviceId}, #{schoolId},#{referenceNo},#{quantity}, #{purpose}, #{debitDate},#{amountDebt},#{price},#{grade},#{sClass}, 'N', SYSDATE(), #{insertId});
     </insert>
 
     <update id="updateStudentDebts" parameterType="com.studentslips.entities.StudentsDebts">
@@ -12,7 +12,7 @@
         quantity = #{quantity}
         ,amount_debt = #{amountDebt}
         , update_id = #{updateId}
-        , update_date = #{updateDate}
+        , update_date = SYSDATE()
         WHERE del_yn = 'N'
         <if test="serviceId!=0 ">
             AND  service_id = #{serviceId}
@@ -38,7 +38,7 @@
         UPDATE ps_students_debts  SET
             del_yn = 'Y'
                              , update_id = #{updateId}
-                             , update_date = #{updateDate}
+                             , update_date = SYSDATE()
         WHERE del_yn = 'N'
         <if test="serviceId!=0 ">
             AND  service_id = #{serviceId}
@@ -71,10 +71,10 @@
             AND  sd.school_id = #{schoolId}
         </if>
         <if test="grade!=0 ">
-            AND   s.grade = #{grade}
+            AND   sd.grade = #{grade}
         </if>
         <if test="sClass!=0 ">
-            AND   s.class = #{sClass}
+            AND   sd.class = #{sClass}
         </if>
         <if test="suppliersId!=0 ">
             AND   sd.suppliers_id = #{suppliersId}

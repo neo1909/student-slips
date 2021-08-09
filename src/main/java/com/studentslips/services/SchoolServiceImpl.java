@@ -1,5 +1,6 @@
 package com.studentslips.services;
 
+import com.studentslips.common.SessionUtil;
 import com.studentslips.dao.SchoolDao;
 import com.studentslips.entities.School;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +14,22 @@ public class SchoolServiceImpl implements SchoolService{
     @Autowired
     private SchoolDao schoolDao;
     @Override
-    public int insertSchool(School school) {
-        school.setInsertId(100);
-        school.setInsertDate(new Timestamp(System.currentTimeMillis()));
+    public int insertSchool(School school) throws Exception {
+        school.setInsertId(SessionUtil.getUserLoginId());
         return schoolDao.insertSchool(school);
     }
 
     @Override
-    public int updateSchool(School school) {
-        school.setUpdateId(100);
-        school.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+    public int updateSchool(School school) throws Exception {
+        school.setUpdateId(SessionUtil.getUserLoginId());
         return schoolDao.updateSchool(school);
     }
 
     @Override
-    public int deleteSchoolById(int id) {
+    public int deleteSchoolById(int id) throws Exception {
         School school = new School();
         school.setId(id);
-        school.setUpdateId(100);
-        school.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        school.setUpdateId(SessionUtil.getUserLoginId());
         return schoolDao.deleteSchoolById(school);
     }
 

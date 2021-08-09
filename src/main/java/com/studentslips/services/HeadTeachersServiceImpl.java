@@ -1,5 +1,6 @@
 package com.studentslips.services;
 
+import com.studentslips.common.SessionUtil;
 import com.studentslips.dao.HeadTeachersDao;
 import com.studentslips.entities.HeadTeachers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,30 +16,30 @@ public class HeadTeachersServiceImpl implements HeadTeachersService{
     HeadTeachersDao headTeachersDao;
 
     @Override
-    public int insertHeadTeachers(HeadTeachers headTeachers) {
-        headTeachers.setInsertId(100);
-        headTeachers.setInsertDate(new Timestamp(System.currentTimeMillis()));
+    public int insertHeadTeachers(HeadTeachers headTeachers) throws Exception {
+        headTeachers.setInsertId(SessionUtil.getUserLoginId());
+        headTeachers.setSchoolId(SessionUtil.getSchoolId());
         return headTeachersDao.insertHeadTeachers(headTeachers);
     }
 
     @Override
-    public int updateHeadTeachers(HeadTeachers headTeachers) {
-        headTeachers.setUpdateId(100);
-        headTeachers.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+    public int updateHeadTeachers(HeadTeachers headTeachers) throws Exception {
+        headTeachers.setUpdateId(SessionUtil.getUserLoginId());
         return headTeachersDao.updateHeadTeachers(headTeachers);
     }
 
     @Override
-    public int deleteHeadTeachersById(int id) {
+    public int deleteHeadTeachersById(int id) throws Exception {
         HeadTeachers headTeachers = new HeadTeachers();
         headTeachers.setId(id);
-        headTeachers.setUpdateId(100);
-        headTeachers.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+        headTeachers.setUpdateId(SessionUtil.getUserLoginId());
+        headTeachers.setSchoolId(SessionUtil.getSchoolId());
         return headTeachersDao.deleteHeadTeachersById(headTeachers);
     }
 
     @Override
-    public List<HeadTeachers> selectAllHeadTeachers(HeadTeachers headTeachers) {
+    public List<HeadTeachers> selectAllHeadTeachers(HeadTeachers headTeachers) throws Exception {
+        headTeachers.setSchoolId(SessionUtil.getSchoolId());
         return headTeachersDao.selectAllHeadTeachers(headTeachers);
     }
 
