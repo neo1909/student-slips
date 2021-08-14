@@ -2,6 +2,7 @@ package com.studentslips.dao;
 
 import com.studentslips.entities.Student;
 import com.studentslips.entities.StudentOverviewBalanceDTO;
+import com.studentslips.entities.StudentOverviewBalancePrintDTO;
 import com.studentslips.entities.StudentsDebts;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -19,5 +20,9 @@ public class StudentOverviewBalanceDao {
 
     public List<StudentOverviewBalanceDTO> selectStudentOverviewBalance(Student std) throws Exception {
         return this.sqlSession.selectList("selectStudentOverviewBalance", std);
+    }
+
+    public StudentOverviewBalancePrintDTO selectPrintData(StudentOverviewBalancePrintDTO dto) {
+        return this.sqlSession.selectOne("selectPrintData", dto);
     }
 }

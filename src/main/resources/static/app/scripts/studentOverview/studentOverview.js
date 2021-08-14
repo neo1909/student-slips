@@ -114,8 +114,6 @@ let fn = {
         );
     },
 
-
-
     onDelete: function (rowIndex) {
         let data = $("#grdStudents").jqxGrid('getrowdata', rowIndex);
         let studentId = data.id;

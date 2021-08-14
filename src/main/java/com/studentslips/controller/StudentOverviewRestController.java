@@ -2,6 +2,7 @@ package com.studentslips.controller;
 
 import com.studentslips.common.Common;
 import com.studentslips.entities.Student;
+import com.studentslips.entities.StudentOverviewBalancePrintDTO;
 import com.studentslips.services.StudentOverviewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,21 @@ public class StudentOverviewRestController {
 
         try {
             result.put(Common.LIST, studentOverviewService.selectStudentOverviewBalance(std));
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
+        }
+
+        return result;
+    }
+
+    @RequestMapping(value = "/ST_OV_03", method = RequestMethod.POST)
+    public Map<String, ?> getStudentOverviewBalance(@RequestBody(required = false) StudentOverviewBalancePrintDTO dto) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            result.put(Common.LIST, studentOverviewService.selectPrintData(dto));
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());

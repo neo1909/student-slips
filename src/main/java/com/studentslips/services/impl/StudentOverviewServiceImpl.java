@@ -5,6 +5,7 @@ import com.studentslips.dao.StudentOverviewBalanceDao;
 import com.studentslips.entities.Student;
 import com.studentslips.entities.StudentOverview;
 import com.studentslips.entities.StudentOverviewBalanceDTO;
+import com.studentslips.entities.StudentOverviewBalancePrintDTO;
 import com.studentslips.services.StudentOverviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,5 +80,11 @@ public class StudentOverviewServiceImpl implements StudentOverviewService {
         studentOverviewBalanceList.add(totalObj);
 
         return studentOverviewBalanceList;
+    }
+
+    @Override
+    public StudentOverviewBalancePrintDTO selectPrintData(StudentOverviewBalancePrintDTO dto) {
+        dto = studentOverviewBalanceDao.selectPrintData(dto);
+        return dto;
     }
 }

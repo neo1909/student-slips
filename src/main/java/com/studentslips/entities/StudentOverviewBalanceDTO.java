@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class StudentOverviewBalanceDTO {
+    private int id;
     private Timestamp date;
     private String description;
     private BigDecimal debit;
@@ -70,5 +71,13 @@ public class StudentOverviewBalanceDTO {
 
     public void setRowType(int rowType) {
         this.rowType = rowType;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
