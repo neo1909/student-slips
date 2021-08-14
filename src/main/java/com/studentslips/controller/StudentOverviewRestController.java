@@ -28,7 +28,7 @@ public class StudentOverviewRestController {
         Map<String, Object> result = new HashMap<>();
 
         try {
-            result.put(Common.LIST, studentOverviewService.selecStudentOverview(std));
+            result.put(Common.LIST, studentOverviewService.selectStudentOverview(std));
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -38,4 +38,18 @@ public class StudentOverviewRestController {
         return result;
     }
 
+    @RequestMapping(value = "/ST_OV_02", method = RequestMethod.POST)
+    public Map<String, ?> getStudentOverviewBalance(@RequestBody(required = false) Student std) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            result.put(Common.LIST, studentOverviewService.selectStudentOverviewBalance(std));
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
+        }
+
+        return result;
+    }
 }

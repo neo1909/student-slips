@@ -161,10 +161,12 @@ let fn = {
                         $('#iptStdNmOverviewSrch').val(data.obj.name);
                         $('#cmbStdGradeOverviewSSrch').val(data.obj.grade);
                         $('#cmbStdClassOverviewSrch').val(data.obj.sClass);
+                        fnPopup.onSearch(studentId);
                     }
                 );
             }
-        }
+        },
+
     }
 };
 

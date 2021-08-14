@@ -9,17 +9,13 @@ let fnPopup = {
         * */
         fnPopup.gridSource = {
             datafields: [
-                { name: 'id', type: 'int'},
-                { name: 'name', type: 'string'},
-                { name: 'schoolId', type: 'int'},
-                { name: 'schoolName', type: 'string'},
-                { name: 'sClass', type: 'int'},
-                { name: 'grade', type: 'int'},
-                { name: 'delYn', type: 'string'},
-                { name: 'insertId', type: 'int'},
-                { name: 'insertDate', type: 'string'},
-                { name: 'updateId', type: 'int'},
-                { name: 'updateDate', type: 'string'}
+                { name: 'date', type: 'date'},
+                { name: 'description', type: 'string'},
+                { name: 'debit', type: 'int'},
+                { name: 'print', type: 'int'},
+                { name: 'claims', type: 'int'},
+                { name: 'balance', type: 'int'},
+                { name: 'rowType', type: 'int'},
             ],
             datatype: "array",
             localdata: fnPopup.dataset
@@ -36,23 +32,23 @@ let fnPopup = {
         $("#grdStudentBalance").jqxGrid({
             source: dataAdapter,
             columns: [
-                { text: 'Date', datafield: '', align: 'center', cellsalign:'center', width: '10%'
-                    , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
-                        return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">'+
-                            + (rowIndex + 1)
-                            + '</div>';
+                { text: 'Date', datafield: 'date', align: 'center', cellsalign:'center', width: '20%', cellsformat: 'D' },
+
+                { text: 'Description of Service', datafield: 'description', align: 'center', cellsalign:'left', width: '30%,'},
+                { text: 'Debit', datafield: 'debit', align: 'center', cellsalign:'left', width: '15%,'},
+                { text: 'Claim', datafield: 'claims', align: 'center', cellsalign:'center', width: '15%,'},
+                { text: 'Balance', datafield: 'balance', align: 'center', cellsalign:'center', width: '15%,'},
+                { text: 'Print', datafield: 'print', cellsalign:'center', width: '5%,'
+                    , cellsrenderer: function (row, rowIndex, column, value) {
+
+
+                    if(column === 'false') {
+                        return '<div style="text-align: center; margin-top: 4px;"> </div>';
                     }
-                },
-                { text: 'Bank Statement', datafield: 'name', align: 'center', cellsalign:'left', width: '20%,'},
-                { text: 'Description of Service', align: 'center', cellsalign:'left', width: '20%,'},
-                { text: 'Debit', datafield: 'schoolName', align: 'center', cellsalign:'left', width: '15%,'},
-                { text: 'Claim', datafield: 'grade', align: 'center', cellsalign:'center', width: '15%,'},
-                { text: 'Balance', datafield: 'sClass', align: 'center', cellsalign:'center', width: '15%,'},
-                { text: 'Print', cellsalign:'center', width: '5%,'
-                    , cellsrenderer: function (rowIndex, column, value) {
-                        return '<div style="text-align: center; margin-top: 4px;">'
-                            + '<button alt="Edit" class="btn btn-success btn-icon btn-sm" style="margin-right: 10px" onclick="fnPopup.onUpdate(' + rowIndex +')"><span class="glyphicon glyphicon-print"></span></button>'
-                            + '</div>';
+
+                    return '<div style="text-align: center; margin-top: 4px;">'
+                        + '<button alt="Edit" class="btn btn-success btn-icon btn-sm" style="margin-right: 10px" onclick="fnPopup.onUpdate(' + rowIndex +')"><span class="glyphicon glyphicon-print"></span></button>'
+                        + '</div>';
                     }
                 }
             ],
@@ -70,7 +66,7 @@ let fnPopup = {
 
     },
 
-    onSearch: function () {
+    onSearch: function (studentId) {
         let stdNm = $('#iptStdNmSrch').val();
         let stdGrade = $('#cmbStdGradeSrch').val();
         let stdClazz = $('#cmbStdClazzSrch').val();
@@ -79,13 +75,11 @@ let fnPopup = {
         }
 
         let params = {
-            name: stdNm,
-            grade: stdGrade,
-            sClass: stdClazz
+            id: studentId
         };
 
         SS.sendToServer(
-            'ST_R_01',
+            'ST_OV_02',
             false,
             params,
             function onSuccess(data) {

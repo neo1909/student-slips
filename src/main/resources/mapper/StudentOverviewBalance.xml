@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="StudentOverviewBalanceDao">
+
+    <resultMap id="result" type="com.studentslips.entities.StudentOverviewBalanceDTO">
+        <result property="date" column="dateA"/>
+        <result property="description" column="descriptions"/>
+        <result property="debit" column="debit"/>
+        <result property="print" column="print"/>
+        <result property="claims" column="claims"/>
+        <result property="balance" column="balance"/>
+        <result property="rowType" column="row_type"/>
+    </resultMap>
+
+    <select id="selectStudentOverviewBalance" parameterType="com.studentslips.entities.Student" resultMap="result">
+        SELECT
+            debit_date AS dateA,
+            CONCAT((
+                       select name from ps_service where id = sb.service_id
+                   ), ' - ', MONTHNAME(debit_date) , ' 1/1 ') AS descriptions ,
+            amount_debt AS debit,
+            1 AS print,
+            0 AS claims,
+            amount_debt AS balance,
+            1 AS row_type
+        FROM ps_students_debts sb
+        WHERE sb.del_yn = 'N'
+        AND sb.student_id = #{id}
+
+        UNION
+
+        SELECT
+            bank_statement_date AS dateA,
+            CONCAT('Bank statement ', no_of_bank_statement) AS descriptions,
+            0 AS debit,
+            0 AS print,
+            claims,
+            balance AS balance,
+            2 AS row_type
+        FROM ps_bank_statement sb
+        WHERE sb.del_yn = 'N'
+        AND sb.payer = #{id}
+
+    </select>
+</mapper>
