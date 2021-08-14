@@ -18,6 +18,7 @@
         <mapper resource="mapper/BankStatementsArchive.xml" />
         <mapper resource="mapper/OverViewClass.xml" />
         <mapper resource="mapper/OverViewSchool.xml" />
+        <mapper resource="mapper/StudentOverviewBalance.xml" />
     </mappers>
 
 </configuration>

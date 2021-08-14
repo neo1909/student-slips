@@ -1,0 +1,76 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="StudentOverviewBalanceDao">
+
+    <resultMap id="result" type="com.studentslips.entities.StudentOverviewBalanceDTO">
+        <result property="id" column="id"/>
+        <result property="date" column="dateA"/>
+        <result property="description" column="descriptions"/>
+        <result property="debit" column="debit"/>
+        <result property="print" column="print"/>
+        <result property="claims" column="claims"/>
+        <result property="balance" column="balance"/>
+        <result property="rowType" column="row_type"/>
+    </resultMap>
+
+    <select id="selectStudentOverviewBalance" parameterType="com.studentslips.entities.Student" resultMap="result">
+        SELECT
+            sb.student_id AS id,
+            debit_date AS dateA,
+            CONCAT((
+                       select name from ps_service where id = sb.service_id
+                   ), ' - ', MONTHNAME(debit_date) , ' 1/1 ') AS descriptions ,
+            amount_debt AS debit,
+            1 AS print,
+            0 AS claims,
+            amount_debt AS balance,
+            1 AS row_type
+        FROM ps_students_debts sb
+        WHERE sb.del_yn = 'N'
+        AND sb.student_id = #{id}
+
+        UNION
+
+        SELECT
+            sb.payer AS id,
+            bank_statement_date AS dateA,
+            CONCAT('Bank statement ', no_of_bank_statement) AS descriptions,
+            0 AS debit,
+            0 AS print,
+            claims,
+            balance AS balance,
+            2 AS row_type
+        FROM ps_bank_statement sb
+        WHERE sb.del_yn = 'N'
+        AND sb.payer = #{id}
+
+    </select>
+
+    <resultMap id="print-result" type="com.studentslips.entities.StudentOverviewBalancePrintDTO">
+        <result property="id" column="student_id"/>
+        <result property="date" column="debit_date"/>
+        <result property="payerInfo" column="payer_info"/>
+        <result property="purpose" column="purpose"/>
+        <result property="payee" column="payee"/>
+        <result property="amount" column="amount"/>
+        <result property="payerAcc" column="payer_acc"/>
+        <result property="payeeAcc" column="payee_acc"/>
+        <result property="refNo" column="reference_no"/>
+    </resultMap>
+
+    <select id="selectPrintData" parameterType="com.studentslips.entities.StudentOverviewBalancePrintDTO" resultMap="print-result">
+        SELECT
+            student_id as id,
+            debit_date as date,
+            (select name from ps_students where id = #{id}) as payer_info,
+            purpose,
+            (select sc.name from ps_students st join ps_school sc on st.school_id = sc.id where st.id = #{id}) as payee,
+            amount_debt as amount,
+            '1111-222-6886-6789' as payer_acc,
+            (select sc.bank_account_number from ps_students st join ps_school sc on st.school_id = sc.id where st.id = #{id}) as payee_acc,
+            reference_no
+        FROM onetouch.ps_students_debts sd
+        WHERE sd.student_id = #{id} and debit_date = #{date}
+    </select>
+</mapper>
