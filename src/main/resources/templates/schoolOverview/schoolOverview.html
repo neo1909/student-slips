@@ -2,20 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Slips</title>
 
     <link rel="stylesheet" href="/lib/styles/bootstrap.min.css" type="text/css">
-   <!-- <link rel="stylesheet" href="/lib/styles/bootstrap-theme.min.css" type="text/css">-->
+    <!-- <link rel="stylesheet" href="/lib/styles/bootstrap-theme.min.css" type="text/css">-->
     <link rel="stylesheet" href="/lib/styles/font-awesome.min.css" type="text/css" >
     <link rel="stylesheet" href="/lib/styles/ionicons.min.css" type="text/css" >
     <link rel="stylesheet" href="/lib/styles/jqx.base.min.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/jqx.bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/app.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/waitMe.min.css" type="text/css">
-
-    <link rel="stylesheet" href="/app/styles/student.css" type="text/css">
+    <link rel="stylesheet" href="/app/styles/cellColor.css" type="text/css">
+    <link rel="stylesheet" href="/app/styles/student/student.css" type="text/css">
 
 </head>
 
@@ -34,11 +34,11 @@
         <aside class="right-side">
             <section class="content-header">
                 <h1>
-                    Students Overview
+                    School Overview
                 </h1>
                 <ol class="breadcrumb">
                     <li></i>Overview</a></li>
-                    <li class="active">Students Overview</li>
+                    <li class="active">School Overview</li>
                 </ol>
             </section>
 
@@ -48,37 +48,49 @@
                     <div class="div-search">
                         <form role="form">
                             <div class="row">
-                                <div class="form-group col-md-5">
-                                    <label >Name and surname</label>
+                                <div class="form-group col-md-1">
+                                    <label >From Date</label>
                                     <div >
-                                        <input id="iptStdNmSrch" style="padding-left: 12px;"/>
+                                        <input id="iptFromDate">
                                     </div>
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-1">
+                                    <label >To Date</label>
+                                    <div >
+                                        <input id="iptToDate">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-1">
                                     <label >Grade</label>
                                     <div >
                                         <div id="cmbStdGradeSrch" style="padding-left: 12px;"></div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-1">
                                     <label >Class</label>
                                     <div >
                                         <div id="cmbStdClazzSrch" style="padding-left: 12px;"></div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-2">
+                                <div class="form-group col-md-1">
+                                    <label >Class</label>
+                                    <div >
+                                        <div id="cmbServiceSrch" style="padding-left: 12px;"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-5">
                                     <button id="btnStdSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search">Search</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="div-grid">
-                    <!--    <button id="btnStdCreate" class="btn btn-success btn-str" type="button" value="Create Student" >
-                            Create Student
-                        </button>-->
+                        <div class="ss-grid">
+                            <div id="grdSchoolOverview"></div>
+                        </div>
 
                         <div class="ss-grid">
-                            <div id="grdStudents"></div>
+                            <div id="grdSchoolDetail"></div>
                         </div>
                     </div>
                 </div>
@@ -86,53 +98,6 @@
         </aside>
     </div>
 
-</div>
-
-<div class="ss-popup ">
-    <div class="ss-popup-content" id="popupStudent">
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="div-search">
-                    <form role="form">
-                        <div class="row">
-                            <div class="form-group col-md-5">
-                                <label >Name and surname</label>
-                                <div >
-                                    <input id="iptStdNmOverviewSrch" style="padding-left: 12px;"/>
-                                    <input name="iptStdId" id="iptStdId" style="display: none;" disabled/>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label >Grade</label>
-                                <div >
-                                    <div id="cmbStdGradeOverviewSSrch" style="padding-left: 12px;"></div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label >Class</label>
-                                <div >
-                                    <div id="cmbStdClassOverviewSrch" style="padding-left: 12px;"></div>
-                                </div>
-                            </div>
-<!--                            <div class="form-group col-md-2">
-                                <button id="btnStudentBalanceSearch" class="btn btn-primary btn-str btn-search" type="button" value="Search">Search</button>
-                            </div>-->
-                        </div>
-                    </form>
-                </div>
-                <div class="div-grid">
-                    <div class="ss-grid">
-                        <div id="grdStudentBalance"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-<!--        <div class="ss-grid">
-            <div id=""></div>
-        </div>-->
-    </div>
 </div>
 
 <script type="text/javascript" src="/lib/scripts/jquery-1.12.4.min.js"></script>
@@ -144,9 +109,8 @@
 <script type="text/javascript" src="/lib/scripts/bootbox.min.js"></script>
 <script type="text/javascript" src="/lib/scripts/bootbox.locales.min.js"></script>
 <script type="text/javascript" src="/lib/scripts/app.js"></script>
-<script type="text/javascript" src="/app/scripts/common.js"></script>
-<script type="text/javascript" src="/app/scripts/studentOverview/studentOverview.js"></script>
-<script type="text/javascript" src="/app/scripts/studentOverview/studentOverviewPopup.js"></script>
 
+<script type="text/javascript" src="/app/scripts/common.js"></script>
+<script type="text/javascript" src="/app/scripts/schoolOverview/schoolOverview.js"></script>
 </body>
 </html>
