@@ -53,31 +53,33 @@ CREATE TABLE `PS_Suppliers` (
 );
 
 
-CREATE TABLE `PS_Suppliers_Service` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-	`suppliers_id` INT NOT NULL ,
-	`service_id` INT NOT NULL,
-	`school_id` INT NOT NULL,
-	`price` DECIMAL  ,
-	`no_payment` INT NOT NULL,
-	`amount_1` DECIMAL  ,
-	`amount_2` DECIMAL ,
-	`amount_3` DECIMAL  ,
-	`amount_4` DECIMAL  ,
-	`amount_5` DECIMAL  ,
-	`amount_6` DECIMAL  ,
-	`amount_7` DECIMAL  ,
-	`amount_8` DECIMAL  ,
-	`amount_9` DECIMAL  ,
-	`amount_10` DECIMAL  ,
-	`amount_11` DECIMAL  ,
-	`amount_12` DECIMAL  ,
-	`grade` INT,
-    `del_yn` VARCHAR(1),
-	`insert_date` DATETIME ,
-	`insert_id` INT  ,
-	`update_date` DATETIME  ,
-	`update_id` INT  
+CREATE TABLE `ps_suppliers_service` (
+        `id` int NOT NULL AUTO_INCREMENT,
+        `name` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+        `suppliers_id` int NOT NULL,
+        `service_id` int NOT NULL,
+        `school_id` int NOT NULL,
+        `price` decimal(10,0) DEFAULT NULL,
+        `no_payment` int NOT NULL,
+        `amount_1` decimal(10,0) DEFAULT NULL,
+        `amount_2` decimal(10,0) DEFAULT NULL,
+        `amount_3` decimal(10,0) DEFAULT NULL,
+        `amount_4` decimal(10,0) DEFAULT NULL,
+        `amount_5` decimal(10,0) DEFAULT NULL,
+        `amount_6` decimal(10,0) DEFAULT NULL,
+        `amount_7` decimal(10,0) DEFAULT NULL,
+        `amount_8` decimal(10,0) DEFAULT NULL,
+        `amount_9` decimal(10,0) DEFAULT NULL,
+        `amount_10` decimal(10,0) DEFAULT NULL,
+        `amount_11` decimal(10,0) DEFAULT NULL,
+        `amount_12` decimal(10,0) DEFAULT NULL,
+        `grade` int DEFAULT NULL,
+        `del_yn` varchar(1) COLLATE utf8_unicode_ci DEFAULT NULL,
+        `insert_date` datetime DEFAULT NULL,
+        `insert_id` int DEFAULT NULL,
+        `update_date` datetime DEFAULT NULL,
+        `update_id` int DEFAULT NULL,
+        PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `PS_School` (
