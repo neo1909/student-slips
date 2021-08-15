@@ -19,6 +19,11 @@
         <mapper resource="mapper/OverViewClass.xml" />
         <mapper resource="mapper/OverViewSchool.xml" />
         <mapper resource="mapper/StudentOverviewBalance.xml" />
+        <mapper resource="mapper/UserSession.xml" />
+        <mapper resource="mapper/User.xml" />
+        <mapper resource="mapper/Role.xml" />
+        <mapper resource="mapper/UserRole.xml" />
+        <mapper resource="mapper/Session.xml" />
     </mappers>
 
 </configuration>

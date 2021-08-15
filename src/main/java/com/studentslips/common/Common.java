@@ -4,6 +4,7 @@ public class Common {
     public static final String STATUS = "status";
     public static final String LIST = "lst";
     public static final String OBJECT = "obj";
+    public static final String MESSAGE = "msg";
 
     //Save the uploaded file to this folder
     public static final String UPLOADED_FOLDER = "D://Upload/";

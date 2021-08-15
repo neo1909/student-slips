@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserRoleDao">
+
+    <insert id="insertUserRole" parameterType="com.studentslips.entities.UserRole">
+        INSERT INTO ps_user_role (user_id, role_id, del_yn)
+        VALUES (#{userId}, #{roleId}, 'N');
+    </insert>
+
+    <insert id="insertMultiUserRole" parameterType="com.studentslips.entities.UserRole">
+        INSERT INTO ps_user_role (user_id, role_id, del_yn)
+        VALUES
+        <foreach collection="roleIdList" item="roleId" index="index" open="(" separator="),("  close=")">
+            #{userId},
+            #{roleId},
+            'N'
+       </foreach>
+       ON DUPLICATE KEY UPDATE del_yn = 'N'
+    </insert>
+
+    <update id="deleteMultiUserRoleNotIn" parameterType="com.studentslips.entities.UserRole">
+        UPDATE ps_user_role set del_yn = 'Y'
+        where 1=1
+        and user_id = #{userId}
+        and role_id not in 
+        <foreach collection="roleIdList" item="roleId" index="index" open="(" separator=","  close=")">
+            #{roleId}
+       </foreach>
+    </update>
+    
+    <select id="selectAllUserRoles" parameterType="com.studentslips.entities.UserRole" resultMap="userRoleModel">
+        SELECT
+        	UR.user_id,
+        	UR.role_id,
+        	R.name as roleName
+        FROM ps_user_role UR
+        left join ps_roles R on UR.role_id = R.id
+        where 1=1
+        	and UR.del_yn = 'N'
+        <if test="userId != null and userId !=''">
+			and UR.user_id = #{userId}
+		</if>
+        <if test="roleId != null and roleId !=''">
+			and UR.role_id = #{roleId}
+		</if>
+        
+    </select>
+    
+    <resultMap id="userRoleModel" type = "com.studentslips.entities.UserRole">
+        <result property = "userId" column = "user_id"/>
+        <result property = "roleId" column = "role_id"/>
+        <result property = "roleName" column = "roleName"/>
+    </resultMap>
+</mapper>
