@@ -17,4 +17,9 @@ public class SupplierServiceController {
     public String getSupplierPage() {
         return "supplierServices/supplier";
     }
+
+    @GetMapping("supplierService")
+    public String getSupplierServicePage() {
+        return "supplierServices/supplierService";
+    }
 }
