@@ -42,12 +42,10 @@ let fnPopup = {
                 { text: 'Print', datafield: 'print', cellsalign:'center', width: '5%,'
                     , cellsrenderer: function (row, rowIndex, column, value) {
 
-
                     if(column === 'false') {
                         return '<div style="text-align: center; margin-top: 4px;"> </div>';
                     }
 
-                    let divId = 'grdStudentBalance';
                     return '<div style="text-align: center; margin-top: 4px;">'
                         + '<button alt="Edit" class="btn btn-success btn-icon btn-sm" style="margin-right: 10px" onclick="fnPopup.onPrint('+ row +')"><span class="glyphicon glyphicon-print"></span></button>'
                         + '</div>';
@@ -61,10 +59,9 @@ let fnPopup = {
         });
 
         // Search
-        $("#iptStdNmOverviewSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
-        $("#cmbStdGradeOverviewSSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.gradeEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
-        $("#cmbStdClassOverviewSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazzEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
-
+        $("#iptStdNmOverviewSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...', disabled: true  });
+        $("#cmbStdGradeOverviewSSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.gradeEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right', disabled: true  });
+        $("#cmbStdClassOverviewSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazzEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right', disabled: true  });
 
     },
 

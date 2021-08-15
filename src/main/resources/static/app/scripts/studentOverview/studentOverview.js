@@ -47,11 +47,11 @@ let fn = {
                 { text: 'School', datafield: 'schoolName', align: 'center', cellsalign:'left', width: '35%,'},
                 { text: 'Grade', datafield: 'grade', align: 'center', cellsalign:'center', width: '9%,'},
                 { text: 'Class', datafield: 'sClass', align: 'center', cellsalign:'center', width: '9%,'},
-                { text: '', cellsalign:'center', width: '7%,'
+                { text: 'Balance Sheet', cellsalign:'center', width: '7%,'
                     , cellsrenderer: function (rowIndex, column, value) {
                         return '<div style="text-align: center; margin-top: 4px;">'
                             + '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + rowIndex +')"><span class="glyphicon glyphicon-menu-right"></span></button>'
-                            + '<button alt="Delete" class="btn btn-danger btn-icon btn-sm" onclick="fn.onDelete(' + rowIndex +')"><span class="glyphicon glyphicon-trash"></span></button>'
+                          /*  + '<button alt="Delete" class="btn btn-danger btn-icon btn-sm" onclick="fn.onDelete(' + rowIndex +')"><span class="glyphicon glyphicon-trash"></span></button>'*/
                             + '</div>';
                     }
                 }
@@ -63,7 +63,7 @@ let fn = {
         });
 
         // Search
-        $("#iptStdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
+        $("#iptStdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...',  });
         $("#cmbStdGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.gradeEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
         $("#cmbStdClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazzEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
 
@@ -79,8 +79,9 @@ let fn = {
             resizable: false
         });
 
-        $('#btnStdCreate').click(function () {
-            $("#popupStudent").jqxWindow('open', fn.popup.open());
+        $('#btnStdSrch').click(function () {
+            $('#grdStudents').jqxGrid('refresh');
+            fn.onSearch();
         });
 
     },
