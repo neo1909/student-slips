@@ -147,3 +147,60 @@ CREATE TABLE ps_bank_statement (
        del_yn varchar(1) NOT NULL,
        PRIMARY KEY (id)
 );
+
+CREATE TABLE `ps_users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `full_name` varchar(100) DEFAULT NULL,
+  `school_id` int NOT NULL,
+  `email` varchar(180) DEFAULT NULL,
+  `user_type` varchar(45) DEFAULT NULL,
+  `login_retry_count` int DEFAULT NULL,
+  `last_login_date` datetime DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `del_yn` varchar(1) NOT NULL,
+  `insert_date` datetime DEFAULT NULL,
+  `insert_id` int DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `update_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  KEY `fk_user_school_idx` (`school_id`),
+  CONSTRAINT `fk_user_school` FOREIGN KEY (`school_id`) REFERENCES `ps_school` (`id`)
+);
+
+CREATE TABLE `ps_roles` (
+  `id` int NOT NULL,
+  `name` varchar(45) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `del_yn` varchar(1) DEFAULT NULL,
+  `insert_date` datetime DEFAULT NULL,
+  `insert_id` int DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `update_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO `ps_roles` VALUES (1,'USER',NULL,'N',NULL,NULL,NULL,NULL),(2,'ADMIN',NULL,'N',NULL,NULL,NULL,NULL);
+
+CREATE TABLE `ps_user_role` (
+  `user_id` int NOT NULL,
+  `role_id` int NOT NULL,
+  `del_yn` varchar(1) NOT NULL DEFAULT 'N',
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `fk_userrole_role_idx` (`role_id`),
+  CONSTRAINT `fk_userrole_role` FOREIGN KEY (`role_id`) REFERENCES `ps_roles` (`id`),
+  CONSTRAINT `fk_userrole_user` FOREIGN KEY (`user_id`) REFERENCES `ps_users` (`id`)
+);
+
+CREATE TABLE `ps_user_session` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `session_id` varchar(255) NOT NULL,
+  `insert_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_usersession_user_idx` (`user_id`),
+  CONSTRAINT `fk_usersession_user` FOREIGN KEY (`user_id`) REFERENCES `ps_users` (`id`)
+);
+

@@ -16,6 +16,11 @@
         <mapper resource="mapper/BankStatement.xml" />
         <mapper resource="mapper/BankStatementUploadHistory.xml" />
         <mapper resource="mapper/BankStatementsArchive.xml" />
+        <mapper resource="mapper/UserSession.xml" />
+        <mapper resource="mapper/User.xml" />
+        <mapper resource="mapper/Role.xml" />
+        <mapper resource="mapper/UserRole.xml" />
+        <mapper resource="mapper/Session.xml" />
     </mappers>
 
 </configuration>
