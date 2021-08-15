@@ -9,12 +9,12 @@ import java.util.List;
 public interface StudentDebtsService {
 
     public List<StudentsDebts> selectStudentDebts(StudentsDebts studentsDebts) throws Exception;
-    public int insertStudentsDebts(StudentsDebts studentsDebts);
-    public int updateStudentsDebts(StudentsDebts studentsDebts);
-    public int deleteStudentsDebtsById(StudentsDebts studentsDebts);
+    public int insertStudentsDebts(StudentsDebts studentsDebts) throws Exception;
+    public int updateStudentsDebts(StudentsDebts studentsDebts) throws Exception;
+    public int deleteStudentsDebtsById(StudentsDebts studentsDebts) throws Exception;
     public List<StudentsDebts> search(StudentsDebts studentsDebts) throws Exception;
-    public void insertStudentsDebtsObj(StudentDebtsObject studentDebtsObject);
-    public void updateStudentsDebtsObj(StudentDebtsObject studentDebtsObject);
+    public void insertStudentsDebtsObj(StudentDebtsObject studentDebtsObject) throws Exception;
+    public void updateStudentsDebtsObj(StudentDebtsObject studentDebtsObject) throws Exception;
     //TaskArchive
     public List<StudentsDebts> searchTaskArchive(TaskArchiveSearch taskArchiveSearch) throws Exception;
 }

@@ -1,5 +1,6 @@
 package com.studentslips.services;
 
+import com.studentslips.common.SessionUtil;
 import com.studentslips.dao.StudentDebtsDao;
 import com.studentslips.entities.StudentDebtsObject;
 import com.studentslips.entities.StudentsDebts;
@@ -22,34 +23,31 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
     }
 
     @Override
-    public int insertStudentsDebts(StudentsDebts studentsDebts) {
-        studentsDebts.setInsertId(100);
-        studentsDebts.setInsertDate(new Timestamp(System.currentTimeMillis()));
+    public int insertStudentsDebts(StudentsDebts studentsDebts) throws Exception {
+        studentsDebts.setInsertId(SessionUtil.getUserLoginId());
         return studentDebtsDao.insertStudentsDebts(studentsDebts);
     }
 
     @Override
-    public int updateStudentsDebts(StudentsDebts studentsDebts) {
-        studentsDebts.setUpdateId(100);
-        studentsDebts.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+    public int updateStudentsDebts(StudentsDebts studentsDebts) throws Exception {
+        studentsDebts.setUpdateId(SessionUtil.getUserLoginId());
         return studentDebtsDao.updateStudentsDebts(studentsDebts);
     }
 
     @Override
-    public int deleteStudentsDebtsById(StudentsDebts studentsDebts) {
-        studentsDebts.setUpdateId(100);
-        studentsDebts.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+    public int deleteStudentsDebtsById(StudentsDebts studentsDebts) throws Exception {
+        studentsDebts.setUpdateId(SessionUtil.getUserLoginId());
         return studentDebtsDao.deleteStudentsDebtsById(studentsDebts);
     }
 
     @Override
     public List<StudentsDebts> search(StudentsDebts studentsDebts) throws Exception {
-
+        studentsDebts.setSchoolId(SessionUtil.getSchoolId());
         return studentDebtsDao.search(studentsDebts);
     }
 
     @Override
-    public void insertStudentsDebtsObj(StudentDebtsObject studentDebtsObject) {
+    public void insertStudentsDebtsObj(StudentDebtsObject studentDebtsObject) throws Exception {
 
         List<StudentsDebts> studentsDebtsList = studentDebtsObject.getStudentsDebtsList();
         if(!studentsDebtsList.isEmpty()){
@@ -63,21 +61,19 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
                 sd.setPurpose(studentDebtsObject.getPurpose());
                 sd.setsClass(studentDebtsObject.getsClass());
                 sd.setGrade(studentDebtsObject.getGrade());
-                sd.setInsertId(100);
-                sd.setInsertDate(new Timestamp(System.currentTimeMillis()));
-                sd.setSchoolId(2);
+                sd.setInsertId(SessionUtil.getUserLoginId());
+                sd.setSchoolId(SessionUtil.getSchoolId());
                 studentDebtsDao.insertStudentsDebts(sd);
             }
         }
     }
 
     @Override
-    public void updateStudentsDebtsObj(StudentDebtsObject studentDebtsObject) {
+    public void updateStudentsDebtsObj(StudentDebtsObject studentDebtsObject) throws Exception {
         List<StudentsDebts> updateStudentsDebtsList = studentDebtsObject.getStudentsDebtsList();
         if(!updateStudentsDebtsList.isEmpty()){
             for (StudentsDebts sd : updateStudentsDebtsList){
-                sd.setUpdateId(100);
-                sd.setUpdateDate(new Timestamp(System.currentTimeMillis()));
+                sd.setUpdateId(SessionUtil.getUserLoginId());
                 studentDebtsDao.updateStudentsDebts(sd);
             }
         }
@@ -85,6 +81,7 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
 
     @Override
     public List<StudentsDebts> searchTaskArchive(TaskArchiveSearch taskArchiveSearch) throws Exception {
+        taskArchiveSearch.setSchoolId(SessionUtil.getSchoolId());
         return studentDebtsDao.searchTaskArchive(taskArchiveSearch);
     }
 }

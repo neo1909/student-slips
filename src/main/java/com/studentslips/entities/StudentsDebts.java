@@ -14,8 +14,7 @@ public class StudentsDebts {
     private String referenceNo;
     private int quantity;
     private String purpose;
-    @JsonFormat(pattern="dd/MM/yyyy")
-    private Date debitDate;
+    private Timestamp debitDate;
     private BigDecimal amountDebt;
     private int grade;
     private int sClass;
@@ -48,11 +47,11 @@ public class StudentsDebts {
         this.suppliersId = suppliersId;
     }
 
-    public Date getDebitDate() {
+    public Timestamp getDebitDate() {
         return debitDate;
     }
 
-    public void setDebitDate(Date debitDate) {
+    public void setDebitDate(Timestamp debitDate) {
         this.debitDate = debitDate;
     }
 

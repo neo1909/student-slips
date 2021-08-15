@@ -4,7 +4,7 @@
 <mapper namespace="HeadTeachersDao">
     <insert id="insertHeadTeachers" parameterType="com.studentslips.entities.HeadTeachers">
         INSERT INTO PS_Head_Teachers (NAME, grade, class, school_id, del_yn, insert_date, insert_id)
-        VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, 'N', #{insertDate}, #{insertId});
+        VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, 'N', SYSDATE(), #{insertId});
     </insert>
 
     <update id="updateHeadTeachers" parameterType="com.studentslips.entities.HeadTeachers">
@@ -18,7 +18,7 @@
         <if test="sClass!=0 ">
             class = #{sClass},
         </if>
-        update_id = #{updateId}, update_date = #{updateDate}
+        update_id = #{updateId}, update_date = SYSDATE()
         WHERE ID = #{id}
         <if test="schoolId!=0 ">
         AND school_id=#{schoolId}
@@ -26,8 +26,12 @@
     </update>
 
     <delete id="deleteHeadTeachersById" parameterType="com.studentslips.entities.HeadTeachers">
-        UPDATE PS_Head_Teachers SET  del_yn = 'Y',update_id = #{updateId}, update_date = #{updateDate}
-        WHERE ID = #{id} AND del_yn = 'N'
+        UPDATE PS_Head_Teachers SET  del_yn = 'Y',update_id = #{updateId}, update_date = SYSDATE()
+        WHERE ID = #{id}
+        <if test="schoolId!=0 ">
+        AND  school_id = #{schoolId}
+        </if>
+        AND del_yn = 'N'
     </delete>
 
     <select id="selectAllHeadTeachers" parameterType="com.studentslips.entities.HeadTeachers" resultMap="result">

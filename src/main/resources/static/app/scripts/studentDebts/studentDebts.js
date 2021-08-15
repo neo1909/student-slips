@@ -190,7 +190,7 @@ function init() {
     });
     $("#cmbStdClazzSrch").jqxDropDownList({
         enableBrowserBoundsDetection: true,
-        source: SS.clazz,
+        source: SS.clazzEmpty,
         selectedIndex: 0,
         height: SS.IPT_HEIGHT,
         width: '100%',

@@ -1,0 +1,83 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="OverViewClassDao">
+
+    <select id="searchAllClass" parameterType="com.studentslips.entities.SchoolAndClassSearch" resultMap="resultAllClass">
+        select  X1.student_id,S.name   ,X1.debit, X1.claims, X1.balance, case when X1.debit > X1.claims then 0 else 1 end isHightColor
+        from (
+        select  XY.student_id,SUM(XY.amount_debt) as debit, SUM(XY.claims) as claims, SUM(XY.balance) as balance
+        from (
+        select  XX.student_id,XX.amount_debt,XX.claims,(XX.amount_debt - XX.claims) as balance
+        from    (select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
+        from    ps_bank_statement bs , ps_students_debts sd
+        where bs.reference_no = sd.reference_no
+        <if test="schoolId!=0 ">
+            and sd.school_id = #{schoolId}
+        </if>
+
+        <if test="serviceListId !=null and !serviceListId.isEmpty()">
+            <foreach item="item" index="index" collection="serviceListId" open="and sd.service_id in (" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        and sd.debit_date between #{fromDate} and  #{toDate}
+        and bs.bank_statement_date between #{fromDate} and  #{toDate}
+        group by sd.student_id,sd.service_id,sd.amount_debt
+        ) XX
+        ) XY
+        group by XY.student_id
+        ) X1
+        left outer join ps_students s
+        on s.id = X1.student_id
+        where  1=1
+        <if test="sClass !=0 ">
+            AND    s.class= #{sClass}
+        </if>
+        <if test="grade !=0 ">
+            AND   s.grade = #{grade}
+        </if>
+    </select>
+
+    <select id="searchDetailClass" parameterType="com.studentslips.entities.SchoolAndClassSearch" resultMap="resultDetailClass">
+        select  student_id,(select s.name from ps_students s where XX.student_id = s.id ) as name_student,service_id,(select sr.name from ps_service sr where XX.service_id = sr.id ) as name_service,XX.amount_debt,XX.claims,(XX.amount_debt - XX.claims) as balance,case when XX.amount_debt > XX.claims then 0 else 1 end isHightColor
+        from(
+        select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
+        from    ps_bank_statement bs , ps_students_debts sd
+        where bs.reference_no = sd.reference_no
+        <if test="schoolId!=0 ">
+            and sd.school_id = #{schoolId}
+        </if>
+        <if test="serviceListId !=null and !serviceListId.isEmpty()">
+            <foreach item="item" index="index" collection="serviceListId" open="and sd.service_id in (" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        and sd.debit_date between #{fromDate} and  #{toDate}
+        and bs.bank_statement_date between #{fromDate} and  #{toDate}
+        <if test="studentId!=0 ">
+            and sd.student_id = #{studentId}
+        </if>
+        group by sd.student_id,sd.service_id,sd.amount_debt
+        ) XX
+    </select>
+
+    <resultMap id = "resultAllClass" type = "com.studentslips.entities.SchoolAndClass">
+        <result property = "studentId" column = "student_id"/>
+        <result property = "nameStudent" column = "NAME"/>
+        <result property = "debit" column = "debit"/>
+        <result property = "claims" column = "claims"/>
+        <result property = "balance" column = "balance"/>
+        <result property = "isHightColor" column = "isHightColor"/>
+    </resultMap>
+    <resultMap id = "resultDetailClass" type = "com.studentslips.entities.SchoolAndClass">
+        <result property = "studentId" column = "student_id"/>
+        <result property = "nameStudent" column = "name_student"/>
+        <result property = "serviceId" column = "service_id"/>
+        <result property = "nameService" column = "name_service"/>
+        <result property = "debit" column = "amount_debt"/>
+        <result property = "claims" column = "claims"/>
+        <result property = "balance" column = "balance"/>
+        <result property = "isHightColor" column = "isHightColor"/>
+    </resultMap>
+</mapper>
