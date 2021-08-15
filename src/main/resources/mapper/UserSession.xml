@@ -1,0 +1,35 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserSessionDao">
+    <select id="countUserSession" parameterType="com.studentslips.entities.UserSession" resultType="int">
+        SELECT count(*)
+        FROM ps_user_session US
+        where 1=1
+        <if test="sessionId!= null and sessionId !=''">
+        	and US.session_id = #{sessionId}
+        </if>
+        <if test="userId != -1">
+        	and US.user_id = #{userId}
+        </if>
+    </select>
+    <select id="selectUserSession" parameterType="com.studentslips.entities.UserSession" resultMap="userSessionModel">
+        SELECT US.*
+        FROM ps_user_session US
+        where US.user_id = #{userId}
+    </select>
+    <insert id="insertUserSession" parameterType="com.studentslips.entities.UserSession" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ps_user_session (user_id, session_id, insert_date)
+        VALUES (#{userId}, #{sessionId}, SYSDATE());
+    </insert>
+    <delete id="deleteUserSession" parameterType="com.studentslips.entities.UserSession">
+        DELETE from ps_user_session
+        WHERE id = #{id}
+    </delete>
+    
+    <resultMap id="userSessionModel" type = "com.studentslips.entities.UserSession">
+        <result property = "userId" column = "user_id"/>
+        <result property = "sessionId" column = "session_id"/>
+        <result property = "insertDate" column = "insert_date"/>
+    </resultMap>
+</mapper>

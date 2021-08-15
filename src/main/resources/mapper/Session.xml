@@ -1,0 +1,52 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="SessionDao">
+    
+    <select id="selectAllSessions" parameterType="com.studentslips.entities.Session" resultMap="sessionModel">
+        SELECT
+        	row_number() over (order by S.creation_time desc) as rnum,
+	        S.primary_id,
+	        S.session_id,
+	        FROM_UNIXTIME(S.creation_time / 1000) as creation_time,
+	        FROM_UNIXTIME(S.last_access_time / 1000) as last_access_time,
+	        S.max_inactive_interval,
+	        FROM_UNIXTIME(S.expiry_time / 1000) as expiry_time,
+	        S.principal_name,
+	        U.full_name
+        FROM spring_session S
+        inner join ps_users U on S.principal_name = U.username
+        where 1=1
+        	and U.del_yn = 'N'
+        <if test="fullName != null and fullName !=''">
+            <bind name="nameLike" value="'%' + fullName + '%'" />
+         	and U.full_name like #{nameLike}
+        </if>
+        <if test="principalName != null and principalName !=''">
+        	and U.username = #{principalName}
+        </if>
+        <if test="sessionId != null and sessionId !=''">
+        	and S.session_id = #{sessionId}
+        </if>
+        
+    </select>
+
+    <update id="deleteSession" parameterType="com.studentslips.entities.Session">
+        UPDATE spring_session SET
+	        principal_name = null,
+	        session_id = null
+        WHERE primary_id = #{primaryId}
+    </update>
+    
+    <resultMap id="sessionModel" type = "com.studentslips.entities.Session">
+        <result property = "rnum" column = "rnum"/>
+        <result property = "primaryId" column = "primary_id"/>
+        <result property = "sessionId" column = "session_id"/>
+        <result property = "createTime" column = "creation_time"/>
+        <result property = "lastAccessTime" column = "last_access_time"/>
+        <result property = "maxInactiveInterval" column = "max_inactive_interval"/>
+        <result property = "expiryTime" column = "expiry_time"/>
+        <result property = "principalName" column = "principal_name"/>
+        <result property = "fullName" column = "full_name"/>
+    </resultMap>
+</mapper>

@@ -1,0 +1,20 @@
+<div class="h-100">
+	<h3>Assign Role: <span th:text="${user.username}"></span></h3>
+	<form id="frmAssignRole" class="form-popup">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="form-group">
+    				<label>Roles</label>
+					<div id="iptRoles"></div>
+				</div>
+			</div>
+		</div>
+
+		<div style="margin-top: 15px; text-align: right" id="btnGroupPopup">
+			<button id="btnCancel" class="btn btn-default btn-str btn-left"
+				type="button" value="Cancel">Cancel</button>
+			<button id="btnSave" class="btn btn-primary btn-str" type="button"
+				value="Save">Save</button>
+		</div>
+	</form>
+</div>

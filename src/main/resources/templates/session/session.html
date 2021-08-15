@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Slips</title>
+
+    <link rel="stylesheet" href="/lib/styles/bootstrap.min.css" type="text/css">
+    <!-- <link rel="stylesheet" href="/lib/styles/bootstrap-theme.min.css" type="text/css">-->
+    <link rel="stylesheet" href="/lib/styles/font-awesome.min.css" type="text/css" >
+    <link rel="stylesheet" href="/lib/styles/ionicons.min.css" type="text/css" >
+    <link rel="stylesheet" href="/lib/styles/jqx.base.min.css" type="text/css">
+    <link rel="stylesheet" href="/lib/styles/jqx.bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/lib/styles/app.css" type="text/css">
+    <link rel="stylesheet" href="/lib/styles/waitMe.min.css" type="text/css">
+
+	<link rel="stylesheet" href="/app/styles/popup.css" type="text/css">
+	<link rel="stylesheet" href="/app/styles/custom.css" type="text/css">
+</head>
+
+<body class="skin-blue" id="ssApp">
+
+<!-- Header Navbar -->
+<div class="header" th:replace="/layout/header :: header"> </div>
+
+<div class="wrapper row-offcanvas row-offcanvas-left">
+
+    <!-- Menu  -->
+    <div class="nav" th:replace="/layout/nav :: nav"> </div>
+
+    <!-- Main  -->
+    <div class="div-content ss-content">
+        <aside class="right-side">
+            <section class="content-header">
+                <h1>
+                   Session
+                </h1>
+                <ol class="breadcrumb">
+                    <li></i> Session</a></li>
+                    <li class="active">Session</li>
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="div-search">
+                        <form role="form">
+                            <div class="row">
+                                <div class="form-group col-md-2">
+				    				<label>Session ID</label>
+									<input type="text" id="iptSrchSessionId">
+                                </div>
+                                <div class="form-group col-md-2">
+				    				<label>Username</label>
+									<input type="text" id="iptSrchUsername">
+                                </div>
+                                <div class="form-group col-md-2">
+				    				<label>Full Name</label>
+									<input type="text" id="iptSrchFullName">
+                                </div>
+                            </div>
+                            <div class="row justify-content-end align-items-center d-flex">
+								<button id="btnStdSrch" class="btn btn-primary btn-str mx-2" type="button" value="Search">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="div-grid">
+                        <div class="ss-grid">
+                            <div id="grdSession"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+</div>
+
+<div class="ss-popup">
+    <div class="ss-popup-content" id="id-ss-popup">
+        <div></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/lib/scripts/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/lib/scripts/popper.min.js"></script>
+<script type="text/javascript" src="/lib/scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="/lib/scripts/jqxcore.min.js"></script>
+<script type="text/javascript" src="/lib/scripts/jqx-all.min.js"></script>
+<script type="text/javascript" src="/lib/scripts/waitMe.min.js"></script>
+<script type="text/javascript" src="/lib/scripts/bootbox.min.js"></script>
+<script type="text/javascript" src="/lib/scripts/bootbox.locales.min.js"></script>
+<script type="text/javascript" src="/lib/scripts/app.js"></script>
+
+<script type="text/javascript" src="/app/scripts/common.js"></script>
+<script type="text/javascript" src="/app/scripts/session/session.js"></script>
+
+</body>
+</html>

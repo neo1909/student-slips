@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="RoleDao">
+    <select id="selectByName" parameterType="java.lang.String" resultMap="roleModel">
+        SELECT
+        	R.*,
+        	row_number() over (order by R.id asc) rnum
+        FROM ps_roles R
+        where R.name = #{name} and R.del_yn='N'
+    </select>
+    
+    <select id="selectAll" parameterType="com.studentslips.entities.Role" resultMap="roleModel">
+        SELECT
+        	R.*,
+        	row_number() over (order by R.id asc) rnum
+        FROM ps_roles R
+        where R.del_yn='N'
+        <if test="name != null and name !=''">
+            <bind name="nameLike" value="'%' + name + '%'" />
+         	and R.name like #{nameLike}
+        </if>
+    </select>
+    
+    <insert id="insertRole" parameterType="com.studentslips.entities.Role" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ps_roles (name, description, del_yn) VALUES (#{name}, #{description}, 'N')
+    </insert>
+    
+    <update id="deleteRole" parameterType="com.studentslips.entities.Role">
+        update ps_roles set del_yn = 'Y' where id = #{id}
+    </update>
+
+    <resultMap id="roleModel" type = "com.studentslips.entities.Role">
+        <result property = "rnum" column = "rnum"/>
+        <result property = "id" column = "id"/>
+        <result property = "name" column = "name"/>
+        <result property = "description" column = "description"/>
+        <result property = "delYn" column = "del_yn"/>
+    </resultMap>
+</mapper>
