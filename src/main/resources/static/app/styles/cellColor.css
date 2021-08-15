@@ -1,0 +1,8 @@
+.green {
+	color: black\9;
+	background-color: #b6ff00\9;
+}
+.green:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .green:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+	color: black;
+	background-color: #b6ff00;
+}

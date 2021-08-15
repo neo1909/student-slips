@@ -1,3 +1,7 @@
+let originalData = [];
+let tr_update = [];
+let isUpdate = false;
+
 let source = {
     datafields: [{
         name: 'id',
@@ -78,9 +82,109 @@ let source = {
     ],
     datatype: "array",
     localdata: null,
-    dataPopup: null
 }
 
+let sourcePopup = {
+    datafields: [{
+        name: 'id',
+        type: 'int'
+    },
+        {
+            name: 'schoolId',
+            type: 'int'
+        },
+        {
+            name: 'filename',
+            type: 'string'
+        },
+        {
+            name: 'bankStatementDate',
+            type: 'string'
+        },
+        {
+            name: 'accountNumber',
+            type: 'string'
+        },
+        {
+            name: 'payer',
+            type: 'string'
+        },
+        {
+            name: 'purpose',
+            type: 'string'
+        },
+        {
+            name: 'noOfChanges',
+            type: 'int'
+        },
+        {
+            name: 'balance',
+            type: 'string'
+        },
+        {
+            name: 'noOfBankStatement',
+            type: 'int'
+        },
+        {
+            name: 'claims',
+            type: 'string'
+        },
+        {
+            name: 'referenceNo',
+            type: 'string'
+        },
+        {
+            name: 'insertId',
+            type: 'int'
+        },
+        {
+            name: 'insertDate',
+            type: 'string'
+        },
+        {
+            name: 'updateId',
+            type: 'int'
+        },
+        {
+            name: 'updateDate',
+            type: 'string'
+        },
+        {
+            name: 'currencyDate',
+            type: 'string'
+        },
+        {
+            name: 'postPaymentYn',
+            type: 'string'
+        },
+        {
+            name: 'delYn',
+            type: 'string'
+        }
+    ],
+    datatype: "array",
+    localdata: null,
+    updaterow: function (rowid, rowdata, commit) {
+        let beforeData = originalData[rowid];
+        let selectedRowData = $('#grdBankDetail').jqxGrid('getrowdata', rowid);
+        if (Object.keys(beforeData).length > 0 && Object.keys(selectedRowData).length > 0) {
+            if (beforeData.referenceNo === selectedRowData.referenceNo) {
+                isUpdate = false;
+                if (tr_update.length > 0) {
+                    tr_update = tr_update.filter(item => item.referenceNo !== selectedRowData.referenceNo);
+                }
+                return;
+            }
+            if (tr_update.length > 0) {
+                tr_update = tr_update.filter(item => item.referenceNo !== selectedRowData.referenceNo);
+            }
+            tr_update.push(selectedRowData);
+            isUpdate = true;
+        }
+
+        commit(true);
+    }
+}
 function init() {
     $("#iptFromDate").jqxDateTimeInput({
         height: SS.IPT_HEIGHT,
@@ -169,7 +273,7 @@ function createGrid() {
 }
 
 function ceateGridBank() {
-    let dataAdapter = new $.jqx.dataAdapter(source);
+    let dataAdapter = new $.jqx.dataAdapter(sourcePopup);
     $("#grdBankDetail").jqxGrid({
         source: dataAdapter,
         selectionmode: 'singlecell',
@@ -263,7 +367,8 @@ function onUpdate (rowIndex) {
             false,
             { id : id },
             function onSuccess(data) {
-                source.dataPopup = data.lst;
+                sourcePopup.localdata = data.lst;
+                originalData = data.lst;
                 $('#grdBankDetail').jqxGrid('updatebounddata');
             }
         );
@@ -272,7 +377,21 @@ function onUpdate (rowIndex) {
 }
 
 function onSave() {
-    $("#btnPayment").prop('disabled', false);
+    if (!isUpdate) {
+        SS.alert('Notification', 'No data update')
+        return;
+    }
+    let data = tr_update[0];
+    SS.sendToServer(
+        'BSA_U_01',
+        false,
+        data,
+        function onSuccess(data) {
+            $("#bankpopup").jqxWindow('close')
+            onSearch();
+        }
+    );
+            // $("#btnPayment").prop('disabled', false);
 }
 
 
