@@ -377,11 +377,9 @@ $(document).ready(function () {
                         function onSuccess(data) {
                             localStorage.removeItem('task');
                             window.location.href = "/taskArchive";
-                            return;
-
                         }
                     );
-
+                    return;
                 }
 
                 let data = {
