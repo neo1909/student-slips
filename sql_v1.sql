@@ -170,6 +170,7 @@ CREATE TABLE `ps_users` (
   KEY `fk_user_school_idx` (`school_id`),
   CONSTRAINT `fk_user_school` FOREIGN KEY (`school_id`) REFERENCES `ps_school` (`id`)
 );
+INSERT INTO `ps_users` VALUES (1,'admin','$2a$10$3ZpIvM/JzRJQMBUflw7JQu28k8F3leyySyHYF3/RT1emRhyVwL9Ni','Admin Student Slips',1,'studentslips.adm@gmail.com',NULL,0,NULL,'ACTIVE',NULL,'N','2021-08-15 15:57:23',NULL,NULL,NULL);
 
 CREATE TABLE `ps_roles` (
   `id` int NOT NULL,
@@ -193,6 +194,7 @@ CREATE TABLE `ps_user_role` (
   CONSTRAINT `fk_userrole_role` FOREIGN KEY (`role_id`) REFERENCES `ps_roles` (`id`),
   CONSTRAINT `fk_userrole_user` FOREIGN KEY (`user_id`) REFERENCES `ps_users` (`id`)
 );
+INSERT INTO `ps_user_role` VALUES (1,1,'N'),(1,2,'N');
 
 CREATE TABLE `ps_user_session` (
   `id` int NOT NULL AUTO_INCREMENT,
