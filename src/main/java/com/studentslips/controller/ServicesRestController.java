@@ -26,7 +26,7 @@ public class ServicesRestController {
     private ServicesService servicesService;
 
     @RequestMapping(value = "/SV_R_01", method = RequestMethod.POST)
-    public Map<String, ?> getAll(@RequestBody Services std){
+    public Map<String, ?> getAll(@RequestBody(required = false) Services std){
         Map<String, Object> result = new HashMap<>();
 
         try {

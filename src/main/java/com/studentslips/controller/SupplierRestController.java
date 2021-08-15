@@ -27,8 +27,9 @@ public class SupplierRestController {
     private SupplierService supplierService;
 
     @RequestMapping(value = "/SL_R_01", method = RequestMethod.POST)
-    public Map<String,?> getAll(@RequestBody Supplier std){
+    public Map<String,?> getAll(@RequestBody(required = false) Supplier std){
         Map<String, Object> result = new HashMap<>();
+
         try {
             result.put(Common.LIST, supplierService.selectAllSupplier(std));
             result.put(Common.STATUS, HttpStatus.OK.value());
@@ -105,4 +106,46 @@ public class SupplierRestController {
 
         return result;
     }
+
+    @RequestMapping(value = "/SL_C_03", method = RequestMethod.POST)
+    public Map<String,?> insertSupplierServiceDetail(@RequestBody SupplierServiceDetail std){
+        Map<String, Object> result = new HashMap<>();
+        try {
+            supplierService.insertSupplierServiceDetail(std);
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
+        }
+
+        return result;
+    }
+    @RequestMapping(value = "/SL_U_03", method = RequestMethod.POST)
+    public Map<String,?> updateSupplierServiceDetail(@RequestBody SupplierServiceDetail std){
+        Map<String, Object> result = new HashMap<>();
+        try {
+            supplierService.updateSupplierServiceDetail(std);
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
+        }
+
+        return result;
+    }
+
+    @RequestMapping(value = "/SL_D_03", method = RequestMethod.POST)
+    public Map<String,?> deleteSupplierServiceDetail(@RequestBody SupplierServiceDetail std){
+        Map<String, Object> result = new HashMap<>();
+        try {
+            supplierService.deleteSupplierServiceDetail(std);
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
+        }
+
+        return result;
+    }
+
 }

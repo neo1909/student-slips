@@ -12,4 +12,8 @@ public interface SupplierService {
       public void insertSupplier(Supplier supplier);
       public void updateSupplier(Supplier supplier);
       public void deleteSupplier(Supplier supplier);
+
+      public void insertSupplierServiceDetail(SupplierServiceDetail std);
+      public void updateSupplierServiceDetail(SupplierServiceDetail std);
+      public void deleteSupplierServiceDetail(SupplierServiceDetail std);
 }

@@ -4,12 +4,17 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class SupplierServiceDetail {
-
-    private int suppliersId;
+    private int id;
     private String name;
+
+    private int supplierId;
+    private String supplierName;
+
     private int schoolId;
+
     private int serviceId;
     private String serviceName;
+
     private BigDecimal price;
     private int noPayment;
     private BigDecimal amount1;
@@ -24,7 +29,7 @@ public class SupplierServiceDetail {
     private BigDecimal amount10;
     private BigDecimal amount11;
     private BigDecimal amount12;
-    private String grade;
+    private int grade;
     private String delYn;
     private int insertId;
     private Timestamp insertDate;
@@ -34,28 +39,12 @@ public class SupplierServiceDetail {
     public SupplierServiceDetail() {
     }
 
-    public int getSuppliersId() {
-        return suppliersId;
+    public int getId() {
+        return id;
     }
 
-    public void setSuppliersId(int suppliersId) {
-        this.suppliersId = suppliersId;
-    }
-
-    public String getDelYn() {
-        return delYn;
-    }
-
-    public void setDelYn(String delYn) {
-        this.delYn = delYn;
-    }
-
-    public String getServiceName() {
-        return serviceName;
-    }
-
-    public void setServiceName(String serviceName) {
-        this.serviceName = serviceName;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -66,6 +55,22 @@ public class SupplierServiceDetail {
         this.name = name;
     }
 
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public String getSupplierName() {
+        return supplierName;
+    }
+
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
+
     public int getSchoolId() {
         return schoolId;
     }
@@ -74,44 +79,20 @@ public class SupplierServiceDetail {
         this.schoolId = schoolId;
     }
 
-    public int getInsertId() {
-        return insertId;
-    }
-
-    public void setInsertId(int insertId) {
-        this.insertId = insertId;
-    }
-
-    public Timestamp getInsertDate() {
-        return insertDate;
-    }
-
-    public void setInsertDate(Timestamp insertDate) {
-        this.insertDate = insertDate;
-    }
-
-    public int getUpdateId() {
-        return updateId;
-    }
-
-    public void setUpdateId(int updateId) {
-        this.updateId = updateId;
-    }
-
-    public Timestamp getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Timestamp updateDate) {
-        this.updateDate = updateDate;
-    }
-
     public int getServiceId() {
         return serviceId;
     }
 
     public void setServiceId(int serviceId) {
         this.serviceId = serviceId;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
     public BigDecimal getPrice() {
@@ -210,6 +191,14 @@ public class SupplierServiceDetail {
         this.amount10 = amount10;
     }
 
+    public BigDecimal getAmount11() {
+        return amount11;
+    }
+
+    public void setAmount11(BigDecimal amount11) {
+        this.amount11 = amount11;
+    }
+
     public BigDecimal getAmount12() {
         return amount12;
     }
@@ -218,19 +207,51 @@ public class SupplierServiceDetail {
         this.amount12 = amount12;
     }
 
-    public String getGradeList() {
+    public int getGrade() {
         return grade;
     }
 
-    public void setGradeList(String grade) {
+    public void setGrade(int grade) {
         this.grade = grade;
     }
 
-    public BigDecimal getAmount11() {
-        return amount11;
+    public String getDelYn() {
+        return delYn;
     }
 
-    public void setAmount11(BigDecimal amount11) {
-        this.amount11 = amount11;
+    public void setDelYn(String delYn) {
+        this.delYn = delYn;
+    }
+
+    public int getInsertId() {
+        return insertId;
+    }
+
+    public void setInsertId(int insertId) {
+        this.insertId = insertId;
+    }
+
+    public Timestamp getInsertDate() {
+        return insertDate;
+    }
+
+    public void setInsertDate(Timestamp insertDate) {
+        this.insertDate = insertDate;
+    }
+
+    public int getUpdateId() {
+        return updateId;
+    }
+
+    public void setUpdateId(int updateId) {
+        this.updateId = updateId;
+    }
+
+    public Timestamp getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Timestamp updateDate) {
+        this.updateDate = updateDate;
     }
 }

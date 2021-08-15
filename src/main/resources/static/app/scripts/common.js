@@ -24,6 +24,8 @@ let SS = {
   grade: [ 1, 2, 3, 4, 5, 6, 7, 8 ],
   gradeEmpty: [ '', 1, 2, 3, 4, 5, 6, 7, 8 ],
 
+  noPayment: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
+
   sendToServer: function (url, async, param, onSuccess, onError) {
     $.ajax({
       async: async,
