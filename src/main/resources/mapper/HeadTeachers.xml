@@ -53,7 +53,7 @@
         </if>
     </select>
 
-    <select id="selectHeadTeachersById" parameterType="int" resultType="com.studentslips.entities.HeadTeachers">
+    <select id="selectHeadTeachersById" parameterType="int" resultMap="result">
         SELECT HT.*,(Select name from PS_School SL where HT.school_id=SL.id AND del_yn='N') AS schoolName FROM PS_Head_Teachers HT WHERE HT.ID = #{id} AND HT.del_yn='N' ;
     </select>
 

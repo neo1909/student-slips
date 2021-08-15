@@ -201,6 +201,7 @@ let fn = {
     },
 
     onUpdate: function (rowIndex) {
+        console.log(rowIndex);
         let data = $("#grdStudents").jqxGrid('getrowdata', rowIndex);
         let studentId = data.id;
         if (studentId != null) {

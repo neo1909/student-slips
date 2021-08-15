@@ -35,7 +35,7 @@
         </if>
     </select>
 
-    <select id="selectServiceById" parameterType="int" resultType="com.studentslips.entities.Services">
+    <select id="selectServiceById" parameterType="int" resultMap="result">
         SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName FROM PS_Service S WHERE S.ID = #{id} AND S.del_yn='N';
     </select>
 

@@ -1,4 +1,3 @@
-;
 
 let fn = {
     dataset: null,
@@ -320,6 +319,7 @@ let fn = {
                         if (data.lst != null && data.lst.length > 0) {
                             let obj = data.lst[0];
                             $('#iptId').val(obj.id);
+                            $('#iptPrice').val(obj.price);
                             $('#iptNm').val(obj.name);
                             $('#cmbSupplier').val(obj.supplierId);
                             $('#cmbService').val(obj.serviceId);

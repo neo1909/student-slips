@@ -249,11 +249,11 @@ function onSearch() {
     );
 }
 function onUpdate (rowIndex) {
-    // let data = $("#grdBank").jqxGrid('getrowdata', rowIndex);
-    // let id = data.id;
-    // if (id != null) {
-        $("#bankpopup").jqxWindow('open', popup(1));
-    // }
+    let data = $("#grdBank").jqxGrid('getrowdata', rowIndex);
+    let id = data.id;
+    if (id != null) {
+        $("#bankpopup").jqxWindow('open', popup(id));
+    }
 }
 
  function popup(id) {
@@ -290,7 +290,7 @@ $(document).ready(function () {
     });
     $('#btnStdSrch').click(function () {
         $('#grdBank').jqxGrid('refresh');
-        onUpdate();
+        onSearch();
     });
 
     $('#btnSave').click(function () {

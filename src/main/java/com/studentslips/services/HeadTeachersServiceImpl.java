@@ -45,6 +45,7 @@ public class HeadTeachersServiceImpl implements HeadTeachersService{
 
     @Override
     public HeadTeachers selectHeadTeachersById(int id) {
+
         return headTeachersDao.selectHeadTeachersById(id);
     }
 }

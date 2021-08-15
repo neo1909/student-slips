@@ -129,10 +129,13 @@
         left join ps_service ps2 on ps2.id = pss.service_id
 
         where pss.del_yn = 'N'
+        <if test="id != 0">
+          AND pss.id = #{id}
+        </if>
         <if test="schoolId != 0">
           and pss.school_id = #{schoolId}
         </if>
-        <if test="!''.equals(name)">
+        <if test="name != null and name != ''">
             <bind name="nameLike" value="'%' + name + '%'" />
             and   pss.name like #{nameLike}
         </if>
@@ -142,7 +145,7 @@
         ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn
         FROM onetouch.ps_suppliers S
         where S.del_yn='N'
-        <if test="!''.equals(name)">
+        <if test="name !=null and name !=''">
             <bind name="nameLike" value="'%' + name + '%'" />
             AND   S.name like #{nameLike}
         </if>
@@ -159,7 +162,7 @@
     <select id="selectSupplierDetailById" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="result">
         SELECT SS.*,(select name from onetouch.ps_service where SS.service_id=id) AS service_name
         FROM  onetouch.ps_suppliers_service SS
-        where SS.del_yn='N'
+        where SS.del_yn='N' AND SS.id =#{id}
         <if test="schoolId != 0">
             AND SS.school_id=#{schoolId}
         </if>

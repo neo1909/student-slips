@@ -35,7 +35,7 @@ CREATE TABLE `PS_Service` (
     `del_yn` VARCHAR(1),
 	`insert_date` DATETIME  ,
 	`insert_id` INT  ,
-	`update_date` INT  ,
+	`update_date` DATETIME  ,
 	`update_id` INT  ,
 	PRIMARY KEY (`id`)
 );

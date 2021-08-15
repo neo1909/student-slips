@@ -111,7 +111,6 @@ let fn = {
     },
 
     onSearch: function () {
-        debugger
         let svcNm = $('#iptSvcNmSrch').val();
         if (svcNm) {
             svcNm = svcNm.trim();
