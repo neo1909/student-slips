@@ -26,7 +26,7 @@
         SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
         FROM PS_Service S
         where  S.del_yn='N'
-        <if test="!''.equals(name)">
+        <if test="name != null and !''.equals(name)">
             <bind name="nameLike" value="'%' + name + '%'" />
             AND   S.name like #{nameLike}
         </if>

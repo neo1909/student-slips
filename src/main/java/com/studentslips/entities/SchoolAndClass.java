@@ -15,11 +15,20 @@ public class SchoolAndClass {
     private String gradeClass;
     private int headTeacherId;
     private String headTeacherName;
+    private String serviceListString;
 
     public SchoolAndClass() {
     }
+    
+    public String getServiceListString() {
+		return serviceListString;
+	}
 
-    public int getStudentId() {
+	public void setServiceListString(String serviceListString) {
+		this.serviceListString = serviceListString;
+	}
+	
+	public int getStudentId() {
         return studentId;
     }
 
