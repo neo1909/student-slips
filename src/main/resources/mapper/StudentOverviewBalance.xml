@@ -19,14 +19,14 @@
             sb.student_id AS id,
             debit_date AS dateA,
             CONCAT((
-                       select name from ps_service where id = sb.service_id
+                       select name from PS_Service where id = sb.service_id
                    ), ' - ', MONTHNAME(debit_date) , ' 1/1 ') AS descriptions ,
             amount_debt AS debit,
             1 AS print,
             0 AS claims,
             amount_debt AS balance,
             1 AS row_type
-        FROM ps_students_debts sb
+        FROM PS_Students_Debts sb
         WHERE sb.del_yn = 'N'
         AND sb.student_id = #{id}
 
@@ -41,7 +41,7 @@
             claims,
             balance AS balance,
             2 AS row_type
-        FROM ps_bank_statement sb
+        FROM PS_Bank_Statement sb
         WHERE sb.del_yn = 'N'
         AND sb.payer = #{id}
 
@@ -63,14 +63,14 @@
         SELECT
             student_id as id,
             debit_date as date,
-            (select name from ps_students where id = #{id}) as payer_info,
+            (select name from PS_Students where id = #{id}) as payer_info,
             purpose,
-            (select sc.name from ps_students st join ps_school sc on st.school_id = sc.id where st.id = #{id}) as payee,
+            (select sc.name from PS_Students st join ps_school sc on st.school_id = sc.id where st.id = #{id}) as payee,
             amount_debt as amount,
             '1111-222-6886-6789' as payer_acc,
-            (select sc.bank_account_number from ps_students st join ps_school sc on st.school_id = sc.id where st.id = #{id}) as payee_acc,
+            (select sc.bank_account_number from PS_Students st join PS_School sc on st.school_id = sc.id where st.id = #{id}) as payee_acc,
             reference_no
-        FROM onetouch.ps_students_debts sd
+        FROM onetouch.PS_Students_Debts sd
         WHERE sd.student_id = #{id} and debit_date = #{date}
     </select>
 </mapper>

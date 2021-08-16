@@ -4,7 +4,7 @@
 <mapper namespace="BankStatementsArchiveDao">
 
     <update id="updateBankStatementArchive" parameterType="com.studentslips.entities.BankStatement">
-        UPDATE ps_bank_statement SET
+        UPDATE PS_Bank_Statement SET
         reference_no = #{referenceNo},
         update_id = #{updateId}, update_date = #{updateDate}
         WHERE ID = #{id}
@@ -15,7 +15,7 @@
 
     <select id="selectBankStatementArchive" parameterType="com.studentslips.entities.BankStatementArchiveSearch" resultMap="result">
         SELECT *
-        FROM ps_bank_statement
+        FROM PS_Bank_Statement
         where bank_statement_date between #{fromDate} and  #{toDate}
         AND del_yn='N'
         <if test="schoolId!=0 ">
@@ -25,7 +25,7 @@
 
     <select id="selectBankStatementArchiveById" parameterType="com.studentslips.entities.BankStatement" resultMap="result">
         SELECT *
-        FROM ps_bank_statement
+        FROM PS_Bank_Statement
         where id = #{id}
           AND del_yn='N'
         <if test="schoolId!=0 ">

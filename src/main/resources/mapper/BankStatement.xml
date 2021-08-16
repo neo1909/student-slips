@@ -3,7 +3,7 @@
 
 <mapper namespace="BankStatementDao">
     <insert id="insertBankStatement" parameterType="com.studentslips.entities.BankStatement">
-        INSERT INTO ps_bank_statement (
+        INSERT INTO PS_Bank_Statement (
         <if test="filename != null">
             file_name,
         </if>
@@ -114,7 +114,7 @@
     </insert>
 
     <update id="updateBankStatement" parameterType="com.studentslips.entities.BankStatement">
-        UPDATE ps_bank_statement
+        UPDATE PS_Bank_Statement
         SET
         <if test="updateDate!=null">
             update_date = #{updateDate}
@@ -133,7 +133,7 @@
     </update>
 
     <delete id="deleteBankStatementById" parameterType="com.studentslips.entities.BankStatement">
-        UPDATE ps_bank_statement
+        UPDATE PS_Bank_Statement
         SET del_yn      = 'Y',
             update_id   = #{updateId},
             update_date = #{updateDate}
@@ -144,7 +144,7 @@
 
     <select id="selectAllBankStatement" parameterType="com.studentslips.entities.BankStatement" resultMap="result">
         SELECT bst.*
-        FROM ps_bank_statement bst
+        FROM PS_Bank_Statement bst
         where bst.del_yn = 'N'
         <if test="filename != null">
             and file_name = #{filename}
@@ -157,14 +157,14 @@
     <select id="selectBankStatementById" parameterType="int" resultType="com.studentslips.entities.BankStatement"
             resultMap="result">>
     SELECT
-    FROM ps_bank_statement bst
+    FROM PS_Bank_Statement bst
     WHERE HT.ID = #{id}
       AND HT.del_yn = 'N';
     </select>
 
     <select id="selectUploadedBankStatement" parameterType="java.util.List" resultMap="result">
         SELECT bst.*
-        FROM ps_bank_statement bst
+        FROM PS_Bank_Statement bst
         where bst.del_yn = 'N'
         and file_name in
         <foreach index="index" collection="list" open="(" item="name" separator="," close=")">

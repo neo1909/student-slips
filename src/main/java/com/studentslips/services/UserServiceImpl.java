@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.studentslips.common.StudentSlipException;
@@ -28,9 +29,9 @@ public class UserServiceImpl implements UserService {
     
     @Autowired
     RoleDao roleDao;
-    
-    @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+
+	@Autowired
+	PasswordEncoder crypt;
     
 	@Override
 	public int register(AuthRegister authRegister) throws Exception {
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
 		user.setFullName(authRegister.getFullName());
 		user.setEmail(authRegister.getEmail());
 		user.setUsername(authRegister.getUsername());
-		user.setPassword(passwordEncoder.encode(authRegister.getPassword()));
+		user.setPassword(crypt.encode(authRegister.getPassword()));
 		user.setLoginRetryCount(0);
 		user.setStatus("ACTIVE");
 		user.setSchoolId(authRegister.getSchoolId());
@@ -89,7 +90,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int insertUser(User user) throws Exception {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setPassword(crypt.encode(user.getPassword()));
 		user.setLoginRetryCount(0);
 		user.setStatus("ACTIVE");
 		Role roleUser = roleDao.selectByName("USER");

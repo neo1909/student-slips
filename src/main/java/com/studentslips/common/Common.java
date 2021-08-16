@@ -7,7 +7,7 @@ public class Common {
     public static final String MESSAGE = "msg";
 
     //Save the uploaded file to this folder
-    public static final String UPLOADED_FOLDER = "D://Upload/";
+    public static final String UPLOADED_FOLDER = "/usr/local/file/";
 
     public static final String VAL_Y = "Y";
     public static final String VAL_N = "N";

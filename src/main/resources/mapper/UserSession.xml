@@ -4,7 +4,7 @@
 <mapper namespace="UserSessionDao">
     <select id="countUserSession" parameterType="com.studentslips.entities.UserSession" resultType="int">
         SELECT count(*)
-        FROM ps_user_session US
+        FROM PS_User_Session US
         where 1=1
         <if test="sessionId!= null and sessionId !=''">
         	and US.session_id = #{sessionId}
@@ -15,15 +15,15 @@
     </select>
     <select id="selectUserSession" parameterType="com.studentslips.entities.UserSession" resultMap="userSessionModel">
         SELECT US.*
-        FROM ps_user_session US
+        FROM PS_User_Session US
         where US.user_id = #{userId}
     </select>
     <insert id="insertUserSession" parameterType="com.studentslips.entities.UserSession" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO ps_user_session (user_id, session_id, insert_date)
+        INSERT INTO PS_User_Session (user_id, session_id, insert_date)
         VALUES (#{userId}, #{sessionId}, SYSDATE());
     </insert>
     <delete id="deleteUserSession" parameterType="com.studentslips.entities.UserSession">
-        DELETE from ps_user_session
+        DELETE from PS_User_Session
         WHERE id = #{id}
     </delete>
     

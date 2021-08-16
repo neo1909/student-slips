@@ -4,12 +4,12 @@
 <mapper namespace="UserRoleDao">
 
     <insert id="insertUserRole" parameterType="com.studentslips.entities.UserRole">
-        INSERT INTO ps_user_role (user_id, role_id, del_yn)
+        INSERT INTO PS_User_Role (user_id, role_id, del_yn)
         VALUES (#{userId}, #{roleId}, 'N');
     </insert>
 
     <insert id="insertMultiUserRole" parameterType="com.studentslips.entities.UserRole">
-        INSERT INTO ps_user_role (user_id, role_id, del_yn)
+        INSERT INTO PS_User_Role (user_id, role_id, del_yn)
         VALUES
         <foreach collection="roleIdList" item="roleId" index="index" open="(" separator="),("  close=")">
             #{userId},
@@ -20,7 +20,7 @@
     </insert>
 
     <update id="deleteMultiUserRoleNotIn" parameterType="com.studentslips.entities.UserRole">
-        UPDATE ps_user_role set del_yn = 'Y'
+        UPDATE PS_User_Role set del_yn = 'Y'
         where 1=1
         and user_id = #{userId}
         and role_id not in 
@@ -34,8 +34,8 @@
         	UR.user_id,
         	UR.role_id,
         	R.name as roleName
-        FROM ps_user_role UR
-        left join ps_roles R on UR.role_id = R.id
+        FROM PS_User_Role UR
+        left join PS_Roles R on UR.role_id = R.id
         where 1=1
         	and UR.del_yn = 'N'
         <if test="userId != null and userId !=''">

@@ -3,7 +3,7 @@
 
 <mapper namespace="BankStatementUploadHistoryDao">
     <insert id="insertBankStatementUploadHistory" parameterType="com.studentslips.entities.BankStatementUploadHistory">
-        INSERT INTO ps_bank_statement_upload_history (
+        INSERT INTO PS_Bank_Statement_Upload_History (
         <if test="filename != null">
             file_name,
         </if>
@@ -82,7 +82,7 @@
     </insert>
 
     <update id="updateBankStatementUploadHistory" parameterType="com.studentslips.entities.BankStatementUploadHistory">
-        UPDATE ps_bank_statement_upload_history
+        UPDATE PS_Bank_Statement_Upload_History
         SET
 
         <if test="postPaymentDate != null">
@@ -96,7 +96,7 @@
     </update>
 
     <delete id="deleteBankStatementUploadHistoryById" parameterType="com.studentslips.entities.BankStatementUploadHistory">
-        UPDATE ps_bank_statement_upload_history
+        UPDATE PS_Bank_Statement_Upload_History
         SET del_yn      = 'Y',
             update_id   = #{updateId},
             update_date = #{updateDate}
@@ -108,7 +108,7 @@
     <select id="selectAllBankStatementUploadHistory" parameterType="com.studentslips.entities.BankStatementUploadHistory"
             resultMap="result">
         SELECT bst.*
-        FROM ps_bank_statement_upload_history bst
+        FROM PS_Bank_Statement_Upload_History bst
         where bst.del_yn = 'N'
         <if test="filename != null">
             and file_name = #{filename}
@@ -122,9 +122,9 @@
             resultType="com.studentslips.entities.BankStatementUploadHistory"
             resultMap="result">>
     SELECT
-    FROM ps_bank_statement_upload_history bst
-    WHERE HT.ID = #{id}
-      AND HT.del_yn = 'N';
+    FROM PS_Bank_Statement_Upload_History bst
+    WHERE bst.ID = #{id}
+      AND bst.del_yn = 'N';
     </select>
 
     <resultMap id="result" type="com.studentslips.entities.BankStatementUploadHistory">

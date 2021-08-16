@@ -3,12 +3,12 @@
 
 <mapper namespace="StudentDebtsDao">
     <insert id="insertStudentDebts" parameterType="com.studentslips.entities.StudentsDebts">
-        INSERT INTO ps_students_debts (student_id,suppliers_id, service_id, school_id, reference_no, quantity, purpose,debit_date, amount_debt,price,grade,class, del_yn, insert_date, insert_id)
+        INSERT INTO PS_Students_Debts (student_id,suppliers_id, service_id, school_id, reference_no, quantity, purpose,debit_date, amount_debt,price,grade,class, del_yn, insert_date, insert_id)
         VALUES (#{studentId}, #{suppliersId}, #{serviceId}, #{schoolId},#{referenceNo},#{quantity}, #{purpose}, #{debitDate},#{amountDebt},#{price},#{grade},#{sClass}, 'N', SYSDATE(), #{insertId});
     </insert>
 
     <update id="updateStudentDebts" parameterType="com.studentslips.entities.StudentsDebts">
-        UPDATE ps_students_debts SET
+        UPDATE PS_Students_Debts SET
         quantity = #{quantity}
         ,amount_debt = #{amountDebt}
         , update_id = #{updateId}
@@ -35,7 +35,7 @@
     </update>
 
     <delete id="deleteStudentDebtsById" parameterType="com.studentslips.entities.StudentsDebts">
-        UPDATE ps_students_debts  SET
+        UPDATE PS_Students_Debts  SET
             del_yn = 'Y'
                              , update_id = #{updateId}
                              , update_date = SYSDATE()
@@ -61,8 +61,8 @@
     </delete>
 
     <select id="selectStudentDebts" parameterType="com.studentslips.entities.StudentsDebts" resultMap="result">
-        select sd.*,s.name,(select name from ps_service where id= sd.service_id) as service_name , s.grade, s.class
-        from ps_students_debts sd, ps_students s
+        select sd.*,s.name,(select name from PS_Service where id= sd.service_id) as service_name , s.grade, s.class
+        from PS_Students_Debts sd, PS_Students s
         where sd.student_id=s.id
         <if test="serviceId!=0 ">
             AND  sd.service_id = #{serviceId}
@@ -88,8 +88,8 @@
     </select>
 
     <select id="search" parameterType="com.studentslips.entities.StudentsDebts" resultMap="result">
-        select s.id as student_id,s.name,concat(concat(s.id , '-' , #{suppliersId}),'-',#{serviceId})  as reference_no, (select name from ps_service where id= #{serviceId}) as service_name, #{price} as price
-        from ps_students s
+        select s.id as student_id,s.name,concat(concat(s.id , '-' , #{suppliersId}),'-',#{serviceId})  as reference_no, (select name from PS_Service where id= #{serviceId}) as service_name, #{price} as price
+        from PS_Students s
         where del_yn='N'
         <if test="schoolId!=0 ">
             AND  s.school_id = #{schoolId}
@@ -103,9 +103,9 @@
     </select>
 
     <select id="selectAllStudentDebts" parameterType="com.studentslips.entities.TaskArchiveSearch" resultMap="result">
-        select sd.debit_date,sd.grade,sd.class,(select name from onetouch.ps_service where sd.service_id=id) as service_name,sd.purpose,sd.price
+        select sd.debit_date,sd.grade,sd.class,(select name from onetouch.PS_Service where sd.service_id=id) as service_name,sd.purpose,sd.price
         ,sd.suppliers_id,sd.service_id,sd.school_id
-        from onetouch.ps_students_debts sd
+        from onetouch.PS_Students_Debts sd
         where sd.debit_date between #{fromDate} and  #{toDate}
         <if test="schoolId!=0 ">
             AND  sd.school_id = #{schoolId}

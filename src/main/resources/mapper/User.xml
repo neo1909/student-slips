@@ -15,7 +15,7 @@
 	        U.description,
 	        U.del_yn,
 	        U.insert_date
-        FROM ps_users U
+        FROM PS_Users U
         where 1=1
         	and U.del_yn = 'N'
         <if test="id > 0">
@@ -34,9 +34,9 @@
         SELECT
         	row_number() over (order by id asc) as rnum,
 	        U.*,
-	        s.name as schoolName
-        FROM ps_users U
-        inner join ps_school S on U.school_id = s.id
+	        S.name as schoolName
+        FROM PS_Users U
+        inner join PS_School S on U.school_id = S.id
         where 1=1
         	and U.del_yn = 'N'
         <if test="fullName != null and fullName !=''">
@@ -59,12 +59,12 @@
 	    <selectKey resultType="int" keyProperty="id" order="AFTER" >
 		  SELECT LAST_INSERT_ID() as id
 		</selectKey>
-        INSERT INTO ps_users (username, password, full_name, school_id, email, user_type, login_retry_count, last_login_date, status, description, del_yn, insert_date, insert_id, update_date, update_id)
+        INSERT INTO PS_Users (username, password, full_name, school_id, email, user_type, login_retry_count, last_login_date, status, description, del_yn, insert_date, insert_id, update_date, update_id)
         VALUES (#{username}, #{password}, #{fullName}, #{schoolId}, #{email}, #{userType}, #{loginRetryCount}, #{lastLoginDate}, #{status}, #{description}, 'N', SYSDATE(), null, null, null);
     </insert>
 
     <update id="updateUser" parameterType="com.studentslips.entities.User">
-        UPDATE ps_users SET
+        UPDATE PS_Users SET
         <if test="password != null and password !=''">
             password = #{password},
         </if>
@@ -101,7 +101,7 @@
     </update>
 
     <update id="deleteUserById" parameterType="com.studentslips.entities.User">
-        UPDATE ps_users SET
+        UPDATE PS_Users SET
 	        del_yn = 'Y',
 	        update_id = #{updateId},
 	        update_date = SYSDATE()
@@ -121,9 +121,9 @@
         	U.login_retry_count,
         	R.id as roleId,
         	R.name as roleName
-        FROM ps_users U
-        left join ps_user_role UR on U.id = UR.user_id
-        inner join ps_roles R on UR.role_id = R.id
+        FROM PS_Users U
+        left join PS_User_Role UR on U.id = UR.user_id
+        inner join PS_Roles R on UR.role_id = R.id
         where 1=1
         	and U.del_yn = 'N'
         <if test="username != null and username !=''">

@@ -14,8 +14,8 @@
 	        FROM_UNIXTIME(S.expiry_time / 1000) as expiry_time,
 	        S.principal_name,
 	        U.full_name
-        FROM spring_session S
-        inner join ps_users U on S.principal_name = U.username
+        FROM SPRING_SESSION S
+        inner join PS_Users U on S.principal_name = U.username
         where 1=1
         	and U.del_yn = 'N'
         <if test="fullName != null and fullName !=''">
@@ -32,7 +32,7 @@
     </select>
 
     <update id="deleteSession" parameterType="com.studentslips.entities.Session">
-        UPDATE spring_session SET
+        UPDATE SPRING_SESSION SET
 	        principal_name = null,
 	        session_id = null
         WHERE primary_id = #{primaryId}

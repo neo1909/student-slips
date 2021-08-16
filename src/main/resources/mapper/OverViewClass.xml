@@ -10,7 +10,7 @@
         from (
         select  XX.student_id,XX.amount_debt,XX.claims,(XX.amount_debt - XX.claims) as balance
         from    (select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
-        from    ps_bank_statement bs , ps_students_debts sd
+        from    PS_Bank_Statement bs , PS_Students_Debts sd
         where bs.reference_no = sd.reference_no
         <if test="schoolId!=0 ">
             and sd.school_id = #{schoolId}
@@ -28,7 +28,7 @@
         ) XY
         group by XY.student_id
         ) X1
-        left outer join ps_students s
+        left outer join PS_Students s
         on s.id = X1.student_id
         where  1=1
         <if test="sClass !=0 ">
@@ -43,7 +43,7 @@
         select  student_id,(select s.name from ps_students s where XX.student_id = s.id ) as name_student,service_id,(select sr.name from ps_service sr where XX.service_id = sr.id ) as name_service,XX.amount_debt,XX.claims,(XX.amount_debt - XX.claims) as balance,case when XX.amount_debt > XX.claims then 0 else 1 end isHightColor
         from(
         select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
-        from    ps_bank_statement bs , ps_students_debts sd
+        from    PS_Bank_Statement bs , PS_Students_Debts sd
         where bs.reference_no = sd.reference_no
         <if test="schoolId!=0 ">
             and sd.school_id = #{schoolId}

@@ -15,7 +15,7 @@
              select X1.student_id,X1.service_id,X1.amount_debt,X1.claims,(X1.amount_debt - X1.claims) as balance
              from (
                     select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
-                    from ps_bank_statement bs , ps_students_debts sd
+                    from PS_Bank_Statement bs , PS_Students_Debts sd
                     where bs.reference_no = sd.reference_no
                     <if test="serviceListId !=null and !serviceListId.isEmpty()">
                         <foreach item="item" index="index" collection="serviceListId" open="and sd.service_id in (" separator="," close=")">
@@ -27,7 +27,7 @@
               group by sd.student_id,sd.service_id,sd.amount_debt
           ) X1
         ) XX,
-        (select s.id as student_id,ht.id as head_teacher_id,ht.name,ht.class,ht.grade,ht.school_id from ps_students s, ps_head_teachers ht
+        (select s.id as student_id,ht.id as head_teacher_id,ht.name,ht.class,ht.grade,ht.school_id from PS_Students s, PS_Head_Teachers ht
         where s.class=ht.class
         and s.grade =ht.grade
         and s.school_id= ht.school_id) XY
@@ -48,7 +48,7 @@
                 select X1.student_id,X1.service_id,X1.amount_debt,X1.claims,(X1.amount_debt - X1.claims) as balance
                 from (
                       select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
-                      from ps_bank_statement bs , ps_students_debts sd
+                      from PS_Bank_Statement bs , PS_Students_Debts sd
                       where bs.reference_no = sd.reference_no
                         <if test="serviceListId !=null and !serviceListId.isEmpty()">
                             <foreach item="item" index="index" collection="serviceListId" open="and sd.service_id in (" separator="," close=")">
@@ -60,7 +60,7 @@
                       group by sd.student_id,sd.service_id,sd.amount_debt
                   ) X1
         ) XX,
-        (select s.id as student_id,ht.id as head_teacher_id,ht.name,ht.class,ht.grade,ht.school_id from ps_students s, ps_head_teachers ht
+        (select s.id as student_id,ht.id as head_teacher_id,ht.name,ht.class,ht.grade,ht.school_id from PS_Students s, PS_Head_Teachers ht
          where s.class=ht.class
            and s.grade =ht.grade
            and s.school_id= ht.school_id) XY
