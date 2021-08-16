@@ -173,7 +173,7 @@ CREATE TABLE `ps_users` (
 INSERT INTO `ps_users` VALUES (1,'admin','$2a$10$3ZpIvM/JzRJQMBUflw7JQu28k8F3leyySyHYF3/RT1emRhyVwL9Ni','Admin Student Slips',1,'studentslips.adm@gmail.com',NULL,0,NULL,'ACTIVE',NULL,'N','2021-08-15 15:57:23',NULL,NULL,NULL);
 
 CREATE TABLE `ps_roles` (
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
   `del_yn` varchar(1) DEFAULT NULL,

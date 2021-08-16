@@ -15,14 +15,23 @@ public class SchoolAndClassSearch {
     private int schoolId;
     private int studentId;
     private List<Integer> serviceListId;
+    private String serviceListString;
     private int sClass;
     private int grade;
     private int headTeacherId;
 
     public SchoolAndClassSearch() {
     }
+    
+    public String getServiceListString() {
+		return serviceListString;
+	}
 
-    public Date getFromDate() {
+	public void setServiceListString(String serviceListString) {
+		this.serviceListString = serviceListString;
+	}
+
+	public Date getFromDate() {
         return fromDate;
     }
 
