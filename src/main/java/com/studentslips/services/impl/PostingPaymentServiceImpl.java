@@ -24,6 +24,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,13 +53,14 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
 
             byte[] bytes = file.getBytes();
             Path path = Paths.get(Common.UPLOADED_FOLDER + file.getOriginalFilename());
-            Files.write(path, bytes);
+            //Files.write(path, bytes);
             if(!result.toString().isEmpty()){
                 result.append(", ");
             }
             result.append(file.getOriginalFilename());
 
-            processConvertAndSave(file);
+            //processConvertAndSave(file);
+            processConvertAndSaveNotUpload(file);
         }
         return result.toString();
     }
@@ -88,6 +90,35 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
 
             doc.getDocumentElement().normalize();
             //String rootElement = doc.getDocumentElement().getNodeName()
+
+            setZaglavlje(bankStatement, doc);
+            setZbirni(bankStatement, doc);
+            setStavka(bankStatement, doc);
+
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            e.printStackTrace();
+        }
+
+        bankStatement.setSchoolId(1);
+        bankStatement.setFilename(file.getOriginalFilename());
+        bankStatement.setInsertDate(new Timestamp(System.currentTimeMillis()));
+        bankStatement.setInsertId(100);
+
+        bankStatementDao.insertBankStatement(bankStatement);
+
+        logUploadHistory(bankStatement);
+
+    }
+
+    private void processConvertAndSaveNotUpload(MultipartFile file) throws Exception {
+        BankStatement bankStatement = new BankStatement();
+
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            InputStream is =  file.getInputStream();
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(is);
 
             setZaglavlje(bankStatement, doc);
             setZbirni(bankStatement, doc);
