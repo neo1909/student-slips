@@ -78,7 +78,7 @@ var fn = {
 
         SS.sendToServer('SC_R_03', false, null, function onSuccess(data) {
         	var src = [];
-    		if (data) src = data.lst;
+    		if (data && data.lst) src = data.lst;
     		fn.data.schoolList = Object.assign({}, src);
     		src.unshift({id: "", schoolName: "All"});
     		$("#iptSrchSchool").jqxDropDownList({ source: src, selectedIndex: 0, displayMember: "schoolName", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%'});

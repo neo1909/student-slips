@@ -3,8 +3,8 @@ let fn = {
 
 		SS.sendToServer('SC_R_03', false, null, function onSuccess(data) {
 	    	var src = [];
-			if (data) src = data.lst;
-			if (data) $("#iptRegSchool").jqxDropDownList({ source: src, selectedIndex: 0, displayMember: "schoolName", valueMember: "id", width: '100%', height: SS.IPT_HEIGHT});
+			if (data && data.lst) src = data.lst;
+			$("#iptRegSchool").jqxDropDownList({ source: src, selectedIndex: 0, displayMember: "schoolName", valueMember: "id", width: '100%', height: SS.IPT_HEIGHT});
 		}, function onError(err) {
 		})
 		
@@ -23,16 +23,6 @@ let fn = {
                 {input: '#iptRegPassword', message: 'Min length = 8', action: 'keyup, blur', rule: 'minLength=8'},
                 {input: '#iptRegEmail', message: 'E-mail is required', action: 'keyup, blur', rule: 'required'},
                 {input: '#iptRegEmail', message: 'E-mail is invalid', action: 'keyup, blur', rule: 'email'},
-                /**
-                 * @TODO
-                 * 
-                 * Validate username:
-                 *  maxlength=45
-                 * Validate password
-                 *  maxlength=45
-                 *  password strength
-                 *  
-                 * */
             ]
         });
 	},

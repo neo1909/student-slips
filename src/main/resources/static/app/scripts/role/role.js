@@ -21,7 +21,7 @@ var fn = {
 			loadError : function(xhr, status, error) {}
 		});
         
-        $("#grdUser").jqxGrid({
+        $("#grdRole").jqxGrid({
             source: dataAdapter,
             columnsresize: true,
             adaptive: true,
@@ -74,7 +74,7 @@ var fn = {
             params,
             function onSuccess(data) {
             	fn.gridSource.localdata = data.lst;
-                $("#grdUser").jqxGrid({ source: fn.gridSource });
+                $("#grdRole").jqxGrid({ source: fn.gridSource });
             },
             function onError(err) {
                 SS.alert( SS.title.ERROR, SS.message.ERROR);
@@ -91,12 +91,12 @@ var fn = {
 		
 		$("#btnSave").click(function() {
 			let params = {
-				username: $("#iptInsRoleName").val()
+					name: $("#iptInsRoleName").val()
 			};
 			SS.sendToServer('R_C_01', false, params, function onSuccess(data) {
 				$("#id-ss-popup").jqxWindow('close');
 
-	            $('#grdUser').jqxGrid('refresh');
+	            $('#grdRole').jqxGrid('refresh');
 	            fn.onSearch();
 			}, function onError(err) {
 				SS.alert(SS.title.ERROR, SS.message.ERROR);
@@ -109,7 +109,7 @@ var fn = {
     },
 
     onDelete: function(rowIndex) {
-        let data = $("#grdUser").jqxGrid('getrowdata', rowIndex);
+        let data = $("#grdRole").jqxGrid('getrowdata', rowIndex);
         let id = data.id;
         if (id) {
             SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
@@ -147,7 +147,7 @@ $(document).ready(function() {
 	fn.init();
 
 	$('#btnStdSrch').click(function() {
-		$('#grdUser').jqxGrid('refresh');
+		$('#grdRole').jqxGrid('refresh');
 		fn.onSearch();
 	});
 
