@@ -7,7 +7,7 @@ public class Common {
     public static final String MESSAGE = "msg";
 
     //Save the uploaded file to this folder
-    public static final String UPLOADED_FOLDER = "/usr/local/file/";
+    public static final String UPLOADED_FOLDER = "aws:elasticbeanstalk:application:environment:UPLOADED_FOLDER:/usr/local/";
 
     public static final String VAL_Y = "Y";
     public static final String VAL_N = "N";

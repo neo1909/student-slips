@@ -10,7 +10,7 @@
                sum(XX.claims) as claims,sum(XX.balance) as balance,
                case when sum(XX.balance) > 0 then 0 else 1 end isHightColor,
                XX.service_id,
-               (select name from ps_service svc where svc.id = XX.service_id) as name_service
+               (select name from PS_Service svc where svc.id = XX.service_id) as name_service
         from (
              select X1.student_id,X1.service_id,X1.amount_debt,X1.claims,(X1.amount_debt - X1.claims) as balance
              from (
@@ -43,7 +43,7 @@
     </select>
 
     <select id="searchDetailSchool" parameterType="com.studentslips.entities.SchoolAndClassSearch" resultMap="resultDetailSchool">
-        select  concat(XY.grade , '/' , XY.class) as grade_class,XY.head_teacher_id,XY.name,XX.service_id,(select name from ps_service where XX.service_id = id) as name_service,sum(XX.amount_debt) as debit,sum(XX.claims) as claims,SUM(XX.balance) as balance,case when SUM(XX.balance) > 0 then 0 else 1 end isHightColor
+        select  concat(XY.grade , '/' , XY.class) as grade_class,XY.head_teacher_id,XY.name,XX.service_id,(select name from PS_Service where XX.service_id = id) as name_service,sum(XX.amount_debt) as debit,sum(XX.claims) as claims,SUM(XX.balance) as balance,case when SUM(XX.balance) > 0 then 0 else 1 end isHightColor
         from (
                 select X1.student_id,X1.service_id,X1.amount_debt,X1.claims,(X1.amount_debt - X1.claims) as balance
                 from (

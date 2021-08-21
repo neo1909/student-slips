@@ -117,38 +117,42 @@ CREATE TABLE `PS_Students_Debts` (
      `price` DECIMAL
 );
 
-CREATE TABLE ps_bank_statement_upload_history (
-      id int NOT NULL AUTO_INCREMENT,
-      file_name longtext DEFAULT NULL,
-      path varchar(255) DEFAULT NULL,
-      upload_date datetime NOT NULL,
-      post_payment_date datetime DEFAULT NULL,
-      insert_date datetime NOT NULL,
-      insert_id int NOT NULL,
-      update_date datetime DEFAULT NULL,
-      update_id int DEFAULT NULL,
-      del_yn varchar(1) NOT NULL,
-      PRIMARY KEY (id)
-);
-
-CREATE TABLE ps_bank_statement (
-       id int NOT NULL AUTO_INCREMENT,
-       file_name varchar(255) DEFAULT NULL,
-       bank_statement_date date DEFAULT NULL,
-       no_of_changes int DEFAULT NULL,
-       balance decimal(10,0) DEFAULT NULL,
-       no_of_bank_statement int DEFAULT NULL,
-       claims decimal(10,0) DEFAULT NULL,
-       reference_no varchar(255) DEFAULT NULL,
-       currency_date date DEFAULT NULL,
-       insert_date datetime NOT NULL,
-       insert_id int NOT NULL,
-       update_date datetime DEFAULT NULL,
-       update_id int DEFAULT NULL,
-       post_payment_yn varchar(1) NOT NULL DEFAULT 'N',
-       del_yn varchar(1) NOT NULL,
-       PRIMARY KEY (id)
-);
+CREATE TABLE PS_Bank_Statement_Upload_History (
+                                                  id int NOT NULL AUTO_INCREMENT,
+                                                  school_id int DEFAULT NULL,
+                                                  file_name longtext DEFAULT NULL,
+                                                  path varchar(255) DEFAULT NULL,
+                                                  upload_date datetime NOT NULL,
+                                                  post_payment_date datetime DEFAULT NULL,
+                                                  insert_date datetime NOT NULL,
+                                                  insert_id int NOT NULL,
+                                                  update_date datetime DEFAULT NULL,
+                                                  update_id int DEFAULT NULL,
+                                                  del_yn varchar(1) NOT NULL,
+                                                  PRIMARY KEY (id)
+)
+CREATE TABLE PS_Bank_Statement (
+                                   id int NOT NULL AUTO_INCREMENT,
+                                   school_id int DEFAULT NULL,
+                                   file_name varchar(255) DEFAULT NULL,
+                                   bank_statement_date date DEFAULT NULL,
+                                   account_number varchar(255) DEFAULT NULL,
+                                   payer varchar(255) DEFAULT NULL,
+                                   purpose longtext DEFAULT NULL,
+                                   no_of_changes int DEFAULT NULL,
+                                   balance decimal(10,0) DEFAULT NULL,
+                                   no_of_bank_statement int DEFAULT NULL,
+                                   claims decimal(10,0) DEFAULT NULL,
+                                   reference_no varchar(255) DEFAULT NULL,
+                                   currency_date date DEFAULT NULL,
+                                   insert_date datetime NOT NULL,
+                                   insert_id int NOT NULL,
+                                   update_date datetime DEFAULT NULL,
+                                   update_id int DEFAULT NULL,
+                                   post_payment_yn varchar(1) NOT NULL DEFAULT 'N',
+                                   del_yn varchar(1) NOT NULL,
+                                   PRIMARY KEY (id)
+)
 
 CREATE TABLE `ps_users` (
   `id` int NOT NULL AUTO_INCREMENT,
