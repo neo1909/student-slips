@@ -12,8 +12,18 @@ public class TaskArchiveSearch {
     private Date toDate;
 
     private int schoolId;
+    
+    private int taskId;
+    
+    public int getTaskId() {
+		return taskId;
+	}
 
-    public Date getFromDate() {
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
+
+	public Date getFromDate() {
         return fromDate;
     }
 

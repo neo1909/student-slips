@@ -36,7 +36,7 @@
 	        U.*,
 	        S.name as schoolName
         FROM PS_Users U
-        inner join PS_School S on U.school_id = S.id
+        left join PS_School S on U.school_id = S.id
         where 1=1
         	and U.del_yn = 'N'
         <if test="fullName != null and fullName !=''">
@@ -49,7 +49,7 @@
         <if test="status != null and status !=''">
         	and U.status = #{status}
         </if>
-        <if test="schoolId != null and schoolId !=''">
+        <if test="schoolId != -1">
         	and U.school_id = #{schoolId}
         </if>
         
@@ -71,7 +71,7 @@
         <if test="fullName != null and fullName !=''">
             full_name = #{fullName},
         </if>
-        <if test="schoolId != null and schoolId !=''">
+        <if test="schoolId != -1">
             school_id = #{schoolId},
         </if>
         <if test="email != null and email !=''">

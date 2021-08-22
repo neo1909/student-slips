@@ -4,7 +4,7 @@
 <mapper namespace="OverViewClassDao">
 
     <select id="searchAllClass" parameterType="com.studentslips.entities.SchoolAndClassSearch" resultMap="resultAllClass">
-        select  X1.student_id,S.name   ,X1.debit, X1.claims, X1.balance, case when X1.debit > X1.claims then 0 else 1 end isHightColor
+        select  X1.student_id,s.name   ,X1.debit, X1.claims, X1.balance, case when X1.debit > X1.claims then 0 else 1 end isHightColor
         from (
         select  XY.student_id,SUM(XY.amount_debt) as debit, SUM(XY.claims) as claims, SUM(XY.balance) as balance
         from (

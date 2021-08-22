@@ -12,11 +12,20 @@ public class Services {
     private Timestamp updateDate;
     private int schoolId;
     private String schoolName;
+    private int supplierId;
 
     public Services() {
     }
 
-    public int getSchoolId() {
+    public int getSupplierId() {
+		return supplierId;
+	}
+
+	public void setSupplierId(int supplierId) {
+		this.supplierId = supplierId;
+	}
+
+	public int getSchoolId() {
         return schoolId;
     }
 

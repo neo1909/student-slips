@@ -37,8 +37,8 @@
                    Overview Class
                 </h1>
                 <ol class="breadcrumb">
-                    <li></i> Overview Class</a></li>
-                    <li class="active">Overview Class</li>
+                    <li></i>Overview</a></li>
+                    <li class="active">Class</li>
                 </ol>
             </section>
 
@@ -50,11 +50,11 @@
                             <div class="row">
                                 <div class="form-group col-md-2">
 				    				<label>Class</label>
-									<div id="iptSrchClass"></div>
+									<div id="cmbSrchClass"></div>
                                 </div>
                                 <div class="form-group col-md-2">
 				    				<label>Service</label>
-									<div id="iptSrchService"></div>
+									<div id="cmbSrchService"></div>
                                 </div>
                                 <div class="form-group col-md-2">
 				    				<label>From Date</label>
@@ -66,7 +66,7 @@
                                 </div>
                             </div>
 							<div class="row justify-content-end align-items-center d-flex">
-								<button id="btnStdSrch" class="btn btn-primary btn-str mx-2" type="button" value="Search">Search</button>
+								<button id="btnSearch" class="btn btn-primary btn-str mx-2" type="button">Search</button>
                             </div>
                         </form>
                     </div>
@@ -77,12 +77,12 @@
 	                        <div class="ss-grid">
 	                            <div id="grdOverviewClass"></div>
 	                        </div>
-	                    	<div class="d-flex" id="grdMaster-total">
-	                    		<div class="mr-auto"><h4 class="text-red">Total</h4></div>
+	                    	<div class="d-flex align-items-center justify-content-end" id="grdMaster-total">
+	                    		<div class="ml-auto mr-3"><h4 class="text-red">Total</h4></div>
 	                    		<div class="d-flex align-items-center">
-		                    		<div class="mr-2">Debit: <span id="grdMaster-debit"></span></div>
-		                    		<div class="mr-2">Claims: <span id="grdMaster-claims"></span></div>
-		                    		<div>Balance: <span id="grdMaster-balance"></span></div>
+		                    		<div class="mx-2">Debit: <span class="debit"></span></div>
+		                    		<div class="mx-2">Claims: <span class="claims"></span></div>
+		                    		<div class="mx-2">Balance: <span class="balance"></span></div>
 	                    		</div>
 	                    	</div>
 	                    </div>
@@ -92,19 +92,29 @@
 	                    	<br/>
 	                        <div class="ss-grid">
 	                            <div id="grdOverviewClassDetail"></div>
-	                        </div>
+	                        </div>	
 	                    	<div class="d-flex align-items-center" id="grdDetail-total">
-	                    		<div class="mr-auto"><h4 class="text-red">Total</h4></div>
+	                    		<div class="ml-auto mr-3"><h4 class="text-red">Total</h4></div>
 	                    		<div class="d-flex align-items-center">
-		                    		<div class="mr-2">Debit: <span id="grdDetail-debit"></span></div>
-		                    		<div class="mr-2">Claims: <span id="grdDetail-claims"></span></div>
-	                    			<div>Balance: <span id="grdDetail-balance"></span></div>
+		                    		<div class="mx-2">Debit: <span class="debit"></span></div>
+		                    		<div class="mx-2">Claims: <span class="claims"></span></div>
+		                    		<div class="mx-2">Balance: <span class="balance"></span></div>
 	                    		</div>
 	                    	</div>
 	                    </div>
                     </div>
 					<div style="margin-top: 15px;">
 						<button id="btnPrint" class="btn btn-primary btn-str" type="button">Print</button>
+						<div class="float-right">
+							<div class="d-flex align-items-center" id="summary-total">
+	                    		<div class="ml-auto mr-3"><h4 class="text-red">In total</h4></div>
+	                    		<div class="d-flex align-items-center">
+		                    		<div class="mx-2">Debit: <span class="debit"></span></div>
+		                    		<div class="mx-2">Claims: <span class="claims"></span></div>
+		                    		<div class="mx-2">Balance: <span class="balance"></span></div>
+	                    		</div>
+	                    	</div>
+						</div>
 					</div>
                 </div>
             </section>

@@ -47,5 +47,6 @@
         <result property = "insertDate" column = "insert_date"/>
         <result property = "updateId" column = "update_id"/>
         <result property = "updateDate" column = "update_date"/>
+        <result property = "supplierId" column = "supplier_id"/>
     </resultMap>
 </mapper>

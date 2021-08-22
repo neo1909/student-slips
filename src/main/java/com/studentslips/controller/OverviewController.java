@@ -13,10 +13,10 @@ public class OverviewController {
 	 * @Section Overview > Student
 	 * 
 	 * */
-//	@GetMapping("class")
-//	public String manageOverviewStudent(Model model) {
-//		return "overview/overviewStudent";
-//	}
+	@GetMapping("student")
+	public String manageOverviewStudent(Model model) {
+		return "studentOverview/studentOverview";
+	}
 	
 	/**
 	 * @Section Overview > Class
@@ -31,8 +31,8 @@ public class OverviewController {
 	 * @Section Overview > School
 	 * 
 	 * */
-//	@GetMapping("class")
-//	public String manageOverviewSchool(Model model) {
-//		return "overview/overviewSchool";
-//	}
+	@GetMapping("school")
+	public String manageOverviewSchool(Model model) {
+		return "schoolOverview/schoolOverview";
+	}
 }
