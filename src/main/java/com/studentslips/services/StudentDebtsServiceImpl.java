@@ -1,10 +1,15 @@
 package com.studentslips.services;
 
 import com.studentslips.common.SessionUtil;
+import com.studentslips.controller.StudentDebtsRestController;
 import com.studentslips.dao.StudentDebtsDao;
 import com.studentslips.entities.StudentDebtsObject;
 import com.studentslips.entities.StudentsDebts;
+import com.studentslips.entities.StudentsDebtsTask;
 import com.studentslips.entities.TaskArchiveSearch;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +18,7 @@ import java.util.List;
 
 @Service(value = "StudentDebtsService")
 public class StudentDebtsServiceImpl implements StudentDebtsService{
+    private static final Logger logger = LoggerFactory.getLogger(StudentDebtsServiceImpl.class);
 
     @Autowired
     StudentDebtsDao studentDebtsDao;
@@ -59,8 +65,7 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
                 sd.setServiceId(studentDebtsObject.getServiceId());
                 sd.setDebitDate(studentDebtsObject.getDebitDate());
                 sd.setPurpose(studentDebtsObject.getPurpose());
-                sd.setsClass(studentDebtsObject.getsClass());
-                sd.setGrade(studentDebtsObject.getGrade());
+                sd.setTaskId(studentDebtsObject.getTaskId());
                 sd.setInsertId(SessionUtil.getUserLoginId());
                 sd.setSchoolId(SessionUtil.getSchoolId());
                 studentDebtsDao.insertStudentsDebts(sd);
@@ -79,9 +84,39 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
         }
     }
 
-    @Override
-    public List<StudentsDebts> searchTaskArchive(TaskArchiveSearch taskArchiveSearch) throws Exception {
+	@Override
+	public List<StudentsDebtsTask> searchTaskArchives(TaskArchiveSearch taskArchiveSearch) throws Exception {
         taskArchiveSearch.setSchoolId(SessionUtil.getSchoolId());
-        return studentDebtsDao.searchTaskArchive(taskArchiveSearch);
-    }
+        return studentDebtsDao.searchTaskArchives(taskArchiveSearch);
+	}
+
+	@Override
+	public int countTaskArchive(TaskArchiveSearch taskArchiveSearch) throws Exception {
+        taskArchiveSearch.setSchoolId(SessionUtil.getSchoolId());
+        return studentDebtsDao.countTaskArchive(taskArchiveSearch);
+	}
+
+	@Override
+	public int deleteTaskArchive(StudentsDebtsTask studentsDebtsTask) {
+		return studentDebtsDao.deleteTaskArchive(studentsDebtsTask);
+	}
+
+	@Override
+	public int updateTaskArchive(StudentsDebtsTask studentsDebtsTask) {
+		return studentDebtsDao.updateTaskArchive(studentsDebtsTask);
+	}
+
+	@Override
+	public StudentsDebtsTask insertTaskArchive(StudentDebtsObject std) throws Exception {
+		StudentsDebtsTask task = new StudentsDebtsTask();
+		task.setSchoolId(SessionUtil.getSchoolId());
+		task.setGrade(std.getGrade());
+		task.setsClass(std.getsClass());
+		task.setServiceId(std.getServiceId());
+		task.setNote(std.getPurpose());
+		task.setDebitDate(std.getDebitDate());
+		task.setInsertId(SessionUtil.getUserLoginId());
+        studentDebtsDao.insertTaskArchive(task);
+        return task;
+	}
 }

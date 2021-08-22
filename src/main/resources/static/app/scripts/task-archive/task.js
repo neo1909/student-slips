@@ -1,6 +1,6 @@
 let source = {
     datafields: [{
-            name: 'studentId',
+            name: 'id',
             type: 'int'
         },
         {
@@ -8,7 +8,11 @@ let source = {
             type: 'int'
         },
         {
-            name: 'suppliersId',
+            name: 'grade',
+            type: 'int'
+        },
+        {
+            name: 'sClass',
             type: 'int'
         },
         {
@@ -16,32 +20,16 @@ let source = {
             type: 'int'
         },
         {
-            name: 'referenceNo',
+            name: 'serviceName',
             type: 'string'
         },
         {
-            name: 'quantity',
-            type: 'int'
-        },
-        {
-            name: 'purpose',
+            name: 'note',
             type: 'string'
         },
         {
             name: 'debitDate',
             type: 'date'
-        },
-        {
-            name: 'amountDebt',
-            type: 'string'
-        },
-        {
-            name: 'sClass',
-            type: 'int'
-        },
-        {
-            name: 'grade',
-            type: 'int'
         },
         {
             name: 'delYn',
@@ -61,18 +49,6 @@ let source = {
         },
         {
             name: 'updateDate',
-            type: 'string'
-        },
-        {
-            name: 'nameStudent',
-            type: 'string'
-        },
-        {
-            name: 'nameService',
-            type: 'string'
-        },
-        {
-            name: 'price',
             type: 'string'
         }
     ],
@@ -112,7 +88,7 @@ function createGrid() {
             {
                 text: 'Service',
                 columntype: 'textbox',
-                datafield: 'nameService',
+                datafield: 'serviceName',
                 align: 'center',
                 cellsalign: 'right',
                 width: '15%',
@@ -120,7 +96,7 @@ function createGrid() {
             },
             {
                 text: 'Note',
-                datafield: 'purpose',
+                datafield: 'note',
                 align: 'center',
                 cellsalign: 'center',
                 width: '35%',
@@ -162,9 +138,8 @@ function setMinDate(time) {
     const date = new Date( time )
     const year = date.getFullYear();
     const month = date.getMonth();
-    const day = +date.getDate() +1;
+    const day = +date.getDate();
     $("#iptToDate").jqxDateTimeInput('setMinDate', new Date( year, month, day));
-    $("#iptToDate").jqxDateTimeInput('setDate', new Date( year, month, day));
 }
 
 function onSearch() {
@@ -189,12 +164,12 @@ function onSearch() {
 
 function onDelete(rowIndex) {
     let data = $("#grdTask").jqxGrid('getrowdata', rowIndex);
-    let studentId = data.studentId;
-    if (studentId) {
+    let id = data.id;
+    if (id) {
         SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
             if (result ) {
                 SS.sendToServer(
-                    'SD_D_01',
+                    'TA_D_01',
                     false,
                     data,
                     function onSuccess(data) {
@@ -208,20 +183,7 @@ function onDelete(rowIndex) {
 
 function onUpdate(rowIndex) {
     let data = $("#grdTask").jqxGrid('getrowdata', rowIndex);
-    const taskData = {
-        isUpdate: true,
-        grade: data.grade,
-        debitDate: data.debitDate,
-        sClass:data.sClass,
-        suppliersId: data.suppliersId,
-        serviceId: data.serviceId,
-        purpose: data.purpose,
-        quantity: data.quantity,
-        price: data.price,
-        studentId: data.studentId
-    }
-    localStorage.setItem('task', JSON.stringify(taskData));
-    window.location.href = "/studentDebts";
+    window.location.href = "/posting/student-debts?id=" + data.id;
 }
 
 

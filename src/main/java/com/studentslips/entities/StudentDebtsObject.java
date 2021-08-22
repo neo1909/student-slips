@@ -18,11 +18,20 @@ public class StudentDebtsObject {
     private Timestamp debitDate;
     private String purpose;
     private List<StudentsDebts> studentsDebtsList;
-
+    private int taskId;
+    
     public StudentDebtsObject() {
     }
 
-    public int getSuppliersId() {
+    public int getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
+
+	public int getSuppliersId() {
         return suppliersId;
     }
 
