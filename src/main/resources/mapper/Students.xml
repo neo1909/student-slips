@@ -3,7 +3,7 @@
 
 <mapper namespace="StudentsDao">
     <insert id="insertStudent" parameterType="com.studentslips.entities.Student">
-        INSERT INTO PS_Students (NAME,grade, class, school_id, del_yn, insert_date, insert_id)
+        INSERT INTO PS_Students (name,grade, class, school_id, del_yn, insert_date, insert_id)
         VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, 'N', SYSDATE(), #{insertId});
     </insert>
 
@@ -40,7 +40,7 @@
     </delete>
 
     <select id="selectAllStudent" parameterType="com.studentslips.entities.Student" resultMap="result">
-        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
+        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName,LPAD(S.id, 4, '0') as student_id
         FROM PS_Students S
         where  S.del_yn='N'
         <if test="schoolId!=0 ">
@@ -48,7 +48,7 @@
         </if>
         <if test="name!=null and name !=''">
             <bind name="nameLike" value="'%' + name + '%'" />
-         AND   S.name like #{nameLike}
+         AND   UPPER(S.name) like UPPER (#{nameLike})
         </if>
         <if test="grade!=0 ">
          AND   S.grade = #{grade}
@@ -59,9 +59,22 @@
     </select>
 
     <select id="selectStudentById" parameterType="int" resultMap="result">
-        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName FROM PS_Students S WHERE S.ID = #{id} AND S.del_yn='N'
+        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName,LPAD(S.id, 4, '0') as student_id
+        FROM PS_Students S
+        WHERE S.id = #{id}
+          AND S.del_yn='N'
     </select>
 
+<!--    <select id="selectStudentByStudentId" parameterType="string" resultMap="result">-->
+<!--        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName-->
+<!--        FROM PS_Students S-->
+<!--        WHERE S.student_id = #{studentId}-->
+<!--          AND S.del_yn='N'-->
+<!--    </select>-->
+
+<!--    <select id="selectAutoIncrement"  resultType="java.lang.String">-->
+<!--        SELECT id FROM PS_Students ORDER BY id DESC LIMIT 1-->
+<!--    </select>-->
     <resultMap id = "result" type = "com.studentslips.entities.Student">
         <result property = "id" column = "ID"/>
         <result property = "name" column = "NAME"/>
@@ -74,5 +87,6 @@
         <result property = "insertDate" column = "insert_date"/>
         <result property = "updateId" column = "update_id"/>
         <result property = "updateDate" column = "update_date"/>
+        <result property = "studentId" column = "student_id"/>
     </resultMap>
 </mapper>
