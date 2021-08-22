@@ -78,9 +78,10 @@ var fn = {
 
         SS.sendToServer('SC_R_03', false, null, function onSuccess(data) {
         	var src = [];
-    		if (data && data.lst) src = data.lst;
-    		fn.data.schoolList = Object.assign({}, src);
-    		src.unshift({id: "", schoolName: "All"});
+    		if (data && data.lst) src = data.lst;	
+    		fn.data.schoolList = [...data.lst] || [];
+    		fn.data.schoolList.unshift({id: 0, schoolName: ""});
+    		src.unshift({id: -1, schoolName: "All"});
     		$("#iptSrchSchool").jqxDropDownList({ source: src, selectedIndex: 0, displayMember: "schoolName", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%'});
     	});
         
@@ -226,6 +227,7 @@ var fn = {
 
     onUpdate: function(rowIndex) {
         var data = $("#grdUser").jqxGrid('getrowdata', rowIndex);
+        console.log(data);
         let id = data.id;
         if (id) {
         	this.onPopupOpen('user/update?id=' + id, 'Update User', function() {

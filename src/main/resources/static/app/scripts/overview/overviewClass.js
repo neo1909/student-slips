@@ -48,6 +48,7 @@ let sourceDetail = {};
 
 let originalServiceIdList = [];
 let checkedAllServices = false;
+let totalData = {};
 
 function init() {
 	sourceDetail = JSON.parse(JSON.stringify(sourceMaster));
@@ -68,7 +69,7 @@ function init() {
 		if (data && data.lst) src = [...data.lst];
 		originalServiceIdList = data.lst.map(i => i.id);
 		src.unshift({id: "", name: "All"});
-		$("#iptSrchService").jqxComboBox({ source: src, displayMember: "name", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});
+		$("#cmbSrchService").jqxComboBox({ source: src, displayMember: "name", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});
 	});
     
     let dataClass = [];
@@ -78,16 +79,15 @@ function init() {
     	}
     }
     
-    $("#iptSrchClass").jqxDropDownList({ source: dataClass, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
+    $("#cmbSrchClass").jqxDropDownList({ source: dataClass, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
 
 };
 function setMinDate(time) {
     const date = new Date( time )
     const year = date.getFullYear();
     const month = date.getMonth();
-    const day = +date.getDate() +1;
+    const day = +date.getDate();
     $("#iptSrchToDate").jqxDateTimeInput('setMinDate', new Date( year, month, day));
-    $("#iptSrchToDate").jqxDateTimeInput('setDate', new Date( year, month, day));
 }
 function createGrid() {
     let dataAdapter = new $.jqx.dataAdapter(sourceMaster, {
@@ -252,16 +252,25 @@ function onCalculateTotal(gridId) {
 			totalBalance += row.balance;
 		});
 		
-		console.log(totalDebit +":" + totalClaims + ":" + totalBalance);
-
 		if (gridId === '#grdOverviewClass') {
-			$("#grdMaster-debit").html(Number(totalDebit).toLocaleString());
-			$("#grdMaster-claims").html(Number(totalClaims).toLocaleString());
-			$("#grdMaster-balance").html(Number(totalBalance).toLocaleString());
+			$("#grdMaster-total .debit").html(Number(totalDebit).toLocaleString());
+			$("#grdMaster-total .claims").html(Number(totalClaims).toLocaleString());
+			$("#grdMaster-total .balance").html(Number(totalBalance).toLocaleString());
+			
+			totalData.master = {};
+			totalData.master.totalDebit = totalDebit;
+			totalData.master.totalClaims = totalClaims;
+			totalData.master.totalBalance = totalBalance;
 		} else {
-			$("#grdDetail-debit").html(Number(totalDebit).toLocaleString());
-			$("#grdDetail-claims").html(Number(totalClaims).toLocaleString());
-			$("#grdDetail-balance").html(Number(totalBalance).toLocaleString());
+			$("#grdDetail-total .debit").html(Number(totalDebit).toLocaleString());
+			$("#grdDetail-total .claims").html(Number(totalClaims).toLocaleString());
+			$("#grdDetail-total .balance").html(Number(totalBalance).toLocaleString());
+
+			if (totalData && totalData.master) {				
+				$("#summary-total .debit").html(Number(totalData.master.totalDebit + totalDebit).toLocaleString());
+				$("#summary-total .claims").html(Number(totalData.master.totalClaims + totalClaims).toLocaleString());
+				$("#summary-total .balance").html(Number(totalData.master.totalBalance + totalBalance).toLocaleString());
+			}
 		}
 		
 	}
@@ -269,12 +278,15 @@ function onCalculateTotal(gridId) {
 
 function onSearch() {
 	
-	$("#grdMaster-debit").html(0);
-	$("#grdMaster-claims").html(0);
-	$("#grdMaster-balance").html(0);
-	$("#grdDetail-debit").html(0);
-	$("#grdDetail-claims").html(0);
-	$("#grdDetail-balance").html(0);
+	$("#grdMaster-total .debit").html(0);
+	$("#grdMaster-total .claims").html(0);
+	$("#grdMaster-total .balance").html(0);
+	$("#grdDetail-total .debit").html(0);
+	$("#grdDetail-total .claims").html(0);
+	$("#grdDetail-total .balance").html(0);
+	$("#summary-total .debit").html(0);
+	$("#summary-total .claims").html(0);
+	$("#summary-total .balance").html(0);
 	
 	let serviceListId = [];
 	let serviceListString = '';
@@ -282,15 +294,15 @@ function onSearch() {
 		serviceListId = [...originalServiceIdList];
 		serviceListString = 'All';
 	} else {
-		serviceListId = $("#iptSrchService").jqxComboBox('getCheckedItems').map(i=>i.value);
-		$("#iptSrchService").jqxComboBox('getCheckedItems').forEach(i => {			
+		serviceListId = $("#cmbSrchService").jqxComboBox('getCheckedItems').map(i=>i.value);
+		$("#cmbSrchService").jqxComboBox('getCheckedItems').forEach(i => {			
 			serviceListString += i.label +  ',';
 		});
 		serviceListString = serviceListString.slice(0, serviceListString.length-1);
 	}
 	
-	let srchGrade = $("#iptSrchClass").val().split("/")[0];
-	let srchClass = $("#iptSrchClass").val().split("/")[1];
+	let srchGrade = $("#cmbSrchClass").val().split("/")[0];
+	let srchClass = $("#cmbSrchClass").val().split("/")[1];
 	
 	if (serviceListId.length == 0) {
 		SS.alert( SS.title.ERROR, "Service is required");
@@ -326,7 +338,7 @@ function onSearchDetail(rowData) {
 	if (checkedAllServices) {
 		serviceListId = [...originalServiceIdList];
 	} else {
-		serviceListId = $("#iptSrchService").jqxComboBox('getCheckedItems').map(i=>i.value);
+		serviceListId = $("#cmbSrchService").jqxComboBox('getCheckedItems').map(i=>i.value);
 	}
 	
 	if (serviceListId.length == 0) {
@@ -372,6 +384,8 @@ function onPrint() {
         '<div>In Detail</div>' +
         '<div>\n' + gridDetailContent + '\n</div>' +
         $('#grdDetail-total').html() +
+        '<br/>\n' +
+        $('#summary-total').html() +
         '\n</body>\n</html>';
     document.write(pageContent);
     document.close();
@@ -379,6 +393,17 @@ function onPrint() {
 }
 
 $(document).ready(function () {
+	
+	$("#grdMaster-total .debit").html(0);
+	$("#grdMaster-total .claims").html(0);
+	$("#grdMaster-total .balance").html(0);
+	$("#grdDetail-total .debit").html(0);
+	$("#grdDetail-total .claims").html(0);
+	$("#grdDetail-total .balance").html(0);
+	$("#summary-total .debit").html(0);
+	$("#summary-total .claims").html(0);
+	$("#summary-total .balance").html(0);
+	
     init();
     createGrid();
     createGridDetail()
@@ -387,7 +412,7 @@ $(document).ready(function () {
         const jsDate = event.args.date;
         setMinDate(jsDate)
     });
-    $('#btnStdSrch').click(function () {
+    $('#btnSearch').click(function () {
         $('#grdOverviewClass').jqxGrid('refresh');
         $('#grdOverviewClassDetail').jqxGrid('clear');
         onSearch();
@@ -403,23 +428,23 @@ $(document).ready(function () {
         onPrint()
     });
     
-    $("#iptSrchService").on('checkChange', function(event) {
+    $("#cmbSrchService").on('checkChange', function(event) {
 	    if (event.args) {
 		    var item = event.args.item;
 		    var value = item.value;
 		    var label = item.label;
 		    var checked = item.checked;
 		    if (label === 'All') {
-		    	let allItems = $("#iptSrchService").jqxComboBox('getItems');
+		    	let allItems = $("#cmbSrchService").jqxComboBox('getItems');
 		    	if (checked) {
 			    	for (let i=1; i<allItems.length; i++) {
-				    	$("#iptSrchService").jqxComboBox('uncheckItem', i);
-			    		$("#iptSrchService").jqxComboBox('disableItem', i);
+				    	$("#cmbSrchService").jqxComboBox('uncheckItem', i);
+			    		$("#cmbSrchService").jqxComboBox('disableItem', i);
 			    	}
 		    		checkedAllServices = true;
 		    	} else {
 			    	for (let i=1; i<allItems.length; i++) {
-			    		$("#iptSrchService").jqxComboBox('enableItem', i);
+			    		$("#cmbSrchService").jqxComboBox('enableItem', i);
 			    	}
 		    		checkedAllServices = false;
 		    	}
@@ -427,7 +452,7 @@ $(document).ready(function () {
 		}
 	});
     
-    $("#iptSrchService").jqxComboBox('checkIndex', 0);
+    $("#cmbSrchService").jqxComboBox('checkIndex', 0);
 
 })
 
