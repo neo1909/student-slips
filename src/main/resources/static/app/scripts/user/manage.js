@@ -76,10 +76,10 @@ var fn = {
         $("#iptSrchUsername").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', maxLength: 45 });
         $("#iptSrchFullName").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', maxLength: 100 });
 
-        SS.sendToServer('SC_R_03', false, null, function onSuccess(data) {
+        SS.sendToServer('SC_R_03', false, {}, function onSuccess(data) {
         	var src = [];
     		if (data && data.lst) src = data.lst;	
-    		fn.data.schoolList = [...data.lst] || [];
+    		fn.data.schoolList = [...src] || [];
     		fn.data.schoolList.unshift({id: 0, schoolName: ""});
     		src.unshift({id: -1, schoolName: "All"});
     		$("#iptSrchSchool").jqxDropDownList({ source: src, selectedIndex: 0, displayMember: "schoolName", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%'});
@@ -256,7 +256,7 @@ var fn = {
     },
     
     initPopupAssignRole: function(data) {
-        SS.sendToServer('R_R_01', false, null, function onSuccess(listRoles) {
+        SS.sendToServer('R_R_01', false, {}, function onSuccess(listRoles) {
         	let srcRoles = [];
     		if (listRoles) srcRoles = listRoles.lst;
     		$("#iptRoles").jqxComboBox({ source: srcRoles, displayMember: "name", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});

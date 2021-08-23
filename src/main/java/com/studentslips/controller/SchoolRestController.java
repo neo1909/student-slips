@@ -63,12 +63,7 @@ public class SchoolRestController {
         Map<String, Object> result = new HashMap<>();
 
         try {
-        	List<School> simpleSchools = schoolService.selectAllSchool(std);
-        	for (School s: simpleSchools) {
-        		s.setBackAccountNumber(null);
-        		s.setDelYn(null);
-        		s.setMunicipality(null);
-        	}
+        	List<School> simpleSchools = schoolService.selectAllSimpleSchool(std);
             result.put(Common.LIST, simpleSchools);
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {

@@ -40,6 +40,18 @@ public class SchoolServiceImpl implements SchoolService{
     }
 
     @Override
+    public List<School> selectAllSimpleSchool(School school) throws Exception {
+    	// Don't add session schoolId as query condition here => Use for register (no user authenticatication) also
+    	List<School> listSimpleSchools = schoolDao.selectAllSchool(school);
+    	for (School s: listSimpleSchools) {
+    		s.setBackAccountNumber(null);
+    		s.setDelYn(null);
+    		s.setMunicipality(null);
+    	}
+        return listSimpleSchools;
+    }
+
+    @Override
     public School selectSchoolById(int schoolId) {
         return schoolDao.selectSchoolById(schoolId);
     }

@@ -230,3 +230,7 @@ CREATE TABLE `ps_user_session` (
   CONSTRAINT `fk_usersession_user` FOREIGN KEY (`user_id`) REFERENCES `ps_users` (`id`)
 );
 
+-- 24/08/2021 Add `supplier_id` to PS_Service (1 service - 1 supplier)
+ALTER TABLE `onetouch`.`ps_service` 
+ADD COLUMN `supplier_id` INT NULL AFTER `school_id`; -- no need to add as FK
+

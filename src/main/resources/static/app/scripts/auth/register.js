@@ -1,7 +1,7 @@
 let fn = {
 	init : function() {
 
-		SS.sendToServer('SC_R_03', false, null, function onSuccess(data) {
+		SS.sendToServer('SC_R_03', false, {}, function onSuccess(data) {
 	    	var src = [];
 			if (data && data.lst) src = data.lst;
 			$("#iptRegSchool").jqxDropDownList({ source: src, selectedIndex: 0, displayMember: "schoolName", valueMember: "id", width: '100%', height: SS.IPT_HEIGHT});
