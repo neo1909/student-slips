@@ -13,11 +13,20 @@ public class Services {
     private int schoolId;
     private String schoolName;
     private int supplierId;
+    private String supplierName;
 
     public Services() {
     }
 
-    public int getSupplierId() {
+    public String getSupplierName() {
+		return supplierName;
+	}
+
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
+
+	public int getSupplierId() {
 		return supplierId;
 	}
 

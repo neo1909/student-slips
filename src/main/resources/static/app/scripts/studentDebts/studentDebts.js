@@ -1,6 +1,5 @@
 let originalData = [];
 let tr_update = [];
-let isUpdate = false;
 let isUpdateNote = false;
 let selectedSupplierId = 0;
 let screenType = "I";
@@ -102,8 +101,6 @@ let source = {
             if (beforeData.quantity === selectedRowData.quantity) {
                 if (tr_update.length > 0) {
                     tr_update = tr_update.filter(item => item.referenceNo !== selectedRowData.referenceNo);
-                } else {
-                	isUpdate = false;
                 }
                 
                 return;
@@ -125,7 +122,6 @@ let source = {
             	id: selectedRowData.id,
             	taskId: selectedRowData.taskId
             });
-            isUpdate = true;
         }
 
         commit(true);
@@ -432,7 +428,7 @@ $(document).ready(function () {
 
     $('#btnSave').on('click', function () {
         if(screenType == 'U') {
-            if (!isUpdate && !isUpdateNote) {
+            if ((!tr_update || tr_update.length === 0) && !isUpdateNote) {
                 SS.alert('Notification', 'No data update')
                 return;
             }
@@ -446,12 +442,14 @@ $(document).ready(function () {
                 false,
                 params,
                 function onSuccess(data) {
+                    isUpdateNote = false;
+                    tr_update = [];
                     $('#btnPrint').prop("disabled", false);
                     SS.alert('Notification', 'Update task successfully');
                 }
             );
         } else {
-            if (!isUpdate) {
+            if (!tr_update || tr_update.length === 0) {
                 SS.alert('Notification', 'No data update')
                 return;
             }
@@ -470,8 +468,8 @@ $(document).ready(function () {
                 false,
                 data,
                 function onSuccess(data) {
-                    isUpdate = false;
                     isUpdateNote = false;
+                    tr_update = [];
                     $('#btnPrint').prop("disabled", false);
                     SS.alert('Notification', 'Save task successfully');
                 }

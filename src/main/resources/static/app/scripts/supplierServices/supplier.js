@@ -139,7 +139,6 @@ let fn = {
         let data = {
             id: $('#iptSplId').val(),
             name: $('#iptSplNm').val().trim(),
-            schoolId: 1
         };
 
         if (data.id) {  // Update
