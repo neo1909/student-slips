@@ -37,6 +37,20 @@
         </if>
     </update>
 
+    <update id="updateStudentDebtsPurpose" parameterType="com.studentslips.entities.StudentsDebts">
+        UPDATE PS_Students_Debts SET
+        purpose = #{purpose}
+        , update_id = #{updateId}
+        , update_date = SYSDATE()
+        WHERE del_yn = 'N'
+        <if test="id != 0">
+            AND id = #{id}
+        </if>
+        <if test="taskId != 0">
+            AND task_id = #{taskId}
+        </if>
+    </update>
+
     <delete id="deleteStudentDebtsById" parameterType="com.studentslips.entities.StudentsDebts">
         UPDATE PS_Students_Debts  SET
             del_yn = 'Y'
@@ -100,9 +114,10 @@
     </select>
 
     <select id="search" parameterType="com.studentslips.entities.StudentsDebts" resultMap="result">
-        select s.id as student_id,s.name,concat(concat(s.id , '-' , #{suppliersId}),'-',#{serviceId})  as reference_no, (select name from PS_Service where id= #{serviceId}) as service_name, #{price} as price
+        select s.id as student_id,s.name,concat(concat(s.id , '-' , S01.supplier_id,'-',#{serviceId}))  as reference_no, S01.name as service_name, #{price} as price
         from PS_Students s
-        where del_yn='N'
+        left join PS_Service S01 on S01.id = #{serviceId}
+        where s.del_yn='N'
         <if test="schoolId!=0 ">
             AND  s.school_id = #{schoolId}
         </if>
