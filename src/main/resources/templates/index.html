@@ -1,66 +1,120 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Slips</title>
 
     <link rel="stylesheet" href="/lib/styles/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/bootstrap-theme.min.css" type="text/css">
-    <link rel="stylesheet" href="/lib/styles/font-awesome.min.css" type="text/css" >
-    <link rel="stylesheet" href="/lib/styles/ionicons.min.css" type="text/css" >
+    <link rel="stylesheet" href="/lib/styles/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/lib/styles/ionicons.min.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/jqx.base.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/jqx.bootstrap.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/app.css" type="text/css">
+    <style>
+        .btnQicklink {
+            padding: 12px 24px;
+            font-size: 18px;
+            margin: 8px;
+            border-radius: unset;
+            border: 1px solid red;
+            background-color: white;
+        }
+
+        .wrapBtn {
+            display: flex;
+            flex-direction: column;
+            margin: 16px;
+        }
+
+        .content-wrapper {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-40%, -50%);
+        }
+
+        .text-quicklink {
+            text-align: center;
+            font-size: 32px;
+            color: #989797;
+        }
+    </style>
 
 </head>
 
 <body class="skin-blue">
 
-<!-- Header Navbar -->
-<div class="header" th:replace="/layout/header :: header"> </div>
+    <!-- Header Navbar -->
+    <div class="header" th:replace="/layout/header :: header"> </div>
 
-<div class="wrapper row-offcanvas row-offcanvas-left">
+    <div class="wrapper row-offcanvas row-offcanvas-left">
 
-    <!-- Menu  -->
-    <div class="nav" th:replace="/layout/nav :: nav"> </div>
+        <!-- Menu  -->
+        <div class="nav" th:replace="/layout/nav :: nav"> </div>
 
-    <!-- Main  -->
-    <div class="div-content">
-        <aside class="right-side">
-            <section class="content-header">
-                <h1>
-                    Home
-                    <small>
-                        Quick link
-                    </small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li></i> Home</a></li>
-                </ol>
-            </section>
+        <!-- Main  -->
+        <div class="div-content">
+            <aside class="right-side">
+                <section class="content-header">
+                    <h1>
+                        Home
+                        <small>
+                            Quick link
+                        </small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li></i> Home</a></li>
+                    </ol>
+                </section>
 
-            <!-- Main content -->
-            <section class="content">
-                <div class="container">
-                    <div class="div-search">
-
+                <!-- Main content -->
+                <section class="content">
+                    <div class="content-wrapper">
+                        <div class="text-quicklink">
+                            <span>Quick links</span>
+                        </div>
+                        <div style="display: inline-flex;">
+                            <div class="wrapBtn">
+                                <button class="btnQicklink" onclick="onRedirect(1)">Posting students debt</button>
+                                <button class="btnQicklink" onclick="onRedirect(2)">Overview per student</button>
+                                <button class="btnQicklink" onclick="onRedirect(3)">Task archive</button>
+                            </div>
+                            <div class="wrapBtn">
+                                <button class="btnQicklink" onclick="onRedirect(4)">Posting payment</button>
+                                <button class="btnQicklink" onclick="onRedirect(5)">Overview by classes</button>
+                                <button class="btnQicklink" onclick="onRedirect(6)">Bank statements archive</button>
+                            </div>
+                        </div>
                     </div>
+                </section>
+            </aside>
+        </div>
 
-                    <div class="div-grid"></div>
-                </div>
-            </section>
-        </aside>
     </div>
 
-</div>
-
-<script type="text/javascript" src="/lib/scripts/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="/lib/scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="/lib/scripts/jqxcore.js"></script>
-<script type="text/javascript" src="/lib/scripts/jqx-all.js"></script>
-<script type="text/javascript" src="/lib/scripts/app.js"></script>
+    <script type="text/javascript" src="/lib/scripts/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="/lib/scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/lib/scripts/jqxcore.js"></script>
+    <script type="text/javascript" src="/lib/scripts/jqx-all.js"></script>
+    <script type="text/javascript" src="/lib/scripts/app.js"></script>
+    <script>
+        function onRedirect(key) {
+            const obj = {
+                1: '/studentDebts',
+                2: '/studentOverview',
+                3: '/taskArchive',
+                4: '/postingPayment',
+                5: '/overview/class',
+                6: '/bankStatement'
+            }
+            return window.location.assign(obj[`${key}`])
+        }
+    </script>
 
 </body>
+
 </html>
