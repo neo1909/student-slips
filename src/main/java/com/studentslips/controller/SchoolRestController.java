@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.studentslips.common.Common;
+import com.studentslips.common.SessionUtil;
+import com.studentslips.common.StudentSlipException;
 import com.studentslips.entities.School;
 import com.studentslips.services.SchoolService;
 
@@ -80,10 +82,27 @@ public class SchoolRestController {
     @RequestMapping(value = "/SC_C_01", method = RequestMethod.POST)
     public Map<String,?> addSchool(@RequestBody School std){
         Map<String, Object> result = new HashMap<>();
+    	
+    	try {
+    		// If user having neither schoolId < 0 (invalid schoolId) nor = 0 (schoolId for identifying admin role) 
+			if (SessionUtil.getSchoolId() > 0) {
+	            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+	            result.put(Common.MESSAGE, "Your school has been already existed");
+	            return result;
+			}
+		} catch (Exception e) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(e.getMessage());
+		}
+    	
         try {
             int dataStd = schoolService.insertSchool(std);
             if (dataStd == 1) {
                 result.put(Common.STATUS, HttpStatus.OK.value());
+	            result.put(Common.MESSAGE, "School is registered successfully");
+            } else {
+                result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+	            result.put(Common.MESSAGE, "Failed to register new school");
             }
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
