@@ -154,8 +154,7 @@ let fn = {
             id: $('#iptStdId').val(),
             name: $('#iptStdNm').val().trim(),
             grade: $('#cmbStdGrade').val(),
-            sClass: $('#cmbStdClass').val(),
-            schoolId: 1,
+            sClass: $('#cmbStdClass').val()
         };
 
         if (data.id) {  // Update
@@ -225,7 +224,7 @@ let fn = {
                 SS.sendToServer(
                     'ST_R_02',
                     false,
-                    { id : studentId },
+                    {id: studentId},
                     function onSuccess(data) {
                         $('#iptStdId').val(data.obj.id);
                         $('#iptStdNm').val(data.obj.name);
@@ -236,11 +235,9 @@ let fn = {
             }
         }
     }
-
 };
 
 $(document).ready(function() {
     fn.init();
     fn.onSearch();
 });
-

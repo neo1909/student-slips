@@ -48,6 +48,8 @@ public class BankStatement {
     private String postPaymentYn;
     private String delYn;
 
+    private int isHightLight;
+
     public BankStatement() {
     }
 
@@ -201,5 +203,13 @@ public class BankStatement {
 
     public void setSchoolId(int schoolId) {
         this.schoolId = schoolId;
+    }
+
+    public int getIsHightLight() {
+        return isHightLight;
+    }
+
+    public void setIsHightLight(int isHightLight) {
+        this.isHightLight = isHightLight;
     }
 }

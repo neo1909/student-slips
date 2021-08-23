@@ -49,25 +49,4 @@ public class StudentServiceImpl implements StudentService{
     public Student selectStudentById(int id) {
        return studentDao.selectStudentById(id);
     }
-
-
-    private String genStudentId(String index){
-        String sqStudentId= null;
-        if(index == null){
-            return "0001";
-        }
-
-        int length = index.length();
-        int sqIndex= Integer.valueOf(index) +1;
-        if (length == 1){
-            sqStudentId = "000"+sqIndex;
-        } else if (length == 2) {
-            sqStudentId = "00"+sqIndex;
-        } else if (length == 3) {
-            sqStudentId = "0"+sqIndex;
-        }else {
-            sqStudentId = String.valueOf(sqIndex);
-        }
-        return sqStudentId;
-    }
 }

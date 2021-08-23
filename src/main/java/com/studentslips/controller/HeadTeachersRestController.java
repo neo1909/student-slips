@@ -69,6 +69,7 @@ public class HeadTeachersRestController {
             }
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            result.put(Common.MESSAGE, ex.getMessage());
             logger.error(ex.getMessage());
         }
 
@@ -85,6 +86,7 @@ public class HeadTeachersRestController {
             }
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            result.put(Common.MESSAGE, ex.getMessage());
             logger.error(ex.getMessage());
         }
 

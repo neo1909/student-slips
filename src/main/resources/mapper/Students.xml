@@ -65,16 +65,6 @@
           AND S.del_yn='N'
     </select>
 
-<!--    <select id="selectStudentByStudentId" parameterType="string" resultMap="result">-->
-<!--        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName-->
-<!--        FROM PS_Students S-->
-<!--        WHERE S.student_id = #{studentId}-->
-<!--          AND S.del_yn='N'-->
-<!--    </select>-->
-
-<!--    <select id="selectAutoIncrement"  resultType="java.lang.String">-->
-<!--        SELECT id FROM PS_Students ORDER BY id DESC LIMIT 1-->
-<!--    </select>-->
     <resultMap id = "result" type = "com.studentslips.entities.Student">
         <result property = "id" column = "ID"/>
         <result property = "name" column = "NAME"/>

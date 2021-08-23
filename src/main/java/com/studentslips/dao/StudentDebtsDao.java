@@ -35,4 +35,8 @@ public class StudentDebtsDao {
     public List<StudentsDebts> searchTaskArchive(TaskArchiveSearch taskArchiveSearch) throws Exception {
         return this.sqlSession.selectList("selectAllStudentDebts", taskArchiveSearch);
     }
+
+    public int selectStudentDebtsCntByReferenceNo(StudentsDebts studentsDebts){
+        return this.sqlSession.selectOne("selectStudentDebtsCntByReferenceNo", studentsDebts);
+    }
 }

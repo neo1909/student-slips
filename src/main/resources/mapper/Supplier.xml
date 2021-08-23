@@ -137,7 +137,7 @@
         </if>
         <if test="name != null and name != ''">
             <bind name="nameLike" value="'%' + name + '%'" />
-            and   pss.name like #{nameLike}
+            and   UPPER(pss.name) like UPPER(#{nameLike})
         </if>
     </select>
     <select id="selectAllSupplier" parameterType="com.studentslips.entities.Supplier"  resultMap="resultSupplier">
@@ -147,7 +147,7 @@
         where S.del_yn='N'
         <if test="name !=null and name !=''">
             <bind name="nameLike" value="'%' + name + '%'" />
-            AND   S.name like #{nameLike}
+            AND   UPPER(S.name) like UPPER(#{nameLike})
         </if>
         <if test="schoolId != 0">
             AND S.school_id=#{schoolId}
@@ -159,23 +159,7 @@
         FROM onetouch.PS_Suppliers S
         where S.del_yn='N' and S.id =#{id}
     </select>
-    <select id="selectSupplierDetailById" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="result">
-        SELECT SS.*,(select name from onetouch.ps_service where SS.service_id=id) AS service_name
-        FROM  onetouch.PS_Suppliers_Service SS
-        where SS.del_yn='N' AND SS.id =#{id}
-        <if test="schoolId != 0">
-            AND SS.school_id=#{schoolId}
-        </if>
-        <if test="suppliersId != 0">
-            AND SS.suppliers_id = #{suppliersId}
-        </if>
-        <if test="serviceId != 0">
-            AND SS.service_id = #{serviceId}
-        </if>
-        <if test="gradeList != null and gradeList !=''">
-            AND concat(',', SS.grade, ',') like #{gradeList}
-        </if>
-    </select>
+
     <resultMap id = "resultSupplier" type = "com.studentslips.entities.Supplier">
         <result property = "id" column = "id"/>
         <result property = "name" column = "name"/>

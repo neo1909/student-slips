@@ -24,7 +24,7 @@ public class BankStatementsArchiveDao {
     public List<BankStatement> selectAll(BankStatementArchiveSearch bankStatementArchiveSearch){
         return this.sqlSession.selectList("selectBankStatementArchive", bankStatementArchiveSearch);
     }
-    public BankStatement selectById(BankStatement bankStatement){
-        return this.sqlSession.selectOne("selectBankStatementArchiveById", bankStatement);
+    public List<BankStatement> selectDetail(BankStatementArchiveSearch bankStatementArchiveSearch){
+        return this.sqlSession.selectList("selectBankStatementArchiveById", bankStatementArchiveSearch);
     }
 }
