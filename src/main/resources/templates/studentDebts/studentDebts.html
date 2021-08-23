@@ -85,9 +85,9 @@
                                 </div>
                                 <div class="row d-flex justify-content-end">
                                     <div class="form-group col-md-4 text-right">
-                                        <button id="btnCancelUpdate" class="btn btn-primary btn-str btn-search" type="button">Cancel Update</button>
-                                        <button id="btnStdSrch" class="btn btn-primary btn-str btn-search" type="button">Search</button>
-                                        <button id="btnApplyToAll" class="btn btn-primary btn-str btn-search" type="button">Apply to all</button>
+                                        <button id="btnCancelUpdate" class="btn btn-primary btn-str btn-search mx-1" type="button">Cancel Update</button>
+                                        <button id="btnStdSrch" class="btn btn-primary btn-str btn-search mx-1" type="button">Search</button>
+                                        <button id="btnApplyToAll" class="btn btn-primary btn-str btn-search mx-1" type="button">Apply to all</button>
                                     </div>
                                 </div>
                                 <input type="hidden" id="iptTaskId" th:value="${taskId}">
@@ -100,14 +100,17 @@
                         </div>
 
                         <div class="action">
+                        	<br/>
                             <div>
+                                <label>Purpose of payment</label>
                                 <textarea id="iptComment"> </textarea>
                             </div>
-                            <div style="padding-top: 16px;">
-                                <button id="btnSave" class="btn btn-primary btn-str mr-4" type="button" value="Save">
+                        	<br/>
+                            <div>
+                                <button id="btnSave" class="btn btn-primary btn-str mx-1" type="button" value="Save">
                                     Save
                                 </button>
-                                <button id="btnPrint" class="btn btn-primary btn-str" type="button" value="Print">
+                                <button id="btnPrint" class="btn btn-primary btn-str mx-1" type="button" value="Print">
                                     Print
                                 </button>
                             </div>

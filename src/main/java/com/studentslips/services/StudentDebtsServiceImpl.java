@@ -79,9 +79,14 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
         if(!updateStudentsDebtsList.isEmpty()){
             for (StudentsDebts sd : updateStudentsDebtsList){
                 sd.setUpdateId(SessionUtil.getUserLoginId());
+                sd.setPurpose(studentDebtsObject.getPurpose());
                 studentDebtsDao.updateStudentsDebts(sd);
             }
         }
+        StudentsDebts newSd = new StudentsDebts();
+        newSd.setTaskId(studentDebtsObject.getTaskId());
+        newSd.setPurpose(studentDebtsObject.getPurpose());
+        studentDebtsDao.updateStudentDebtsPurpose(newSd);
     }
 
 	@Override

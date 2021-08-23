@@ -29,6 +29,9 @@ public class StudentDebtsDao {
     public int updateStudentsDebts(StudentsDebts studentsDebts){
         return this.sqlSession.update("updateStudentDebts", studentsDebts);
     }
+    public int updateStudentDebtsPurpose(StudentsDebts studentsDebts){
+        return this.sqlSession.update("updateStudentDebtsPurpose", studentsDebts);
+    }
     public int deleteStudentsDebtsById(StudentsDebts studentsDebts){
         return this.sqlSession.delete("deleteStudentDebtsById", studentsDebts);
     }

@@ -1,6 +1,7 @@
 let originalData = [];
 let tr_update = [];
 let isUpdate = false;
+let isUpdateNote = false;
 let selectedSupplierId = 0;
 let screenType = "I";
 let taskId = 0;
@@ -99,15 +100,22 @@ let source = {
         let selectedRowData = $('#grdStudentDebts').jqxGrid('getrowdata', rowid);
         if (Object.keys(beforeData).length > 0 && Object.keys(selectedRowData).length > 0) {
             if (beforeData.quantity === selectedRowData.quantity) {
-                isUpdate = false;
                 if (tr_update.length > 0) {
-                    tr_update = tr_update.filter(item => item.quantity !== selectedRowData.quantity);
+                    tr_update = tr_update.filter(item => item.referenceNo !== selectedRowData.referenceNo);
+                } else {
+                	isUpdate = false;
                 }
                 
                 return;
             }
             if (tr_update.length > 0) {
-                tr_update = tr_update.filter(item => item.quantity !== selectedRowData.quantity);
+                tr_update = tr_update.filter(item => {
+                	if (item.referenceNo === selectedRowData.referenceNo) {                		
+                		return (item.referenceNo !== selectedRowData.referenceNo);
+                	} else {
+                		return true;
+                	}
+                });
             }
             tr_update.push({
             	quantity: selectedRowData.quantity,
@@ -229,7 +237,7 @@ function init() {
     $("#iptComment").jqxTextArea({
         width: 450,
         height: 100,
-        placeHolder: 'Enter a sentence...'
+        placeHolder: 'Enter note on the purpose of the payment...'
     });
     
     $('#btnPrint').prop("disabled", true);
@@ -240,9 +248,11 @@ function init() {
     	screenType = 'U';
     	$("#screen-title").html("Student Debts: Update task ID = " + taskId);
     	onSearchUpdate();
-        $(".search-condition-panel").hide();
+        $("#cmbStdGradeSrch").jqxDropDownList({ disabled: true });
+        $("#cmbStdClazzSrch").jqxDropDownList({ disabled: true });
+        $("#cmbStdServiceSrch").jqxDropDownList({ disabled: true });
 		$("#btnCancelUpdate").show();
-		$("#btnStdSrch").remove();
+		$("#btnStdSrch").prop('disabled', true);
 		
 		SS.sendToServer(
 	        'TA_R_01',
@@ -370,7 +380,6 @@ $(document).ready(function () {
         });
     } else {
         $("#btnCancelUpdate").on('click', function() {
-        	 localStorage.removeItem('task');
              window.location.href = "/archive/task-archive";
         });
     }
@@ -396,7 +405,9 @@ $(document).ready(function () {
     
     $("#iptComment").on("change", function() {
         if (updateTaskOriginalData.note !== $("#iptComment").val()) {
-        	isUpdate = true;
+        	isUpdateNote = true;
+        } else {
+        	isUpdateNote = false;
         }
     });
     
@@ -420,11 +431,11 @@ $(document).ready(function () {
     });
 
     $('#btnSave').on('click', function () {
-        if (!isUpdate) {
-            SS.alert('Notification', 'No data update')
-            return;
-        }
         if(screenType == 'U') {
+            if (!isUpdate && !isUpdateNote) {
+                SS.alert('Notification', 'No data update')
+                return;
+            }
             let params = {
             	taskId: taskId,
             	purpose: $("#iptComment").val(),
@@ -435,12 +446,15 @@ $(document).ready(function () {
                 false,
                 params,
                 function onSuccess(data) {
-                    localStorage.removeItem('task');
                     $('#btnPrint').prop("disabled", false);
                     SS.alert('Notification', 'Update task successfully');
                 }
             );
         } else {
+            if (!isUpdate) {
+                SS.alert('Notification', 'No data update')
+                return;
+            }
             let data = {
             	suppliersId: selectedSupplierId,
                 serviceId: $('#cmbStdServiceSrch').val(),
@@ -457,6 +471,7 @@ $(document).ready(function () {
                 data,
                 function onSuccess(data) {
                     isUpdate = false;
+                    isUpdateNote = false;
                     $('#btnPrint').prop("disabled", false);
                     SS.alert('Notification', 'Save task successfully');
                 }
