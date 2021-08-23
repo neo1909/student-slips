@@ -35,6 +35,7 @@ public class SchoolServiceImpl implements SchoolService{
 
     @Override
     public List<School> selectAllSchool(School school) throws Exception {
+    	school.setId(SessionUtil.getSchoolId());
         return schoolDao.selectAllSchool(school);
     }
 

@@ -1,7 +1,7 @@
 let fn = {
     dataset: null,
     gridSource: null,
-
+    
     init: function () {
 
         /*
@@ -45,12 +45,13 @@ let fn = {
                             + '</div>';
                     }
                 },
-                {text: 'School Name', datafield: 'schoolName', align: 'center', cellsalign: 'left', width: '35%,'},
-                {text: 'Address', datafield: 'address', align: 'center', cellsalign: 'left', width: '35%,'},
-                {text: 'City', datafield: 'city', align: 'center', cellsalign: 'center', width: '9%,'},
-                {text: 'Municipality', datafield: 'municipality', align: 'center', cellsalign: 'center', width: '9%,'},
+                {text: 'School Name', datafield: 'schoolName', align: 'center', cellsalign: 'left', width: '22%'},
+                {text: 'Address', datafield: 'address', align: 'center', cellsalign: 'left', width: '30%'},
+                {text: 'City', datafield: 'city', align: 'center', cellsalign: 'center', width: '10%'},
+                {text: 'Municipality', datafield: 'municipality', align: 'center', cellsalign: 'center', width: '10%'},
+                {text: 'Bank Account Number', datafield: 'backAccountNumber', align: 'center', cellsalign: 'center', width: '15%'},
                 {
-                    text: 'Actions', align: 'center', width: '7%,'
+                    text: 'Actions', align: 'center', width: '8%'
                     , cellsrenderer: function (rowIndex, column, value) {
                         return '<div style="text-align: center; margin-top: 4px;">'
                             + '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + rowIndex + ')"><span class="glyphicon glyphicon-edit"></span></button>'
@@ -114,6 +115,7 @@ let fn = {
         });
 
         $('#btnStdCreate').click(function () {
+        	$("#popupSchool").jqxWindow({title: 'Create School'});
             $("#popupSchool").jqxWindow('open', fn.popup.open());
         });
 
@@ -140,8 +142,10 @@ let fn = {
             false,
             params,
             function onSuccess(data) {
-                fn.gridSource.localdata = data.lst;
-                $("#grdSchool").jqxGrid({ source: fn.gridSource });
+            	if (data && data.lst) {            		
+            		fn.gridSource.localdata = data.lst;
+            		$("#grdSchool").jqxGrid({ source: fn.gridSource });
+            	}
             },
 
             function onError(err) {
@@ -177,9 +181,17 @@ let fn = {
             false,
             data,
             function onSuccess(data) {
-                console.log(data)
                 $("#popupSchool").jqxWindow('close');
-                fn.onSearch();
+            	if (data && data.msg) {
+                	SS.confirm(SS.title.CONFIRM, data.msg, function (result) {
+                        if (result) {
+                            fn.onSearch();
+                        }
+                    });
+            	}
+            },
+            function onError(err) {
+            	SS.alert( SS.title.ERROR, err || SS.message.ERROR);
             }
         );
     },
@@ -188,6 +200,7 @@ let fn = {
         let data = $("#grdSchool").jqxGrid('getrowdata', rowIndex);
         let id = data.id;
         if (id != null) {
+        	$("#popupSchool").jqxWindow({title: 'Update School ID = ' + id });
             $("#popupSchool").jqxWindow('open', fn.popup.open(id));
         }
     },
