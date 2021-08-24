@@ -4,6 +4,8 @@ import com.studentslips.common.SessionUtil;
 import com.studentslips.dao.SupplierDao;
 import com.studentslips.entities.Supplier;
 import com.studentslips.entities.SupplierServiceDetail;
+import com.studentslips.entities.SupplierServiceDetailGroup;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -56,20 +58,53 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public void insertSupplierServiceDetail(SupplierServiceDetail std) throws Exception {
-        std.setInsertId(SessionUtil.getUserLoginId());
-        std.setSchoolId(SessionUtil.getSchoolId());
-        supplierDao.insertSupplierService(std);
+    	List<Integer> listGradeIds = std.getListGradeIds();
+    	std.setInsertId(SessionUtil.getUserLoginId());
+    	std.setSchoolId(SessionUtil.getSchoolId());
+    	for (Integer gradeId: listGradeIds) {
+    		std.setGrade(gradeId);
+    		supplierDao.insertSupplierService(std);
+    	}
     }
 
     @Override
     public void updateSupplierServiceDetail(SupplierServiceDetail std) throws Exception {
+    	List<Integer> listGradeIds = std.getListGradeIds();
         std.setUpdateId(SessionUtil.getUserLoginId());
-        supplierDao.updateSupplierService(std);
+    	for (Integer gradeId: listGradeIds) {
+    		std.setGrade(gradeId);
+            supplierDao.updateSupplierService(std);
+    	}
+    	SupplierServiceDetailGroup group = new SupplierServiceDetailGroup();
+    	group.setGroupId(std.getGroupId());
+    	group.setName(std.getName());
+    	group.setUpdateId(SessionUtil.getUserLoginId());
+        supplierDao.updateSupplierServiceGroup(group);
     }
 
     @Override
     public void deleteSupplierServiceDetail(SupplierServiceDetail std) throws Exception {
         std.setUpdateId(SessionUtil.getUserLoginId());
         supplierDao.deleteSupplierService(std);
+    }
+
+	@Override
+	public List<SupplierServiceDetailGroup> getAllSupplierServiceGroups(SupplierServiceDetail std) {
+		return supplierDao.getAllSupplierServiceGroups(std);
+	}
+
+	@Override
+	public SupplierServiceDetailGroup getSupplierServiceGroupByGroupId(SupplierServiceDetail std) {
+		return supplierDao.getSupplierServiceGroupByGroupId(std);
+	}
+
+    @Override
+    public SupplierServiceDetailGroup insertSupplierServiceGroup(SupplierServiceDetail std) throws Exception {
+    	SupplierServiceDetailGroup group = new SupplierServiceDetailGroup();
+    	group.setName(std.getName());
+    	group.setInsertId(SessionUtil.getUserLoginId());
+    	group.setSchoolId(SessionUtil.getSchoolId());
+        supplierDao.insertSupplierServiceGroup(group);
+        return group;
     }
 }

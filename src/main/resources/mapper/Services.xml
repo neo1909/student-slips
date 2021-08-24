@@ -37,6 +37,9 @@
         <if test="schoolId!=0 ">
             AND  S.school_id = #{schoolId}
         </if>
+        <if test="supplierId != 0 ">
+            AND  S.supplier_id = #{supplierId}
+        </if>
     </select>
 
     <select id="selectServiceById" parameterType="int" resultMap="result">

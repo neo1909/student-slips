@@ -6,11 +6,11 @@
         INSERT INTO onetouch.PS_Suppliers (NAME, school_id, del_yn, insert_date, insert_id)
         VALUES (#{name}, #{schoolId}, 'N', SYSDATE(), #{insertId});
     </insert>
-    <insert id="insertSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail">
+    <insert id="insertSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO onetouch.PS_Suppliers_Service ( name, suppliers_id, service_id,school_id,price,no_payment,amount_1,amount_2,amount_3,amount_4,amount_5,
-                                                   amount_6,amount_7,amount_8,amount_9,amount_10,amount_11,amount_12,grade,del_yn, insert_date, insert_id )
+                                                   amount_6,amount_7,amount_8,amount_9,amount_10,amount_11,amount_12,grade,del_yn, insert_date, insert_id, group_id )
         VALUES (#{name}, #{supplierId}, #{serviceId},#{schoolId},#{price},#{noPayment},#{amount1},#{amount2},#{amount3},#{amount4},#{amount5},#{amount6},#{amount7},
-                #{amount8},#{amount9},#{amount10},#{amount11},#{amount12},#{grade},'N', SYSDATE(), #{insertId});
+                #{amount8},#{amount9},#{amount10},#{amount11},#{amount12},#{grade},'N', SYSDATE(), #{insertId}, #{groupId});
     </insert>
     <update id="updateSupplier" parameterType="com.studentslips.entities.Supplier">
         UPDATE onetouch.PS_Suppliers  SET
@@ -81,9 +81,15 @@
         update_id = #{updateId}
         , update_date = SYSDATE()
 
-        WHERE id = #{id}
+        WHERE 1=1
         <if test="schoolId!=0 ">
             AND  school_id = #{schoolId}
+        </if>
+        <if test="groupId != 0 ">
+            AND  group_id = #{groupId}
+        </if>
+        <if test="id != 0 ">
+            AND  id = #{id}
         </if>
     </update>
     <delete id="deleteSupplier" parameterType="com.studentslips.entities.Supplier">
@@ -95,7 +101,13 @@
         SET  del_yn = 'Y'
             ,update_id = #{updateId}
             , update_date = SYSDATE()
-        WHERE id = #{id}
+        WHERE 1=1
+        <if test="groupId != 0 ">
+            AND  group_id = #{groupId}
+        </if>
+        <if test="id != 0 ">
+            AND  id = #{id}
+        </if>
     </delete>
     <select id="selectSupplierDetail" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="result">
 
@@ -219,5 +231,110 @@
         <result property = "amount11" column = "amount_11"/>
         <result property = "amount12" column = "amount_12"/>
 
+    </resultMap>
+    
+    <insert id="insertSupplierServiceGroup" parameterType="com.studentslips.entities.SupplierServiceDetailGroup" useGeneratedKeys="true" keyProperty="groupId" keyColumn="id">
+        INSERT INTO onetouch.PS_Suppliers_Service_Group ( name, school_id, del_yn, insert_date, insert_id )
+        VALUES (#{name}, ${schoolId}, 'N', SYSDATE(), #{insertId});
+    </insert>
+    
+    <update id="updateSupplierServiceGroup" parameterType="com.studentslips.entities.SupplierServiceDetailGroup">
+        UPDATE onetouch.PS_Suppliers_Service_Group  SET
+        <if test="name!= null and name != ''">
+            NAME = #{name},
+        </if>
+        update_id = #{updateId}, update_date = SYSDATE() WHERE ID = #{groupId}
+        <if test="schoolId!=0 ">
+            AND  school_id = #{schoolId}
+        </if>
+    </update>
+    
+    <select id="getAllSupplierServiceGroups" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="supSvcDtlGroupSearchModel">
+        select
+			SS.*, S01.list_grade_ids_str, ps.name as supplier_name, ps2.name as service_name
+		from ps_suppliers_service SS
+		inner join (
+			select
+				group_id,
+				GROUP_CONCAT(grade) as list_grade_ids_str
+			from ps_suppliers_service
+			group by group_id
+		) S01 on SS.group_id = S01.group_id
+        left join PS_Suppliers ps on ps.id = SS.suppliers_id
+        left join PS_Service ps2 on ps2.id = SS.service_id
+        where SS.del_yn = 'N'
+        group by group_id
+    </select>
+    
+    <resultMap id = "supSvcDtlGroupSearchModel" type = "com.studentslips.entities.SupplierServiceDetailGroup">
+        <result property = "groupId" column = "group_id"/>
+        <result property = "listGradeIdsStr" column = "list_grade_ids_str"/>
+        <result property = "name" column = "name"/>
+        <result property = "supplierId" column = "suppliers_id"/>
+        <result property = "supplierName" column = "supplier_name"/>
+        <result property = "serviceId" column = "service_id"/>
+        <result property = "serviceName" column = "service_name"/>
+        <result property = "schoolId" column = "school_id"/>
+        <result property = "price" column = "price"/>
+        <result property = "noPayment" column = "no_payment"/>
+        <result property = "amount1" column = "amount_1"/>
+        <result property = "amount2" column = "amount_2"/>
+        <result property = "amount3" column = "amount_3"/>
+        <result property = "amount4" column = "amount_4"/>
+        <result property = "amount5" column = "amount_5"/>
+        <result property = "amount6" column = "amount_6"/>
+        <result property = "amount7" column = "amount_7"/>
+        <result property = "amount8" column = "amount_8"/>
+        <result property = "amount9" column = "amount_9"/>
+        <result property = "amount10" column = "amount_10"/>
+        <result property = "amount11" column = "amount_11"/>
+        <result property = "amount12" column = "amount_12"/>
+    </resultMap>
+    
+    <select id="getSupplierServiceGroupByGroupId" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="supSvcDtlGroupUpdateModel">
+        select
+			SS.*, S01.list_grade_ids_str, ps.name as supplier_name, ps2.name as service_name
+		from ps_suppliers_service SS
+		inner join (
+			select
+				group_id,
+				GROUP_CONCAT(grade) as list_grade_ids_str
+			from ps_suppliers_service
+			group by group_id
+		) S01 on SS.group_id = S01.group_id
+        left join PS_Suppliers ps on ps.id = SS.suppliers_id
+        left join PS_Service ps2 on ps2.id = SS.service_id
+        where SS.del_yn = 'N'
+        and SS.group_id = #{groupId}
+    </select>
+    
+    <resultMap id = "supSvcDtlGroupUpdateModel" type = "com.studentslips.entities.SupplierServiceDetailGroup">
+        <result property = "groupId" column = "group_id"/>
+        	<result property = "listGradeIdsStr" column = "list_grade_ids_str"/>
+    	<!-- <collection property="listSupplierDetails" ofType="com.studentslips.entities.SupplierServiceDetail" javaType="ArrayList"> -->
+	        <result property = "name" column = "name"/>
+	        <result property = "supplierId" column = "suppliers_id"/>
+	        <result property = "supplierName" column = "supplier_name"/>
+	        <result property = "serviceId" column = "service_id"/>
+	        <result property = "serviceName" column = "service_name"/>
+	        <result property = "schoolId" column = "school_id"/>
+	        <result property = "price" column = "price"/>
+	        <result property = "noPayment" column = "no_payment"/>
+	        <result property = "amount1" column = "amount_1"/>
+	        <result property = "amount2" column = "amount_2"/>
+	        <result property = "amount3" column = "amount_3"/>
+	        <result property = "amount4" column = "amount_4"/>
+	        <result property = "amount5" column = "amount_5"/>
+	        <result property = "amount6" column = "amount_6"/>
+	        <result property = "amount7" column = "amount_7"/>
+	        <result property = "amount8" column = "amount_8"/>
+	        <result property = "amount9" column = "amount_9"/>
+	        <result property = "amount10" column = "amount_10"/>
+	        <result property = "amount11" column = "amount_11"/>
+	        <result property = "amount12" column = "amount_12"/>
+    	<!-- </collection> -->
+        <collection property="listGradeIds" ofType="java.lang.Integer" javaType="ArrayList">
+        	<result column="grade"/>
+        </collection>
     </resultMap>
 </mapper>
