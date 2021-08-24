@@ -2,11 +2,7 @@
 let fn = {
     dataset: null,
     gridSource: null,
-
-    _srcService: [],
-    _srcSupplier: [],
-
-    init: function() {
+    init: function () {
 
         /*
         * Init Component
@@ -14,39 +10,39 @@ let fn = {
         fn.gridSource = {
             datafields: [
 
-                { name: 'id', type: 'int'},
-                { name: 'name', type: 'string'},
+                { name: 'id', type: 'int' },
+                { name: 'name', type: 'string' },
 
-                { name: 'suppliersId', type: 'int'},
-                { name: 'supplierName', type: 'string'},
+                { name: 'suppliersId', type: 'int' },
+                { name: 'supplierName', type: 'string' },
 
-                { name: 'schoolId', type: 'int'},
+                { name: 'schoolId', type: 'int' },
 
-                { name: 'serviceId', type: 'int'},
-                { name: 'serviceName', type: 'string'},
+                { name: 'serviceId', type: 'int' },
+                { name: 'serviceName', type: 'string' },
 
-                { name: 'price', type: 'number'},
-                { name: 'noPayment', type: 'int'},
-                { name: 'grade', type: 'int'},
+                { name: 'price', type: 'number' },
+                { name: 'noPayment', type: 'int' },
+                { name: 'grade', type: 'int' },
 
-                { name: 'amount1', type: 'number'},
-                { name: 'amount2', type: 'number'},
-                { name: 'amount3', type: 'number'},
-                { name: 'amount4', type: 'number'},
-                { name: 'amount5', type: 'number'},
-                { name: 'amount6', type: 'number'},
-                { name: 'amount7', type: 'number'},
-                { name: 'amount8', type: 'number'},
-                { name: 'amount9', type: 'number'},
-                { name: 'amount12', type: 'number'},
-                { name: 'amount11', type: 'number'},
-                { name: 'amount12', type: 'number'},
+                { name: 'amount1', type: 'number' },
+                { name: 'amount2', type: 'number' },
+                { name: 'amount3', type: 'number' },
+                { name: 'amount4', type: 'number' },
+                { name: 'amount5', type: 'number' },
+                { name: 'amount6', type: 'number' },
+                { name: 'amount7', type: 'number' },
+                { name: 'amount8', type: 'number' },
+                { name: 'amount9', type: 'number' },
+                { name: 'amount12', type: 'number' },
+                { name: 'amount11', type: 'number' },
+                { name: 'amount12', type: 'number' },
 
-                { name: 'delYn', type: 'string'},
-                { name: 'insertId', type: 'int'},
-                { name: 'insertDate', type: 'string'},
-                { name: 'updateId', type: 'int'},
-                { name: 'updateDate', type: 'string'}
+                { name: 'delYn', type: 'string' },
+                { name: 'insertId', type: 'int' },
+                { name: 'insertDate', type: 'string' },
+                { name: 'updateId', type: 'int' },
+                { name: 'updateDate', type: 'string' }
             ],
             datatype: "array",
             localdata: fn.dataset
@@ -63,25 +59,27 @@ let fn = {
         $("#grdDetail").jqxGrid({
             source: dataAdapter,
             columns: [
-                { text: 'No.', datafield: '', align: 'center', cellsalign:'center', width: '5%'
+                {
+                    text: 'No.', datafield: '', align: 'center', cellsalign: 'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
-                        return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">'+
+                        return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">' +
                             + (rowIndex + 1)
                             + '</div>';
                     }
                 },
-                { text: 'Name', datafield: 'name', align: 'center', cellsalign:'left', width: '15%'},
-                { text: 'Supplier Name', datafield: 'supplierName', align: 'center', cellsalign:'left', width: '15%'},
-                { text: 'Service Name', datafield: 'serviceName', align: 'center', cellsalign:'left', width: '15%'},
-                { text: 'Price', datafield: 'price', align: 'center', cellsalign:'right', width: '20%'},
-                { text: 'No. Payment', datafield: 'noPayment', align: 'center', cellsalign:'right', width: '10%'},
-                { text: 'Grade', datafield: 'grade', align: 'center', cellsalign:'center', width: '10%'},
+                { text: 'Name', datafield: 'name', align: 'center', cellsalign: 'left', width: '15%' },
+                { text: 'Supplier Name', datafield: 'supplierName', align: 'center', cellsalign: 'left', width: '15%' },
+                { text: 'Service Name', datafield: 'serviceName', align: 'center', cellsalign: 'left', width: '15%' },
+                { text: 'Price', datafield: 'price', align: 'center', cellsalign: 'right', width: '20%' },
+                { text: 'No. Payment', datafield: 'noPayment', align: 'center', cellsalign: 'right', width: '10%' },
+                { text: 'Grade', datafield: 'grade', align: 'center', cellsalign: 'center', width: '10%' },
 
-                { text: '', cellsalign:'center', width: '10%,'
+                {
+                    text: 'Actions', cellsalign: 'center', width: '10%,'
                     , cellsrenderer: function (rowIndex, column, value) {
                         return '<div style="text-align: center; margin-top: 4px;">'
-                            + '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + rowIndex +')"><span class="glyphicon glyphicon-edit"></span></button>'
-                            + '<button alt="Delete" class="btn btn-danger btn-icon btn-sm" onclick="fn.onDelete(' + rowIndex +')"><span class="glyphicon glyphicon-trash"></span></button>'
+                            + '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + rowIndex + ')"><span class="glyphicon glyphicon-edit"></span></button>'
+                            + '<button alt="Delete" class="btn btn-danger btn-icon btn-sm" onclick="fn.onDelete(' + rowIndex + ')"><span class="glyphicon glyphicon-trash"></span></button>'
                             + '</div>';
                     }
                 }
@@ -108,12 +106,12 @@ let fn = {
         });
 
         $('#iptNm').jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter name...' });
-        $("#cmbSupplier").jqxDropDownList({ enableBrowserBoundsDetection: true, source: fn._srcSupplier, displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
-        $("#cmbService").jqxDropDownList({ enableBrowserBoundsDetection: true, source: fn._srcService, displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
-        $("#cmbGrade").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.grade, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
+        $("#cmbSupplier").jqxDropDownList({ enableBrowserBoundsDetection: true, height: SS.IPT_HEIGHT, width: '100%' });
+        $("#cmbService").jqxDropDownList({ enableBrowserBoundsDetection: true,source: [], selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', disabled: true });
+        $("#cmbGrade").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.grade, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', checkboxes: true });
         $("#cmbNoPayment").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.noPayment, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
 
-        $("#iptPrice").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
+        $("#iptPrice").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
         $("#iptAmt01").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
         $("#iptAmt02").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
         $("#iptAmt03").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
@@ -126,19 +124,6 @@ let fn = {
         $("#iptAmt10").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
         $("#iptAmt11").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
         $("#iptAmt12").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
-
-        // $('#form').jqxValidator({
-        //     hintType: 'label',
-        //     rules: [
-        //         { input: '#iptNm', message: 'Name is required!', action: 'keyup, blur', rule: 'required' },
-        //         { input: '#iptSplNm', message: 'Data is invalid!', action: 'keyup, blur', rule: 'length=1,250' },
-        //     ]
-        // });
-
-
-        /*
-        * Init Component Event
-        * */
         $('#btnSrch').click(function () {
             $('#grdDetail').jqxGrid('refresh');
             fn.onSearch();
@@ -153,24 +138,14 @@ let fn = {
         });
 
         $('#btnSave').click(function () {
-            // if (!$('#form').jqxValidator('validate')) {
-            //     return;
-            // }
-
             fn.onSave();
         });
     },
 
     onSearch: function () {
-        let name = $('#iptNmSrch').val();
-        if (name) {
-            name = name.trim();
-        }
-
         let params = {
-            name: name
+            name: $('#iptNmSrch').val() ? $('#iptNmSrch').val().trim() : ""
         };
-
         SS.sendToServer(
             'SL_R_03',
             false,
@@ -181,19 +156,22 @@ let fn = {
             },
 
             function onError(err) {
-                SS.alert( SS.title.ERROR, SS.message.ERROR);
+                SS.alert(SS.title.ERROR, SS.message.ERROR);
             }
         );
     },
 
+    convertStringToNumber: function (num) {
+        return Number(num)
+    },
+
     onSave: function () {
         let data = {
-            id: $('#iptId').val(),
+            groupId : $('#iptId').val(),
             name: $('#iptNm').val().trim(),
-            schoolId: 1,
             supplierId: $('#cmbSupplier').val(),
             serviceId: $('#cmbService').val(),
-            grade: $('#cmbGrade').val(),
+            listGradeIds: Array.from(String($('#cmbGrade').val().replaceAll(',',"")), fn.convertStringToNumber),
             price: $('#iptPrice').val(),
             noPayment: $('#cmbNoPayment').val(),
             amount1: $('#iptAmt01').val(),
@@ -239,11 +217,11 @@ let fn = {
         let id = data.id;
         if (id) {
             SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
-                if (result ) {
+                if (result) {
                     SS.sendToServer(
                         'SL_D_03',
                         false,
-                        { id : id },
+                        { id: id },
                         function onSuccess(data) {
                             fn.onSearch();
                         }
@@ -261,29 +239,63 @@ let fn = {
         }
     },
 
-    popup: {
-        reset: function () {
-            $('#iptNm').val('');
-            $('#iptSplId').val(null);
-        },
-
-        getService: function () {
+    getService: function (id) {
+        if (id) {
             SS.sendToServer(
                 'SV_R_01',
                 false,
                 {
-                    name: ""
+                    supplierId: id
                 },
                 function onSuccess(data) {
-                    fn._srcService = data.lst;
+                    if (data && data.lst && data.lst.length > 0) {
+                        $("#cmbService").jqxDropDownList({
+                            source: [...data.lst],
+                            displayMember: "name",
+                            valueMember: "id",
+                            disabled: false,
+                            selectedIndex: 0
+                        })
+                        return
+                    }
+                    $("#cmbService").jqxDropDownList({
+                        disabled: true,
+                        source: [],
+                    })
                 },
 
                 function onError(err) {
                     fn._srcService = [];
-                    SS.alert( SS.title.ERROR, SS.message.ERROR);
+                    SS.alert(SS.title.ERROR, SS.message.ERROR);
                 }
             );
+        }
+    },
+
+
+    popup: {
+        reset: function () {
+            $('#iptId').val(null);
+            $('#iptPrice').val("");
+            $('#iptNm').val("");
+            $('#cmbGrade').jqxDropDownList('uncheckAll');
+            $('#cmbNoPayment').jqxDropDownList('selectIndex', 0 );
+            $('#cmbSupplier').jqxDropDownList('selectIndex', 0 );
+            $('#cmbService').jqxDropDownList('selectIndex', 0 );
+            $('#iptAmt01').val("");
+            $('#iptAmt02').val("");
+            $('#iptAmt03').val("");
+            $('#iptAmt04').val("");
+            $('#iptAmt05').val("");
+            $('#iptAmt06').val("");
+            $('#iptAmt07').val("");
+            $('#iptAmt08').val("");
+            $('#iptAmt09').val("");
+            $('#iptAmt10').val("");
+            $('#iptAmt11').val("");
+            $('#iptAmt12').val("");
         },
+
 
         getSupplier: function () {
             SS.sendToServer(
@@ -293,28 +305,23 @@ let fn = {
                     name: ""
                 },
                 function onSuccess(data) {
-                    fn._srcSupplier = data.lst;
+                    $("#cmbSupplier").jqxDropDownList({ source: [{}, ...data.lst], displayMember: 'name', valueMember: 'id' })
                 },
-
                 function onError(err) {
-                    fn._srcService = [];
-                    SS.alert( SS.title.ERROR, SS.message.ERROR);
+                    SS.alert(SS.title.ERROR, SS.message.ERROR);
                 }
             );
         },
 
         open: function (id) {
             fn.popup.reset();
-            fn.popup.getService();
             fn.popup.getSupplier();
-            $("#cmbSupplier").jqxDropDownList({ source: fn._srcSupplier, displayMember: 'name', valueMember: 'id'});
-            $("#cmbService").jqxDropDownList({ source: fn._srcService, displayMember: 'name', valueMember: 'id'});
-
+            ;
             if (id != null) { // Update
                 SS.sendToServer(
                     'SL_R_03',
                     false,
-                    { id : id , name: ""},
+                    { id: id, name: "" },
                     function onSuccess(data) {
                         if (data.lst != null && data.lst.length > 0) {
                             let obj = data.lst[0];
@@ -323,7 +330,7 @@ let fn = {
                             $('#iptNm').val(obj.name);
                             $('#cmbSupplier').val(obj.supplierId);
                             $('#cmbService').val(obj.serviceId);
-                            $('#cmbGrade').val(obj.grade);
+                            $('#cmbGrade').val(obj.grade); // loop grade to bind checked
                             $('#cmbNoPayment').val(obj.noPayment);
                             $('#iptAmt01').val(obj.amount1);
                             $('#iptAmt02').val(obj.amount2);
@@ -346,8 +353,30 @@ let fn = {
 
 };
 
-$(document).ready(function() {
+$(document).ready(function () {
     fn.init();
     fn.onSearch();
+    $('#cmbSupplier').on('change', function (event) {
+        if (event.args && event.args.item && event.args.item.originalItem.id) {
+            const supplierId = event.args.item.originalItem.id;
+            return fn.getService(supplierId);
+        }
+        $("#cmbService").jqxDropDownList({
+            disabled: true,
+            source: [],
+        })
+    })
+    $("#cmbNoPayment").on('change', function (event) {
+        if (event.args && event.args.item) {
+            const id = event.args.item.originalItem;
+            let arrPay = document.querySelectorAll('.amountPay');
+            for(let j=1; j<= arrPay.length; j++){
+                arrPay[j-1].style.display = "none";
+            }
+            for (let i = 1; i <= id; i++) {
+                arrPay[i-1].style.display = "block";
+            }
+        }
+    })
 });
 

@@ -3,8 +3,8 @@
 $.jqx.theme = "bootstrap";
 
 let SS = {
- // API: 'http://localhost:5000/api/',  // local
-  API: 'http://onetouchapp-env.eba-px6uytgm.ap-southeast-1.elasticbeanstalk.com/api/',    // test
+ API: 'http://localhost:5000/api/',  // local
+ //  API: 'http://onetouchapp-env.eba-px6uytgm.ap-southeast-1.elasticbeanstalk.com/api/',    // test
   IPT_HEIGHT: 32,
 
   // Literal
@@ -22,9 +22,10 @@ let SS = {
   clazz: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
   clazzEmpty: [ '', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ],
   grade: [ 1, 2, 3, 4, 5, 6, 7, 8 ],
+  gradeAll: [ "All", 1, 2, 3, 4, 5, 6, 7, 8 ],
   gradeEmpty: [ '', 1, 2, 3, 4, 5, 6, 7, 8 ],
 
-  noPayment: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
+  noPayment: [ '', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
 
   sendToServer: function (url, async, param, onSuccess, onError) {
     $.ajax({
