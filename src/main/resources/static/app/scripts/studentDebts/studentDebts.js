@@ -138,7 +138,7 @@ function createGrid() {
                 text: 'Name student',
                 datafield: 'nameStudent',
                 align: 'center',
-                cellsalign: 'left',
+                cellsalign: 'center',
                 width: '16,6667%',
                 editable: false,
             },
@@ -146,7 +146,7 @@ function createGrid() {
                 text: 'Reference No',
                 datafield: 'referenceNo',
                 align: 'center',
-                cellsalign: 'left',
+                cellsalign: 'center',
                 width: '16,6667%',
                 editable: false,
             },
@@ -154,7 +154,7 @@ function createGrid() {
                 text: 'Service',
                 datafield: 'nameService',
                 align: 'center',
-                cellsalign: 'right',
+                cellsalign: 'center',
                 width: '16,6667%',
                 editable: false,
             },
@@ -166,16 +166,16 @@ function createGrid() {
                 cellsalign: 'right',
                 width: '16,6667%',
                 editable: true,
-                cellsformat: 'd'
+                cellsformat: 'd2'
             },
             {
                 text: 'Price',
                 datafield: 'price',
                 align: 'center',
-                cellsalign: 'center',
+                cellsalign: 'right',
                 width: '16,6667%',
                 editable: false,
-                cellsformat: 'd'
+                cellsformat: 'd2'
             },
             {
                 text: 'Amount of debit',
@@ -184,7 +184,7 @@ function createGrid() {
                 align: 'center',
                 cellsalign: 'right',
                 editable: false,
-                cellsformat: 'd'
+                cellsformat: 'd2'
             },
         ],
         theme: 'bootstrap',
@@ -192,6 +192,12 @@ function createGrid() {
         height: 350,
         rowsheight: 33
     });
+    let localizationobj = {
+    	currencysymbol: "",
+		decimalseparator: ",",
+		thousandsseparator: "."
+    }
+    $("#grdStudentDebts").jqxGrid('localizestrings', localizationobj);
 }
 
 function init() {
@@ -208,7 +214,9 @@ function init() {
     });
     $("#cmbStdGradeSrch").jqxDropDownList({
         enableBrowserBoundsDetection: true,
-        source: SS.gradeEmpty,
+        source: SS.dataSource.grade('All'),
+        displayMember: 'name',
+        valueMember: 'id',
         selectedIndex: 0,
         height: SS.IPT_HEIGHT,
         width: '100%',
@@ -216,7 +224,9 @@ function init() {
     });
     $("#cmbStdClazzSrch").jqxDropDownList({
         enableBrowserBoundsDetection: true,
-        source: SS.clazzEmpty,
+        source: SS.dataSource.clazz('All'),
+        displayMember: 'name',
+        valueMember: 'id',
         selectedIndex: 0,
         height: SS.IPT_HEIGHT,
         width: '100%',
@@ -278,6 +288,10 @@ function onSearchUpdate() {
         false,
         { taskId: taskId },
         function onSuccess(data) {
+        	if (data && data.status && data.status === 'NG') {
+                SS.alert( SS.title.ERROR, data.message);
+                return;
+        	}
             if(data) {
                 source.localdata = data.lst;
                 originalData = data.lst;
@@ -307,6 +321,10 @@ function onSearch() {
         false,
         params,
         function onSuccess(data) {
+        	if (data && data.status && data.status === 'NG') {
+                SS.alert( SS.title.ERROR, data.message);
+                return;
+        	}
             if(data) {
                 source.localdata = data.lst;
                 originalData = data.lst;
@@ -320,6 +338,7 @@ function onSearch() {
 }
 
 function onGetService(gradeId) {
+	if (screenType == 'U') return;
     SS.sendToServer(
         'SL_R_03',
         false, {
@@ -335,7 +354,7 @@ function onGetService(gradeId) {
                     disabled: false,
                     selectedIndex: 0
                 })
-                return
+                return;
             }
             $("#cmbStdServiceSrch").jqxDropDownList({
                 disabled: true,
@@ -357,6 +376,9 @@ $(document).ready(function () {
     createGrid();
     
     if (screenType == 'I') {
+        
+        onGetService("");
+        
         $('#btnStdSrch').click(function () {
             $('#grdStudentDebts').jqxGrid('refresh');
             onSearch();
@@ -364,7 +386,7 @@ $(document).ready(function () {
 
         $('#cmbStdGradeSrch').on('change', function (event) {
             if (event.args && event.args.item) {
-                const gradeId = event.args.item.originalItem
+                const gradeId = event.args.item.originalItem.id;
                 onGetService(gradeId);
             }
         })
@@ -420,6 +442,9 @@ $(document).ready(function () {
             '</head>\n' +
             '<body>\n' +
             '<div>\n' + gridContent + '\n</div>' +
+            '<br/>\n' + 
+            '<div><h4>Purpose of the payment</h4></div>\n' +
+            '<div>\n' + $("#iptComment").val() + '\n</div>' +
             '\n</body>\n</html>';
         document.write(pageContent);
         document.close();
@@ -442,6 +467,10 @@ $(document).ready(function () {
                 false,
                 params,
                 function onSuccess(data) {
+                	if (data && data.status && data.status === 'NG') {
+                        SS.alert( SS.title.ERROR, data.message);
+                        return;
+                	}
                     isUpdateNote = false;
                     tr_update = [];
                     $('#btnPrint').prop("disabled", false);
@@ -468,6 +497,10 @@ $(document).ready(function () {
                 false,
                 data,
                 function onSuccess(data) {
+                	if (data && data.status && data.status === 'NG') {
+                        SS.alert( SS.title.ERROR, data.message);
+                        return;
+                	}
                     isUpdateNote = false;
                     tr_update = [];
                     $('#btnPrint').prop("disabled", false);

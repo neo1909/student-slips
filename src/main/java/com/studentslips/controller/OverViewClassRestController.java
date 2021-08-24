@@ -1,6 +1,7 @@
 package com.studentslips.controller;
 
 import com.studentslips.common.Common;
+import com.studentslips.common.StudentSlipException;
 import com.studentslips.entities.SchoolAndClass;
 import com.studentslips.entities.SchoolAndClassSearch;
 import com.studentslips.services.OverViewClassService;
@@ -44,8 +45,7 @@ public class OverViewClassRestController {
             result.put(Common.LIST, listResult);
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
-            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-            logger.error(ex.getMessage());
+            throw new StudentSlipException(ex.getMessage(), true);
         }
 
         return result;
@@ -59,8 +59,7 @@ public class OverViewClassRestController {
             result.put(Common.LIST, overViewClassService.selectDetailClass(std));
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
-            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-            logger.error(ex.getMessage());
+            throw new StudentSlipException(ex.getMessage(), true);
         }
 
         return result;

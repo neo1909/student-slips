@@ -47,47 +47,53 @@
                     <div class="container-fluid">
                         <div class="div-search">
                             <form role="form">
-                                <div class="row search-condition-panel">
-                                    <div class="form-group col-md-2">
-                                        <label>Grade</label>
-                                        <div>
-                                            <div id="cmbStdGradeSrch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label>Class</label>
-                                        <div>
-                                            <div id="cmbStdClazzSrch"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row search-condition-panel">
-                                    <div class="form-group col-md-2">
-                                        <label>Service</label>
-                                        <div>
-                                            <div id="cmbStdServiceSrch"></div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label>Price</label>
-                                        <div>
-                                            <input id="iptPriceSrch">
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label>Debit date</label>
-                                        <div>
-                                            <input id="iptDateSrch">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row d-flex justify-content-end">
-                                    <div class="form-group col-md-4 text-right">
-                                        <button id="btnCancelUpdate" class="btn btn-primary btn-str btn-search mx-1" type="button">Cancel Update</button>
-                                        <button id="btnStdSrch" class="btn btn-primary btn-str btn-search mx-1" type="button">Search</button>
-                                        <button id="btnApplyToAll" class="btn btn-primary btn-str btn-search mx-1" type="button">Apply to all</button>
-                                    </div>
-                                </div>
+                            	<div class="row d-flex align-items-end">
+                            		<div class="col-md-7">
+		                                <div class="row search-condition-panel">
+		                                    <div class="form-group col-md-6">
+		                                        <label>Grade</label>
+		                                        <div>
+		                                            <div id="cmbStdGradeSrch"></div>
+		                                        </div>
+		                                    </div>
+		                                    <div class="form-group col-md-6">
+		                                        <label>Class</label>
+		                                        <div>
+		                                            <div id="cmbStdClazzSrch"></div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                                <div class="row search-condition-panel">
+		                                    <div class="form-group col-md-4">
+		                                        <label>Service</label>
+		                                        <div>
+		                                            <div id="cmbStdServiceSrch"></div>
+		                                        </div>
+		                                    </div>
+		                                    <div class="form-group col-md-4">
+		                                        <label>Price</label>
+		                                        <div>
+		                                            <input id="iptPriceSrch">
+		                                        </div>
+		                                    </div>
+		                                    <div class="form-group col-md-4">
+		                                        <label>Debit date</label>
+		                                        <div>
+		                                            <input id="iptDateSrch">
+		                                        </div>
+		                                    </div>
+		                                </div>
+                            		</div>
+                            		<div class="col-md-5">
+		                                <div class="row d-flex justify-content-end">
+		                                    <div class="form-group col-md-12 text-right">
+		                                        <button id="btnCancelUpdate" class="btn btn-primary btn-str btn-search mx-1" type="button">Cancel Update</button>
+		                                        <button id="btnStdSrch" class="btn btn-primary btn-str btn-search mx-1" type="button">Search</button>
+		                                        <button id="btnApplyToAll" class="btn btn-primary btn-str btn-search mx-1" type="button">Apply to all</button>
+		                                    </div>
+		                                </div>
+                            		</div>
+                            	</div>
                                 <input type="hidden" id="iptTaskId" th:value="${taskId}">
                             </form>
                         </div>

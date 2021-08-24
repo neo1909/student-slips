@@ -1,6 +1,7 @@
 package com.studentslips.controller;
 
 import com.studentslips.common.Common;
+import com.studentslips.common.StudentSlipException;
 import com.studentslips.entities.StudentDebtsObject;
 import com.studentslips.entities.StudentsDebts;
 import com.studentslips.entities.StudentsDebtsTask;
@@ -34,8 +35,7 @@ public class StudentDebtsRestController {
             result.put(Common.LIST, studentDebtsService.selectStudentDebts(std));
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
-            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-            logger.error(ex.getMessage());
+            throw new StudentSlipException(ex.getMessage(), true);
         }
 
         return result;
@@ -48,8 +48,7 @@ public class StudentDebtsRestController {
             result.put(Common.LIST, studentDebtsService.search(std));
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
-            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-            logger.error(ex.getMessage());
+            throw new StudentSlipException(ex.getMessage(), true);
         }
 
         return result;
@@ -63,8 +62,7 @@ public class StudentDebtsRestController {
             studentDebtsService.insertStudentsDebtsObj(std);
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
-            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-            logger.error(ex.getMessage());
+            throw new StudentSlipException(ex.getMessage(), true);
         }
 
         return result;
@@ -81,8 +79,7 @@ public class StudentDebtsRestController {
            studentDebtsService.updateTaskArchive(task);
                 result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
-            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-            logger.error(ex.getMessage());
+            throw new StudentSlipException(ex.getMessage(), true);
         }
 
         return result;
@@ -97,8 +94,7 @@ public class StudentDebtsRestController {
                 result.put(Common.STATUS, HttpStatus.OK.value());
             }
         } catch (Exception ex) {
-            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-            logger.error(ex.getMessage());
+            throw new StudentSlipException(ex.getMessage(), true);
         }
 
         return result;
@@ -112,8 +108,7 @@ public class StudentDebtsRestController {
             result.put(Common.LIST, studentDebtsService.searchTaskArchives(std));
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
-            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-            logger.error(ex.getMessage());
+            throw new StudentSlipException(ex.getMessage(), true);
         }
 
         return result;
@@ -134,8 +129,7 @@ public class StudentDebtsRestController {
                 result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
         	}
         } catch (Exception ex) {
-            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-            logger.error(ex.getMessage());
+            throw new StudentSlipException(ex.getMessage(), true);
         }
 
         return result;

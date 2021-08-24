@@ -1,3 +1,8 @@
+let originalListGradeIds = [];
+var tr_update = [];
+var tr_insert = [];
+var tr_delete = [];
+var screenType = '';
 
 let fn = {
     dataset: null,
@@ -131,6 +136,7 @@ let fn = {
         });
 
         $('#btnCreate').click(function () {
+        	screenType = 'I';
             $("#popupDetail").jqxWindow('open', fn.popup.open());
         });
 
@@ -193,7 +199,11 @@ let fn = {
             SS.sendToServer(
                 'SL_U_03',
                 false,
-                data,
+                Object.assign(data, {
+                	trInsert: tr_insert,
+                	trUpdate: tr_update,
+                	trDelete: tr_delete,
+                }),
                 function onSuccess(data) {
                     $("#popupDetail").jqxWindow('close');
                     fn.onSearch();
@@ -233,8 +243,8 @@ let fn = {
     },
 
     onUpdate: function (rowIndex) {
+    	screenType = 'U';
         let data = $("#grdDetail").jqxGrid('getrowdata', rowIndex);
-        console.log(data)
         let id = data.groupId;
         if (id != null) {
             $("#popupDetail").jqxWindow('open', fn.popup.open(id));
@@ -332,6 +342,7 @@ let fn = {
                             $('#iptNm').val(obj.name);
                             $('#cmbSupplier').val(obj.supplierId);
                             $('#cmbService').val(obj.serviceId);
+                            originalListGradeIds = [...obj.listGradeIds];
                             for(let i = 0; i<= obj.listGradeIds.length ; i++) {
                                 $("#cmbGrade").jqxDropDownList('checkItem', obj.listGradeIds[i]);
                             }
@@ -358,6 +369,11 @@ let fn = {
 
 };
 
+
+function diffArray(arr1, arr2) {
+	return new Set([...(new Set(arr1))].filter(x => !(new Set(arr2)).has(x)));
+};
+
 $(document).ready(function () {
     fn.init();
     fn.onSearch();
@@ -382,6 +398,14 @@ $(document).ready(function () {
                 arrPay[i-1].style.display = "block";
             }
         }
-    })
+    });
+    $("#cmbGrade").on('checkChange', function (event) {
+    	if (event.args && screenType == 'U') {
+		    var checkedItems = $("#cmbGrade").jqxDropDownList('getCheckedItems').map(i => Number(i.value));
+            tr_insert = [...diffArray(checkedItems, originalListGradeIds)];
+            tr_delete = [...diffArray(originalListGradeIds, checkedItems)];
+            tr_update = originalListGradeIds.filter(grade => ![...tr_insert, ...tr_delete].includes(grade));
+    	}
+    });
 });
 

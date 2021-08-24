@@ -1,5 +1,3 @@
-;
-
 let fn = {
     dataset: null,
     gridSource: null,

@@ -3,7 +3,9 @@ package com.studentslips.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SupplierServiceDetailGroup implements Serializable {
 
@@ -13,7 +15,6 @@ public class SupplierServiceDetailGroup implements Serializable {
 	private int groupId;
 	private String listGradeIdsStr;
 	private List<Integer> listGradeIds;
-	private List<SupplierServiceDetail> listSupplierDetails;
 
 	// Select -> Query dùng GROUP_CONCAT, store vào listGradeIdsStr = 1, 2, 3, 4,
 	// ...
@@ -271,14 +272,6 @@ public class SupplierServiceDetailGroup implements Serializable {
 
 	public void setListGradeIds(List<Integer> listGradeIds) {
 		this.listGradeIds = listGradeIds;
-	}
-
-	public List<SupplierServiceDetail> getListSupplierDetails() {
-		return listSupplierDetails;
-	}
-
-	public void setListSupplierDetails(List<SupplierServiceDetail> listSupplierDetails) {
-		this.listSupplierDetails = listSupplierDetails;
 	}
 
 }

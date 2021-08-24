@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Set;
 
 @Component(value = "SupplierService")
 public class SupplierServiceImpl implements SupplierService {
@@ -69,12 +70,21 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public void updateSupplierServiceDetail(SupplierServiceDetail std) throws Exception {
-    	List<Integer> listGradeIds = std.getListGradeIds();
+    	SupplierServiceDetailGroup searchGroup = getSupplierServiceGroupByGroupId(std);
         std.setUpdateId(SessionUtil.getUserLoginId());
-    	for (Integer gradeId: listGradeIds) {
+    	for (Integer gradeId: std.getTrInsert()) {
     		std.setGrade(gradeId);
+    		std.setSchoolId(searchGroup.getSchoolId());
+            supplierDao.insertSupplierService(std);
+    	}
+    	for (Integer gradeId: std.getTrUpdate()) {
             supplierDao.updateSupplierService(std);
     	}
+    	for (Integer gradeId: std.getTrDelete()) {
+    		std.setGrade(gradeId);
+            supplierDao.deleteSupplierService(std);
+    	}
+    	
     	SupplierServiceDetailGroup group = new SupplierServiceDetailGroup();
     	group.setGroupId(std.getGroupId());
     	group.setName(std.getName());
