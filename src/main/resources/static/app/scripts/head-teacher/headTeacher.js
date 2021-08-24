@@ -129,8 +129,8 @@ let fn = {
 
         let params = {
             name: headTeacherNm,
-            grade: htGrade,
-            sClass: htClazz
+            grade: htGrade == 'All' ? '' : htGrade,
+            sClass: htClazz == 'All' ? '' : htClazz
         };
 
         SS.sendToServer(
@@ -163,8 +163,12 @@ let fn = {
                 false,
                 data,
                 function onSuccess(data) {
-                    $("#popupHeadTeacher").jqxWindow('close');
-                    fn.onSearch();
+                    if (data && data.status == 200){
+                        $("#popupHeadTeacher").jqxWindow('close');
+                        fn.onSearch();
+                    }else {
+                        SS.alert(SS.title.ERROR, data.msg);
+                    }
                 }
             );
         } else {    // Insert
@@ -173,8 +177,12 @@ let fn = {
                 false,
                 data,
                 function onSuccess(data) {
-                    $("#popupHeadTeacher").jqxWindow('close');
-                    fn.onSearch();
+                    if (data && data.status == 200){
+                        $("#popupHeadTeacher").jqxWindow('close');
+                        fn.onSearch();
+                    }else {
+                        SS.alert(SS.title.ERROR, data.msg);
+                    }
                 }
             );
         }

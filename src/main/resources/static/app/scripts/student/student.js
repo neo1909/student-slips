@@ -21,7 +21,8 @@ let fn = {
                 { name: 'insertId', type: 'int'},
                 { name: 'insertDate', type: 'string'},
                 { name: 'updateId', type: 'int'},
-                { name: 'updateDate', type: 'string'}
+                { name: 'updateDate', type: 'string'},
+                { name: 'studentId', type: 'string'}
             ],
             datatype: "array",
             localdata: fn.dataset
@@ -45,8 +46,9 @@ let fn = {
                             + '</div>';
                     }
                 },
-                { text: 'Name and surname', datafield: 'name', align: 'center', cellsalign:'left', width: '35%,'},
-                { text: 'School', datafield: 'schoolName', align: 'center', cellsalign:'left', width: '35%,'},
+                { text: 'Student Id', datafield: 'studentId', align: 'center', cellsalign:'left', width: '10%,'},
+                { text: 'Name and surname', datafield: 'name', align: 'center', cellsalign:'left', width: '30%,'},
+                { text: 'School', datafield: 'schoolName', align: 'center', cellsalign:'left', width: '30%,'},
                 { text: 'Grade', datafield: 'grade', align: 'center', cellsalign:'center', width: '9%,'},
                 { text: 'Class', datafield: 'sClass', align: 'center', cellsalign:'center', width: '9%,'},
                 { text: '', cellsalign:'center', width: '7%,'
@@ -126,11 +128,10 @@ let fn = {
         if (stdNm) {
             stdNm = stdNm.trim();
         }
-
         let params = {
             name: stdNm,
-            grade: stdGrade,
-            sClass: stdClazz
+            grade: stdGrade == 'All' ? '' : stdGrade,
+            sClass: stdClazz == 'All' ? '' : stdClazz
         };
 
         SS.sendToServer(
@@ -153,8 +154,7 @@ let fn = {
             id: $('#iptStdId').val(),
             name: $('#iptStdNm').val().trim(),
             grade: $('#cmbStdGrade').val(),
-            sClass: $('#cmbStdClass').val(),
-            schoolId: 1,
+            sClass: $('#cmbStdClass').val()
         };
 
         if (data.id) {  // Update
@@ -224,7 +224,7 @@ let fn = {
                 SS.sendToServer(
                     'ST_R_02',
                     false,
-                    { id : studentId },
+                    {id: studentId},
                     function onSuccess(data) {
                         $('#iptStdId').val(data.obj.id);
                         $('#iptStdNm').val(data.obj.name);
@@ -235,11 +235,9 @@ let fn = {
             }
         }
     }
-
 };
 
 $(document).ready(function() {
     fn.init();
     fn.onSearch();
 });
-

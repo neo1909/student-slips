@@ -17,7 +17,7 @@ let source = {
         },
         {
             name: 'bankStatementDate',
-            type: 'string'
+            type: 'date'
         },
         {
             name: 'accountNumber',
@@ -99,7 +99,7 @@ let sourcePopup = {
         },
         {
             name: 'bankStatementDate',
-            type: 'string'
+            type: 'date'
         },
         {
             name: 'accountNumber',
@@ -212,7 +212,7 @@ function setMinDate(time) {
     const date = new Date( time )
     const year = date.getFullYear();
     const month = date.getMonth();
-    const day = +date.getDate() +1;
+ //   const day = +date.getDate() +1;
     $("#iptToDate").jqxDateTimeInput('setMinDate', new Date( year, month, day));
     $("#iptToDate").jqxDateTimeInput('setDate', new Date( year, month, day));
 }
@@ -222,10 +222,10 @@ function createGrid() {
         source: dataAdapter,
         columns: [{
                 text: 'Date',
-                datafield: 'currencyDate',
-                cellsformat: 'dd/MM/yyyy',
+                datafield: 'bankStatementDate',
+                cellsformat: 'dd.MM.yyyy',
                 align: 'center',
-                cellsalign: 'left',
+                cellsalign: 'center',
                 width: '20%',
                 editable: false,
             },
@@ -235,7 +235,7 @@ function createGrid() {
                 align: 'center',
                 cellsalign: 'left',
                 width: '30%',
-                editable: false,
+                editable: false
             },
             {
                 text: 'Balance',
@@ -319,7 +319,7 @@ function ceateGridBank() {
             {
                 text: 'Amount',
                 columntype: 'textbox',
-                datafield: 'amount',
+                datafield: 'claims',
                 align: 'center',
                 cellsalign: 'right',
                 width: '20%',
@@ -354,25 +354,29 @@ function onSearch() {
 }
 function onUpdate (rowIndex) {
     let data = $("#grdBank").jqxGrid('getrowdata', rowIndex);
-    let id = data.id;
-    if (id != null) {
-        $("#bankpopup").jqxWindow('open', popup(id));
+    if (data) {
+        $("#bankpopup").jqxWindow('open', popup(data));
     }
 }
 
- function popup(id) {
-    if (id != null) {
-        SS.sendToServer(
+ function popup(dataGrid) {
+
+     const dateTmp = new Date(dataGrid.bankStatementDate);
+     const mnth = ("0" + (dateTmp.getMonth() + 1)).slice(-2);
+     const day = ("0" + dateTmp.getDate()).slice(-2);
+     const dateFinal = [dateTmp.getFullYear(), mnth, day].join("-");
+
+     SS.sendToServer(
             'BSA_R_02',
             false,
-            { id : id },
+            { filename : dataGrid.filename ,
+                bankStatementDate : dateFinal},
             function onSuccess(data) {
                 sourcePopup.localdata = data.lst;
                 originalData = data.lst;
                 $('#grdBankDetail').jqxGrid('updatebounddata');
             }
         );
-    }
 
 }
 
@@ -401,12 +405,12 @@ $(document).ready(function () {
     init();
     createGrid();
     ceateGridBank()
-    setMinDate($("#iptFromDate").val('date'));
-    $('#iptFromDate').on('valueChanged', function (event)
-    {
-        const jsDate = event.args.date;
-        setMinDate(jsDate)
-    });
+    // setMinDate($("#iptFromDate").val('date'));
+    // $('#iptFromDate').on('valueChanged', function (event)
+    // {
+    //     const jsDate = event.args.date;
+    //     setMinDate(jsDate)
+    // });
     $('#btnStdSrch').click(function () {
         $('#grdBank').jqxGrid('refresh');
         onSearch();
