@@ -59,4 +59,8 @@ public class StudentDebtsDao {
 	public int countTaskArchive(TaskArchiveSearch taskArchiveSearch) {
 		return this.sqlSession.selectOne("countTaskArchive", taskArchiveSearch);
 	}
+  public int selectStudentDebtsCntByReferenceNo(StudentsDebts studentsDebts){
+        return this.sqlSession.selectOne("selectStudentDebtsCntByReferenceNo", studentsDebts);
+   }
+
 }

@@ -3,6 +3,7 @@ package com.studentslips.services;
 import com.studentslips.common.SessionUtil;
 import com.studentslips.dao.StudentsDao;
 import com.studentslips.entities.Student;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,7 @@ public class StudentServiceImpl implements StudentService{
     public int insertStudent(Student student) throws Exception {
         student.setInsertId(SessionUtil.getUserLoginId());
         student.setSchoolId(SessionUtil.getSchoolId());
+
        return studentDao.insertStudent(student);
     }
 
@@ -44,8 +46,7 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public Student selectStudentById(int studentId) {
-       return studentDao.selectStudentById(studentId);
+    public Student selectStudentById(int id) {
+       return studentDao.selectStudentById(id);
     }
-
 }

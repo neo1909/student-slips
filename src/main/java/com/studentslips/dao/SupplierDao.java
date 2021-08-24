@@ -46,8 +46,6 @@ public class SupplierDao {
     public Supplier selectSupplierById(int supplierId) {
         return this.sqlSession.selectOne("selectSupplierById", supplierId);
     }
-    public SupplierServiceDetail selectSupplierServiceById(SupplierServiceDetail supplierServiceDetail) {
-        return this.sqlSession.selectOne("selectSupplierDetailById", supplierServiceDetail);
-    }
+
 
 }

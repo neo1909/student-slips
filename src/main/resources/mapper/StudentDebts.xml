@@ -139,7 +139,14 @@
         </if>
         group by sd.debit_date,sd.grade,sd.class,sd.service_id,sd.school_id, sd.id
     </select>
-    
+    <select id="selectStudentDebtsCntByReferenceNo" parameterType="com.studentslips.entities.StudentsDebts" resultType="int">
+        select count(1)
+        from onetouch.PS_Students_Debts sd
+        where sd.reference_no = #{referenceNo}
+        <if test="schoolId!=0 ">
+            AND  sd.school_id = #{schoolId}
+        </if>
+    </select>
     <resultMap id = "result" type = "com.studentslips.entities.StudentsDebts">
         <result property = "studentId" column = "student_id"/>
         <result property = "suppliersId" column = "suppliers_id"/>
