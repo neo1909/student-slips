@@ -10,7 +10,7 @@ let fn = {
         fn.gridSource = {
             datafields: [
 
-                { name: 'id', type: 'int' },
+                { name: 'groupId', type: 'int' },
                 { name: 'name', type: 'string' },
 
                 { name: 'suppliersId', type: 'int' },
@@ -37,6 +37,7 @@ let fn = {
                 { name: 'amount12', type: 'number' },
                 { name: 'amount11', type: 'number' },
                 { name: 'amount12', type: 'number' },
+                { name: 'listGradeIdsStr', type: 'string' },
 
                 { name: 'delYn', type: 'string' },
                 { name: 'insertId', type: 'int' },
@@ -72,7 +73,7 @@ let fn = {
                 { text: 'Service Name', datafield: 'serviceName', align: 'center', cellsalign: 'left', width: '15%' },
                 { text: 'Price', datafield: 'price', align: 'center', cellsalign: 'right', width: '20%' },
                 { text: 'No. Payment', datafield: 'noPayment', align: 'center', cellsalign: 'right', width: '10%' },
-                { text: 'Grade', datafield: 'grade', align: 'center', cellsalign: 'center', width: '10%' },
+                { text: 'Grade', datafield: 'listGradeIdsStr', align: 'center', cellsalign: 'center', width: '10%' },
 
                 {
                     text: 'Actions', cellsalign: 'center', width: '10%,'
@@ -147,7 +148,7 @@ let fn = {
             name: $('#iptNmSrch').val() ? $('#iptNmSrch').val().trim() : ""
         };
         SS.sendToServer(
-            'SL_R_03',
+            'SLG_R_01',
             false,
             params,
             function onSuccess(data) {
@@ -188,7 +189,7 @@ let fn = {
             amount12: $('#iptAmt12').val()
         };
 
-        if (data.id) {  // Update
+        if (data.groupId) {  // Update
             SS.sendToServer(
                 'SL_U_03',
                 false,
@@ -233,7 +234,8 @@ let fn = {
 
     onUpdate: function (rowIndex) {
         let data = $("#grdDetail").jqxGrid('getrowdata', rowIndex);
-        let id = data.id;
+        console.log(data)
+        let id = data.groupId;
         if (id != null) {
             $("#popupDetail").jqxWindow('open', fn.popup.open(id));
         }
@@ -319,18 +321,21 @@ let fn = {
             ;
             if (id != null) { // Update
                 SS.sendToServer(
-                    'SL_R_03',
+                    'SLG_R_02',
                     false,
-                    { id: id, name: "" },
+                    { groupId: id},
                     function onSuccess(data) {
-                        if (data.lst != null && data.lst.length > 0) {
-                            let obj = data.lst[0];
-                            $('#iptId').val(obj.id);
+                        if (Object.keys(data).length > 0) {
+                            let obj = data.obj;
+                            $('#iptId').val(obj.groupId);
                             $('#iptPrice').val(obj.price);
                             $('#iptNm').val(obj.name);
                             $('#cmbSupplier').val(obj.supplierId);
                             $('#cmbService').val(obj.serviceId);
-                            $('#cmbGrade').val(obj.grade); // loop grade to bind checked
+                            for(let i = 0; i<= obj.listGradeIds.length ; i++) {
+                                $("#cmbGrade").jqxDropDownList('checkItem', obj.listGradeIds[i]);
+                            }
+                             // loop grade to bind checked
                             $('#cmbNoPayment').val(obj.noPayment);
                             $('#iptAmt01').val(obj.amount1);
                             $('#iptAmt02').val(obj.amount2);
