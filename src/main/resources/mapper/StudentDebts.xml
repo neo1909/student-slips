@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="StudentDebtsDao">
-    <insert id="insertStudentDebts" parameterType="com.studentslips.entities.StudentsDebts">
-        INSERT INTO PS_Students_Debts (student_id,suppliers_id, service_id, school_id, reference_no, quantity, purpose,debit_date, amount_debt,price,grade,class, del_yn, insert_date, insert_id)
-        VALUES (#{studentId}, #{suppliersId}, #{serviceId}, #{schoolId},#{referenceNo},#{quantity}, #{purpose}, #{debitDate},#{amountDebt},#{price},#{grade},#{sClass}, 'N', SYSDATE(), #{insertId});
+    <insert id="insertStudentDebts" parameterType="com.studentslips.entities.StudentsDebts" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO PS_Students_Debts (student_id,suppliers_id, service_id, school_id, reference_no, quantity, purpose,debit_date, amount_debt,price,grade,class, del_yn, insert_date, insert_id, task_id)
+        VALUES (#{studentId}, #{suppliersId}, #{serviceId}, #{schoolId},#{referenceNo},#{quantity}, #{purpose}, #{debitDate},#{amountDebt},#{price},#{grade},#{sClass}, 'N', SYSDATE(), #{insertId}, #{taskId});
     </insert>
 
     <update id="updateStudentDebts" parameterType="com.studentslips.entities.StudentsDebts">
@@ -14,6 +14,9 @@
         , update_id = #{updateId}
         , update_date = SYSDATE()
         WHERE del_yn = 'N'
+        <if test="id!=0">
+            AND  id = #{id}
+        </if>
         <if test="serviceId!=0 ">
             AND  service_id = #{serviceId}
         </if>
@@ -34,12 +37,29 @@
         </if>
     </update>
 
+    <update id="updateStudentDebtsPurpose" parameterType="com.studentslips.entities.StudentsDebts">
+        UPDATE PS_Students_Debts SET
+        purpose = #{purpose}
+        , update_id = #{updateId}
+        , update_date = SYSDATE()
+        WHERE del_yn = 'N'
+        <if test="id != 0">
+            AND id = #{id}
+        </if>
+        <if test="taskId != 0">
+            AND task_id = #{taskId}
+        </if>
+    </update>
+
     <delete id="deleteStudentDebtsById" parameterType="com.studentslips.entities.StudentsDebts">
         UPDATE PS_Students_Debts  SET
             del_yn = 'Y'
                              , update_id = #{updateId}
                              , update_date = SYSDATE()
         WHERE del_yn = 'N'
+        <if test="id!=0">
+            AND  id = #{id}
+        </if>
         <if test="serviceId!=0 ">
             AND  service_id = #{serviceId}
         </if>
@@ -58,12 +78,15 @@
         <if test="sClass!=0 ">
             AND   class = #{sClass}
         </if>
+        <if test="taskId!=0 ">
+            AND   task_id = #{taskId}
+        </if>
     </delete>
 
     <select id="selectStudentDebts" parameterType="com.studentslips.entities.StudentsDebts" resultMap="result">
         select sd.*,s.name,(select name from PS_Service where id= sd.service_id) as service_name , s.grade, s.class
         from PS_Students_Debts sd, PS_Students s
-        where sd.student_id=s.id
+        where sd.student_id=s.id and sd.del_yn='N'
         <if test="serviceId!=0 ">
             AND  sd.service_id = #{serviceId}
         </if>
@@ -85,12 +108,16 @@
         <if test="debitDate!= null">
             AND  sd.debit_date = #{debitDate}
         </if>
+        <if test="taskId!=0 ">
+            AND   sd.task_id = #{taskId}
+        </if>
     </select>
 
     <select id="search" parameterType="com.studentslips.entities.StudentsDebts" resultMap="result">
-        select s.id as student_id,s.name,concat(concat(s.id , '-' , #{suppliersId}),'-',#{serviceId})  as reference_no, (select name from PS_Service where id= #{serviceId}) as service_name, #{price} as price
+        select s.id as student_id,s.name,concat(concat(s.id , '-' , S01.supplier_id,'-',#{serviceId}))  as reference_no, S01.name as service_name, #{price} as price
         from PS_Students s
-        where del_yn='N'
+        left join PS_Service S01 on S01.id = #{serviceId}
+        where s.del_yn='N'
         <if test="schoolId!=0 ">
             AND  s.school_id = #{schoolId}
         </if>
@@ -103,14 +130,14 @@
     </select>
 
     <select id="selectAllStudentDebts" parameterType="com.studentslips.entities.TaskArchiveSearch" resultMap="result">
-        select sd.debit_date,sd.grade,sd.class,(select name from onetouch.PS_Service where sd.service_id=id) as service_name,sd.purpose,sd.price
+        select sd.id,sd.debit_date,sd.grade,sd.class,(select name from onetouch.PS_Service where sd.service_id=id) as service_name,sd.purpose,sd.price
         ,sd.suppliers_id,sd.service_id,sd.school_id
         from onetouch.PS_Students_Debts sd
-        where sd.debit_date between #{fromDate} and  #{toDate}
+        where sd.debit_date between #{fromDate} and  #{toDate} and sd.del_yn='N'
         <if test="schoolId!=0 ">
             AND  sd.school_id = #{schoolId}
         </if>
-        group by sd.debit_date,sd.grade,sd.class,sd.service_id,sd.school_id
+        group by sd.debit_date,sd.grade,sd.class,sd.service_id,sd.school_id, sd.id
     </select>
     <select id="selectStudentDebtsCntByReferenceNo" parameterType="com.studentslips.entities.StudentsDebts" resultType="int">
         select count(1)
@@ -120,7 +147,6 @@
             AND  sd.school_id = #{schoolId}
         </if>
     </select>
-
     <resultMap id = "result" type = "com.studentslips.entities.StudentsDebts">
         <result property = "studentId" column = "student_id"/>
         <result property = "suppliersId" column = "suppliers_id"/>
@@ -141,5 +167,80 @@
         <result property = "price" column = "price"/>
         <result property = "grade" column = "grade"/>
         <result property = "sClass" column = "class"/>
+        <result property = "id" column = "id"/>
     </resultMap>
+    
+    
+    <!-- 
+    	TASK_ARCHIVE
+     -->
+    <select id="searchTaskArchives" parameterType="com.studentslips.entities.TaskArchiveSearch" resultMap="studentsDebtsTaskModel">
+    	select T01.id, T01.school_id, T01.grade, T01.class, T01.service_id, S01.name as service_name, T01.note, T01.debit_date, T01.del_yn, T01.insert_id, T01.insert_date, T01.update_id, T01.update_date
+    	from onetouch.PS_Students_Debts_Task T01
+    	left join onetouch.PS_Service S01 on T01.service_id = S01.id and S01.del_yn = 'N'
+    	where 1=1
+    		AND T01.del_yn = 'N'
+        <if test="taskId != 0">
+            AND T01.id = #{taskId}
+        </if>
+        <if test="fromDate != null and toDate != null">
+            AND T01.debit_date between #{fromDate} and #{toDate}
+        </if>
+        <if test="schoolId != 0">
+            AND T01.school_id = #{schoolId}
+        </if>
+    </select>
+    <select id="countTaskArchive" parameterType="com.studentslips.entities.TaskArchiveSearch" resultType="int">
+    	select count(T01.id)
+    	from onetouch.PS_Students_Debts_Task T01
+    	where 1=1
+    		AND T01.del_yn = 'N'
+        <if test="taskId != 0">
+            AND T01.id = #{taskId}
+        </if>
+        <if test="schoolId != 0">
+            AND T01.school_id = #{schoolId}
+        </if>
+    </select>
+    
+    <insert id="insertTaskArchive" parameterType="com.studentslips.entities.StudentsDebtsTask" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO onetouch.PS_Students_Debts_Task (school_id, grade, class, service_id, note, debit_date, del_yn, insert_date, insert_id)
+        VALUES (#{schoolId}, #{grade}, #{sClass}, #{serviceId}, #{note}, #{debitDate}, 'N', SYSDATE(), #{insertId});
+    </insert>
+    
+    <delete id="deleteTaskArchive" parameterType="com.studentslips.entities.StudentsDebtsTask">
+        UPDATE onetouch.PS_Students_Debts_Task SET del_yn = 'Y', update_id = #{updateId}, update_date = SYSDATE()
+        WHERE del_yn = 'N'
+        <if test="id!=0">
+            AND id = #{id}
+        </if>
+    </delete>
+
+    <update id="updateTaskArchive" parameterType="com.studentslips.entities.StudentsDebtsTask">
+        UPDATE onetouch.PS_Students_Debts_Task SET
+			note = #{note}
+        	, update_id = #{updateId}
+        	, update_date = SYSDATE()
+        WHERE del_yn = 'N'
+        <if test="id != 0">
+            AND id = #{id}
+        </if>
+    </update>
+
+    <resultMap id="studentsDebtsTaskModel" type = "com.studentslips.entities.StudentsDebtsTask">
+        <result property = "id" column = "id"/>
+        <result property = "grade" column = "grade"/>
+        <result property = "sClass" column = "class"/>
+        <result property = "schoolId" column = "school_id"/>
+        <result property = "serviceId" column = "service_id"/>
+        <result property = "serviceName" column = "service_name"/>
+        <result property = "note" column = "note"/>
+        <result property = "debitDate" column = "debit_date"/>
+        <result property = "delYn" column = "del_yn"/>
+        <result property = "insertId" column = "insert_id"/>
+        <result property = "insertDate" column = "insert_date"/>
+        <result property = "updateId" column = "update_id"/>
+        <result property = "updateDate" column = "update_date"/>
+    </resultMap>
+    
 </mapper>

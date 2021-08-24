@@ -3,6 +3,7 @@ package com.studentslips.controller;
 import com.studentslips.common.Common;
 import com.studentslips.entities.StudentDebtsObject;
 import com.studentslips.entities.StudentsDebts;
+import com.studentslips.entities.StudentsDebtsTask;
 import com.studentslips.entities.TaskArchiveSearch;
 import com.studentslips.services.StudentDebtsService;
 import org.slf4j.Logger;
@@ -57,6 +58,8 @@ public class StudentDebtsRestController {
     public Map<String, ?> addStudentsDebts(@RequestBody StudentDebtsObject std){
         Map<String, Object> result = new HashMap<>();
         try {
+        	StudentsDebtsTask newTask = studentDebtsService.insertTaskArchive(std);
+        	std.setTaskId(newTask.getId());
             studentDebtsService.insertStudentsDebtsObj(std);
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
@@ -72,6 +75,10 @@ public class StudentDebtsRestController {
         Map<String, Object> result = new HashMap<>();
         try {
            studentDebtsService.updateStudentsDebtsObj(std);
+           StudentsDebtsTask task = new StudentsDebtsTask();
+           task.setId(std.getTaskId());
+           task.setNote(std.getPurpose());
+           studentDebtsService.updateTaskArchive(task);
                 result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -102,8 +109,30 @@ public class StudentDebtsRestController {
         Map<String, Object> result = new HashMap<>();
 
         try {
-            result.put(Common.LIST, studentDebtsService.searchTaskArchive(std));
+            result.put(Common.LIST, studentDebtsService.searchTaskArchives(std));
             result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
+        }
+
+        return result;
+    }
+
+    @RequestMapping(value = "/TA_D_01", method = RequestMethod.POST)
+    public Map<String, ?> deleteTaskArchive(@RequestBody StudentsDebtsTask studentsDebtsTask){
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+        	StudentsDebts std = new StudentsDebts();
+        	std.setTaskId(studentsDebtsTask.getId());
+        	int cnt = studentDebtsService.deleteStudentsDebtsById(std);
+        	int cntParent = studentDebtsService.deleteTaskArchive(studentsDebtsTask);
+        	if (cnt > 0 && cntParent > 0) {        		        		
+        		result.put(Common.STATUS, HttpStatus.OK.value());
+        	} else {
+                result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        	}
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
             logger.error(ex.getMessage());

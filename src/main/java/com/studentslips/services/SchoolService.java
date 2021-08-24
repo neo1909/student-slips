@@ -10,4 +10,5 @@ public interface SchoolService {
     public int deleteSchoolById(int id) throws Exception;
     public List<School> selectAllSchool(School school) throws Exception;
     public School selectSchoolById(int schoolId);
+    public List<School> selectAllSimpleSchool(School school) throws Exception;
 }

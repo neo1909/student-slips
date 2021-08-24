@@ -1,5 +1,3 @@
-;
-
 let fn = {
     dataset: null,
     gridSource: null,
@@ -239,5 +237,11 @@ let fn = {
 
 $(document).ready(function() {
     fn.init();
-    fn.onSearch();
+    fn.onSearch();   
+    $(document).on('keypress', function(e) {
+    	if (e.keyCode == 13) {
+    		e.preventDefault();
+    		fn.onSearch();
+    	}
+    })
 });

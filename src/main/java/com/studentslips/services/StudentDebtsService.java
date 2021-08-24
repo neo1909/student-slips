@@ -2,6 +2,7 @@ package com.studentslips.services;
 
 import com.studentslips.entities.StudentDebtsObject;
 import com.studentslips.entities.StudentsDebts;
+import com.studentslips.entities.StudentsDebtsTask;
 import com.studentslips.entities.TaskArchiveSearch;
 
 import java.util.List;
@@ -16,5 +17,9 @@ public interface StudentDebtsService {
     public void insertStudentsDebtsObj(StudentDebtsObject studentDebtsObject) throws Exception;
     public void updateStudentsDebtsObj(StudentDebtsObject studentDebtsObject) throws Exception;
     //TaskArchive
-    public List<StudentsDebts> searchTaskArchive(TaskArchiveSearch taskArchiveSearch) throws Exception;
+    public List<StudentsDebtsTask> searchTaskArchives(TaskArchiveSearch taskArchiveSearch) throws Exception;
+	public int deleteTaskArchive(StudentsDebtsTask studentsDebtsTask);
+	public int updateTaskArchive(StudentsDebtsTask studentsDebtsTask);
+	public StudentsDebtsTask insertTaskArchive(StudentDebtsObject std) throws Exception;
+	public int countTaskArchive(TaskArchiveSearch taskArchiveSearch) throws Exception;
 }

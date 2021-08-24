@@ -97,24 +97,29 @@ CREATE TABLE `PS_School` (
 	`update_id` INT  ,
 	PRIMARY KEY (`id`)
 );
-CREATE TABLE `PS_Students_Debts` (
-     `student_id` INT NOT NULL ,
-     `suppliers_id` INT NOT NULL ,
-     `service_id` INT NOT NULL  ,
-     `reference_no` VARCHAR(255)  ,
-     `quantity` INT  ,
-     `school_id` INT NOT NULL,
-     `purpose` longtext,
-     `debit_date` DATE  ,
-     `amount_debt` DECIMAL  ,
-     `grade` INT ,
-     `class` INT ,
-     `del_yn` VARCHAR(1),
-     `insert_date` DATETIME ,
-     `insert_id` INT  ,
-     `update_date` DATETIME  ,
-     `update_id` INT,
-     `price` DECIMAL
+CREATE TABLE `Ps_Students_Debts` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `task_id` int DEFAULT NULL,
+  `school_id` int NOT NULL,
+  `grade` int DEFAULT NULL,
+  `class` int DEFAULT NULL,
+  `student_id` int NOT NULL,
+  `suppliers_id` int NOT NULL,
+  `service_id` int NOT NULL,
+  `reference_no` varchar(255) DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
+  `price` decimal(10,0) DEFAULT NULL,
+  `amount_debt` decimal(10,0) DEFAULT NULL,
+  `purpose` longtext,
+  `debit_date` date DEFAULT NULL,
+  `del_yn` varchar(1) DEFAULT NULL,
+  `insert_date` datetime DEFAULT NULL,
+  `insert_id` int DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `update_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_student_debt_task_idx` (`task_id`),
+  CONSTRAINT `fk_student_debt_task` FOREIGN KEY (`task_id`) REFERENCES `ps_students_debts_task` (`id`)
 );
 
 CREATE TABLE PS_Bank_Statement_Upload_History (
@@ -153,6 +158,21 @@ CREATE TABLE PS_Bank_Statement (
                                    del_yn varchar(1) NOT NULL,
                                    PRIMARY KEY (id)
 )
+CREATE TABLE `Ps_Students_Debts_Task` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `school_id` int DEFAULT NULL,
+  `grade` int DEFAULT NULL,
+  `class` int DEFAULT NULL,
+  `service_id` int DEFAULT NULL,
+  `note` varchar(255) DEFAULT NULL,
+  `debit_date` date DEFAULT NULL,
+  `del_yn` varchar(1) NOT NULL,
+  `insert_id` int DEFAULT NULL,
+  `insert_date` date DEFAULT NULL,
+  `update_id` int DEFAULT NULL,
+  `update_date` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
 
 CREATE TABLE `ps_users` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -173,10 +193,8 @@ CREATE TABLE `ps_users` (
   `update_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
-  KEY `fk_user_school_idx` (`school_id`),
-  CONSTRAINT `fk_user_school` FOREIGN KEY (`school_id`) REFERENCES `ps_school` (`id`)
 );
-INSERT INTO `ps_users` VALUES (1,'admin','$2a$10$3ZpIvM/JzRJQMBUflw7JQu28k8F3leyySyHYF3/RT1emRhyVwL9Ni','Admin Student Slips',1,'studentslips.adm@gmail.com',NULL,0,NULL,'ACTIVE',NULL,'N','2021-08-15 15:57:23',NULL,NULL,NULL);
+INSERT INTO `ps_users` VALUES (1,'admin','$2a$10$3ZpIvM/JzRJQMBUflw7JQu28k8F3leyySyHYF3/RT1emRhyVwL9Ni','Admin Student Slips',0,'studentslips.adm@gmail.com',NULL,0,NULL,'ACTIVE',NULL,'N','2021-08-15 15:57:23',NULL,NULL,NULL);
 
 CREATE TABLE `ps_roles` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -211,4 +229,8 @@ CREATE TABLE `ps_user_session` (
   KEY `fk_usersession_user_idx` (`user_id`),
   CONSTRAINT `fk_usersession_user` FOREIGN KEY (`user_id`) REFERENCES `ps_users` (`id`)
 );
+
+-- 24/08/2021 Add `supplier_id` to PS_Service (1 service - 1 supplier)
+ALTER TABLE `onetouch`.`ps_service` 
+ADD COLUMN `supplier_id` INT NULL AFTER `school_id`; -- no need to add as FK
 
