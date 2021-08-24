@@ -1,18 +1,18 @@
 package com.studentslips.services.impl;
 
+import com.studentslips.common.Common;
 import com.studentslips.dao.BankStatementDao;
 import com.studentslips.dao.StudentOverviewBalanceDao;
-import com.studentslips.entities.Student;
-import com.studentslips.entities.StudentOverview;
-import com.studentslips.entities.StudentOverviewBalanceDTO;
-import com.studentslips.entities.StudentOverviewBalancePrintDTO;
+import com.studentslips.entities.*;
 import com.studentslips.services.StudentOverviewService;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service(value = "StudentOverviewServiceImpl")
 public class StudentOverviewServiceImpl implements StudentOverviewService {
@@ -27,59 +27,100 @@ public class StudentOverviewServiceImpl implements StudentOverviewService {
     }
 
     @Override
-    public List<StudentOverviewBalanceDTO> selectStudentOverviewBalance(Student std) throws Exception {
-
-        List<StudentOverviewBalanceDTO> studentOverviewBalanceList = studentOverviewBalanceDao.selectStudentOverviewBalance(std);
-
-        if (CollectionUtils.isEmpty(studentOverviewBalanceList)){
-            return new ArrayList<>();
+    public  Map<String, Object> selectStudentOverviewBalance(StudentOverviewBalanceRequestDTO requestDTO) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+        List<Integer> serviceList = studentOverviewBalanceDao.selectDistinctServiceStdDebts(requestDTO.getId());
+        if (CollectionUtils.isEmpty(serviceList)) {
+            return new HashMap<>();
         }
+        Set<Integer> serviceSet = new HashSet<>(serviceList);
+        int indexService = 1;
+        for (int serviceId : serviceSet) {
+            requestDTO.setServiceId(serviceId);
 
-        Collections.sort(studentOverviewBalanceList, new Comparator<StudentOverviewBalanceDTO>() {
-            @Override
-            public int compare(StudentOverviewBalanceDTO o1, StudentOverviewBalanceDTO o2) {
-                return o1.getDate().compareTo(o2.getDate());
+            List<StudentOverviewBalanceDTO> studentOverviewBalanceList = studentOverviewBalanceDao.selectStudentOverviewBalance(requestDTO);
+
+            if (CollectionUtils.isEmpty(studentOverviewBalanceList)) {
+                continue;
             }
-        });
 
-        BigDecimal balanceMonth = BigDecimal.valueOf(0);
-        for (int i = 1; i < studentOverviewBalanceList.size(); i+=2) {
-            BigDecimal bankBalance = BigDecimal.valueOf(0);
-            if(studentOverviewBalanceList.get(i-1).getRowType() == 1) {
-                balanceMonth = studentOverviewBalanceList.get(i - 1).getBalance();
-                if(i - 2 > 0) {
-                    balanceMonth = balanceMonth.add(studentOverviewBalanceList.get(i - 2).getBalance());
+            Collections.sort(studentOverviewBalanceList, new Comparator<StudentOverviewBalanceDTO>() {
+                @Override
+                public int compare(StudentOverviewBalanceDTO o1, StudentOverviewBalanceDTO o2) {
+                    return o1.getDate().compareTo(o2.getDate());
                 }
-                bankBalance = balanceMonth.subtract(studentOverviewBalanceList.get(i).getClaims());
-                studentOverviewBalanceList.get(i-1).setBalance(balanceMonth);
-                studentOverviewBalanceList.get(i).setBalance(bankBalance);
+            });
+
+            BigDecimal bankBalance = BigDecimal.valueOf(0);
+            for (int i = 0; i < studentOverviewBalanceList.size(); i++) {
+                StudentOverviewBalanceDTO dto1 = studentOverviewBalanceList.get(i);
+                if (dto1.getRowType() == 1) {
+                    dto1.setBalance(dto1.getDebit());
+                    if (i > 0) {
+                        if(studentOverviewBalanceList.get(i-1).getRowType() == 1) {
+                            dto1.setBalance(dto1.getDebit().add(studentOverviewBalanceList.get(i-1).getBalance()));
+                            bankBalance = bankBalance.add(dto1.getDebit().add(studentOverviewBalanceList.get(i-1).getBalance()));
+                        } else {
+                            dto1.setBalance(dto1.getDebit().add(bankBalance));
+                        }
+                    }
+                    continue;
+                }
+
+                if (i > 0 && dto1.getRowType() == 2) {
+                    StudentOverviewBalanceDTO dto2 = studentOverviewBalanceList.get(i - 1);
+                    if (dto2.getRowType() == 1) {
+                        if (bankBalance.compareTo(BigDecimal.ZERO) > 0){
+                            bankBalance = bankBalance.subtract(dto1.getClaims());
+                            dto1.setBalance(bankBalance);
+                        } else {
+                            bankBalance = bankBalance.add(dto2.getDebit().subtract(dto1.getClaims()));
+                            dto1.setBalance(bankBalance);
+                        }
+                    } else if (dto2.getRowType() == 2) {
+                        bankBalance = bankBalance.subtract(dto1.getClaims());
+                        dto1.setBalance(bankBalance);
+                    }
+                }
             }
+
+            studentOverviewBalanceList = studentOverviewBalanceList.stream().filter(studentOverviewBalanceDTO -> (DateUtils.isSameDay(studentOverviewBalanceDTO.getDate(), requestDTO.getFromDate()) || studentOverviewBalanceDTO.getDate().after(requestDTO.getFromDate()))
+                    && (DateUtils.isSameDay(studentOverviewBalanceDTO.getDate(), requestDTO.getToDate()) || studentOverviewBalanceDTO.getDate().before(requestDTO.getToDate()))
+            ).collect(Collectors.toList());
+
+            BigDecimal totalClaims = new BigDecimal(0);
+            BigDecimal totalDebit = new BigDecimal(0);
+
+            for (StudentOverviewBalanceDTO dto : studentOverviewBalanceList) {
+                totalClaims = totalClaims.add(dto.getClaims());
+            }
+
+            for (StudentOverviewBalanceDTO dto : studentOverviewBalanceList) {
+                totalDebit = totalDebit.add(dto.getDebit());
+            }
+            BigDecimal totalBalance = new BigDecimal(0);
+
+            if (!CollectionUtils.isEmpty(studentOverviewBalanceList)) {
+                totalBalance = studentOverviewBalanceList.get(0).getBalance();
+                if (studentOverviewBalanceList.size() > 0) {
+                    totalBalance = studentOverviewBalanceList.get(studentOverviewBalanceList.size() - 1).getBalance();
+                }
+            }
+            StudentOverviewBalanceDTO totalObj = new StudentOverviewBalanceDTO();
+            totalObj.setDate(null);
+            totalObj.setDescription("TOTAL");
+            totalObj.setDebit(totalDebit);
+            totalObj.setPrint(false);
+            totalObj.setClaims(totalClaims);
+            totalObj.setBalance(totalBalance);
+            totalObj.setServiceId(-1);
+
+            studentOverviewBalanceList.add(totalObj);
+            result.put(Common.LIST + indexService, studentOverviewBalanceList);
+            indexService++;
         }
+        return result;
 
-        BigDecimal totalBalance = studentOverviewBalanceList.get(studentOverviewBalanceList.size()-1).getBalance();
-
-        BigDecimal totalClaims = new BigDecimal(0);
-        BigDecimal totalDebit = new BigDecimal(0);
-
-        for (StudentOverviewBalanceDTO dto: studentOverviewBalanceList) {
-            totalClaims = totalClaims.add(dto.getClaims());
-        }
-
-        for (StudentOverviewBalanceDTO dto: studentOverviewBalanceList) {
-            totalDebit = totalDebit.add(dto.getDebit());
-        }
-
-        StudentOverviewBalanceDTO totalObj = new StudentOverviewBalanceDTO();
-        totalObj.setDate(null);
-        totalObj.setDescription("TOTAL");
-        totalObj.setDebit(totalDebit);
-        totalObj.setPrint(true);
-        totalObj.setClaims(totalClaims);
-        totalObj.setBalance(totalBalance);
-
-        studentOverviewBalanceList.add(totalObj);
-
-        return studentOverviewBalanceList;
     }
 
     @Override

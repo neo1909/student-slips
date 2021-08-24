@@ -35,10 +35,17 @@ let fnPopup = {
             columns: [
                 { text: 'Date', datafield: 'date', align: 'center', cellsalign:'center', width: '20%', cellsformat: 'D' },
 
-                { text: 'Description of Service', datafield: 'description', align: 'center', cellsalign:'left', width: '30%,'},
-                { text: 'Debit', datafield: 'debit', align: 'center', cellsalign:'left', width: '15%,'},
-                { text: 'Claim', datafield: 'claims', align: 'center', cellsalign:'center', width: '15%,'},
-                { text: 'Balance', datafield: 'balance', align: 'center', cellsalign:'center', width: '15%,'},
+                { text: 'Description of Service', datafield: 'description', align: 'center', cellsalign:'left', width: '30%'},
+                { text: 'Debit', datafield: 'debit', align: 'center', cellsalign:'left', width: '15%', cellsformat: 'd'},
+                { text: 'Claim', datafield: 'claims', align: 'center', cellsalign:'center', width: '15%', cellsformat: 'd'},
+                { text: 'Balance', datafield: 'balance', align: 'center', cellsalign:'center', width: '15%', cellsformat: 'd',
+                    cellclassname: function (row, columnfield, value){
+                        let convertedValue = parseFloat(value);
+                        if (convertedValue < 0) {
+                            return 'green';
+                        }
+                    }
+                },
                 { text: 'Print', datafield: 'print', cellsalign:'center', width: '5%,'
                     , cellsrenderer: function (row, rowIndex, column, value) {
 
@@ -62,19 +69,39 @@ let fnPopup = {
         $("#iptStdNmOverviewSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...', disabled: true  });
         $("#cmbStdGradeOverviewSSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.gradeEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right', disabled: true  });
         $("#cmbStdClassOverviewSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazzEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right', disabled: true  });
+        $("#iptFromDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy"});
+        $("#iptToDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy"});
 
+        $('#btnStudentBalanceSearch').click(function () {
+
+            let fromDateStr = $('#iptFromDate').val();
+            let toDateStr = $('#iptToDate').val();
+
+            let dateParts = fromDateStr.split("/");
+
+            let fromDate = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+
+            dateParts = toDateStr.split("/");
+
+            let toDate = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+
+            fnPopup.onSearch(fromDate, toDate)
+        });
     },
 
-    onSearch: function (studentId) {
+    onSearch: function (fromDate, toDate) {
+
         let stdNm = $('#iptStdNmSrch').val();
-        let stdGrade = $('#cmbStdGradeSrch').val();
-        let stdClazz = $('#cmbStdClazzSrch').val();
         if (stdNm) {
             stdNm = stdNm.trim();
         }
 
+        let studentId = $('#iptStdId').val();
+
         let params = {
-            id: studentId
+            id: studentId,
+            fromDate: fromDate,
+            toDate: toDate
         };
 
         SS.sendToServer(
@@ -219,6 +246,6 @@ let fnPopup = {
 
 $(document).ready(function() {
     fnPopup.init();
-    fnPopup.onSearch();
+//    fnPopup.onSearch(fromDate, toDate);
 });
 

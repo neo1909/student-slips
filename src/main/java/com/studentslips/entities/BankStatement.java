@@ -13,11 +13,20 @@ public class BankStatement {
     // DatumIzvoda
     private Timestamp bankStatementDate;
 
-    // RacunIzvoda
-    private String accountNumber;
+//    // RacunIzvoda
+//    private String accountNumber;
+
+    // RacunZaduzenja
+    private String payerAccount;
+
+    // NazivZaduzenja
+    private String payer;
 
     // Naziv
-    private String payer;
+    private String payee;
+
+    // Racun Izvoda
+    private String payeeAccount;
 
     // SvrhaDoznake
     private String purpose;
@@ -171,13 +180,13 @@ public class BankStatement {
         this.postPaymentYn = postPaymentYn;
     }
 
-    public String getAccountNumber() {
+/*    public String getAccountNumber() {
         return accountNumber;
     }
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
-    }
+    }*/
 
     public String getPayer() {
         return payer;
@@ -201,5 +210,29 @@ public class BankStatement {
 
     public void setSchoolId(int schoolId) {
         this.schoolId = schoolId;
+    }
+
+    public String getPayerAccount() {
+        return payerAccount;
+    }
+
+    public void setPayerAccount(String payerAccount) {
+        this.payerAccount = payerAccount;
+    }
+
+    public String getPayee() {
+        return payee;
+    }
+
+    public void setPayee(String payee) {
+        this.payee = payee;
+    }
+
+    public String getPayeeAcount() {
+        return payeeAccount;
+    }
+
+    public void setPayeeAcount(String payeeAcount) {
+        this.payeeAccount = payeeAcount;
     }
 }
