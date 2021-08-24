@@ -3,14 +3,17 @@
 
 <mapper namespace="ServicesDao">
     <insert id="insertService" parameterType="com.studentslips.entities.Services">
-        INSERT INTO PS_Service (NAME, school_id, del_yn, insert_date, insert_id)
-        VALUES (#{name},#{schoolId}, 'N', SYSDATE(), #{insertId});
+        INSERT INTO PS_Service (NAME, school_id, del_yn, insert_date, insert_id, supplier_id)
+        VALUES (#{name},#{schoolId}, 'N', SYSDATE(), #{insertId}, #{supplierId});
     </insert>
 
     <update id="updateService" parameterType="com.studentslips.entities.Services">
         UPDATE PS_Service SET
         <if test="name!= null ">
             NAME = #{name},
+        </if>
+        <if test="supplierId != 0 ">
+            SUPPLIER_ID = #{supplierId},
         </if>
         update_id = #{updateId}, update_date = SYSDATE() WHERE ID = #{id}
         <if test="schoolId!=0 ">
@@ -23,8 +26,9 @@
     </delete>
 
     <select id="selectAllService" parameterType="com.studentslips.entities.Services" resultMap="result">
-        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
+        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName, S01.name as supplier_name
         FROM PS_Service S
+        left join PS_Suppliers S01 on S.supplier_id = S01.id and S01.del_yn = 'N'
         where  S.del_yn='N'
         <if test="name != null and !''.equals(name)">
             <bind name="nameLike" value="'%' + name + '%'" />
@@ -36,7 +40,10 @@
     </select>
 
     <select id="selectServiceById" parameterType="int" resultMap="result">
-        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName FROM PS_Service S WHERE S.ID = #{id} AND S.del_yn='N';
+        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName, S01.name as supplier_name
+        FROM PS_Service S
+        left join PS_Suppliers S01 on S.supplier_id = S01.id and S01.del_yn = 'N'
+        WHERE S.ID = #{id} AND S.del_yn='N';
     </select>
 
     <resultMap id = "result" type = "com.studentslips.entities.Services">
@@ -47,5 +54,7 @@
         <result property = "insertDate" column = "insert_date"/>
         <result property = "updateId" column = "update_id"/>
         <result property = "updateDate" column = "update_date"/>
+        <result property = "supplierId" column = "supplier_id"/>
+        <result property = "supplierName" column = "supplier_name"/>
     </resultMap>
 </mapper>

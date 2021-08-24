@@ -42,12 +42,12 @@ public class BankStatementArchiveController {
 
 
     @RequestMapping(value = "/BSA_R_02", method = RequestMethod.POST)
-    public Map<String, ?> getBankStatementArchiveById(@RequestBody BankStatement std) {
+    public Map<String, ?> getBankStatementArchiveById(@RequestBody BankStatementArchiveSearch std) {
 
         Map<String, Object> result = new HashMap<>();
 
         try {
-            result.put(Common.OBJECT, bankStatementArchiveService.selectById(std));
+            result.put(Common.LIST, bankStatementArchiveService.selectDetail(std));
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());

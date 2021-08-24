@@ -15,6 +15,8 @@ let fn = {
                 { name: 'name', type: 'string'},
                 { name: 'schoolId', type: 'int'},
                 { name: 'schoolName', type: 'string'},
+                { name: 'supplierId', type: 'int'},
+                { name: 'supplierName', type: 'string'},
                 { name: 'delYn', type: 'string'},
                 { name: 'insertId', type: 'int'},
                 { name: 'insertDate', type: 'string'},
@@ -43,8 +45,9 @@ let fn = {
                             + '</div>';
                     }
                 },
-                { text: 'Service Name', datafield: 'name', align: 'center', cellsalign:'left', width: '88%'},
-                { text: '', cellsalign:'center', width: '7%,'
+                { text: 'Service Name', datafield: 'name', align: 'center', cellsalign:'left', width: '40%'},
+                { text: 'Supplier Name', datafield: 'supplierName', align: 'center', cellsalign:'left', width: '40%'},
+                { text: '', cellsalign:'center', width: '15%,'
                     , cellsrenderer: function (rowIndex, column, value) {
                         return '<div style="text-align: center; margin-top: 4px;">'
                             + '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + rowIndex +')"><span class="glyphicon glyphicon-edit"></span></button>'
@@ -66,7 +69,7 @@ let fn = {
         $("#popupService").jqxWindow({
             isModal: true,
             autoOpen: false,
-            height: 250,
+            height: 350,
             width: 700,
             theme: 'bootstrap',
             title: 'Service detail',
@@ -139,7 +142,7 @@ let fn = {
         let data = {
             id: $('#iptSvcId').val(),
             name: $('#iptSvcNm').val().trim(),
-            schoolId: 1
+            supplierId: $("#cmbSupplier").val()
         };
 
         if (data.id) {  // Update
@@ -201,6 +204,14 @@ let fn = {
 
         open: function (serviceId) {
             fn.popup.reset();
+            
+    		SS.sendToServer('SL_R_01', false, {}, function onSuccess(data) {
+    	    	var src = [];
+    			if (data && data.lst) src = data.lst;;
+    			src.unshift({id: "", name: ""});
+    			$("#cmbSupplier").jqxDropDownList({ source: src, selectedIndex: 0, displayMember: "name", valueMember: "id", width: '100%', height: SS.IPT_HEIGHT});
+    		}, function onError(err) {
+    		})
 
             if (serviceId != null) { // Update
                 SS.sendToServer(

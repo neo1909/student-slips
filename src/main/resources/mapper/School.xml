@@ -49,6 +49,9 @@
             <bind name="nameLike" value="'%' + schoolName + '%'" />
         AND   name like #{nameLike}
         </if>
+        <if test="id != 0">
+        	AND id = #{id}
+        </if>
     </select>
 
     <select id="selectSchoolById" parameterType="int" resultMap="result">

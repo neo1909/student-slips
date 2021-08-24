@@ -19,8 +19,8 @@ public class StudentsDao {
         return this.sqlSession.selectList("selectAllStudent", student);
     }
 
-    public Student selectStudentById(int studentId){
-        return this.sqlSession.selectOne("selectStudentById",studentId);
+    public Student selectStudentById(int id){
+        return this.sqlSession.selectOne("selectStudentById",id);
     }
 
     public int insertStudent(Student student){
@@ -32,4 +32,12 @@ public class StudentsDao {
     public int deleteStudentById(Student student){
         return this.sqlSession.delete("deleteStudentById", student);
     }
+
+//    public String selectAutoIncrement(){
+//        return this.sqlSession.selectOne("selectAutoIncrement");
+//    }
+//
+//    public Student selectStudentByStudentId(String studentId){
+//        return this.sqlSession.selectOne("selectStudentByStudentId",studentId);
+//    }
 }

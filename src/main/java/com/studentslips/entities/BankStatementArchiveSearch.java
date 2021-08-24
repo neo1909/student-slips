@@ -13,6 +13,11 @@ public class BankStatementArchiveSearch {
 
     private int schoolId;
 
+    private String filename;
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date bankStatementDate;
+    private String referenceNo;
+
     public Date getFromDate() {
         return fromDate;
     }
@@ -35,5 +40,29 @@ public class BankStatementArchiveSearch {
 
     public void setSchoolId(int schoolId) {
         this.schoolId = schoolId;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public Date getBankStatementDate() {
+        return bankStatementDate;
+    }
+
+    public void setBankStatementDate(Date bankStatementDate) {
+        this.bankStatementDate = bankStatementDate;
+    }
+
+    public String getReferenceNo() {
+        return referenceNo;
+    }
+
+    public void setReferenceNo(String referenceNo) {
+        this.referenceNo = referenceNo;
     }
 }

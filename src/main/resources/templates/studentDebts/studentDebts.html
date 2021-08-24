@@ -8,16 +8,13 @@
     <title>Student Slips</title>
 
     <link rel="stylesheet" href="/lib/styles/bootstrap.min.css" type="text/css">
-    <!-- <link rel="stylesheet" href="/lib/styles/bootstrap-theme.min.css" type="text/css">-->
     <link rel="stylesheet" href="/lib/styles/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/ionicons.min.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/jqx.base.min.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/jqx.bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/app.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/waitMe.min.css" type="text/css">
-
-    <link rel="stylesheet" href="/app/styles/student/student.css" type="text/css">
-
+    <link rel="stylesheet" href="/app/styles/custom.css" type="text/css">
 </head>
 
 <body class="skin-blue" id="ssApp">
@@ -34,7 +31,7 @@
         <div class="div-content ss-content">
             <aside class="right-side">
                 <section class="content-header">
-                    <h1>
+                    <h1 id="screen-title">
                         Student Debts
                     </h1>
                     <ol class="breadcrumb">
@@ -48,7 +45,7 @@
                     <div class="container-fluid">
                         <div class="div-search">
                             <form role="form">
-                                <div class="row">
+                                <div class="row search-condition-panel">
                                     <div class="form-group col-md-2">
                                         <label>Grade</label>
                                         <div>
@@ -62,13 +59,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="form-group col-md-2">
-                                        <label>Suplier</label>
-                                        <div>
-                                            <div id="cmbSuplier"></div>
-                                        </div>
-                                    </div>
+                                <div class="row search-condition-panel">
                                     <div class="form-group col-md-2">
                                         <label>Service</label>
                                         <div>
@@ -87,11 +78,15 @@
                                             <input id="iptDateSrch">
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <button id="btnStdSrch" class="btn btn-primary btn-str btn-search" type="button"
-                                            value="Search">Search</button>
+                                </div>
+                                <div class="row d-flex justify-content-end">
+                                    <div class="form-group col-md-4 text-right">
+                                        <button id="btnCancelUpdate" class="btn btn-primary btn-str btn-search mx-1" type="button">Cancel Update</button>
+                                        <button id="btnStdSrch" class="btn btn-primary btn-str btn-search mx-1" type="button">Search</button>
+                                        <button id="btnApplyToAll" class="btn btn-primary btn-str btn-search mx-1" type="button">Apply to all</button>
                                     </div>
                                 </div>
+                                <input type="hidden" id="iptTaskId" th:value="${taskId}">
                             </form>
                         </div>
                         <div class="div-grid">
@@ -101,14 +96,17 @@
                         </div>
 
                         <div class="action">
+                        	<br/>
                             <div>
+                                <label>Purpose of payment</label>
                                 <textarea id="iptComment"> </textarea>
                             </div>
-                            <div style="padding-top: 16px;">
-                                <button id="btnSave" class="btn btn-primary btn-str mr-4" type="button" value="Save">
+                        	<br/>
+                            <div>
+                                <button id="btnSave" class="btn btn-primary btn-str mx-1" type="button" value="Save">
                                     Save
                                 </button>
-                                <button id="btnPrint" class="btn btn-primary btn-str" type="button" value="Print">
+                                <button id="btnPrint" class="btn btn-primary btn-str mx-1" type="button" value="Print">
                                     Print
                                 </button>
                             </div>

@@ -1,6 +1,7 @@
 package com.studentslips.dao;
 
 import com.studentslips.entities.StudentsDebts;
+import com.studentslips.entities.StudentsDebtsTask;
 import com.studentslips.entities.TaskArchiveSearch;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -28,6 +29,9 @@ public class StudentDebtsDao {
     public int updateStudentsDebts(StudentsDebts studentsDebts){
         return this.sqlSession.update("updateStudentDebts", studentsDebts);
     }
+    public int updateStudentDebtsPurpose(StudentsDebts studentsDebts){
+        return this.sqlSession.update("updateStudentDebtsPurpose", studentsDebts);
+    }
     public int deleteStudentsDebtsById(StudentsDebts studentsDebts){
         return this.sqlSession.delete("deleteStudentDebtsById", studentsDebts);
     }
@@ -35,4 +39,28 @@ public class StudentDebtsDao {
     public List<StudentsDebts> searchTaskArchive(TaskArchiveSearch taskArchiveSearch) throws Exception {
         return this.sqlSession.selectList("selectAllStudentDebts", taskArchiveSearch);
     }
+
+    public List<StudentsDebtsTask> searchTaskArchives(TaskArchiveSearch taskArchiveSearch) throws Exception {
+        return this.sqlSession.selectList("searchTaskArchives", taskArchiveSearch);
+    }
+
+    public int insertTaskArchive(StudentsDebtsTask studentsDebtsTask){
+        return this.sqlSession.insert("insertTaskArchive", studentsDebtsTask);
+    }
+    
+	public int deleteTaskArchive(StudentsDebtsTask studentsDebtsTask) {
+		return this.sqlSession.delete("deleteTaskArchive", studentsDebtsTask);
+	}
+
+	public int updateTaskArchive(StudentsDebtsTask studentsDebtsTask) {
+		return this.sqlSession.update("updateTaskArchive", studentsDebtsTask);
+	}
+
+	public int countTaskArchive(TaskArchiveSearch taskArchiveSearch) {
+		return this.sqlSession.selectOne("countTaskArchive", taskArchiveSearch);
+	}
+  public int selectStudentDebtsCntByReferenceNo(StudentsDebts studentsDebts){
+        return this.sqlSession.selectOne("selectStudentDebtsCntByReferenceNo", studentsDebts);
+   }
+
 }

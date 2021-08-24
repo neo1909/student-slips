@@ -93,6 +93,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/api/**").authenticated()
 			.antMatchers("/index**").authenticated()
 			.antMatchers("/admin/**").hasAnyRole("ADMIN")
+			.antMatchers("/data-entry/**").authenticated()
+			.antMatchers("/posting/**").authenticated()
+			.antMatchers("/overview/**").authenticated()
+			.antMatchers("/archive/**").authenticated()
 			.anyRequest().permitAll();
 		
 

@@ -10,6 +10,9 @@ input[type="password"].jqx-input-bootstrap, input[type="password"].jqx-widget-co
 .jqx-input, .jqx-dropdownlist-content {
 	padding-left: 1rem !important;
 }
+textarea.jqx-text-area-element-bootstrap {
+	padding-left: 1rem !important;
+}
 
 /* Common CSS */
 

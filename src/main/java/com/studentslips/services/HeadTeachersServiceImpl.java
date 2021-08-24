@@ -1,6 +1,7 @@
 package com.studentslips.services;
 
 import com.studentslips.common.SessionUtil;
+import com.studentslips.common.StudentSlipException;
 import com.studentslips.dao.HeadTeachersDao;
 import com.studentslips.entities.HeadTeachers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,18 @@ public class HeadTeachersServiceImpl implements HeadTeachersService{
 
     @Override
     public int insertHeadTeachers(HeadTeachers headTeachers) throws Exception {
+
+        HeadTeachers checkHT = new HeadTeachers();
+        checkHT.setGrade(headTeachers.getGrade());
+        checkHT.setsClass(headTeachers.getsClass());
+        checkHT.setSchoolId(SessionUtil.getSchoolId());
+
+        List<HeadTeachers> lst = headTeachersDao.selectAllHeadTeachers(checkHT);
+
+        if (lst !=null && !lst.isEmpty()){
+            throw new StudentSlipException("Class already exists head teacher !");
+        }
+
         headTeachers.setInsertId(SessionUtil.getUserLoginId());
         headTeachers.setSchoolId(SessionUtil.getSchoolId());
         return headTeachersDao.insertHeadTeachers(headTeachers);
@@ -24,6 +37,22 @@ public class HeadTeachersServiceImpl implements HeadTeachersService{
 
     @Override
     public int updateHeadTeachers(HeadTeachers headTeachers) throws Exception {
+
+        HeadTeachers checkHT = new HeadTeachers();
+        checkHT.setGrade(headTeachers.getGrade());
+        checkHT.setsClass(headTeachers.getsClass());
+        checkHT.setSchoolId(SessionUtil.getSchoolId());
+
+        List<HeadTeachers> lst = headTeachersDao.selectAllHeadTeachers(checkHT);
+
+        if (lst !=null && !lst.isEmpty()){
+            for (HeadTeachers ht : lst) {
+                if (headTeachers.getId() != 0 && headTeachers.getId() != ht.getId()) {
+                    throw new StudentSlipException("Class already exists head teacher !");
+                }
+            }
+        }
+
         headTeachers.setUpdateId(SessionUtil.getUserLoginId());
         return headTeachersDao.updateHeadTeachers(headTeachers);
     }
@@ -48,4 +77,5 @@ public class HeadTeachersServiceImpl implements HeadTeachersService{
 
         return headTeachersDao.selectHeadTeachersById(id);
     }
+
 }

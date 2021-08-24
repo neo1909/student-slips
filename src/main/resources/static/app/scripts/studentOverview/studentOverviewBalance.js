@@ -460,8 +460,8 @@ $(document).ready(function() {
 
     var localizationobj = {};
     localizationobj.currencysymbol = " ";
-    localizationobj.decimalseparator = ".";
-    localizationobj.thousandsseparator = ",";
+    localizationobj.decimalseparator = ",";
+    localizationobj.thousandsseparator = ".";
     $('#grdStudentBalance1').jqxGrid('localizestrings', localizationobj);
     $('#grdStudentBalance2').jqxGrid('localizestrings', localizationobj);
     $('#grdStudentBalance3').jqxGrid('localizestrings', localizationobj);

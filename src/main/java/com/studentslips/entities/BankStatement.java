@@ -57,6 +57,8 @@ public class BankStatement {
     private String postPaymentYn;
     private String delYn;
 
+    private int isHightLight;
+
     public BankStatement() {
     }
 
@@ -234,5 +236,13 @@ public class BankStatement {
 
     public void setPayeeAcount(String payeeAcount) {
         this.payeeAccount = payeeAcount;
+    }
+
+    public int getIsHightLight() {
+        return isHightLight;
+    }
+
+    public void setIsHightLight(int isHightLight) {
+        this.isHightLight = isHightLight;
     }
 }

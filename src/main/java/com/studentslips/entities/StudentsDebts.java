@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class StudentsDebts {
+	private int id;
     private int studentId;
     private int schoolId;
     private int suppliersId;
@@ -27,11 +28,28 @@ public class StudentsDebts {
     private String nameStudent;
     private String nameService;
     private BigDecimal price;
+    private int taskId;
 
     public StudentsDebts() {
     }
+    
+    public int getTaskId() {
+		return taskId;
+	}
 
-    public BigDecimal getAmountDebt() {
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public BigDecimal getAmountDebt() {
         return amountDebt;
     }
 

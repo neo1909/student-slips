@@ -14,6 +14,7 @@ public class Student {
     private int updateId;
     private Timestamp updateDate;
     private String schoolName;
+    private String studentId;
 
     public Student() {
     }
@@ -104,5 +105,13 @@ public class Student {
 
     public void setGrade(int grade) {
         this.grade = grade;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 }
