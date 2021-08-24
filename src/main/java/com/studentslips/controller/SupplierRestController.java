@@ -4,6 +4,7 @@ package com.studentslips.controller;
 import com.studentslips.common.Common;
 import com.studentslips.entities.Supplier;
 import com.studentslips.entities.SupplierServiceDetail;
+import com.studentslips.entities.SupplierServiceDetailGroup;
 import com.studentslips.services.SupplierService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,8 +112,14 @@ public class SupplierRestController {
     public Map<String,?> insertSupplierServiceDetail(@RequestBody SupplierServiceDetail std){
         Map<String, Object> result = new HashMap<>();
         try {
-            supplierService.insertSupplierServiceDetail(std);
-            result.put(Common.STATUS, HttpStatus.OK.value());
+        	SupplierServiceDetailGroup group = supplierService.insertSupplierServiceGroup(std);
+        	if (group.getGroupId() != 0) {
+        		std.setGroupId(group.getGroupId());
+                supplierService.insertSupplierServiceDetail(std);
+                result.put(Common.STATUS, HttpStatus.OK.value());
+        	} else {
+                result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+        	}
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
             logger.error(ex.getMessage());
@@ -148,4 +155,31 @@ public class SupplierRestController {
         return result;
     }
 
+    @RequestMapping(value = "/SLG_R_01", method = RequestMethod.POST)
+    public Map<String,?> getAllSupplierServiceGroups(@RequestBody SupplierServiceDetail std){
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put(Common.LIST, supplierService.getAllSupplierServiceGroups(std));
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
+        }
+
+        return result;
+    }
+
+    @RequestMapping(value = "/SLG_R_02", method = RequestMethod.POST)
+    public Map<String,?> getSupplierServiceGroupByGroupId(@RequestBody SupplierServiceDetail std){
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put(Common.OBJECT, supplierService.getSupplierServiceGroupByGroupId(std));
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
+        }
+
+        return result;
+    }
 }
