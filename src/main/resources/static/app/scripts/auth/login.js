@@ -14,6 +14,8 @@ let fn = {
 	},
 	
 	addEventListener : function() {
+//		$(document).
+		
 		$("#btnCreateAccount").on('click', function() {
 			var onSuccess = function(res) {
 				$("#dynamic-panel").html(res);

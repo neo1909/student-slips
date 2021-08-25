@@ -2,6 +2,9 @@ package com.studentslips.entities;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class SupplierServiceDetail {
     private int id;
@@ -35,11 +38,66 @@ public class SupplierServiceDetail {
     private Timestamp insertDate;
     private int updateId;
     private Timestamp updateDate;
-
+    
+    private String listGradeIdsStr;
+    private List<Integer> listGradeIds;
+    private int groupId;
+    private List<Integer> trInsert;
+    private List<Integer> trUpdate;
+    private List<Integer> trDelete;
+    
     public SupplierServiceDetail() {
     }
 
-    public int getId() {
+    public List<Integer> getTrInsert() {
+		return trInsert;
+	}
+
+	public void setTrInsert(List<Integer> trInsert) {
+		this.trInsert = trInsert;
+	}
+
+	public List<Integer> getTrUpdate() {
+		return trUpdate;
+	}
+
+	public void setTrUpdate(List<Integer> trUpdate) {
+		this.trUpdate = trUpdate;
+	}
+
+	public List<Integer> getTrDelete() {
+		return trDelete;
+	}
+
+	public void setTrDelete(List<Integer> trDelete) {
+		this.trDelete = trDelete;
+	}
+
+	public int getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
+
+	public String getListGradeIdsStr() {
+		return listGradeIdsStr;
+	}
+
+	public void setListGradeIdsStr(String listGradeIdsStr) {
+		this.listGradeIdsStr = listGradeIdsStr;
+	}
+
+	public List<Integer> getListGradeIds() {
+		return listGradeIds;
+	}
+
+	public void setListGradeIds(List<Integer> listGradeIds) {
+		this.listGradeIds = listGradeIds;
+	}
+
+	public int getId() {
         return id;
     }
 

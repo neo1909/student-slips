@@ -130,7 +130,7 @@ function createGrid() {
                 cellsalign: 'right',
                 width: '15%',
                 editable: false,
-                cellsformat: 'd'
+                cellsformat: 'd2'
             },
             {
                 text: 'Claims',
@@ -139,7 +139,7 @@ function createGrid() {
                 cellsalign: 'right',
                 width: '15%',
                 editable: false,
-                cellsformat: 'd'
+                cellsformat: 'd2'
             },
             {
                 text: 'Balance',
@@ -148,9 +148,9 @@ function createGrid() {
                 cellsalign: 'right',
                 width: '15%',
                 editable: false,
-                cellsformat: 'd',
+                cellsformat: 'd2',
                 cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
-                	let formatValue = value.toLocaleString().replace(/\./g, ",");
+                	let formatValue = Number(value).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2});
                 	if (value && value > 0) {
                 		return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
 					} else {
@@ -165,6 +165,12 @@ function createGrid() {
         rowsheight: 33,
         selectionmode: 'none'
     });
+    let localizationobj = {
+    	currencysymbol: "",
+		decimalseparator: ",",
+		thousandsseparator: "."
+    }
+    $("#grdOverviewClass").jqxGrid('localizestrings', localizationobj);
 }
 
 function createGridDetail() {
@@ -203,7 +209,7 @@ function createGridDetail() {
                 cellsalign: 'right',
                 width: '15%',
                 editable: false,
-                cellsformat: 'd'
+                cellsformat: 'd2'
             },
             {
                 text: 'Claims',
@@ -212,7 +218,7 @@ function createGridDetail() {
                 cellsalign: 'right',
                 width: '15%',
                 editable: false,
-                cellsformat: 'd'
+                cellsformat: 'd2'
             },
             {
                 text: 'Balance',
@@ -221,9 +227,9 @@ function createGridDetail() {
                 cellsalign: 'right',
                 width: '15%',
                 editable: false,
-                cellsformat: 'd',
+                cellsformat: 'd2',
                 cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
-                	let formatValue = value.toLocaleString().replace(/\./g, ",");
+                	let formatValue = Number(value).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2});
                 	if (value && value > 0) {
                 		return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
 					} else {
@@ -237,6 +243,12 @@ function createGridDetail() {
         height: 300,
         rowsheight: 33
     });
+    let localizationobj = {
+    	currencysymbol: "",
+		decimalseparator: ",",
+		thousandsseparator: "."
+    }
+    $("#grdOverviewClassDetail").jqxGrid('localizestrings', localizationobj);
 }
 
 function onCalculateTotal(gridId) {
@@ -253,23 +265,23 @@ function onCalculateTotal(gridId) {
 		});
 		
 		if (gridId === '#grdOverviewClass') {
-			$("#grdMaster-total .debit").html(Number(totalDebit).toLocaleString());
-			$("#grdMaster-total .claims").html(Number(totalClaims).toLocaleString());
-			$("#grdMaster-total .balance").html(Number(totalBalance).toLocaleString());
+			$("#grdMaster-total .debit").html(Number(totalDebit).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+			$("#grdMaster-total .claims").html(Number(totalClaims).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+			$("#grdMaster-total .balance").html(Number(totalBalance).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
 			
 			totalData.master = {};
 			totalData.master.totalDebit = totalDebit;
 			totalData.master.totalClaims = totalClaims;
 			totalData.master.totalBalance = totalBalance;
 		} else {
-			$("#grdDetail-total .debit").html(Number(totalDebit).toLocaleString());
-			$("#grdDetail-total .claims").html(Number(totalClaims).toLocaleString());
-			$("#grdDetail-total .balance").html(Number(totalBalance).toLocaleString());
+			$("#grdDetail-total .debit").html(Number(totalDebit).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+			$("#grdDetail-total .claims").html(Number(totalClaims).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+			$("#grdDetail-total .balance").html(Number(totalBalance).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
 
 			if (totalData && totalData.master) {				
-				$("#summary-total .debit").html(Number(totalData.master.totalDebit + totalDebit).toLocaleString());
-				$("#summary-total .claims").html(Number(totalData.master.totalClaims + totalClaims).toLocaleString());
-				$("#summary-total .balance").html(Number(totalData.master.totalBalance + totalBalance).toLocaleString());
+				$("#summary-total .debit").html(Number(totalData.master.totalDebit + totalDebit).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+				$("#summary-total .claims").html(Number(totalData.master.totalClaims + totalClaims).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+				$("#summary-total .balance").html(Number(totalData.master.totalBalance + totalBalance).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
 			}
 		}
 		
@@ -322,6 +334,10 @@ function onSearch() {
         false,
         params,
         function onSuccess(data) {
+        	if (data && data.status && data.status === 'NG') {
+                SS.alert( SS.title.ERROR, data.message);
+                return;
+        	}
             sourceMaster.localdata = data.lst;
             $("#grdOverviewClass").jqxGrid({ source: sourceMaster });
         	onCalculateTotal("#grdOverviewClass");
@@ -356,6 +372,10 @@ function onSearchDetail(rowData) {
             toDate:  $("#iptSrchToDate").val(),
         },
         function onSuccess(data) {
+        	if (data && data.status && data.status === 'NG') {
+                SS.alert( SS.title.ERROR, data.message);
+                return;
+        	}
         	sourceDetail.localdata = data.lst;
             $('#grdOverviewClassDetail').jqxGrid({ source: sourceDetail });
         	onCalculateTotal("#grdOverviewClassDetail");

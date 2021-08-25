@@ -142,6 +142,10 @@ let fn = {
             false,
             params,
             function onSuccess(data) {
+            	if (data && data.status && data.status === 'NG') {
+                    SS.alert( SS.title.ERROR, data.message);
+                    return;
+            	}
             	if (data && data.lst) {            		
             		fn.gridSource.localdata = data.lst;
             		$("#grdSchool").jqxGrid({ source: fn.gridSource });
@@ -170,6 +174,10 @@ let fn = {
                 false,
                 {...data,id:id},
                 function onSuccess(data) {
+                	if (data && data.status && data.status === 'NG') {
+                        SS.alert( SS.title.ERROR, data.message);
+                        return;
+                	}
                     $("#popupSchool").jqxWindow('close');
                     fn.onSearch();
                 }
@@ -181,6 +189,10 @@ let fn = {
             false,
             data,
             function onSuccess(data) {
+            	if (data && data.status && data.status === 'NG') {
+                    SS.alert( SS.title.ERROR, data.message);
+                    return;
+            	}
                 $("#popupSchool").jqxWindow('close');
             	if (data && data.msg) {
                 	SS.confirm(SS.title.CONFIRM, data.msg, function (result) {
@@ -216,6 +228,10 @@ let fn = {
                         false,
                         { id : id },
                         function onSuccess(data) {
+                        	if (data && data.status && data.status === 'NG') {
+                                SS.alert( SS.title.ERROR, data.message);
+                                return;
+                        	}
                             fn.onSearch();
                         }
                     );

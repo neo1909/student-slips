@@ -2,6 +2,8 @@ package com.studentslips.dao;
 
 import com.studentslips.entities.Supplier;
 import com.studentslips.entities.SupplierServiceDetail;
+import com.studentslips.entities.SupplierServiceDetailGroup;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -48,4 +50,21 @@ public class SupplierDao {
     }
 
 
+
+    public int insertSupplierServiceGroup(SupplierServiceDetailGroup supplierServiceDetailGroup) {
+        return this.sqlSession.insert("insertSupplierServiceGroup", supplierServiceDetailGroup);
+    }
+
+    public int updateSupplierServiceGroup(SupplierServiceDetailGroup supplierServiceDetailGroup) {
+        return this.sqlSession.insert("updateSupplierServiceGroup", supplierServiceDetailGroup);
+    }
+    
+    
+    public List<SupplierServiceDetailGroup> getAllSupplierServiceGroups(SupplierServiceDetail supplierServiceDetail) {
+        return this.sqlSession.selectList("getAllSupplierServiceGroups", supplierServiceDetail);
+    }
+
+    public SupplierServiceDetailGroup getSupplierServiceGroupByGroupId(SupplierServiceDetail supplierServiceDetail) {
+        return this.sqlSession.selectOne("getSupplierServiceGroupByGroupId", supplierServiceDetail);
+    }
 }
