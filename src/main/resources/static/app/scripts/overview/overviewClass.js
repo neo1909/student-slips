@@ -448,7 +448,7 @@ $(document).ready(function () {
     	}
     });
     
-    $("#grdOverviewClass").on('rowdoubleclick', function (event) {
+    $("#grdOverviewClass").on('rowclick', function (event) {
         let rowData = $("#grdOverviewClass").jqxGrid('getrowdata', event.args.rowindex);
         $('#grdOverviewClassDetail').jqxGrid('refresh');
     	onSearchDetail(rowData);

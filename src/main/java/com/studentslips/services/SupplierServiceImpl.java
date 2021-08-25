@@ -77,13 +77,14 @@ public class SupplierServiceImpl implements SupplierService {
     		std.setSchoolId(searchGroup.getSchoolId());
             supplierDao.insertSupplierService(std);
     	}
-    	for (Integer gradeId: std.getTrUpdate()) {
-            supplierDao.updateSupplierService(std);
-    	}
     	for (Integer gradeId: std.getTrDelete()) {
     		std.setGrade(gradeId);
             supplierDao.deleteSupplierService(std);
     	}
+    	
+    	std.setId(0);
+    	std.setGrade(0);
+        supplierDao.updateSupplierService(std);
     	
     	SupplierServiceDetailGroup group = new SupplierServiceDetailGroup();
     	group.setGroupId(std.getGroupId());
@@ -94,8 +95,14 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public void deleteSupplierServiceDetail(SupplierServiceDetail std) throws Exception {
-        std.setUpdateId(SessionUtil.getUserLoginId());
-        supplierDao.deleteSupplierService(std);
+    	SupplierServiceDetailGroup group = new SupplierServiceDetailGroup();
+    	group.setGroupId(std.getGroupId());
+    	group.setUpdateId(SessionUtil.getUserLoginId());
+    	int cnt = supplierDao.deleteSupplierServiceGroup(group);
+    	if (cnt > 0) {
+    		std.setUpdateId(SessionUtil.getUserLoginId());
+    		supplierDao.deleteSupplierService(std);
+    	}
     }
 
 	@Override

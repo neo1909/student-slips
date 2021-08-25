@@ -68,12 +68,12 @@
             AND  id = #{id}
         </if>
     </update>
-    <delete id="deleteSupplier" parameterType="com.studentslips.entities.Supplier">
+    <update id="deleteSupplier" parameterType="com.studentslips.entities.Supplier">
         UPDATE onetouch.PS_Suppliers  SET  del_yn = 'Y',update_id = #{updateId}, update_date = SYSDATE()
         WHERE ID = #{id} AND del_yn = 'N';
-    </delete>
-    <delete id="deleteSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail">
-        DELETE FROM onetouch.PS_Suppliers_Service
+    </update>
+    <update id="deleteSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail">
+        UPDATE onetouch.PS_Suppliers_Service SET del_yn='Y'
         WHERE 1=1
         <if test="groupId != 0 ">
             AND  group_id = #{groupId}
@@ -84,7 +84,7 @@
         <if test="id != 0 ">
             AND  id = #{id}
         </if>
-    </delete>
+    </update>
     <select id="selectSupplierDetail" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="result">
 
         select
@@ -209,6 +209,11 @@
         </if>
     </update>
     
+    <update id="deleteSupplierServiceGroup" parameterType="com.studentslips.entities.SupplierServiceDetailGroup">
+        UPDATE onetouch.PS_Suppliers_Service_Group SET del_yn = 'Y'
+        WHERE 1=1 AND id = #{groupId}
+    </update>
+    
     <select id="getAllSupplierServiceGroups" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="supSvcDtlGroupSearchModel">
         select
 			SS.*, S01.list_grade_ids_str, ps.name as supplier_name, ps2.name as service_name
@@ -218,6 +223,7 @@
 				group_id,
 				GROUP_CONCAT(grade) as list_grade_ids_str
 			from ps_suppliers_service
+        	where del_yn = 'N'
 			group by group_id
 		) S01 on SS.group_id = S01.group_id
         left join PS_Suppliers ps on ps.id = SS.suppliers_id
@@ -264,6 +270,7 @@
 				group_id,
 				GROUP_CONCAT(grade) as list_grade_ids_str
 			from ps_suppliers_service
+        	where del_yn = 'N'
 			group by group_id
 		) S01 on SS.group_id = S01.group_id
         left join PS_Suppliers ps on ps.id = SS.suppliers_id

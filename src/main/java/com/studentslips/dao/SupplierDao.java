@@ -54,9 +54,11 @@ public class SupplierDao {
     public int insertSupplierServiceGroup(SupplierServiceDetailGroup supplierServiceDetailGroup) {
         return this.sqlSession.insert("insertSupplierServiceGroup", supplierServiceDetailGroup);
     }
-
     public int updateSupplierServiceGroup(SupplierServiceDetailGroup supplierServiceDetailGroup) {
-        return this.sqlSession.insert("updateSupplierServiceGroup", supplierServiceDetailGroup);
+        return this.sqlSession.update("updateSupplierServiceGroup", supplierServiceDetailGroup);
+    }
+    public int deleteSupplierServiceGroup(SupplierServiceDetailGroup supplierServiceDetailGroup) {
+        return this.sqlSession.update("deleteSupplierServiceGroup", supplierServiceDetailGroup);
     }
     
     

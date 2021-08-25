@@ -248,7 +248,7 @@ function createGrid() {
                 	let rowData = $("#grdBank").jqxGrid("getrowdata", row);
                 	let isHighlight = rowData.isHightLight;
                 	if (isHighlight == 0) {
-                		return '<div style="padding: 4px; background-color: #FF4848, color: #FFF, padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + value + '</div>';
+                		return '<div style="background-color: #FF4848; color: #FFF; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + value + '</div>';
 					}
                 }
             },
@@ -337,7 +337,7 @@ function ceateGridBank() {
                 	let rowData = $("#grdBankDetail").jqxGrid("getrowdata", row);
                 	let isHighlight = rowData.isHightLight;
                 	if (isHighlight == 0) {
-                		return '<div style="padding: 4px; background-color: #FF4848, color: #FFF, padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + value + '</div>';
+                		return '<div style="background-color: #FF4848; color: #FFF; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + value + '</div>';
 					}
                 }
             },

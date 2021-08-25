@@ -304,7 +304,13 @@ function onSearchUpdate() {
     );
 }
 
+function resetFields() {
+	if (screenType == 'U') return;
+	$("#iptComment").val('');
+};
+
 function onSearch() {
+	resetFields();
 	tr_update = [];
     let params = {
         grade: $("#cmbStdGradeSrch").val() ? $("#cmbStdGradeSrch").val() : "",

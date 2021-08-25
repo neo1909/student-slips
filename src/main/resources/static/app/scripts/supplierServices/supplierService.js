@@ -231,14 +231,14 @@ let fn = {
 
     onDelete: function (rowIndex) {
         let data = $("#grdDetail").jqxGrid('getrowdata', rowIndex);
-        let id = data.id;
+        let id = data.groupId;
         if (id) {
             SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
                 if (result) {
                     SS.sendToServer(
                         'SL_D_03',
                         false,
-                        { id: id },
+                        { groupId: id },
                         function onSuccess(data) {
                             fn.onSearch();
                         }
