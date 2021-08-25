@@ -114,7 +114,7 @@
     </select>
 
     <select id="search" parameterType="com.studentslips.entities.StudentsDebts" resultMap="result">
-        select s.id as student_id,s.name,concat(concat(LPAD(S.id, 4, '0') , '-' , S01.supplier_id,'-',#{serviceId}))  as reference_no, S01.name as service_name, #{price} as price
+        select s.id as student_id,s.name,concat(concat(LPAD(s.id, 4, '0') , '-' , S01.supplier_id,'-',#{serviceId}))  as reference_no, S01.name as service_name, #{price} as price
         from PS_Students s
         left join PS_Service S01 on S01.id = #{serviceId}
         where s.del_yn='N'
