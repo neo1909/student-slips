@@ -75,6 +75,7 @@ let fnOverview = {
         * */
         $('#btnStdSrch').click(function () {
             $('#grdSchoolOverview').jqxGrid('refresh');
+            $('#grdSchoolDetail').jqxGrid('clear');
             fnOverview.onSearch();
         });
 
@@ -138,6 +139,8 @@ let fnOverview = {
 
         $("#grdSchoolOverview").jqxGrid('clearselection');
         $('#grdSchoolOverview').jqxGrid('refresh');
+        $("#grdSchoolDetail").jqxGrid('clearselection');
+        $('#grdSchoolDetail').jqxGrid('refresh');
         let params = {
             fromDate: $('#iptFromDate').val(),
             toDate: $('#iptToDate').val(),
@@ -266,8 +269,8 @@ let fnDetail = {
             return;
         }
 
-        $("#grdSchoolOverview").jqxGrid('clearselection');
-        $('#grdSchoolOverview').jqxGrid('refresh');
+        $("#grdSchoolDetail").jqxGrid('clearselection');
+        $('#grdSchoolDetail').jqxGrid('refresh');
         let params = {
             fromDate: $('#iptFromDate').val(),
             toDate: $('#iptToDate').val(),
@@ -334,6 +337,9 @@ function onCalculateTotal(gridId) {
             $("#grdDetail-claims").html(SS.format.formatNumberByLocales(totalClaims));
             $("#grdDetail-balance").html(SS.format.formatNumberByLocales(totalBalance));
         }
+        $("#intotal-debit").html(SS.format.formatNumberByLocales(totalDebit));
+        $("#intotal-claims").html(SS.format.formatNumberByLocales(totalClaims));
+        $("#intotal-balance").html(SS.format.formatNumberByLocales(totalBalance));
 
     }
 }
@@ -369,6 +375,11 @@ let originalServiceIdList = [];
 let checkedAllServices = false;
 
 $(document).ready(function() {
+
+    $("#intotal-debit").html(0);
+    $("#intotal-claims").html(0);
+    $("#intotal-balance").html(0);
+
     fnCommon.onServiceSearch();
     fnOverview.init();
     fnDetail.init();

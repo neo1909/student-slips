@@ -71,8 +71,8 @@ let fn = {
         $("#popupStudent").jqxWindow({
             isModal: true,
             autoOpen: false,
-            height: 600,
-            width: 1000,
+            height: 720,
+            width: 1280,
             theme: 'bootstrap',
             title: 'Student Balance Overview',
             position: 'center',
