@@ -159,10 +159,22 @@ let fn = {
 			hintType: 'label',
             rules: [
                 { input: '#iptNm', message: 'Name is required', action: 'keyup, blur', rule: 'required' },
-                { input: '#cmbSupplier', message: 'Supplier is required', action: 'keyup, blur', rule: 'required' },
-                { input: '#cmbService', message: 'Service is required', action: 'keyup, blur', rule: 'required' },
-                { input: '#cmbGrade', message: 'Grade is required', action: 'keyup, blur', rule: 'required' },
-                { input: '#cmbNoPayment', message: 'No. of Payment is required', action: 'keyup, blur', rule: 'required' },
+                { input: '#cmbSupplier', message: 'Supplier is required', action: 'change, keyup, blur', rule: function () {
+                		return ($('#cmbSupplier').val() > 0)
+                	} 
+                },
+                { input: '#cmbService', message: 'Service is required', action: 'change, keyup, blur', rule: function () {
+            			return ($('#cmbService').val() > 0)
+            		}  
+                },
+                { input: '#cmbGrade', message: 'Grade is required', action: 'blur', rule: function () {
+        				return ($('#cmbGrade').val() && $('#cmbGrade').val() != '')
+        			}
+                },
+                { input: '#cmbNoPayment', message: 'No. of Payment is required', action: 'change, keyup, blur', rule: function () {
+            			return ($('#cmbNoPayment').val() > 0)
+            		}
+                },
             ]
 		});
     },
