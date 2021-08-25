@@ -279,9 +279,9 @@ function onCalculateTotal(gridId) {
 			$("#grdDetail-total .balance").html(SS.format.formatNumberByLocales(totalBalance));
 
 			if (totalData && totalData.master) {				
-				let debit = totalData.master.totalDebit + totalDebit;
-				let claims = totalData.master.totalClaims + totalClaims;
-				let balance = totalData.master.totalBalance + totalBalance;
+				let debit = totalData.master.totalDebit;
+				let claims = totalData.master.totalClaims;
+				let balance = totalData.master.totalBalance;
 				$("#summary-total .debit").html(SS.format.formatNumberByLocales(debit));
 				$("#summary-total .claims").html(SS.format.formatNumberByLocales(claims));
 				$("#summary-total .balance").html(SS.format.formatNumberByLocales(balance));

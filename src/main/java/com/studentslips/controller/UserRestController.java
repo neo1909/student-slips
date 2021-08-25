@@ -63,7 +63,7 @@ public class UserRestController {
     public Map<String,?> updateUser(@RequestBody User user){
         Map<String, Object> result = new HashMap<>();
         try {
-            int dataStd = userService.updateUser(user);
+            int dataStd = userService.updateUserForAdmin(user);
             if (dataStd == 1) {
                 result.put(Common.STATUS, HttpStatus.OK.value());
             } else {

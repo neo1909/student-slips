@@ -120,4 +120,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.deleteUserById(user);
 	}
 
+	@Override
+	public int updateUserForAdmin(User user) {
+		return userDao.updateUserForAdmin(user);
+	}
+
 }

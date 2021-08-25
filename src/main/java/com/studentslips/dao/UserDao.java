@@ -40,4 +40,8 @@ public class UserDao {
 	public int deleteUserById(User user) {
 		return this.sqlSession.update("deleteUserById", user);
 	}
+
+	public int updateUserForAdmin(User user) {
+		return this.sqlSession.update("updateUserForAdmin", user);
+	}
 }

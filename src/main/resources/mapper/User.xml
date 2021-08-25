@@ -65,9 +65,25 @@
 
     <update id="updateUser" parameterType="com.studentslips.entities.User">
         UPDATE PS_Users SET
-        <if test="password != null and password !=''">
-            password = #{password},
+        <if test="loginRetryCount > -1">
+            login_retry_count = #{loginRetryCount},
         </if>
+        <if test="lastLoginDate != null">
+            last_login_date = #{lastLoginDate},
+        </if>
+        <if test="status != null and status !=''">
+            status = #{status},
+        </if>
+        <if test="delYn != null and delYn !=''">
+            del_yn = #{delYn},
+        </if>
+        update_id = #{updateId},
+        update_date = SYSDATE()
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateUserForAdmin" parameterType="com.studentslips.entities.User">
+        UPDATE PS_Users SET
         <if test="fullName != null and fullName !=''">
             full_name = #{fullName},
         </if>
@@ -79,12 +95,6 @@
         </if>
         <if test="userType != null and userType !=''">
             user_type = #{userType},
-        </if>
-        <if test="loginRetryCount > -1">
-            login_retry_count = #{loginRetryCount},
-        </if>
-        <if test="lastLoginDate != null">
-            last_login_date = #{lastLoginDate},
         </if>
         <if test="status != null and status !=''">
             status = #{status},

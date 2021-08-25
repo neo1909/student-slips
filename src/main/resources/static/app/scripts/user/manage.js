@@ -67,7 +67,6 @@ var fn = {
     	this.initGrid();
     	
     	fn.data.statusList = [
-    		{value: "", name: "All"},
     		{value: "ACTIVE", name: "ACTIVE"},
     		{value: "DEACTIVE", name: "DEACTIVE"},
     	];
