@@ -39,42 +39,18 @@
         <if test="noPayment!= 0 ">
             no_payment=#{noPayment},
         </if>
-        <if test="amount1!= 0 ">
             amount_1=#{amount1},
-        </if>
-        <if test="amount2!= 0 ">
             amount_2=#{amount2},
-        </if>
-        <if test="amount3!= 0 ">
             amount_3=#{amount3},
-        </if>
-        <if test="amount4!= 0 ">
             amount_4=#{amount4},
-        </if>
-        <if test="amount5!= 0 ">
             amount_5=#{amount5},
-        </if>
-        <if test="amount6!= 0 ">
             amount_6=#{amount6},
-        </if>
-        <if test="amount7!= 0 ">
             amount_7=#{amount7},
-        </if>
-        <if test="amount8!= 0 ">
             amount_8=#{amount8},
-        </if>
-        <if test="amount9!= 0 ">
             amount_9=#{amount9},
-        </if>
-        <if test="amount10!= 0 ">
             amount_10=#{amount10},
-        </if>
-        <if test="amount11!= 0 ">
             amount_11=#{amount11},
-        </if>
-        <if test="amount12!= 0 ">
             amount_12=#{amount12},
-        </if>
         update_id = #{updateId}
         , update_date = SYSDATE()
 
@@ -86,7 +62,7 @@
             AND  group_id = #{groupId}
         </if>
         <if test="grade != 0">
-            AND grade=#{grade},
+            AND grade=#{grade}
         </if>
         <if test="id != 0 ">
             AND  id = #{id}

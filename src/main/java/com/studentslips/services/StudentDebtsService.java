@@ -18,8 +18,8 @@ public interface StudentDebtsService {
     public void updateStudentsDebtsObj(StudentDebtsObject studentDebtsObject) throws Exception;
     //TaskArchive
     public List<StudentsDebtsTask> searchTaskArchives(TaskArchiveSearch taskArchiveSearch) throws Exception;
-	public int deleteTaskArchive(StudentsDebtsTask studentsDebtsTask);
-	public int updateTaskArchive(StudentsDebtsTask studentsDebtsTask);
+	public int deleteTaskArchive(StudentsDebtsTask studentsDebtsTask) throws Exception;
+	public int updateTaskArchive(StudentsDebtsTask studentsDebtsTask) throws Exception;
 	public StudentsDebtsTask insertTaskArchive(StudentDebtsObject std) throws Exception;
 	public int countTaskArchive(TaskArchiveSearch taskArchiveSearch) throws Exception;
 }

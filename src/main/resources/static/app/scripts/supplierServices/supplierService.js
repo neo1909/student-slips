@@ -124,18 +124,18 @@ let fn = {
         $("#cmbNoPayment").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.noPayment, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
 
         $("#iptPrice").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
-        $("#iptAmt01").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
-        $("#iptAmt02").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
-        $("#iptAmt03").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
-        $("#iptAmt04").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
-        $("#iptAmt05").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
-        $("#iptAmt06").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
-        $("#iptAmt07").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
-        $("#iptAmt08").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
-        $("#iptAmt09").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
-        $("#iptAmt10").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
-        $("#iptAmt11").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
-        $("#iptAmt12").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: true });
+        $("#iptAmt01").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
+        $("#iptAmt02").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
+        $("#iptAmt03").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
+        $("#iptAmt04").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
+        $("#iptAmt05").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
+        $("#iptAmt06").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
+        $("#iptAmt07").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
+        $("#iptAmt08").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
+        $("#iptAmt09").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
+        $("#iptAmt10").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
+        $("#iptAmt11").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
+        $("#iptAmt12").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
         $('#btnSrch').click(function () {
             $('#grdDetail').jqxGrid('refresh');
             fn.onSearch();
@@ -402,6 +402,18 @@ $(document).ready(function () {
         })
     })
     $("#cmbNoPayment").on('change', function (event) {
+        $('#iptAmt01').val("");
+        $('#iptAmt02').val("");
+        $('#iptAmt03').val("");
+        $('#iptAmt04').val("");
+        $('#iptAmt05').val("");
+        $('#iptAmt06').val("");
+        $('#iptAmt07').val("");
+        $('#iptAmt08').val("");
+        $('#iptAmt09').val("");
+        $('#iptAmt10').val("");
+        $('#iptAmt11').val("");
+        $('#iptAmt12').val("");
         if (event.args && event.args.item) {
             const id = event.args.item.originalItem;
             let arrPay = document.querySelectorAll('.amountPay');

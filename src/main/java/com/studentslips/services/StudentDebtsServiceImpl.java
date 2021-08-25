@@ -102,12 +102,14 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
 	}
 
 	@Override
-	public int deleteTaskArchive(StudentsDebtsTask studentsDebtsTask) {
+	public int deleteTaskArchive(StudentsDebtsTask studentsDebtsTask) throws Exception {
+        studentsDebtsTask.setUpdateId(SessionUtil.getUserLoginId());
 		return studentDebtsDao.deleteTaskArchive(studentsDebtsTask);
 	}
 
 	@Override
-	public int updateTaskArchive(StudentsDebtsTask studentsDebtsTask) {
+	public int updateTaskArchive(StudentsDebtsTask studentsDebtsTask) throws Exception {
+        studentsDebtsTask.setUpdateId(SessionUtil.getUserLoginId());
 		return studentDebtsDao.updateTaskArchive(studentsDebtsTask);
 	}
 

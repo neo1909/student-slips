@@ -80,7 +80,7 @@ let source = {
             type: 'string'
         },
         {
-            name: 'isHighlight',
+            name: 'isHightLight',
             type: 'int'
         }
     ],
@@ -166,7 +166,7 @@ let sourcePopup = {
             type: 'string'
         },
         {
-            name: 'isHighlight',
+            name: 'isHightLight',
             type: 'int'
         }
     ],
@@ -246,11 +246,9 @@ function createGrid() {
                 cellsformat: 'd',
                 cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
                 	let rowData = $("#grdBank").jqxGrid("getrowdata", row);
-                	let isHighlight = rowData.isHighlight;
+                	let isHighlight = rowData.isHightLight;
                 	if (isHighlight == 0) {
                 		return '<div style="padding: 4px; background-color: #FF4848, color: #FFF, padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + value + '</div>';
-					} else {
-						return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + value + '</div>';
 					}
                 }
             },
@@ -305,7 +303,7 @@ function ceateGridBank() {
         editable: true,
             columns: [{
                 text: 'Account Number',
-                datafield: 'accountNumber',
+                datafield: 'payerAccount',
                 align: 'center',
                 cellsalign: 'left',
                 width: '20%',
@@ -336,12 +334,10 @@ function ceateGridBank() {
                 width: '20%',
                 editable: true,
                 cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
-                	let rowData = $("#grdBank").jqxGrid("getrowdata", row);
-                	let isHighlight = rowData.isHighlight;
+                	let rowData = $("#grdBankDetail").jqxGrid("getrowdata", row);
+                	let isHighlight = rowData.isHightLight;
                 	if (isHighlight == 0) {
                 		return '<div style="padding: 4px; background-color: #FF4848, color: #FFF, padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + value + '</div>';
-					} else {
-						return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + value + '</div>';
 					}
                 }
             },

@@ -66,8 +66,8 @@ let fn = {
 
         // Search
         $("#iptHTdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
-        $("#cmbHTGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.gradeEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
-        $("#cmbHTClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazzEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbHTGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.gradeAll, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbHTClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazzAll, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
 
         // Popup Head Teacher
         $("#popupHeadTeacher").jqxWindow({

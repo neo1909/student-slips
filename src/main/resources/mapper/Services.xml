@@ -32,7 +32,7 @@
         where  S.del_yn='N'
         <if test="name != null and !''.equals(name)">
             <bind name="nameLike" value="'%' + name + '%'" />
-            AND   S.name like #{nameLike}
+            AND   UPPER(S.name) like UPPER(#{nameLike})
         </if>
         <if test="schoolId!=0 ">
             AND  S.school_id = #{schoolId}

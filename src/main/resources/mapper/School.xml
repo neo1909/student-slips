@@ -47,7 +47,7 @@
         where  S.del_yn='N'
         <if test="schoolName!=null and schoolName !=''">
             <bind name="nameLike" value="'%' + schoolName + '%'" />
-        AND   name like #{nameLike}
+        AND   UPPER(name) like UPPER(#{nameLike})
         </if>
         <if test="id != 0">
         	AND id = #{id}
