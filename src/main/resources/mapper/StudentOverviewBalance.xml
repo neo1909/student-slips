@@ -22,7 +22,7 @@
                                     select name from PS_Service where id = sd.service_id
                                 ), ' - ', MONTHNAME(debit_date) , ' 1/1 ') AS descriptions
             FROM PS_Students_Debts sd
-            where student_id = #{id} and sd.service_id = #{serviceId}
+            where student_id = #{id} and sd.service_id = #{serviceId} and del_yn = 'N'
                 -- and sd.debit_date between '2021-08-10' and  '2021-09-11'
         )
 
