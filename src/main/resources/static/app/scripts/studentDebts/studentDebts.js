@@ -81,7 +81,7 @@ let source = {
         },
         {
             name: 'price',
-            type: 'string'
+            type: 'number'
         },
         {
             name: 'id',
@@ -166,7 +166,7 @@ function createGrid() {
                 cellsalign: 'right',
                 width: '16,6667%',
                 editable: true,
-                cellsformat: 'd2'
+                cellsformat: 'd'
             },
             {
                 text: 'Price',

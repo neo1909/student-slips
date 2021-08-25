@@ -21,15 +21,15 @@ let sourceMaster = {
         },
         {
             name: 'debit',
-            type: 'int'
+            type: 'number'
         },
         {
             name: 'claims',
-            type: 'int'
+            type: 'number'
         },
         {
             name: 'balance',
-            type: 'int'
+            type: 'number'
         },
         {
             name: 'isHightColor',
@@ -150,7 +150,7 @@ function createGrid() {
                 editable: false,
                 cellsformat: 'd2',
                 cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
-                	let formatValue = Number(value).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                	let formatValue = SS.format.formatNumberByLocales(value);
                 	if (value && value > 0) {
                 		return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
 					} else {
@@ -229,7 +229,7 @@ function createGridDetail() {
                 editable: false,
                 cellsformat: 'd2',
                 cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
-                	let formatValue = Number(value).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                	let formatValue = SS.format.formatNumberByLocales(value);
                 	if (value && value > 0) {
                 		return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
 					} else {
@@ -265,23 +265,26 @@ function onCalculateTotal(gridId) {
 		});
 		
 		if (gridId === '#grdOverviewClass') {
-			$("#grdMaster-total .debit").html(Number(totalDebit).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
-			$("#grdMaster-total .claims").html(Number(totalClaims).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
-			$("#grdMaster-total .balance").html(Number(totalBalance).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+			$("#grdMaster-total .debit").html(SS.format.formatNumberByLocales(totalDebit));
+			$("#grdMaster-total .claims").html(SS.format.formatNumberByLocales(totalClaims));
+			$("#grdMaster-total .balance").html(SS.format.formatNumberByLocales(totalBalance));
 			
 			totalData.master = {};
 			totalData.master.totalDebit = totalDebit;
 			totalData.master.totalClaims = totalClaims;
 			totalData.master.totalBalance = totalBalance;
 		} else {
-			$("#grdDetail-total .debit").html(Number(totalDebit).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
-			$("#grdDetail-total .claims").html(Number(totalClaims).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
-			$("#grdDetail-total .balance").html(Number(totalBalance).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+			$("#grdDetail-total .debit").html(SS.format.formatNumberByLocales(totalDebit));
+			$("#grdDetail-total .claims").html(SS.format.formatNumberByLocales(totalClaims));
+			$("#grdDetail-total .balance").html(SS.format.formatNumberByLocales(totalBalance));
 
 			if (totalData && totalData.master) {				
-				$("#summary-total .debit").html(Number(totalData.master.totalDebit + totalDebit).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
-				$("#summary-total .claims").html(Number(totalData.master.totalClaims + totalClaims).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
-				$("#summary-total .balance").html(Number(totalData.master.totalBalance + totalBalance).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+				let debit = totalData.master.totalDebit + totalDebit;
+				let claims = totalData.master.totalClaims + totalClaims;
+				let balance = totalData.master.totalBalance + totalBalance;
+				$("#summary-total .debit").html(SS.format.formatNumberByLocales(debit));
+				$("#summary-total .claims").html(SS.format.formatNumberByLocales(claims));
+				$("#summary-total .balance").html(SS.format.formatNumberByLocales(balance));
 			}
 		}
 		

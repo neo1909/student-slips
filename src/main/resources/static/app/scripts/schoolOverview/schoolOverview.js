@@ -12,9 +12,9 @@ let fnOverview = {
                 {name: 'nameStudent', type: 'string'},
                 {name: 'serviceId', type: 'int'},
                 {name: 'nameService', type: 'string'},
-                {name: 'debit', type: 'int'},
-                {name: 'claims', type: 'int'},
-                {name: 'balance', type: 'int'},
+                {name: 'debit', type: 'number'},
+                {name: 'claims', type: 'number'},
+                {name: 'balance', type: 'number'},
                 {name: 'isHightColor', type: 'int'},
                 {name: 'gradeClass', type: 'string'},
                 {name: 'headTeacherId', type: 'int'},
@@ -46,13 +46,10 @@ let fnOverview = {
                 {text: 'Grade/Class', datafield: 'gradeClass', align: 'center', cellsalign: 'center', width: '10%,'},
                 {text: 'Head Teacher', datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
                 {text: 'Services', datafield: 'nameService', align: 'center', cellsalign: 'center', width: '15%,'},
-                {text: 'Dedit', datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd'},
-                {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd'},
+                {text: 'Dedit', datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
+                {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
                 {text: 'Balance', datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
-                        let formatValue = value.toLocaleString().replace(/\./g, ",");/*
-                        if (formatValue < 0) {
-                            return 'green';
-                        }*/
+                		let formatValue = SS.format.formatNumberByLocales(value);
                         if (value && value > 0) {
                             return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
                         } else {
@@ -65,6 +62,12 @@ let fnOverview = {
             height: 300,
             rowsheight: 33
         });
+        let localizationobj = {
+        	currencysymbol: "",
+    		decimalseparator: ",",
+    		thousandsseparator: "."
+        }
+        $("#grdSchoolOverview").jqxGrid('localizestrings', localizationobj);
 
         /*
         * Init Component Event
@@ -181,9 +184,9 @@ let fnDetail = {
                 {name: 'nameStudent', type: 'string'},
                 {name: 'serviceId', type: 'int'},
                 {name: 'nameService', type: 'string'},
-                {name: 'debit', type: 'int'},
-                {name: 'claims', type: 'int'},
-                {name: 'balance', type: 'int'},
+                {name: 'debit', type: 'number'},
+                {name: 'claims', type: 'number'},
+                {name: 'balance', type: 'number'},
                 {name: 'isHightColor', type: 'int'},
                 {name: 'gradeClass', type: 'string'},
                 {name: 'headTeacherId', type: 'int'},
@@ -215,13 +218,10 @@ let fnDetail = {
                 {text: 'Grade/Class', datafield: 'gradeClass', align: 'center', cellsalign: 'center', width: '10%,'},
                 {text: 'Head Teacher', datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
                 {text: 'Services', datafield: 'nameService', align: 'center', cellsalign: 'center', width: '15%,'},
-                {text: 'Dedit', datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd'},
-                {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd'},
-                {text: 'Balance', datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
-                        let formatValue = value.toLocaleString().replace(/\./g, ",");/*
-                        if (formatValue < 0) {
-                            return 'green';
-                        }*/
+                {text: 'Dedit', datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
+                {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
+                {text: 'Balance', datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
+                        let formatValue = SS.format.formatNumberByLocales(value);
                         if (value && value > 0) {
                             return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
                         } else {
@@ -234,6 +234,12 @@ let fnDetail = {
             height: 300,
             rowsheight: 33
         });
+        let localizationobj = {
+        	currencysymbol: "",
+    		decimalseparator: ",",
+    		thousandsseparator: "."
+        }
+        $("#grdSchoolDetail").jqxGrid('localizestrings', localizationobj);
     },
 
     onSearch: function (rowdata) {
@@ -298,16 +304,14 @@ function onCalculateTotal(gridId) {
             totalBalance += row.balance;
         });
 
-        console.log(totalDebit +":" + totalClaims + ":" + totalBalance);
-
         if (gridId === '#grdSchoolOverview') {
-            $("#grdMaster-debit").html(Number(totalDebit).toLocaleString());
-            $("#grdMaster-claims").html(Number(totalClaims).toLocaleString());
-            $("#grdMaster-balance").html(Number(totalBalance).toLocaleString());
+            $("#grdMaster-debit").html(SS.format.formatNumberByLocales(totalDebit));
+            $("#grdMaster-claims").html(SS.format.formatNumberByLocales(totalClaims));
+            $("#grdMaster-balance").html(SS.format.formatNumberByLocales(totalBalance));
         } else {
-            $("#grdDetail-debit").html(Number(totalDebit).toLocaleString());
-            $("#grdDetail-claims").html(Number(totalClaims).toLocaleString());
-            $("#grdDetail-balance").html(Number(totalBalance).toLocaleString());
+            $("#grdDetail-debit").html(SS.format.formatNumberByLocales(totalDebit));
+            $("#grdDetail-claims").html(SS.format.formatNumberByLocales(totalClaims));
+            $("#grdDetail-balance").html(SS.format.formatNumberByLocales(totalBalance));
         }
 
     }

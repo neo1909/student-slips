@@ -45,6 +45,19 @@ let SS = {
 		 return src;
 	 },
   },
+  
+  locales: {
+	 number: "sr-RS"
+  },
+  
+  format: {
+	  formatNumberByLocales: function(value, minimumFractionDigits, maximumFractionDigits) {
+			  return Number(value).toLocaleString(SS.locales.number, {
+								minimumFractionDigits : minimumFractionDigits ? minimumFractionDigits : 2,
+								maximumFractionDigits : maximumFractionDigits ? maximumFractionDigits : 2
+							});
+	  }
+  },
 
   sendToServer: function (url, async, param, onSuccess, onError) {
     $.ajax({

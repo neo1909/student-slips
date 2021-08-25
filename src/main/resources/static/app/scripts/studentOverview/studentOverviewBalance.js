@@ -20,10 +20,10 @@ let fnPopup = {
         {name: 'serviceNm', type: 'string'},
         {name: 'date', type: 'date'},
         {name: 'description', type: 'string'},
-        {name: 'debit', type: 'int'},
+        {name: 'debit', type: 'number'},
         {name: 'print', type: 'int'},
-        {name: 'claims', type: 'int'},
-        {name: 'balance', type: 'int'},
+        {name: 'claims', type: 'number'},
+        {name: 'balance', type: 'number'},
         {name: 'rowType', type: 'int'},
     ],
 
@@ -409,9 +409,9 @@ function onCalculateTotal() {
             totalBalance += allRows[allRows.length-1].balance;
         }
     }
-    $("#grdStudentBalance-debit").html(Number(totalDebit).toLocaleString());
-    $("#grdStudentBalance-claims").html(Number(totalClaims).toLocaleString());
-    $("#grdStudentBalance-balance").html(Number(totalBalance).toLocaleString());
+    $("#grdStudentBalance-debit").html(SS.format.formatNumberByLocales(totalDebit));
+    $("#grdStudentBalance-claims").html(SS.format.formatNumberByLocales(totalClaims));
+    $("#grdStudentBalance-balance").html(SS.format.formatNumberByLocales(totalBalance));
 }
 
 function onPrint() {

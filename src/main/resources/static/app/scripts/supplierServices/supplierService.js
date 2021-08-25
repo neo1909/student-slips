@@ -76,7 +76,7 @@ let fn = {
                 { text: 'Name', datafield: 'name', align: 'center', cellsalign: 'left', width: '15%' },
                 { text: 'Supplier Name', datafield: 'supplierName', align: 'center', cellsalign: 'left', width: '15%' },
                 { text: 'Service Name', datafield: 'serviceName', align: 'center', cellsalign: 'left', width: '15%' },
-                { text: 'Price', datafield: 'price', align: 'center', cellsalign: 'right', width: '20%' },
+                { text: 'Price', datafield: 'price', align: 'center', cellsalign: 'right', width: '20%', cellsformat: 'd2' },
                 { text: 'No. Payment', datafield: 'noPayment', align: 'center', cellsalign: 'right', width: '10%' },
                 { text: 'Grade', datafield: 'listGradeIdsStr', align: 'center', cellsalign: 'center', width: '10%' },
 
@@ -95,6 +95,12 @@ let fn = {
             height: 400,
             rowsheight: 33
         });
+        let localizationobj = {
+        	currencysymbol: "",
+    		decimalseparator: ",",
+    		thousandsseparator: "."
+        }
+        $("#grdDetail").jqxGrid('localizestrings', localizationobj);
 
         // Search
         $("#iptNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });

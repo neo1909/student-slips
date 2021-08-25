@@ -243,15 +243,14 @@ function createGrid() {
                 cellsalign: 'right',
                 width: '30%',
                 editable: false,
-                cellsformat: 'd2',
+                cellsformat: 'd',
                 cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
                 	let rowData = $("#grdBank").jqxGrid("getrowdata", row);
                 	let isHighlight = rowData.isHighlight;
-                	let formatValue = Number(value).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2});
                 	if (isHighlight == 0) {
-                		return '<div style="padding: 4px; background-color: #FF4848, color: #FFF, padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
+                		return '<div style="padding: 4px; background-color: #FF4848, color: #FFF, padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + value + '</div>';
 					} else {
-						return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
+						return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + value + '</div>';
 					}
                 }
             },
@@ -272,7 +271,7 @@ function createGrid() {
                 cellsalign: 'right',
                 width: '20%',
                 editable: false,
-                cellsformat: 'd2'
+                cellsformat: 'd'
             },
             {
                 text: 'Actions',
