@@ -1,11 +1,14 @@
 package com.studentslips.entities;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class StudentOverviewBalanceDTO {
     private int id;
-    private Timestamp date;
+    private int serviceId;
+    private String serviceNm;
+    private Date date;
     private String description;
     private BigDecimal debit;
     private boolean print;
@@ -17,11 +20,11 @@ public class StudentOverviewBalanceDTO {
 
     }
 
-    public Timestamp getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -79,5 +82,21 @@ public class StudentOverviewBalanceDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(int serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public String getServiceNm() {
+        return serviceNm;
+    }
+
+    public void setServiceNm(String serviceNm) {
+        this.serviceNm = serviceNm;
     }
 }

@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="/lib/styles/jqx.bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/app.css" type="text/css">
     <link rel="stylesheet" href="/lib/styles/waitMe.min.css" type="text/css">
+    <link rel="stylesheet" href="/app/styles/cellColor.css" type="text/css">
+    <link rel="stylesheet" href="/app/styles/student.css" type="text/css">
+    <link rel="stylesheet" href="/app/styles/custom.css" type="text/css">
+
 </head>
 
 <body class="skin-blue" id="ssApp">
@@ -93,35 +97,72 @@
                 <div class="div-search">
                     <form role="form">
                         <div class="row">
-                            <div class="form-group col-md-5">
+                            <div class="form-group col-md-2">
                                 <label >Name and surname</label>
                                 <div >
                                     <input id="iptStdNmOverviewSrch" style="padding-left: 12px;"/>
                                     <input name="iptStdId" id="iptStdId" style="display: none;" disabled/>
                                 </div>
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-1">
                                 <label >Grade</label>
                                 <div >
                                     <div id="cmbStdGradeOverviewSSrch" style="padding-left: 12px;"></div>
                                 </div>
                             </div>
-                            <div class="form-group col-md-2">
+                            <div class="form-group col-md-1">
                                 <label >Class</label>
                                 <div >
                                     <div id="cmbStdClassOverviewSrch" style="padding-left: 12px;"></div>
                                 </div>
                             </div>
-<!--                            <div class="form-group col-md-2">
+
+                            <div class="form-group col-md-2">
+                                <label>From Date</label>
+                                <div >
+                                    <input id="iptFromDate">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label>To Date</label>
+                                <div >
+                                    <input id="iptToDate">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-2">
                                 <button id="btnStudentBalanceSearch" class="btn btn-primary btn-str btn-search" type="button" value="Search">Search</button>
-                            </div>-->
+                            </div>
                         </div>
                     </form>
                 </div>
-                <div class="div-grid">
+                <div class="div-grid" id="print-grids">
                     <div class="ss-grid">
-                        <div id="grdStudentBalance"></div>
+                        <h4 id="serviceLabel1" class="text-red"></h4>
+                        <div id="grdStudentBalance1"></div>
+                        <br><br>
+                        <h4 id="serviceLabel2" class="text-red"></h4>
+                        <div id="grdStudentBalance2"></div>
+                        <br><br>
+                        <h4 id="serviceLabel3" class="text-red"></h4>
+                        <div id="grdStudentBalance3"></div>
+                        <br><br>
+                        <h4 id="serviceLabel4" class="text-red"></h4>
+                        <div id="grdStudentBalance4"></div>
+                        <br><br>
+                        <h4 id="serviceLabel5" class="text-red"></h4>
+                        <div id="grdStudentBalance5"></div>
                     </div>
+                </div>
+                <div class="d-flex align-items-center" id="grdStudentBalance-total">
+                    <div class="mr-auto"><h4 class="text-red">Total</h4></div>
+                    <div class="d-flex align-items-center">
+                        <div class="mr-2">Debit: <span id="grdStudentBalance-debit"></span></div>
+                        <div class="mr-2">Claims: <span id="grdStudentBalance-claims"></span></div>
+                        <div>Balance: <span id="grdStudentBalance-balance"></span></div>
+                    </div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <button id="btnPrint" class="btn btn-primary btn-str" type="button">Print</button>
                 </div>
             </div>
         </section>
@@ -143,7 +184,7 @@
 <script type="text/javascript" src="/lib/scripts/app.js"></script>
 <script type="text/javascript" src="/app/scripts/common.js"></script>
 <script type="text/javascript" src="/app/scripts/studentOverview/studentOverview.js"></script>
-<script type="text/javascript" src="/app/scripts/studentOverview/studentOverviewPopup.js"></script>
-
+<!--<script type="text/javascript" src="/app/scripts/studentOverview/studentOverviewPopup.js"></script>-->
+<script type="text/javascript" src="/app/scripts/studentOverview/studentOverviewBalance.js"></script>
 </body>
 </html>

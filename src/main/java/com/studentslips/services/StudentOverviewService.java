@@ -1,16 +1,14 @@
 package com.studentslips.services;
 
-import com.studentslips.entities.Student;
-import com.studentslips.entities.StudentOverview;
-import com.studentslips.entities.StudentOverviewBalanceDTO;
-import com.studentslips.entities.StudentOverviewBalancePrintDTO;
+import com.studentslips.entities.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StudentOverviewService {
     List<StudentOverview> selectStudentOverview(Student std);
 
-    List<StudentOverviewBalanceDTO> selectStudentOverviewBalance(Student std) throws Exception;
+    Map<String, Object> selectStudentOverviewBalance(StudentOverviewBalanceRequestDTO requestDTO) throws Exception;
 
     StudentOverviewBalancePrintDTO selectPrintData(StudentOverviewBalancePrintDTO dto);
 }

@@ -16,12 +16,24 @@
             bank_statement_date,
         </if>
 
-        <if test="accountNumber != null">
+<!--        <if test="accountNumber != null">
             account_number,
-        </if>
+        </if>-->
 
         <if test="payer != null">
             payer,
+        </if>
+
+        <if test="payerAccount != null">
+            payer_account,
+        </if>
+
+        <if test="payee != null">
+            payee,
+        </if>
+
+        <if test="payeeAccount != null">
+            payee_account,
         </if>
 
         <if test="purpose != null">
@@ -70,11 +82,22 @@
         <if test="bankStatementDate != null">
             #{bankStatementDate},
         </if>
-        <if test="accountNumber != null">
+       <!-- <if test="accountNumber != null">
             #{accountNumber},
-        </if>
+        </if>-->
         <if test="payer != null">
             #{payer},
+        </if>
+        <if test="payerAccount != null">
+            #{payerAccount},
+        </if>
+
+        <if test="payee != null">
+            #{payee},
+        </if>
+
+        <if test="payeeAccount != null">
+            #{payeeAccount},
         </if>
         <if test="purpose != null">
             #{purpose},
@@ -180,6 +203,9 @@
         <result property="bankStatementDate" column="bank_statement_date"/>
         <result property="accountNumber" column="account_number"/>
         <result property="payer" column="payer"/>
+        <result property="payerAccount" column="payer_account"/>
+        <result property="payee" column="payee"/>
+        <result property="payeeAccount" column="payee_account"/>
         <result property="purpose" column="purpose"/>
         <result property="noOfChanges" column="no_of_changes"/>
         <result property="balance" column="balance"/>

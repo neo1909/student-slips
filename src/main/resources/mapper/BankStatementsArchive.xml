@@ -52,11 +52,21 @@
         <result property = "noOfChanges" column = "no_of_changes"/>
         <result property = "balance" column = "balance"/>
         <result property = "noOfBankStatement" column = "no_of_bank_statement"/>
+        <result property = "claims" column = "claims"/>
+        <result property = "referenceNo" column = "reference_no"/>
+        <result property = "currencyDate" column = "currency_date"/>
+        <result property = "insertDate" column = "insert_date"/>
+        <result property = "insertId" column = "insert_id"/>
+        <result property = "updateDate" column = "update_date"/>
+        <result property = "updateId" column = "update_id"/>
+        <result property = "postPaymentYn" column = "post_payment_yn"/>
+        <result property = "delYn" column = "del_yn"/>
+      <!--  <result property = "accountNumber" column = "account_number"/>-->
         <result property = "isHightLight" column = "is_hight_light"/>
     </resultMap>
     <resultMap id = "result" type = "com.studentslips.entities.BankStatement">
         <result property = "id" column = "id"/>
-        <result property = "accountNumber" column = "account_number"/>
+        <!--<result property = "accountNumber" column = "account_number"/>-->
         <result property = "payer" column = "payer"/>
         <result property = "purpose" column = "purpose"/>
         <result property = "referenceNo" column = "reference_no"/>

@@ -1,13 +1,11 @@
 package com.studentslips.dao;
 
-import com.studentslips.entities.Student;
-import com.studentslips.entities.StudentOverviewBalanceDTO;
-import com.studentslips.entities.StudentOverviewBalancePrintDTO;
-import com.studentslips.entities.StudentsDebts;
+import com.studentslips.entities.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class StudentOverviewBalanceDao {
@@ -18,11 +16,16 @@ public class StudentOverviewBalanceDao {
         this.sqlSession = sqlSession;
     }
 
-    public List<StudentOverviewBalanceDTO> selectStudentOverviewBalance(Student std) throws Exception {
-        return this.sqlSession.selectList("selectStudentOverviewBalance", std);
+    public List<StudentOverviewBalanceDTO> selectStudentOverviewBalance(StudentOverviewBalanceRequestDTO requestDTO) throws Exception {
+        return this.sqlSession.selectList("selectStudentOverviewBalance", requestDTO);
     }
 
     public StudentOverviewBalancePrintDTO selectPrintData(StudentOverviewBalancePrintDTO dto) {
         return this.sqlSession.selectOne("selectPrintData", dto);
+    }
+
+
+    public List<Integer> selectDistinctServiceStdDebts(int studentId) throws Exception {
+        return this.sqlSession.selectList("selectDistinctServiceStdDebts", studentId);
     }
 }

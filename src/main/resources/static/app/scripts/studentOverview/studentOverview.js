@@ -160,7 +160,19 @@ let fn = {
                         $('#iptStdNmOverviewSrch').val(data.obj.name);
                         $('#cmbStdGradeOverviewSSrch').val(data.obj.grade);
                         $('#cmbStdClassOverviewSrch').val(data.obj.sClass);
-                        fnPopup.onSearch(studentId);
+                        let fromDate = new Date();
+                        fromDate.setHours(0);
+                        fromDate.setMinutes(0);
+                        fromDate.setMilliseconds(0);
+                        $('#iptFromDate').val(fromDate);
+
+                        let toDate = new Date();
+                        toDate.setHours(0);
+                        toDate.setMinutes(0);
+                        toDate.setMilliseconds(0);
+                        $('#iptToDate').val(toDate);
+
+                        fnPopup.onSearch(fromDate, toDate);
                     }
                 );
             }
