@@ -64,15 +64,15 @@ let fn = {
 
         // Search
         $("#iptStdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...',  });
-        $("#cmbStdGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.gradeEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
-        $("#cmbStdClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazzEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbStdGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.gradeAll, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbStdClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazzAll, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
 
         // Popup Student
         $("#popupStudent").jqxWindow({
             isModal: true,
             autoOpen: false,
-            height: 600,
-            width: 1000,
+            height: 720,
+            width: 1280,
             theme: 'bootstrap',
             title: 'Student Balance Overview',
             position: 'center',
@@ -88,8 +88,8 @@ let fn = {
 
     onSearch: function () {
         let stdNm = $('#iptStdNmSrch').val();
-        let stdGrade = $('#cmbStdGradeSrch').val();
-        let stdClazz = $('#cmbStdClazzSrch').val();
+        let stdGrade = $('#cmbStdGradeSrch').val() != 'All' ? $('#cmbStdGradeSrch').val() : '';
+        let stdClazz = $('#cmbStdClazzSrch').val() != 'All' ? $('#cmbStdClazzSrch').val() : '';
         if (stdNm) {
             stdNm = stdNm.trim();
         }

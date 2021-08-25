@@ -19,6 +19,7 @@ let fnOverview = {
                 {name: 'gradeClass', type: 'string'},
                 {name: 'headTeacherId', type: 'int'},
                 {name: 'headTeacherName', type: 'string'},
+                {name: 'serviceListString',type: 'string'}
             ],
             datatype: "array",
             localdata: fnOverview.dataset
@@ -45,7 +46,7 @@ let fnOverview = {
                 },
                 {text: 'Grade/Class', datafield: 'gradeClass', align: 'center', cellsalign: 'center', width: '10%,'},
                 {text: 'Head Teacher', datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
-                {text: 'Services', datafield: 'nameService', align: 'center', cellsalign: 'center', width: '15%,'},
+                {text: 'Services', datafield: 'serviceListString', align: 'center', cellsalign: 'center', width: '15%,'},
                 {text: 'Dedit', datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
                 {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
                 {text: 'Balance', datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
@@ -74,11 +75,21 @@ let fnOverview = {
         * */
         $('#btnStdSrch').click(function () {
             $('#grdSchoolOverview').jqxGrid('refresh');
+            $('#grdSchoolDetail').jqxGrid('clear');
             fnOverview.onSearch();
         });
 
         // Search
-        $("#cmbStdGradeSrch").jqxDropDownList({enableBrowserBoundsDetection: true, source: SS.gradeEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbStdGradeSrch").jqxDropDownList({
+            enableBrowserBoundsDetection: true,
+            source: SS.dataSource.grade('All'),
+            displayMember: 'name',
+            valueMember: 'id',
+            selectedIndex: 0,
+            height: SS.IPT_HEIGHT,
+            width: '100%',
+            dropDownHorizontalAlignment: 'right'
+        });
        // $("#cmbStdClazzSrch").jqxDropDownList({enableBrowserBoundsDetection: true, source: SS.clazzEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
         $("#cmbServiceSrch").jqxDropDownList({enableBrowserBoundsDetection: true, source: fnCommon.commonService, displayMember: "name", valueMember: "id", selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
         $("#iptFromDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy"});
@@ -128,12 +139,15 @@ let fnOverview = {
 
         $("#grdSchoolOverview").jqxGrid('clearselection');
         $('#grdSchoolOverview').jqxGrid('refresh');
+        $("#grdSchoolDetail").jqxGrid('clearselection');
+        $('#grdSchoolDetail').jqxGrid('refresh');
         let params = {
             fromDate: $('#iptFromDate').val(),
             toDate: $('#iptToDate').val(),
             grade: $('#cmbStdGradeSrch').val(),
            // sClass: $('#cmbStdClazzSrch').val(),
             serviceListId: serviceListId,
+            serviceListString: serviceListString
         };
         SS.sendToServer(
             'OVS_R_01',
@@ -243,16 +257,26 @@ let fnDetail = {
     },
 
     onSearch: function (rowdata) {
+        let serviceListId = [];
+        if (checkedAllServices) {
+            serviceListId = [...originalServiceIdList];
+        } else {
+            serviceListId = $("#cmbSrchService").jqxComboBox('getCheckedItems').map(i=>i.value);
+        }
 
-        $("#grdSchoolOverview").jqxGrid('clearselection');
-        $('#grdSchoolOverview').jqxGrid('refresh');
+        if (serviceListId.length == 0) {
+            SS.alert( SS.title.ERROR, "Service is required");
+            return;
+        }
+
+        $("#grdSchoolDetail").jqxGrid('clearselection');
+        $('#grdSchoolDetail').jqxGrid('refresh');
         let params = {
             fromDate: $('#iptFromDate').val(),
             toDate: $('#iptToDate').val(),
             grade: $('#cmbStdGradeSrch').val(),
-            //sClass: $('#cmbStdClazzSrch').val(),
-            serviceListId: [ rowdata.headTeacherId],
-            //sClass: $('#cmbStdClazzSrch').val(),
+            serviceListId: serviceListId,
+            headTeacherId: rowdata.headTeacherId
         };
         SS.sendToServer(
             'OVS_R_02',
@@ -313,6 +337,9 @@ function onCalculateTotal(gridId) {
             $("#grdDetail-claims").html(SS.format.formatNumberByLocales(totalClaims));
             $("#grdDetail-balance").html(SS.format.formatNumberByLocales(totalBalance));
         }
+        $("#intotal-debit").html(SS.format.formatNumberByLocales(totalDebit));
+        $("#intotal-claims").html(SS.format.formatNumberByLocales(totalClaims));
+        $("#intotal-balance").html(SS.format.formatNumberByLocales(totalBalance));
 
     }
 }
@@ -348,6 +375,11 @@ let originalServiceIdList = [];
 let checkedAllServices = false;
 
 $(document).ready(function() {
+
+    $("#intotal-debit").html(0);
+    $("#intotal-claims").html(0);
+    $("#intotal-balance").html(0);
+
     fnCommon.onServiceSearch();
     fnOverview.init();
     fnDetail.init();
@@ -387,5 +419,6 @@ $(document).ready(function() {
         onPrint()
     });
     $("#cmbServiceSrch").jqxComboBox('checkIndex', 0);
+    $("#cmbStdGradeSrch").jqxComboBox('checkIndex', 0);
     fnOverview.onSearch();
 });

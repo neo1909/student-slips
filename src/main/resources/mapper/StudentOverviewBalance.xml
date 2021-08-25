@@ -82,7 +82,7 @@
             purpose,
             (select sc.name from PS_Students st join PS_School sc on st.school_id = sc.id where st.id = #{id}) as payee,
             amount_debt as amount,
-            '1111-222-6886-6789' as payer_acc,
+            '' as payer_acc,
             (select sc.bank_account_number from PS_Students st join PS_School sc on st.school_id = sc.id where st.id = #{id}) as payee_acc,
             reference_no
         FROM onetouch.PS_Students_Debts sd

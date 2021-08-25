@@ -20,7 +20,7 @@ let source = {
             type: 'date'
         },
         {
-            name: 'accountNumber',
+            name: 'payerAccount',
             type: 'string'
         },
         {
@@ -106,7 +106,7 @@ let sourcePopup = {
             type: 'date'
         },
         {
-            name: 'accountNumber',
+            name: 'payerAccount',
             type: 'string'
         },
         {

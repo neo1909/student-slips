@@ -222,7 +222,7 @@ let fnPopup = {
             params,
             function onSuccess(data) {
                 fnPopup.gridSource1.localdata = data.lst1;
-                $('#serviceLabel1').text(data.lst1[0].serviceNm == null ? "No service" : data.lst1[0].serviceNm);
+                $('#serviceLabel1').text(data.lst1.length <= 1 ? "No service" : data.lst1[0].serviceNm);
                 $("#grdStudentBalance1").jqxGrid({source: fnPopup.gridSource1});
 
                 fnPopup.gridSource2.localdata = data.lst2;

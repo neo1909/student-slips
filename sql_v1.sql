@@ -29,16 +29,17 @@ CREATE TABLE `PS_Head_Teachers` (
 );
 
 CREATE TABLE `PS_Service` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-	`name` VARCHAR(255),
-    `school_id` INT NOT NULL,
-    `del_yn` VARCHAR(1),
-	`insert_date` DATETIME  ,
-	`insert_id` INT  ,
-	`update_date` DATETIME  ,
-	`update_id` INT  ,
-	PRIMARY KEY (`id`)
-);
+      `id` int NOT NULL AUTO_INCREMENT,
+      `name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+      `school_id` int DEFAULT NULL,
+      `supplier_id` int DEFAULT NULL,
+      `del_yn` varchar(1) COLLATE utf8_bin DEFAULT NULL,
+      `insert_date` datetime DEFAULT NULL,
+      `insert_id` int DEFAULT NULL,
+      `update_date` datetime DEFAULT NULL,
+      `update_id` int DEFAULT NULL,
+      PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3 COLLATE=utf8_bin
 
 CREATE TABLE `PS_Suppliers` (
 	`id` INT NOT NULL AUTO_INCREMENT,

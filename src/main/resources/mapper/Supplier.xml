@@ -217,12 +217,12 @@
     <select id="getAllSupplierServiceGroups" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="supSvcDtlGroupSearchModel">
         select
 			SS.*, S01.list_grade_ids_str, ps.name as supplier_name, ps2.name as service_name
-		from ps_suppliers_service SS
+		from PS_Suppliers_Service SS
 		inner join (
 			select
 				group_id,
 				GROUP_CONCAT(grade) as list_grade_ids_str
-			from ps_suppliers_service
+			from PS_Suppliers_Service
         	where del_yn = 'N'
 			group by group_id
 		) S01 on SS.group_id = S01.group_id
@@ -264,12 +264,12 @@
     <select id="getSupplierServiceGroupByGroupId" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="supSvcDtlGroupUpdateModel">
         select
 			SS.*, S01.list_grade_ids_str, ps.name as supplier_name, ps2.name as service_name
-		from ps_suppliers_service SS
+		from PS_Suppliers_Service SS
 		inner join (
 			select
 				group_id,
 				GROUP_CONCAT(grade) as list_grade_ids_str
-			from ps_suppliers_service
+			from PS_Suppliers_Service
         	where del_yn = 'N'
 			group by group_id
 		) S01 on SS.group_id = S01.group_id

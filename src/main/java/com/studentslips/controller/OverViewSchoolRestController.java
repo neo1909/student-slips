@@ -1,6 +1,7 @@
 package com.studentslips.controller;
 
 import com.studentslips.common.Common;
+import com.studentslips.entities.SchoolAndClass;
 import com.studentslips.entities.SchoolAndClassSearch;
 import com.studentslips.services.OverViewSchoolService;
 import org.slf4j.Logger;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,7 +32,15 @@ public class OverViewSchoolRestController {
         Map<String, Object> result = new HashMap<>();
 
         try {
-            result.put(Common.LIST, overViewSchoolService.selectAllSchool(std));
+            List<SchoolAndClass> schoolList = new ArrayList<>();
+            if (!std.getServiceListId().isEmpty()) {
+                schoolList = overViewSchoolService.selectAllSchool(std);
+
+                schoolList.forEach(c -> {
+                    c.setServiceListString(std.getServiceListString());
+                });
+            }
+            result.put(Common.LIST, schoolList);
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
