@@ -438,6 +438,13 @@ $(document).ready(function () {
         onSearch();
     });
     
+    $(document).on('keypress', function(e) {
+    	if (e.keyCode == 13) {
+    		e.preventDefault();
+    		onSearch();
+    	}
+    });
+    
     $("#grdOverviewClass").on('rowdoubleclick', function (event) {
         let rowData = $("#grdOverviewClass").jqxGrid('getrowdata', event.args.rowindex);
         $('#grdOverviewClassDetail').jqxGrid('refresh');

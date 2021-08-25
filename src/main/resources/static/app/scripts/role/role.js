@@ -26,10 +26,10 @@ var fn = {
             columnsresize: true,
             adaptive: true,
             columns: [
-	            { text: '#', datafield: 'rnum', align: 'center', cellsalign: 'left', width: '5%', editable: false },
-	            { text: 'ID', datafield: 'id', align: 'center', cellsalign: 'left', width: '15%', editable: false },
-	            { text: 'Name', datafield: 'name', align: 'center', cellsalign: 'right', width: '20%', editable: false },
-	            { text: 'Description', datafield: 'description', align: 'center', cellsalign: 'right', width: '40%', editable: false },
+	            { text: '#', datafield: 'rnum', align: 'center', cellsalign: 'center', width: '5%', editable: false },
+//	            { text: 'ID', datafield: 'id', align: 'center', cellsalign: 'left', width: '15%', editable: false },
+	            { text: 'Name', datafield: 'name', align: 'center', cellsalign: 'center', width: '30%', editable: false },
+	            { text: 'Description', datafield: 'description', align: 'center', cellsalign: 'center', width: '40%', editable: false },
 	            { text: 'Del  Y/N', datafield: 'delYn', align: 'center', cellsalign: 'center', width: '10%', editable: false },
 	            { text: 'Actions', align: 'center', width: '15%',
 	                    cellsrenderer: function (rowIndex, column, value) {
@@ -154,4 +154,11 @@ $(document).ready(function() {
 	$('#btnStdCreate').click(function() {
 		fn.onCreate();
 	});
+	
+	$(document).on('keypress', function(e) {
+    	if (e.keyCode == 13) {
+    		e.preventDefault();
+    		fn.onSearch();
+    	}
+    });
 });

@@ -38,13 +38,12 @@ var fn = {
             adaptive: true,
             columns: [
 	            { text: '#', datafield: 'rnum', align: 'center', cellsalign: 'center', width: '5%', editable: false },
-	            { text: 'ID', datafield: 'id', align: 'center', cellsalign: 'center', width: '5%', editable: false },
-	            { text: 'Username', datafield: 'username', align: 'center', cellsalign: 'right', width: '10%', editable: false },
-	            { text: 'Email', datafield: 'email', align: 'center', cellsalign: 'right', width: '15%', editable: false },
+	            { text: 'Username', datafield: 'username', align: 'center', cellsalign: 'center', width: '10%', editable: false },
+	            { text: 'Email', datafield: 'email', align: 'center', cellsalign: 'center', width: '15%', editable: false },
 	            { text: 'School', datafield: 'schoolId', displayfield: 'schoolName', align: 'center', cellsalign: 'center', width: '15%', editable: false },
 	            { text: 'Full name', datafield: 'fullName', align: 'center', cellsalign: 'center', width: '15%', editable: false },
 	            { text: 'User Type', datafield: 'userType', align: 'center', cellsalign: 'center', width: '15%', editable: false },
-	            { text: 'Last Login Date', cellsformat: 'dd/MM/yyyy', datafield: 'lastLoginDate', align: 'center', cellsalign: 'center', width: '15%', editable: false },
+	            { text: 'Last Login Date', cellsformat: 'dd/MM/yyyy', datafield: 'lastLoginDate', align: 'left', cellsalign: 'center', width: '15%', editable: false },
 	            { text: 'Status', datafield: 'status', align: 'center', cellsalign: 'center', width: '10%', editable: false },
 	            { text: 'Del  Y/N', datafield: 'delYn', align: 'center', cellsalign: 'center', width: '10%', editable: false },
 	            { text: 'Actions', align: 'center', width: '10%',
@@ -320,6 +319,13 @@ var fn = {
 
 $(document).ready(function() {
 	fn.init();
+    
+    $(document).on('keypress', function(e) {
+    	if (e.keyCode == 13) {
+    		e.preventDefault();
+    		fn.onSearch();
+    	}
+    });
 
 	$('#btnStdSrch').click(function() {
 		$('#grdUser').jqxGrid('refresh');

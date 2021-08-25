@@ -377,6 +377,14 @@ function diffArray(arr1, arr2) {
 $(document).ready(function () {
     fn.init();
     fn.onSearch();
+    
+    $(document).on('keypress', function(e) {
+    	if (e.keyCode == 13) {
+    		e.preventDefault();
+    		fn.onSearch();
+    	}
+    });
+    
     $('#cmbSupplier').on('change', function (event) {
         if (event.args && event.args.item && event.args.item.originalItem.id) {
             const supplierId = event.args.item.originalItem.id;

@@ -30,15 +30,14 @@ var fn = {
             columnsresize: true,
             adaptive: true,
             columns: [
-	            { text: '#', datafield: 'rnum', align: 'center', cellsalign: 'center', width: '3%', editable: false },
-	            { text: 'ID', datafield: 'primaryId', align: 'center', cellsalign: 'center', width: '15%', editable: false },
+	            { text: '#', datafield: 'rnum', align: 'center', cellsalign: 'center', width: '5%', editable: false },
 	            { text: 'Session ID', datafield: 'sessionId', align: 'center', cellsalign: 'center', width: '15%', editable: false },
-	            { text: 'Creation Time', cellsformat: 'dd/MM/yyyy HH:mm:ss', datafield: 'createTime', align: 'center', cellsalign: 'center', width: '10%', editable: false },
-	            { text: 'Last Access Time', cellsformat: 'dd/MM/yyyy HH:mm:ss', datafield: 'lastAccessTime', align: 'center', cellsalign: 'center', width: '10%', editable: false },
-	            { text: 'Max Inactive Interval', datafield: 'maxInactiveInterval', align: 'center', cellsalign: 'center', width: '5%', editable: false },
-	            { text: 'Expiry Time', cellsformat: 'dd/MM/yyyy HH:mm:ss', datafield: 'expiryTime', align: 'center', cellsalign: 'center', width: '12%', editable: false },
-	            { text: 'Principal Name', datafield: 'principalName', align: 'center', cellsalign: 'center', width: '10%', editable: false },
-	            { text: 'User Fullname', datafield: 'fullName', align: 'center', cellsalign: 'center', width: '10%', editable: false },
+	            { text: 'Creation Time', cellsformat: 'dd/MM/yyyy HH:mm:ss', datafield: 'createTime', align: 'center', cellsalign: 'left', width: '15%', editable: false },
+	            { text: 'Last Access Time', cellsformat: 'dd/MM/yyyy HH:mm:ss', datafield: 'lastAccessTime', align: 'center', cellsalign: 'left', width: '15%', editable: false },
+	            { text: 'Max Inactive Interval', datafield: 'maxInactiveInterval', align: 'center', cellsalign: 'right', width: '10%', editable: false },
+	            { text: 'Expiry Time', cellsformat: 'dd/MM/yyyy HH:mm:ss', datafield: 'expiryTime', align: 'center', cellsalign: 'left', width: '15%', editable: false },
+//	            { text: 'Principal Name', datafield: 'principalName', align: 'center', cellsalign: 'center', width: '10%', editable: false },
+	            { text: 'User Fullname', datafield: 'fullName', align: 'center', cellsalign: 'center', width: '15%', editable: false },
 	            { text: 'Actions', align: 'center', width: '10%',
 	                    cellsrenderer: function (rowIndex, column, value) {
 	                        return '<div style="text-align: center; margin-top: 4px;">' +
@@ -110,4 +109,11 @@ $(document).ready(function() {
 		$('#grdSession').jqxGrid('refresh');
 		fn.onSearch();
 	});
+	
+	$(document).on('keypress', function(e) {
+    	if (e.keyCode == 13) {
+    		e.preventDefault();
+    		fn.onSearch();
+    	}
+    });
 });

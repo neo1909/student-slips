@@ -198,6 +198,13 @@ $(document).ready(function () {
         const jsDate = event.args.date;
         setMinDate(jsDate)
     });
+    
+    $(document).on('keypress', function(e) {
+    	if (e.keyCode == 13) {
+    		e.preventDefault();
+    		onSearch();
+    	}
+    });
 
     $('#btnStdSrch').click(function () {
         $('#grdTask').jqxGrid('refresh');

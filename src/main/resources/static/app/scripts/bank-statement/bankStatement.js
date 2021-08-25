@@ -37,7 +37,7 @@ let source = {
         },
         {
             name: 'balance',
-            type: 'string'
+            type: 'number'
         },
         {
             name: 'noOfBankStatement',
@@ -78,6 +78,10 @@ let source = {
         {
             name: 'delYn',
             type: 'string'
+        },
+        {
+            name: 'isHighlight',
+            type: 'int'
         }
     ],
     datatype: "array",
@@ -119,7 +123,7 @@ let sourcePopup = {
         },
         {
             name: 'balance',
-            type: 'string'
+            type: 'number'
         },
         {
             name: 'noOfBankStatement',
@@ -160,6 +164,10 @@ let sourcePopup = {
         {
             name: 'delYn',
             type: 'string'
+        },
+        {
+            name: 'isHighlight',
+            type: 'int'
         }
     ],
     datatype: "array",
@@ -212,9 +220,8 @@ function setMinDate(time) {
     const date = new Date( time )
     const year = date.getFullYear();
     const month = date.getMonth();
- //   const day = +date.getDate() +1;
+    const day = +date.getDate();
     $("#iptToDate").jqxDateTimeInput('setMinDate', new Date( year, month, day));
-    $("#iptToDate").jqxDateTimeInput('setDate', new Date( year, month, day));
 }
 function createGrid() {
     let dataAdapter = new $.jqx.dataAdapter(source);
@@ -233,9 +240,20 @@ function createGrid() {
                 text: 'No of Bank Statements',
                 datafield: 'noOfBankStatement',
                 align: 'center',
-                cellsalign: 'left',
+                cellsalign: 'right',
                 width: '30%',
-                editable: false
+                editable: false,
+                cellsformat: 'd2',
+                cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
+                	let rowData = $("#grdBank").jqxGrid("getrowdata", row);
+                	let isHighlight = rowData.isHighlight;
+                	let formatValue = Number(value).toLocaleString("sr-RS", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                	if (isHighlight == 0) {
+                		return '<div style="padding: 4px; background-color: #FF4848, color: #FFF, padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
+					} else {
+						return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
+					}
+                }
             },
             {
                 text: 'Balance',
@@ -244,6 +262,7 @@ function createGrid() {
                 cellsalign: 'right',
                 width: '20%',
                 editable: false,
+                cellsformat: 'd2'
             },
             {
                 text: 'No of Changes',
@@ -253,6 +272,7 @@ function createGrid() {
                 cellsalign: 'right',
                 width: '20%',
                 editable: false,
+                cellsformat: 'd2'
             },
             {
                 text: 'Actions',
@@ -270,6 +290,12 @@ function createGrid() {
         height: 350,
         rowsheight: 33
     });
+    let localizationobj = {
+    	currencysymbol: "",
+		decimalseparator: ",",
+		thousandsseparator: "."
+    }
+    $("#grdBank").jqxGrid('localizestrings', localizationobj);
 }
 
 function ceateGridBank() {
@@ -309,12 +335,16 @@ function ceateGridBank() {
                 align: 'center',
                 cellsalign: 'right',
                 width: '20%',
-                cellsrenderer : function (row, columnfield, value, defaulthtml, columnproperties){
-                   if(!value) {
-                        return '<div style="background-color: red">' + value + '</div>';
-                   }
-                },
                 editable: true,
+                cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
+                	let rowData = $("#grdBank").jqxGrid("getrowdata", row);
+                	let isHighlight = rowData.isHighlight;
+                	if (isHighlight == 0) {
+                		return '<div style="padding: 4px; background-color: #FF4848, color: #FFF, padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + value + '</div>';
+					} else {
+						return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + value + '</div>';
+					}
+                }
             },
             {
                 text: 'Amount',
@@ -395,7 +425,6 @@ function onSave() {
             onSearch();
         }
     );
-            // $("#btnPayment").prop('disabled', false);
 }
 
 
@@ -405,19 +434,30 @@ $(document).ready(function () {
     init();
     createGrid();
     ceateGridBank()
-    // setMinDate($("#iptFromDate").val('date'));
-    // $('#iptFromDate').on('valueChanged', function (event)
-    // {
-    //     const jsDate = event.args.date;
-    //     setMinDate(jsDate)
-    // });
+     setMinDate($("#iptFromDate").val('date'));
+     $('#iptFromDate').on('valueChanged', function (event)
+     {
+         const jsDate = event.args.date;
+         setMinDate(jsDate)
+     });
     $('#btnStdSrch').click(function () {
         $('#grdBank').jqxGrid('refresh');
         onSearch();
     });
+    
+	$(document).on('keypress', function(e) {
+    	if (e.keyCode == 13) {
+    		e.preventDefault();
+    		onSearch();
+    	}
+    });
 
     $('#btnSave').click(function () {
-        onSave()
+    	SS.confirm(SS.title.CONFIRM, "Do you want to Save and Post payment? ", function (result) {
+            if (result) {
+                onSave()
+            }
+        });
     });
 
 })

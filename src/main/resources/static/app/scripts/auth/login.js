@@ -13,8 +13,40 @@ let fn = {
         });
 	},
 	
+	doLogin: function() {
+		if (!$('#formLogin').jqxValidator('validate')) return;
+		
+    	var username = $("#iptLoginUsername").val();
+    	var password = $("#iptLoginPassword").val();
+    	
+		$.ajax({
+			url : "/authenticate",
+			type : 'POST',
+			data: {
+            	username: username,
+            	password: password
+            },
+			success : function(data) {
+				if (data && data === 'OK') {
+					window.location.href = "/index";
+				}
+            },
+			error : function(err) {
+				if (err && err.responseJSON) {
+					$("#iptLoginPassword").val("");
+					SS.alert(SS.title.ERROR, err.responseJSON.message);
+				}
+            }
+		});
+	},
+	
 	addEventListener : function() {
-//		$(document).
+		$(document).on('keypress', function(e) {
+	    	if (e.keyCode == 13) {
+	    		e.preventDefault();
+	    		fn.doLogin();
+	    	}
+	    })
 		
 		$("#btnCreateAccount").on('click', function() {
 			var onSuccess = function(res) {
@@ -32,30 +64,7 @@ let fn = {
 		});
 		
 		$("#btnLogin").on('click', function() {
-			if (!$('#formLogin').jqxValidator('validate')) return;
-			
-        	var username = $("#iptLoginUsername").val();
-        	var password = $("#iptLoginPassword").val();
-        	
-			$.ajax({
-				url : "/authenticate",
-				type : 'POST',
-				data: {
-	            	username: username,
-	            	password: password
-	            },
-				success : function(data) {
-					if (data && data === 'OK') {
-						window.location.href = "/index";
-					}
-	            },
-				error : function(err) {
-					if (err && err.responseJSON) {
-						$("#iptLoginPassword").val("");
-						SS.alert(SS.title.ERROR, err.responseJSON.message);
-					}
-	            }
-			});
+    		fn.doLogin();
 		});
 		$("#btnForgetPassword").on('click', function() {
 			var onSuccess = function(res) {

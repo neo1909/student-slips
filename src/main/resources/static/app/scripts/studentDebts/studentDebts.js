@@ -379,6 +379,13 @@ $(document).ready(function () {
         
         onGetService("");
         
+        $(document).on('keypress', function(e) {
+        	if (e.keyCode == 13) {
+        		e.preventDefault();
+        		onSearch();
+        	}
+        });
+        
         $('#btnStdSrch').click(function () {
             $('#grdStudentDebts').jqxGrid('refresh');
             onSearch();

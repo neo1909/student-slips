@@ -348,6 +348,12 @@ $(document).ready(function() {
     fnOverview.init();
     fnDetail.init();
 
+	$(document).on('keypress', function(e) {
+    	if (e.keyCode == 13) {
+    		e.preventDefault();
+    		fnOverview.onSearch();
+    	}
+    });
 
     $("#cmbServiceSrch").on('checkChange', function(event) {
         if (event.args) {
