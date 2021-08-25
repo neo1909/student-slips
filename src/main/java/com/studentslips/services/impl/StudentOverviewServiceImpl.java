@@ -30,8 +30,9 @@ public class StudentOverviewServiceImpl implements StudentOverviewService {
     public  Map<String, Object> selectStudentOverviewBalance(StudentOverviewBalanceRequestDTO requestDTO) throws Exception {
         Map<String, Object> result = new HashMap<>();
         List<Integer> serviceList = studentOverviewBalanceDao.selectDistinctServiceStdDebts(requestDTO.getId());
+        result.put(Common.LIST + 1,new ArrayList<>());
         if (CollectionUtils.isEmpty(serviceList)) {
-            return new HashMap<>();
+            return result;
         }
         Set<Integer> serviceSet = new HashSet<>(serviceList);
         int indexService = 1;

@@ -75,6 +75,7 @@ public class SupplierServiceImpl implements SupplierService {
     	for (Integer gradeId: std.getTrInsert()) {
     		std.setGrade(gradeId);
     		std.setSchoolId(searchGroup.getSchoolId());
+    		std.setInsertId(SessionUtil.getUserLoginId());
             supplierDao.insertSupplierService(std);
     	}
     	for (Integer gradeId: std.getTrDelete()) {
