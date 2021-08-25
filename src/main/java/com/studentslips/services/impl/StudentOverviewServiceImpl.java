@@ -55,33 +55,35 @@ public class StudentOverviewServiceImpl implements StudentOverviewService {
             for (int i = 0; i < studentOverviewBalanceList.size(); i++) {
                 StudentOverviewBalanceDTO dto1 = studentOverviewBalanceList.get(i);
                 if (dto1.getRowType() == 1) {
+
                     dto1.setBalance(dto1.getDebit());
                     if (i > 0) {
                         if(studentOverviewBalanceList.get(i-1).getRowType() == 1) {
-                            dto1.setBalance(dto1.getDebit().add(studentOverviewBalanceList.get(i-1).getBalance()));
                             bankBalance = bankBalance.add(dto1.getDebit().add(studentOverviewBalanceList.get(i-1).getBalance()));
                         } else {
-                            dto1.setBalance(dto1.getDebit().add(bankBalance));
+                            bankBalance = dto1.getDebit().add(bankBalance);
                         }
+                        dto1.setBalance(bankBalance);
+                    } else {
+                        bankBalance = dto1.getDebit();
+                    }
+                    continue;
+                } else if(dto1.getRowType() == 2) {
+                    if(i == 0) {
+                        bankBalance = bankBalance.subtract(dto1.getClaims());
+                        dto1.setBalance(bankBalance);
+                    } else {
+                        StudentOverviewBalanceDTO dto2 = studentOverviewBalanceList.get(i-1);
+                        if(dto2.getRowType() == 2) {
+                            bankBalance = bankBalance.subtract(dto1.getClaims());
+                        } else {
+                            bankBalance = bankBalance.subtract(dto1.getClaims());
+                        }
+                        dto1.setBalance(bankBalance);
                     }
                     continue;
                 }
 
-                if (i > 0 && dto1.getRowType() == 2) {
-                    StudentOverviewBalanceDTO dto2 = studentOverviewBalanceList.get(i - 1);
-                    if (dto2.getRowType() == 1) {
-                        if (bankBalance.compareTo(BigDecimal.ZERO) > 0){
-                            bankBalance = bankBalance.subtract(dto1.getClaims());
-                            dto1.setBalance(bankBalance);
-                        } else {
-                            bankBalance = bankBalance.add(dto2.getDebit().subtract(dto1.getClaims()));
-                            dto1.setBalance(bankBalance);
-                        }
-                    } else if (dto2.getRowType() == 2) {
-                        bankBalance = bankBalance.subtract(dto1.getClaims());
-                        dto1.setBalance(bankBalance);
-                    }
-                }
             }
 
             studentOverviewBalanceList = studentOverviewBalanceList.stream().filter(studentOverviewBalanceDTO -> (DateUtils.isSameDay(studentOverviewBalanceDTO.getDate(), requestDTO.getFromDate()) || studentOverviewBalanceDTO.getDate().after(requestDTO.getFromDate()))
