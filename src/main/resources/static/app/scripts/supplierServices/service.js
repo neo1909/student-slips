@@ -1,5 +1,3 @@
-;
-
 let fn = {
     dataset: null,
     gridSource: null,
@@ -128,10 +126,13 @@ let fn = {
             false,
             params,
             function onSuccess(data) {
+            	if (data && data.status && data.status === 'NG') {
+                    SS.alert( SS.title.ERROR, data.message);
+                    return;
+            	}
                 fn.gridSource.localdata = data.lst;
                 $("#grdService").jqxGrid({ source: fn.gridSource });
             },
-
             function onError(err) {
                 SS.alert( SS.title.ERROR, SS.message.ERROR);
             }
@@ -151,6 +152,10 @@ let fn = {
                 false,
                 data,
                 function onSuccess(data) {
+                	if (data && data.status && data.status === 'NG') {
+                        SS.alert(SS.title.ERROR, data.message);
+                        return;
+                	}
                     $("#popupService").jqxWindow('close');
                     fn.onSearch();
                 }
@@ -161,6 +166,10 @@ let fn = {
                 false,
                 data,
                 function onSuccess(data) {
+                	if (data && data.status && data.status === 'NG') {
+                        SS.alert(SS.title.ERROR, data.message);
+                        return;
+                	}
                     $("#popupService").jqxWindow('close');
                     fn.onSearch();
                 }
@@ -173,13 +182,17 @@ let fn = {
         let data = $("#grdService").jqxGrid('getrowdata', rowIndex);
         let serviceId = data.id;
         if (serviceId) {
-            SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
+            SS.confirm(SS.title.CONFIRM, "Do you want delete ?", function (result) {
                 if (result ) {
                     SS.sendToServer(
                         'SV_D_01',
                         false,
                         { id : serviceId },
                         function onSuccess(data) {
+                        	if (data && data.status && data.status === 'NG') {
+                                SS.alert(SS.title.ERROR, data.message);
+                                return;
+                        	}
                             fn.onSearch();
                         }
                     );
@@ -208,7 +221,6 @@ let fn = {
     		SS.sendToServer('SL_R_01', false, {}, function onSuccess(data) {
     	    	var src = [];
     			if (data && data.lst) src = data.lst;;
-    			src.unshift({id: "", name: ""});
     			$("#cmbSupplier").jqxDropDownList({ source: src, selectedIndex: 0, displayMember: "name", valueMember: "id", width: '100%', height: SS.IPT_HEIGHT});
     		}, function onError(err) {
     		})

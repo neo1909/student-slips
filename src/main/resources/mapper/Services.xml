@@ -22,7 +22,7 @@
     </update>
 
     <delete id="deleteServiceById" parameterType="com.studentslips.entities.Services">
-        UPDATE PS_Service SET  del_yn = 'Y',update_id = #{updateId}, update_date = SYSDATE() WHERE ID = #{id} and del_yn='N';
+        DELETE FROM PS_Service WHERE ID = #{id}
     </delete>
 
     <select id="selectAllService" parameterType="com.studentslips.entities.Services" resultMap="result">
@@ -36,6 +36,9 @@
         </if>
         <if test="schoolId!=0 ">
             AND  S.school_id = #{schoolId}
+        </if>
+        <if test="supplierId != 0 ">
+            AND  S.supplier_id = #{supplierId}
         </if>
     </select>
 
