@@ -27,15 +27,21 @@ let fn = {
             	password: password
             },
 			success : function(data) {
-				if (data && data === 'OK') {
+				let result = JSON.parse(data);
+				if (result && result.status == 'OK') {
 					window.location.href = "/index";
 				}
             },
 			error : function(err) {
-				if (err && err.responseJSON) {
-					$("#iptLoginPassword").val("");
-					SS.alert(SS.title.ERROR, err.responseJSON.message);
+				let message = "Failed to login";
+				if (err && err.responseText) {
+					let result = JSON.parse(err.responseText);
+					if (result.status == 'NG' && result.message) {
+						message = result.message;
+					}
 				}
+				$("#iptLoginPassword").val("");
+				SS.alert(SS.title.ERROR, message);
             }
 		});
 	},

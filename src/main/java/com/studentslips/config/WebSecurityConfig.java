@@ -13,11 +13,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 
 import com.studentslips.security.CustomAuthenticationEntryPoint;
 import com.studentslips.security.CustomAuthenticationFailureHandler;
 import com.studentslips.security.CustomAuthenticationFilter;
 import com.studentslips.security.CustomAuthenticationSuccessHandler;
+import com.studentslips.security.CustomExceptionHandlerFilter;
 import com.studentslips.security.CustomLogoutHandler;
 
 
@@ -34,6 +36,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		customAuthFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
 		return customAuthFilter;
 	};
+	
+	@Bean
+	public CustomExceptionHandlerFilter customExceptionHandlerFilter() {
+		return new CustomExceptionHandlerFilter();
+	}
 	
 	/***
 	 * @description
@@ -125,5 +132,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		 * 
 		 * */
 		http.addFilterBefore(customAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(customExceptionHandlerFilter(), CorsFilter.class);
 	}
 }

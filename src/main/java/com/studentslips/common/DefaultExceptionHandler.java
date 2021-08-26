@@ -23,7 +23,7 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(value = { StudentSlipException.class })
 	public ResponseEntity<Object> handleStudentSlipException(Exception ex, WebRequest request) {
-		log.error("# DefaultExceptionHandler-StudentSlipException Class=[{}]; Code=[{}]; Message=[{}]", ex.getClass().getSimpleName(), ((StudentSlipException) ex).getCode(), ex.getMessage());
+		log.error("# DefaultExceptionHandler-StudentSlipException || Class=[{}]; Code=[{}]; Message=[{}]", ex.getClass().getSimpleName(), ((StudentSlipException) ex).getCode(), ex.getMessage());
 		return handleCustom((StudentSlipException) ex, HttpStatus.OK, request);
 	}
 

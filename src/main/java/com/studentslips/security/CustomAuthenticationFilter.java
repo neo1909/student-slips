@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,17 +18,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.studentslips.common.StudentSlipException;
 import com.studentslips.entities.User;
 import com.studentslips.services.UserService;
-import com.studentslips.services.UserSessionService;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
-	@Autowired
-	private UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(CustomAuthenticationFilter.class);
 	
 	@Autowired
-	private UserSessionService userSessionService;
+	private UserService userService;
 	
 	private BCryptPasswordEncoder passwordEncoder;
 	
@@ -46,15 +47,16 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		password = (password != null) ? password.trim() : "";
 
 		User loginedUser = userService.selectUserWithRoles(new User(username));
+		logger.debug("# CustomAuthenticationFilter || Logined User=[{}]", loginedUser);
 		
 		if (loginedUser == null) {
-			throw new AuthenticationServiceException("User does not exist");
+			throw new StudentSlipException("User does not exist");
 		}
 
 		// Can't login if exceed 5 times retry within 15 mins
 		long currentInUTC = System.currentTimeMillis();
 		long current = currentInUTC + TimeZone.getDefault().getOffset(currentInUTC);
-		if (loginedUser.getLastLoginDate() != null && "ACTIVE".equals(loginedUser.getStatus())) {			
+		if (loginedUser.getLastLoginDate() != null && "ACTIVE".equals(loginedUser.getStatus())) {
 			long lastLoginTime = loginedUser.getLastLoginDate().getTime();
 			long timeDiff = 1000*60*5 - (current - lastLoginTime);
 			if (loginedUser.getLoginRetryCount() > 3 && timeDiff > 0) {
@@ -64,6 +66,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		}
 		
 		if (!passwordEncoder.matches(password, loginedUser.getPassword()) && "ACTIVE".equals(loginedUser.getStatus())) {
+			logger.debug("# CustomAuthenticationFilter || Wrong password [{}]", loginedUser);
 			if (loginedUser.getLoginRetryCount() >= 5) {
 				loginedUser.setStatus("DEACTIVE");
 				userService.updateUser(loginedUser);
@@ -77,6 +80,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		}
 		
 		if (!"ACTIVE".equals(loginedUser.getStatus())) {
+			logger.debug("# CustomAuthenticationFilter || Locked account [{}]", loginedUser);
 			throw new AuthenticationServiceException("Account is locked. Please contact the administrator for support.");
 		}
 

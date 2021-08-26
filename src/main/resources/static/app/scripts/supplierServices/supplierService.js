@@ -123,19 +123,19 @@ let fn = {
         $("#cmbGrade").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.grade, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', checkboxes: true });
         $("#cmbNoPayment").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.noPayment, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
 
-        $("#iptPrice").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, min: 0 });
-        $("#iptAmt01").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
-        $("#iptAmt02").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
-        $("#iptAmt03").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
-        $("#iptAmt04").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
-        $("#iptAmt05").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
-        $("#iptAmt06").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
-        $("#iptAmt07").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
-        $("#iptAmt08").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
-        $("#iptAmt09").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
-        $("#iptAmt10").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
-        $("#iptAmt11").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
-        $("#iptAmt12").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false });
+        $("#iptPrice").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, min: 0, groupSeparator: ".", decimalSeparator: "," });
+        $("#iptAmt01").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
+        $("#iptAmt02").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
+        $("#iptAmt03").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
+        $("#iptAmt04").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
+        $("#iptAmt05").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
+        $("#iptAmt06").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
+        $("#iptAmt07").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
+        $("#iptAmt08").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
+        $("#iptAmt09").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
+        $("#iptAmt10").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
+        $("#iptAmt11").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
+        $("#iptAmt12").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
         $('#btnSrch').click(function () {
             $('#grdDetail').jqxGrid('refresh');
             fn.onSearch();
