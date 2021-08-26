@@ -227,6 +227,7 @@ function createGrid() {
     let dataAdapter = new $.jqx.dataAdapter(source);
     $("#grdBank").jqxGrid({
         source: dataAdapter,
+        pageable: true,
         columns: [{
                 text: 'Date',
                 datafield: 'bankStatementDate',
@@ -300,6 +301,7 @@ function ceateGridBank() {
     $("#grdBankDetail").jqxGrid({
         source: dataAdapter,
         selectionmode: 'singlecell',
+        pageable: true,
         editable: true,
             columns: [{
                 text: 'Account Number',
@@ -416,6 +418,7 @@ function onSave() {
         false,
         data,
         function onSuccess(data) {
+        	tr_update = [];
             $("#bankpopup").jqxWindow('close')
             onSearch();
         }

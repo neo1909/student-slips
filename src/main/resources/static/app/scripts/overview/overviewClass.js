@@ -100,6 +100,7 @@ function createGrid() {
     
     $("#grdOverviewClass").jqxGrid({
         source: dataAdapter,
+        pageable: true,
         columns: [{
                 text: 'Name and surname',
                 datafield: 'studentId',
@@ -177,6 +178,7 @@ function createGridDetail() {
     let dataAdapter = new $.jqx.dataAdapter(sourceDetail);
     $("#grdOverviewClassDetail").jqxGrid({
         source: dataAdapter,
+        pageable: true,
         editable: true,
             columns: [{
                 text: 'Name and surname',

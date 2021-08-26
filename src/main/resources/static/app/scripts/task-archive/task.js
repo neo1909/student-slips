@@ -60,6 +60,7 @@ function createGrid() {
     let dataAdapter = new $.jqx.dataAdapter(source);
     $("#grdTask").jqxGrid({
         source: dataAdapter,
+        pageable: true,
         columns: [{
                 text: 'Date',
                 datafield: 'debitDate',

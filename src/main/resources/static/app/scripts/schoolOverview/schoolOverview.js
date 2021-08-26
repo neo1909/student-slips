@@ -35,6 +35,7 @@ let fnOverview = {
 
         $("#grdSchoolOverview").jqxGrid({
             source: dataAdapter,
+            pageable: true,
             columns: [
                 {
                     text: 'No.', datafield: '', align: 'center', cellsalign: 'center', width: '5%'
@@ -220,6 +221,7 @@ let fnDetail = {
 
         $("#grdSchoolDetail").jqxGrid({
             source: dataAdapter,
+            pageable: true,
             columns: [
                 {
                     text: 'No.', datafield: '', align: 'center', cellsalign: 'center', width: '5%'

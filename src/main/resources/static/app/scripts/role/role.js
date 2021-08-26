@@ -23,6 +23,7 @@ var fn = {
         
         $("#grdRole").jqxGrid({
             source: dataAdapter,
+            pageable: true,
             columnsresize: true,
             adaptive: true,
             columns: [

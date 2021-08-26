@@ -35,6 +35,7 @@ let fn = {
 
         $("#grdSupplier").jqxGrid({
             source: dataAdapter,
+            pageable: true,
             columns: [
                 { text: 'No.', datafield: '', align: 'center', cellsalign:'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {

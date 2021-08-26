@@ -64,6 +64,7 @@ let fn = {
 
         $("#grdDetail").jqxGrid({
             source: dataAdapter,
+            pageable: true,
             columns: [
                 {
                     text: 'No.', datafield: '', align: 'center', cellsalign: 'center', width: '5%'

@@ -35,6 +35,7 @@ var fn = {
         $("#grdUser").jqxGrid({
             source: dataAdapter,
             columnsresize: true,
+            pageable: true,
             adaptive: true,
             columns: [
 	            { text: '#', datafield: 'rnum', align: 'center', cellsalign: 'center', width: '5%', editable: false },

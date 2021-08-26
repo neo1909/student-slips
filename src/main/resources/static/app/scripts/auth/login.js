@@ -18,13 +18,13 @@ let fn = {
 		
     	var username = $("#iptLoginUsername").val();
     	var password = $("#iptLoginPassword").val();
-    	
+    			
 		$.ajax({
 			url : "/authenticate",
 			type : 'POST',
 			data: {
             	username: username,
-            	password: password
+            	password: CryptoJS.AES.encrypt(password, "!@#studentslips-2021").toString()
             },
 			success : function(data) {
 				let result = JSON.parse(data);
