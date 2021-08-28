@@ -1,17 +1,16 @@
 package com.studentslips.services;
 
-import com.studentslips.common.SessionUtil;
-import com.studentslips.dao.SupplierDao;
-import com.studentslips.entities.Supplier;
-import com.studentslips.entities.SupplierServiceDetail;
-import com.studentslips.entities.SupplierServiceDetailGroup;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.Set;
+import com.studentslips.common.SessionUtil;
+import com.studentslips.common.StudentSlipException;
+import com.studentslips.dao.SupplierDao;
+import com.studentslips.entities.Supplier;
+import com.studentslips.entities.SupplierServiceDetail;
+import com.studentslips.entities.SupplierServiceDetailGroup;
 
 @Component(value = "SupplierService")
 public class SupplierServiceImpl implements SupplierService {
@@ -23,12 +22,6 @@ public class SupplierServiceImpl implements SupplierService {
     public List<Supplier> selectAllSupplier(Supplier supplier) throws Exception {
         supplier.setSchoolId(SessionUtil.getSchoolId());
         return supplierDao.selectAllSupplier(supplier);
-    }
-
-    @Override
-    public List<SupplierServiceDetail> selectAllSupplierDetail(SupplierServiceDetail supplierServiceDetail) throws Exception {
-        supplierServiceDetail.setSchoolId(SessionUtil.getSchoolId());
-        return supplierDao.selectAllSupplierService(supplierServiceDetail);
     }
 
     @Override
@@ -58,73 +51,114 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public void insertSupplierServiceDetail(SupplierServiceDetail std) throws Exception {
-    	List<Integer> listGradeIds = std.getListGradeIds();
-    	std.setInsertId(SessionUtil.getUserLoginId());
-    	std.setSchoolId(SessionUtil.getSchoolId());
-    	for (Integer gradeId: listGradeIds) {
-    		std.setGrade(gradeId);
-    		supplierDao.insertSupplierService(std);
+    public List<SupplierServiceDetail> selectAllSupplierDetail(SupplierServiceDetail supplierServiceDetail) throws Exception {
+        supplierServiceDetail.setSchoolId(SessionUtil.getSchoolId());
+        if (supplierServiceDetail.getGrade() == 0) {
+            return supplierDao.selectSupplierServiceAllGrades(supplierServiceDetail);
+        }
+        return supplierDao.selectAllSupplierService(supplierServiceDetail);
+    }
+
+    @Override
+    public void insertSupplierServiceDetail(SupplierServiceDetailGroup ssg) throws Exception {    	
+    	int count = supplierDao.countSupplierServiceGroup(ssg);
+    	if (count > 0) {
+        	throw new StudentSlipException("No Insert. Supplier - Service ID has already been existed.");
+    	}
+    	
+    	ssg.setInsertId(SessionUtil.getUserLoginId());
+    	ssg.setSchoolId(SessionUtil.getSchoolId());
+        int result = supplierDao.insertSupplierServiceGroup(ssg);
+        if (result > 0) {
+        	SupplierServiceDetail ssd = new SupplierServiceDetail();
+        	ssd.setGroupId(ssg.getGroupId());
+        	ssd.setListGradeIdsStr(ssg.getListGradeIdsStr());
+        	ssd.setListGradeIds(ssg.getListGradeIds());
+        	ssd.setName(ssg.getName());
+        	ssd.setSupplierId(ssg.getSupplierId());
+        	ssd.setServiceId(ssg.getServiceId());
+        	ssd.setSchoolId(ssg.getSchoolId());
+        	ssd.setInsertId(SessionUtil.getUserLoginId());
+        	for (Integer grade: ssd.getListGradeIds()) {
+        		ssd.setId(0);
+        		ssd.setGrade(grade);
+    			supplierDao.insertSupplierService(ssd);
+        	}
+        } else {
+        	throw new StudentSlipException("Failed to create Supplier - Service Detail");
+        }
+    }
+
+    @Override
+    public void updateSupplierServiceDetail(SupplierServiceDetailGroup ssg) throws Exception {
+    	
+    	int count = supplierDao.countSupplierServiceGroup(ssg);
+    	if (count > 0) {
+        	throw new StudentSlipException("No Update. Supplier - Service ID has already been existed.");
+    	}
+    	
+    	ssg.setUpdateId(SessionUtil.getUserLoginId());
+        supplierDao.updateSupplierServiceGroup(ssg);
+
+		SupplierServiceDetail ssdInsert = new SupplierServiceDetail();
+		ssdInsert.setName(ssg.getName());
+		ssdInsert.setSupplierId(ssg.getSupplierId());
+		ssdInsert.setServiceId(ssg.getServiceId());
+		ssdInsert.setGroupId(ssg.getGroupId());
+		ssdInsert.setSchoolId(ssg.getSchoolId());
+		ssdInsert.setInsertId(SessionUtil.getUserLoginId());
+    	if (!ssg.getTrInsert().isEmpty()) {
+	    	for (Integer grade: ssg.getTrInsert()) {
+	    		ssdInsert.setId(0);
+	    		ssdInsert.setGrade(grade);
+	            supplierDao.insertSupplierService(ssdInsert);
+	    	}
+    	}
+
+    	if (!ssg.getTrDelete().isEmpty()) {
+    		SupplierServiceDetail ssdDelete = new SupplierServiceDetail();
+    		ssdDelete.setListGradeIds(ssg.getTrDelete());
+    		ssdDelete.setGroupId(ssg.getGroupId());
+    		ssdDelete.setUpdateId(SessionUtil.getUserLoginId());
+    		supplierDao.deleteSupplierService(ssdDelete);
+    	}
+
+    	if (!ssg.getTrUpdate().isEmpty()) {
+	    	SupplierServiceDetail ssdUpdate = new SupplierServiceDetail();
+	    	ssdUpdate.setName(ssg.getName());
+	    	ssdUpdate.setListGradeIds(ssg.getTrUpdate());
+	    	ssdUpdate.setSupplierId(ssg.getSupplierId());
+	    	ssdUpdate.setServiceId(ssg.getServiceId());
+	    	ssdUpdate.setSchoolId(ssg.getSchoolId());
+	    	ssdUpdate.setGroupId(ssg.getGroupId());
+	    	ssdUpdate.setUpdateId(SessionUtil.getUserLoginId());
+	    	supplierDao.updateSupplierService(ssdUpdate);
     	}
     }
 
     @Override
-    public void updateSupplierServiceDetail(SupplierServiceDetail std) throws Exception {
-    	SupplierServiceDetailGroup searchGroup = getSupplierServiceGroupByGroupId(std);
-        std.setUpdateId(SessionUtil.getUserLoginId());
-    	for (Integer gradeId: std.getTrInsert()) {
-    		std.setGrade(gradeId);
-    		std.setSchoolId(searchGroup.getSchoolId());
-    		std.setInsertId(SessionUtil.getUserLoginId());
-            supplierDao.insertSupplierService(std);
-    	}
-    	for (Integer gradeId: std.getTrDelete()) {
-    		std.setGrade(gradeId);
-    		std.setInsertId(0);
-            supplierDao.deleteSupplierService(std);
-    	}
-    	
-    	std.setId(0);
-    	std.setGrade(0);
-		std.setInsertId(0);
-        supplierDao.updateSupplierService(std);
-    	
-    	SupplierServiceDetailGroup group = new SupplierServiceDetailGroup();
-    	group.setGroupId(std.getGroupId());
-    	group.setName(std.getName());
-    	group.setUpdateId(SessionUtil.getUserLoginId());
-        supplierDao.updateSupplierServiceGroup(group);
-    }
-
-    @Override
-    public void deleteSupplierServiceDetail(SupplierServiceDetail std) throws Exception {
-    	SupplierServiceDetailGroup group = new SupplierServiceDetailGroup();
-    	group.setGroupId(std.getGroupId());
-    	group.setUpdateId(SessionUtil.getUserLoginId());
-    	int cnt = supplierDao.deleteSupplierServiceGroup(group);
+    public void deleteSupplierServiceDetail(SupplierServiceDetailGroup ssg) throws Exception {
+    	ssg.setUpdateId(SessionUtil.getUserLoginId());
+    	int cnt = supplierDao.deleteSupplierServiceGroup(ssg);
     	if (cnt > 0) {
-    		std.setUpdateId(SessionUtil.getUserLoginId());
-    		supplierDao.deleteSupplierService(std);
+    		SupplierServiceDetail ssd = new SupplierServiceDetail();
+    		ssd.setGroupId(ssg.getGroupId());
+    		supplierDao.deleteSupplierService(ssd);
     	}
     }
 
 	@Override
-	public List<SupplierServiceDetailGroup> getAllSupplierServiceGroups(SupplierServiceDetail std) {
-		return supplierDao.getAllSupplierServiceGroups(std);
+	public List<SupplierServiceDetailGroup> getAllSupplierServiceGroups(SupplierServiceDetail ssd) {
+		return supplierDao.selectAllSupplierServiceGroups(ssd);
 	}
 
 	@Override
-	public SupplierServiceDetailGroup getSupplierServiceGroupByGroupId(SupplierServiceDetail std) {
-		return supplierDao.getSupplierServiceGroupByGroupId(std);
+	public SupplierServiceDetailGroup getSupplierServiceGroupByGroupId(SupplierServiceDetail ssd) {
+		return supplierDao.selectSupplierServiceGroupByGroupId(ssd);
 	}
-
+    
     @Override
-    public SupplierServiceDetailGroup insertSupplierServiceGroup(SupplierServiceDetail std) throws Exception {
-    	SupplierServiceDetailGroup group = new SupplierServiceDetailGroup();
-    	group.setName(std.getName());
-    	group.setInsertId(SessionUtil.getUserLoginId());
-    	group.setSchoolId(SessionUtil.getSchoolId());
-        supplierDao.insertSupplierServiceGroup(group);
-        return group;
+    public SupplierServiceDetailGroup getAllInstallmentsByGradeAndService(SupplierServiceDetail ssd) {
+    	return supplierDao.getAllInstallmentsByGradeAndService(ssd);
     }
 }
