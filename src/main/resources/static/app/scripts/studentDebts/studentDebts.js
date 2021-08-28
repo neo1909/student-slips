@@ -57,8 +57,11 @@ function onGetService(gradeId) {
 
         function onSuccess(data) {
             if (data && data.lst && data.lst.length > 0) {
+            	let dataList = [...data.lst].map(d => {
+            		return { serviceId: d.serviceId, serviceName: d.serviceName }
+            	});
                 $("#cmbStdServiceSrch").jqxDropDownList({
-                    source: [{serviceId: '', serviceName: ''}, ...data.lst],
+                    source: [{serviceId: '', serviceName: ''}, ...dataList],
                     displayMember: "serviceName",
                     valueMember: "serviceId",
                     disabled: false,

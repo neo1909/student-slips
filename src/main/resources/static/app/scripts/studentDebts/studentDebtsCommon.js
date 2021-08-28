@@ -409,13 +409,14 @@ $(document).ready(function() {
 			        ${rows[i].referenceNo}
 			    </label>
 			    <label class="currencyDate">
-			        EMPTY_FIELD
+
 			    </label>
 			    <label class="currency">
 			        RSDS
 			    </label>
+			 </div>
         	`;
-        	pageContent += '<div style="break-after: always"></div>';
+        	pageContent += '<div style="break-after: always; page-break-after: always;"></div>';
         }
         pageContent += '</body></html>'
         document.write(pageContent);

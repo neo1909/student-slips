@@ -68,15 +68,19 @@ function onGetService(gradeId) {
 
         function onSuccess(data) {
             if (data && data.lst && data.lst.length > 0) {
+            	let dataList = [...data.lst].map(d => {
+            		return { serviceId: d.serviceId, serviceName: d.serviceName }
+            	});
+            	console.log(dataList);
                 $("#cmbStdServiceSrch").jqxDropDownList({
-                    source: [{serviceId: '', serviceName: ''}, ...data.lst],
+                    source: [{serviceId: '', serviceName: ''}, ...dataList],
                     displayMember: "serviceName",
                     valueMember: "serviceId",
                     disabled: true,
                     selectedIndex: 0
                 });
                 
-        		let serviceItem = $("#cmbStdServiceSrch").jqxDropDownList('getItemByValue', updateTaskOriginalData.serviceId);
+        		let serviceItem = $("#cmbStdServiceSrch").jqxDropDownList('getItem', updateTaskOriginalData.serviceId);
         		$("#cmbStdServiceSrch").jqxDropDownList('selectItem', serviceItem);
             	
                 return;
