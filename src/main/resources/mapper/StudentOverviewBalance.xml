@@ -91,7 +91,7 @@
 
 
     <select id="selectDistinctServiceStdDebts" parameterType="int" resultType="int">
-        SELECT distinct service_id FROM PS_Students_Debts where student_id = 1;
+        SELECT distinct service_id FROM PS_Students_Debts where student_id = #{studentId};
     </select>
 
 </mapper>
