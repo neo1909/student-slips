@@ -280,4 +280,11 @@ CREATE TABLE `ps_suppliers_service_group` (
   `update_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 )
+
+ALTER TABLE `onetouch`.`ps_students_debts` 
+ADD COLUMN `installment` INT NULL AFTER `installment`;
+
+ALTER TABLE `onetouch`.`ps_students_debts_task` 
+ADD COLUMN `installment` INT NULL AFTER `debit_date`,
+ADD COLUMN `price` DECIMAL(10,2) NULL AFTER `installment`;
 -- 28/08/2021 Change `supplier_service` and `supplier_service-group` ===== END
