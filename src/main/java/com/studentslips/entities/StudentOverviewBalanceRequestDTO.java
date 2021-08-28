@@ -8,8 +8,9 @@ public class StudentOverviewBalanceRequestDTO {
     private int id;
     private int serviceId;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date fromDate;
-
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date toDate;
 
     public int getId() {

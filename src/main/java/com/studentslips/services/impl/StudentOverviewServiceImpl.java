@@ -60,7 +60,7 @@ public class StudentOverviewServiceImpl implements StudentOverviewService {
                     dto1.setBalance(dto1.getDebit());
                     if (i > 0) {
                         if(studentOverviewBalanceList.get(i-1).getRowType() == 1) {
-                            bankBalance = bankBalance.add(dto1.getDebit().add(studentOverviewBalanceList.get(i-1).getBalance()));
+                            bankBalance = bankBalance.add(dto1.getDebit());
                         } else {
                             bankBalance = dto1.getDebit().add(bankBalance);
                         }

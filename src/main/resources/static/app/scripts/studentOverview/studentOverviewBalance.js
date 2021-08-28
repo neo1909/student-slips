@@ -190,15 +190,7 @@ let fnPopup = {
             let fromDateStr = $('#iptFromDate').val();
             let toDateStr = $('#iptToDate').val();
 
-            let dateParts = fromDateStr.split("/");
-
-            let fromDate = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-
-            dateParts = toDateStr.split("/");
-
-            let toDate = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-
-            fnPopup.onSearch(fromDate, toDate)
+            fnPopup.onSearch(fromDateStr, toDateStr)
         });
     },
 
