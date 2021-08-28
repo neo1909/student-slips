@@ -3,8 +3,8 @@
 
 <mapper namespace="StudentDebtsDao">
     <insert id="insertStudentDebts" parameterType="com.studentslips.entities.StudentsDebts" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO PS_Students_Debts (student_id,suppliers_id, service_id, school_id, reference_no, quantity, purpose,debit_date, amount_debt,price,grade,class, del_yn, insert_date, insert_id, task_id)
-        VALUES (#{studentId}, #{suppliersId}, #{serviceId}, #{schoolId},#{referenceNo},#{quantity}, #{purpose}, #{debitDate},#{amountDebt},#{price},#{grade},#{sClass}, 'N', SYSDATE(), #{insertId}, #{taskId});
+        INSERT INTO PS_Students_Debts (student_id,suppliers_id, service_id, school_id, reference_no, quantity, purpose,debit_date, amount_debt,price,grade,class, del_yn, insert_date, insert_id, task_id, installment)
+        VALUES (#{studentId}, #{suppliersId}, #{serviceId}, #{schoolId},#{referenceNo},#{quantity}, #{purpose}, #{debitDate},#{amountDebt},#{price},#{grade},#{sClass}, 'N', SYSDATE(), #{insertId}, #{taskId}, #{installment});
     </insert>
 
     <update id="updateStudentDebts" parameterType="com.studentslips.entities.StudentsDebts">
@@ -130,7 +130,7 @@
     </select>
 
     <select id="selectAllStudentDebts" parameterType="com.studentslips.entities.TaskArchiveSearch" resultMap="result">
-        select sd.id,sd.debit_date,sd.grade,sd.class,(select name from onetouch.PS_Service where sd.service_id=id) as service_name,sd.purpose,sd.price
+        select sd.id,sd.debit_date,sd.grade,sd.class,(select name from onetouch.PS_Service where sd.service_id=id) as service_name,sd.purpose,sd.price, sd.installment
         ,sd.suppliers_id,sd.service_id,sd.school_id
         from onetouch.PS_Students_Debts sd
         where sd.debit_date between #{fromDate} and  #{toDate} and sd.del_yn='N'
@@ -167,7 +167,7 @@
         <result property = "price" column = "price"/>
         <result property = "grade" column = "grade"/>
         <result property = "sClass" column = "class"/>
-        <result property = "id" column = "id"/>
+        <result property = "installment" column = "installment"/>
     </resultMap>
     
     
@@ -175,7 +175,7 @@
     	TASK_ARCHIVE
      -->
     <select id="searchTaskArchives" parameterType="com.studentslips.entities.TaskArchiveSearch" resultMap="studentsDebtsTaskModel">
-    	select T01.id, T01.school_id, T01.grade, T01.class, T01.service_id, S01.name as service_name, T01.note, T01.debit_date, T01.del_yn, T01.insert_id, T01.insert_date, T01.update_id, T01.update_date
+    	select T01.id, T01.school_id, T01.grade, T01.class, T01.service_id, S01.name as service_name, T01.note, T01.debit_date, T01.installment, T01.price, T01.del_yn, T01.insert_id, T01.insert_date, T01.update_id, T01.update_date
     	from onetouch.PS_Students_Debts_Task T01
     	left join onetouch.PS_Service S01 on T01.service_id = S01.id and S01.del_yn = 'N'
     	where 1=1
@@ -204,8 +204,8 @@
     </select>
     
     <insert id="insertTaskArchive" parameterType="com.studentslips.entities.StudentsDebtsTask" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT INTO onetouch.PS_Students_Debts_Task (school_id, grade, class, service_id, note, debit_date, del_yn, insert_date, insert_id)
-        VALUES (#{schoolId}, #{grade}, #{sClass}, #{serviceId}, #{note}, #{debitDate}, 'N', SYSDATE(), #{insertId});
+        INSERT INTO onetouch.PS_Students_Debts_Task (school_id, grade, class, service_id, note, debit_date, installment, price, del_yn, insert_date, insert_id)
+        VALUES (#{schoolId}, #{grade}, #{sClass}, #{serviceId}, #{note}, #{debitDate}, #{installment}, #{price}, 'N', SYSDATE(), #{insertId});
     </insert>
     
     <delete id="deleteTaskArchive" parameterType="com.studentslips.entities.StudentsDebtsTask">
@@ -236,6 +236,8 @@
         <result property = "serviceName" column = "service_name"/>
         <result property = "note" column = "note"/>
         <result property = "debitDate" column = "debit_date"/>
+        <result property = "installment" column = "installment"/>
+        <result property = "price" column = "price"/>
         <result property = "delYn" column = "del_yn"/>
         <result property = "insertId" column = "insert_id"/>
         <result property = "insertDate" column = "insert_date"/>

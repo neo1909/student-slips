@@ -431,13 +431,18 @@ function onSave() {
 $(document).ready(function () {
     init();
     createGrid();
-    ceateGridBank()
-     setMinDate($("#iptFromDate").val('date'));
-     $('#iptFromDate').on('valueChanged', function (event)
-     {
-         const jsDate = event.args.date;
-         setMinDate(jsDate)
-     });
+    ceateGridBank();
+    const date = new Date()
+    const year = date.getFullYear();
+    let month = date.getMonth();
+    const day = +date.getDate();
+    $("#iptFromDate").jqxDateTimeInput('setDate', new Date( year, month-1, day));
+//     setMinDate($("#iptFromDate").val('date'));
+//     $('#iptFromDate').on('valueChanged', function (event)
+//     {
+//         const jsDate = event.args.date;
+//         setMinDate(jsDate)
+//     });
     $('#btnStdSrch').click(function () {
         $('#grdBank').jqxGrid('refresh');
         onSearch();

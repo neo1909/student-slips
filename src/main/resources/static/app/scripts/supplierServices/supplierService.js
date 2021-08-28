@@ -93,7 +93,7 @@ let fn = {
             ],
             theme: 'bootstrap',
             width: '100%',
-            height: 400,
+            height: '650',
             rowsheight: 33
         });
         let localizationobj = {
@@ -160,6 +160,10 @@ let fn = {
 			hintType: 'label',
             rules: [
                 { input: '#iptNm', message: 'Name is required', action: 'keyup, blur', rule: 'required' },
+                { input: '#iptPrice', message: 'Price must be equals or greater than 0', action: 'change, keyup, blur', rule: function () {
+	            		return ($('#iptPrice').val() >= 0)
+	            	} 
+	            },
                 { input: '#cmbSupplier', message: 'Supplier is required', action: 'change, keyup, blur', rule: function () {
                 		return ($('#cmbSupplier').val() > 0)
                 	} 
@@ -237,6 +241,9 @@ let fn = {
                 	trDelete: tr_delete,
                 }),
                 function onSuccess(data) {
+                	if (data && data.status == 'NG' && data.message) {
+                        SS.alert(SS.title.ERROR, data.message);
+                	}
                     $("#popupDetail").jqxWindow('close');
                     fn.onSearch();
                 }
@@ -247,8 +254,14 @@ let fn = {
                 false,
                 data,
                 function onSuccess(data) {
+                	if (data && data.status == 'NG' && data.message) {
+                        SS.alert(SS.title.ERROR, data.message);
+                	}
                     $("#popupDetail").jqxWindow('close');
                     fn.onSearch();
+                },
+                function onError(err) {
+                    SS.alert(SS.title.ERROR, SS.message.ERROR);
                 }
             );
         }
@@ -369,6 +382,9 @@ let fn = {
                     function onSuccess(data) {
                         if (Object.keys(data).length > 0) {
                             let obj = data.obj;
+                            if (!obj) {
+                            	 SS.alert(SS.title.ERROR, "Unable to get this record data");
+                            }
                             $('#iptId').val(obj.groupId);
                             $('#iptPrice').val(obj.price);
                             $('#iptNm').val(obj.name);

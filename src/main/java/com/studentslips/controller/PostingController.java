@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.studentslips.entities.TaskArchiveSearch;
 import com.studentslips.services.StudentDebtsService;
@@ -24,7 +24,12 @@ public class PostingController {
 	 * 
 	 * */
     @GetMapping("student-debts")
-    public String getStudentDebtsPage(Model model, @RequestParam(required=false) String id) throws Exception {
+    public String getStudentDebtsPage(Model model) throws Exception {
+        return "studentDebts/studentDebts";
+    }
+    
+    @GetMapping("student-debts/update/{id}")
+    public String getStudentDebtsUpdatePage(Model model, @PathVariable String id) throws Exception {
     	if (StringUtils.isNotBlank(id)) {
     		TaskArchiveSearch taskArchiveSearch = new TaskArchiveSearch();
     		taskArchiveSearch.setTaskId(Integer.parseInt(id));
@@ -33,7 +38,7 @@ public class PostingController {
 		    	model.addAttribute("taskId", id);
 			}
     	}
-        return "studentDebts/studentDebts";
+        return "studentDebts/studentDebtsUpdate";
     }
     
     /**

@@ -235,3 +235,56 @@ CREATE TABLE `ps_user_session` (
 ALTER TABLE `onetouch`.`ps_service` 
 ADD COLUMN `supplier_id` INT NULL AFTER `school_id`; -- no need to add as FK
 
+-- 28/08/2021 Change `supplier_service` and `supplier_service-group` ===== START
+DROP TABLE IF EXISTS `ps_suppliers_service`;
+CREATE TABLE `ps_suppliers_service` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `supplier_id` int NOT NULL,
+  `service_id` int NOT NULL,
+  `school_id` int NOT NULL,
+  `grade` int DEFAULT NULL,
+  `del_yn` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `group_id` int DEFAULT NULL,
+  `insert_id` int DEFAULT NULL,
+  `insert_date` date DEFAULT NULL,
+  `update_id` int DEFAULT NULL,
+  `update_date` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+DROP TABLE IF EXISTS `ps_suppliers_service_group`;
+CREATE TABLE `ps_suppliers_service_group` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `school_id` int NOT NULL,
+  `supplier_id` int NOT NULL,
+  `service_id` int NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `no_payment` int NOT NULL,
+  `amount_1` decimal(10,2) DEFAULT NULL,
+  `amount_2` decimal(10,2) DEFAULT NULL,
+  `amount_3` decimal(10,2) DEFAULT NULL,
+  `amount_4` decimal(10,2) DEFAULT NULL,
+  `amount_5` decimal(10,2) DEFAULT NULL,
+  `amount_6` decimal(10,2) DEFAULT NULL,
+  `amount_7` decimal(10,2) DEFAULT NULL,
+  `amount_8` decimal(10,2) DEFAULT NULL,
+  `amount_9` decimal(10,2) DEFAULT NULL,
+  `amount_10` decimal(10,2) DEFAULT NULL,
+  `amount_11` decimal(10,2) DEFAULT NULL,
+  `amount_12` decimal(10,2) DEFAULT NULL,
+  `del_yn` varchar(1) NOT NULL,
+  `insert_id` int DEFAULT NULL,
+  `insert_date` datetime DEFAULT NULL,
+  `update_id` int DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+)
+
+ALTER TABLE `onetouch`.`ps_students_debts` 
+ADD COLUMN `installment` INT NULL AFTER `installment`;
+
+ALTER TABLE `onetouch`.`ps_students_debts_task` 
+ADD COLUMN `installment` INT NULL AFTER `debit_date`,
+ADD COLUMN `price` DECIMAL(10,2) NULL AFTER `installment`;
+-- 28/08/2021 Change `supplier_service` and `supplier_service-group` ===== END

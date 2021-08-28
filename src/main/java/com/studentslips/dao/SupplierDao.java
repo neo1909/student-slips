@@ -21,36 +21,47 @@ public class SupplierDao {
     public List<Supplier> selectAllSupplier(Supplier supplier) {
         return this.sqlSession.selectList("selectAllSupplier", supplier);
     }
-    public List<SupplierServiceDetail> selectAllSupplierService(SupplierServiceDetail supplierServiceDetail) {
-        return this.sqlSession.selectList("selectSupplierDetail", supplierServiceDetail);
+    public Supplier selectSupplierById(int supplierId) {
+        return this.sqlSession.selectOne("selectSupplierById", supplierId);
     }
     public int insertSupplier(Supplier supplier) {
         return this.sqlSession.insert("insertSupplier", supplier);
     }
-
-    public int insertSupplierService(SupplierServiceDetail supplierServiceDetail) {
-        return this.sqlSession.insert("insertSupplierService", supplierServiceDetail);
-    }
     public int updateSupplier(Supplier supplier) {
         return this.sqlSession.update("updateSupplier", supplier);
-    }
-
-    public int updateSupplierService(SupplierServiceDetail supplierServiceDetail) {
-        return this.sqlSession.update("updateSupplierService", supplierServiceDetail);
     }
     public int deleteSupplier(Supplier supplier) {
         return this.sqlSession.update("deleteSupplier", supplier);
     }
 
+    
+    
+    public List<SupplierServiceDetail> selectAllSupplierService(SupplierServiceDetail supplierServiceDetail) {
+        return this.sqlSession.selectList("selectAllSupplierService", supplierServiceDetail);
+    }
+    public List<SupplierServiceDetail> selectSupplierServiceAllGrades(SupplierServiceDetail supplierServiceDetail) {
+        return this.sqlSession.selectList("selectSupplierServiceAllGrades", supplierServiceDetail);
+    }
+    public int insertSupplierService(SupplierServiceDetail supplierServiceDetail) {
+        return this.sqlSession.insert("insertSupplierService", supplierServiceDetail);
+    }
+    public int updateSupplierService(SupplierServiceDetail supplierServiceDetail) {
+        return this.sqlSession.update("updateSupplierService", supplierServiceDetail);
+    }
     public int deleteSupplierService(SupplierServiceDetail supplierServiceDetail) {
         return this.sqlSession.update("deleteSupplierService", supplierServiceDetail);
     }
-    public Supplier selectSupplierById(int supplierId) {
-        return this.sqlSession.selectOne("selectSupplierById", supplierId);
+
+
+    public List<SupplierServiceDetailGroup> selectAllSupplierServiceGroups(SupplierServiceDetail supplierServiceDetail) {
+        return this.sqlSession.selectList("selectAllSupplierServiceGroups", supplierServiceDetail);
     }
-
-
-
+    public SupplierServiceDetailGroup selectSupplierServiceGroupByGroupId(SupplierServiceDetail supplierServiceDetail) {
+        return this.sqlSession.selectOne("selectSupplierServiceGroupByGroupId", supplierServiceDetail);
+    }
+    public int countSupplierServiceGroup(SupplierServiceDetailGroup supplierServiceDetailGroup) {
+        return this.sqlSession.selectOne("countSupplierServiceGroup", supplierServiceDetailGroup);
+    }
     public int insertSupplierServiceGroup(SupplierServiceDetailGroup supplierServiceDetailGroup) {
         return this.sqlSession.insert("insertSupplierServiceGroup", supplierServiceDetailGroup);
     }
@@ -61,12 +72,9 @@ public class SupplierDao {
         return this.sqlSession.update("deleteSupplierServiceGroup", supplierServiceDetailGroup);
     }
     
-    
-    public List<SupplierServiceDetailGroup> getAllSupplierServiceGroups(SupplierServiceDetail supplierServiceDetail) {
-        return this.sqlSession.selectList("getAllSupplierServiceGroups", supplierServiceDetail);
-    }
 
-    public SupplierServiceDetailGroup getSupplierServiceGroupByGroupId(SupplierServiceDetail supplierServiceDetail) {
-        return this.sqlSession.selectOne("getSupplierServiceGroupByGroupId", supplierServiceDetail);
+    
+    public SupplierServiceDetailGroup getAllInstallmentsByGradeAndService(SupplierServiceDetail supplierServiceDetail) {
+    	return this.sqlSession.selectOne("getAllInstallmentsByGradeAndService", supplierServiceDetail);
     }
 }

@@ -2,135 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="SupplierDao">
-    <insert id="insertSupplier" parameterType="com.studentslips.entities.Supplier"  useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO onetouch.PS_Suppliers (NAME, school_id, del_yn, insert_date, insert_id)
-        VALUES (#{name}, #{schoolId}, 'N', SYSDATE(), #{insertId});
-    </insert>
-    <insert id="insertSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        INSERT INTO onetouch.PS_Suppliers_Service ( name, suppliers_id, service_id,school_id,price,no_payment,amount_1,amount_2,amount_3,amount_4,amount_5,
-                                                   amount_6,amount_7,amount_8,amount_9,amount_10,amount_11,amount_12,grade,del_yn, insert_date, insert_id, group_id )
-        VALUES (#{name}, #{supplierId}, #{serviceId},#{schoolId},#{price},#{noPayment},#{amount1},#{amount2},#{amount3},#{amount4},#{amount5},#{amount6},#{amount7},
-                #{amount8},#{amount9},#{amount10},#{amount11},#{amount12},#{grade},'N', SYSDATE(), #{insertId}, #{groupId});
-    </insert>
-    <update id="updateSupplier" parameterType="com.studentslips.entities.Supplier">
-        UPDATE onetouch.PS_Suppliers  SET
-        <if test="name!= null and name != ''">
-            NAME = #{name},
-        </if>
-        update_id = #{updateId}, update_date = SYSDATE() WHERE ID = #{id}
-        <if test="schoolId!=0 ">
-            AND  school_id = #{schoolId}
-        </if>
-    </update>
-    <update id="updateSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail">
-        UPDATE onetouch.PS_Suppliers_Service  SET
-        <if test="name!= null and name!=''">
-            NAME = #{name},
-        </if>
-        <if test="serviceId != 0 ">
-        service_id=#{serviceId},
-        </if>
-        <if test="supplierId != 0 ">
-            suppliers_id=#{supplierId},
-        </if>
-        <if test="price!= 0 ">
-            price=#{price},
-        </if>
-        <if test="noPayment!= 0 ">
-            no_payment=#{noPayment},
-        </if>
-            amount_1=#{amount1},
-            amount_2=#{amount2},
-            amount_3=#{amount3},
-            amount_4=#{amount4},
-            amount_5=#{amount5},
-            amount_6=#{amount6},
-            amount_7=#{amount7},
-            amount_8=#{amount8},
-            amount_9=#{amount9},
-            amount_10=#{amount10},
-            amount_11=#{amount11},
-            amount_12=#{amount12},
-        update_id = #{updateId}
-        , update_date = SYSDATE()
 
-        WHERE 1=1
-        <if test="schoolId!=0 ">
-            AND  school_id = #{schoolId}
-        </if>
-        <if test="groupId != 0 ">
-            AND  group_id = #{groupId}
-        </if>
-        <if test="grade != 0">
-            AND grade=#{grade}
-        </if>
-        <if test="id != 0 ">
-            AND  id = #{id}
-        </if>
-    </update>
-    <update id="deleteSupplier" parameterType="com.studentslips.entities.Supplier">
-        UPDATE onetouch.PS_Suppliers  SET  del_yn = 'Y',update_id = #{updateId}, update_date = SYSDATE()
-        WHERE ID = #{id} AND del_yn = 'N';
-    </update>
-    <update id="deleteSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail">
-        UPDATE onetouch.PS_Suppliers_Service SET del_yn='Y'
-        WHERE 1=1
-        <if test="groupId != 0 ">
-            AND  group_id = #{groupId}
-        </if>
-        <if test="grade != 0 ">
-            AND  grade = #{grade}
-        </if>
-        <if test="id != 0 ">
-            AND  id = #{id}
-        </if>
-    </update>
-    <select id="selectSupplierDetail" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="result">
-
-        select
-            pss.id,
-            pss.name,
-            pss.suppliers_id,
-            pss.service_id,
-            pss.school_id,
-            pss.price,
-            pss.no_payment,
-            pss.grade,
-            pss.amount_1,
-            pss.amount_2,
-            pss.amount_3,
-            pss.amount_4,
-            pss.amount_5,
-            pss.amount_6,
-            pss.amount_7,
-            pss.amount_8,
-            pss.amount_9,
-            pss.amount_10,
-            pss.amount_11,
-            pss.amount_12,
-
-            ps.name as supplier_name,
-            ps2.name as service_name
-
-        from PS_Suppliers_Service pss
-        left join PS_Suppliers ps on ps.id = pss.suppliers_id
-        left join PS_Service ps2 on ps2.id = pss.service_id
-
-        where pss.del_yn = 'N'
-        <if test="id != 0">
-          AND pss.id = #{id}
-        </if>
-        <if test="schoolId != 0">
-          and pss.school_id = #{schoolId}
-        </if>
-        <if test="name != null and name != ''">
-            <bind name="nameLike" value="'%' + name + '%'" />
-            and   UPPER(pss.name) like UPPER(#{nameLike})
-        </if>
-        <if test="grade != 0">
-          and pss.grade = #{grade}
-        </if>
-    </select>
     <select id="selectAllSupplier" parameterType="com.studentslips.entities.Supplier"  resultMap="resultSupplier">
         SELECT S.id,S.name,S.school_id, (Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
         ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn
@@ -150,7 +22,24 @@
         FROM onetouch.PS_Suppliers S
         where S.del_yn='N' and S.id =#{id}
     </select>
-
+    <insert id="insertSupplier" parameterType="com.studentslips.entities.Supplier"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO onetouch.PS_Suppliers (NAME, school_id, del_yn, insert_date, insert_id)
+        VALUES (#{name}, #{schoolId}, 'N', SYSDATE(), #{insertId});
+    </insert>
+    <update id="updateSupplier" parameterType="com.studentslips.entities.Supplier">
+        UPDATE onetouch.PS_Suppliers  SET
+        <if test="name!= null and name != ''">
+            NAME = #{name},
+        </if>
+        update_id = #{updateId}, update_date = SYSDATE() WHERE ID = #{id}
+        <if test="schoolId!=0 ">
+            AND  school_id = #{schoolId}
+        </if>
+    </update>
+    <update id="deleteSupplier" parameterType="com.studentslips.entities.Supplier">
+        UPDATE onetouch.PS_Suppliers  SET  del_yn = 'Y',update_id = #{updateId}, update_date = SYSDATE()
+        WHERE ID = #{id} AND del_yn = 'N';
+    </update>
     <resultMap id = "resultSupplier" type = "com.studentslips.entities.Supplier">
         <result property = "id" column = "id"/>
         <result property = "name" column = "name"/>
@@ -162,50 +51,150 @@
         <result property = "updateId" column = "update_id"/>
         <result property = "updateDate" column = "update_date"/>
     </resultMap>
-
-    <resultMap id = "result" type = "com.studentslips.entities.SupplierServiceDetail">
+    
+    
+    
+    <insert id="insertSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO onetouch.PS_Suppliers_Service (name, supplier_id, service_id, school_id, grade, del_yn, group_id, insert_id, insert_date)
+        VALUES (#{name}, #{supplierId}, #{serviceId}, #{schoolId}, #{grade}, 'N', #{groupId}, #{insertId}, SYSDATE());
+    </insert>
+    <update id="updateSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail">
+        UPDATE onetouch.PS_Suppliers_Service
+        SET
+	        <if test="name != null and name != ''">
+	            NAME = #{name},
+	        </if>
+	        <if test="serviceId != 0">
+	        	service_id=#{serviceId},
+	        </if>
+	        <if test="supplierId != 0">
+	            supplier_id=#{supplierId},
+	        </if>
+	        update_id = #{updateId},
+	        update_date = SYSDATE()
+        WHERE 1=1
+		<if test="listGradeIds != null and !listGradeIds.isEmpty()">
+			<foreach item="item" index="index" collection="listGradeIds" open="AND grade IN (" separator="," close=")">#{item}</foreach>
+		</if>
+        <if test="schoolId != 0">
+            AND  school_id = #{schoolId}
+        </if>
+        <if test="groupId != 0">
+            AND  group_id = #{groupId}
+        </if>
+    </update>
+    <update id="deleteSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail">
+        UPDATE onetouch.PS_Suppliers_Service
+        SET
+	        del_yn='Y',
+	        update_id = #{updateId},
+	        update_date = SYSDATE()
+        WHERE 1=1
+		<if test="listGradeIds != null and !listGradeIds.isEmpty()">
+			<foreach item="item" index="index" collection="listGradeIds" open="AND grade IN (" separator="," close=")">#{item}</foreach>
+		</if>
+        <if test="groupId != 0">
+            AND group_id = #{groupId}
+        </if>
+    </update>
+    <select id="selectAllSupplierService" parameterType="com.studentslips.entities.SupplierServiceDetail" resultMap="resultSupplierService">
+        select
+            ssd.id,
+            ssd.name,
+            ssd.supplier_id,
+            ssd.service_id,
+            ssd.school_id,
+            ps.name as supplier_name,
+            ps2.name as service_name
+        from PS_Suppliers_Service ssd
+        left join PS_Suppliers ps on ps.id = ssd.supplier_id
+        left join PS_Service ps2 on ps2.id = ssd.service_id
+        where ssd.del_yn = 'N'
+        <if test="schoolId != 0">
+			AND ssd.school_id = #{schoolId}
+        </if>
+        <if test="name != null and name != ''">
+            <bind name="nameLike" value="'%' + name + '%'" />
+			AND UPPER(ssd.name) like UPPER(#{nameLike})
+        </if>
+        <if test="grade != 0">
+			AND ssd.grade = #{grade}
+        </if>
+        group by ssd.group_id
+    </select>
+    <select id="selectSupplierServiceAllGrades" parameterType="com.studentslips.entities.SupplierServiceDetail" resultMap="resultSupplierService">
+        select
+			ssd.id,
+			ssd.name,
+			ssd.supplier_id,
+			ssd.service_id,
+			ssd.school_id,
+			ps.name as supplier_name,
+			ps2.name as service_name
+		from ps_suppliers_service ssd
+		left join PS_Suppliers ps on ps.id = ssd.supplier_id
+		left join PS_Service ps2 on ps2.id = ssd.service_id
+		where 1=1
+		and ssd.del_yn = 'N'
+		group by ssd.group_id
+		having count(ssd.grade) = 8
+    </select>
+    
+    <resultMap id = "resultSupplierService" type = "com.studentslips.entities.SupplierServiceDetail">
         <result property = "id" column = "id"/>
         <result property = "name" column = "name"/>
-
-        <result property = "supplierId" column = "suppliers_id"/>
-        <result property = "supplierName" column = "supplier_name"/>
-
-        <result property = "serviceId" column = "service_id"/>
-        <result property = "serviceName" column = "service_name"/>
-
         <result property = "schoolId" column = "school_id"/>
         <result property = "grade" column = "grade"/>
-        <result property = "price" column = "price"/>
-        <result property = "noPayment" column = "no_payment"/>
-
-        <result property = "amount1" column = "amount_1"/>
-        <result property = "amount2" column = "amount_2"/>
-        <result property = "amount3" column = "amount_3"/>
-        <result property = "amount4" column = "amount_4"/>
-        <result property = "amount5" column = "amount_5"/>
-        <result property = "amount6" column = "amount_6"/>
-        <result property = "amount7" column = "amount_7"/>
-        <result property = "amount8" column = "amount_8"/>
-        <result property = "amount9" column = "amount_9"/>
-        <result property = "amount10" column = "amount_10"/>
-        <result property = "amount11" column = "amount_11"/>
-        <result property = "amount12" column = "amount_12"/>
-
+        <result property = "supplierId" column = "supplier_id"/>
+        <result property = "supplierName" column = "supplier_name"/>
+        <result property = "serviceId" column = "service_id"/>
+        <result property = "serviceName" column = "service_name"/>
     </resultMap>
     
+    <!-- 
+    	Supplier service group
+     -->
     <insert id="insertSupplierServiceGroup" parameterType="com.studentslips.entities.SupplierServiceDetailGroup" useGeneratedKeys="true" keyProperty="groupId" keyColumn="id">
-        INSERT INTO onetouch.PS_Suppliers_Service_Group ( name, school_id, del_yn, insert_date, insert_id )
-        VALUES (#{name}, ${schoolId}, 'N', SYSDATE(), #{insertId});
+        INSERT INTO onetouch.PS_Suppliers_Service_Group (name, school_id, supplier_id, service_id, price, no_payment, amount_1, amount_2, amount_3, amount_4, amount_5,
+                                                   amount_6, amount_7, amount_8, amount_9, amount_10, amount_11, amount_12, del_yn, insert_date, insert_id)
+        VALUES (#{name}, ${schoolId}, #{supplierId}, #{serviceId}, #{price}, #{noPayment}, #{amount1}, #{amount2}, #{amount3}, #{amount4}, #{amount5}, #{amount6}, #{amount7},
+                #{amount8}, #{amount9}, #{amount10}, #{amount11}, #{amount12}, 'N', SYSDATE(), #{insertId});
     </insert>
     
     <update id="updateSupplierServiceGroup" parameterType="com.studentslips.entities.SupplierServiceDetailGroup">
-        UPDATE onetouch.PS_Suppliers_Service_Group  SET
+        UPDATE onetouch.PS_Suppliers_Service_Group SET
         <if test="name!= null and name != ''">
             NAME = #{name},
         </if>
-        update_id = #{updateId}, update_date = SYSDATE() WHERE ID = #{groupId}
-        <if test="schoolId!=0 ">
-            AND  school_id = #{schoolId}
+        <if test="serviceId != 0 ">
+        	service_id = #{serviceId},
+        </if>
+        <if test="supplierId != 0 ">
+            supplier_id = #{supplierId},
+        </if>
+        <if test="price!= 0 ">
+            price = #{price},
+        </if>
+        <if test="noPayment!= 0 ">
+            no_payment = #{noPayment},
+        </if>
+			amount_1 = #{amount1},
+			amount_2 = #{amount2},
+			amount_3 = #{amount3},
+			amount_4 = #{amount4},
+			amount_5 = #{amount5},
+			amount_6 = #{amount6},
+			amount_7 = #{amount7},
+			amount_8 = #{amount8},
+			amount_9 = #{amount9},
+			amount_10 = #{amount10},
+			amount_11 = #{amount11},
+			amount_12 = #{amount12},
+	        update_id = #{updateId},
+	        update_date = SYSDATE()
+		WHERE ID = #{groupId}
+        <if test="schoolId != 0 ">
+            AND school_id = #{schoolId}
         </if>
     </update>
     
@@ -214,10 +203,10 @@
         WHERE 1=1 AND id = #{groupId}
     </update>
     
-    <select id="getAllSupplierServiceGroups" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="supSvcDtlGroupSearchModel">
+    <select id="selectAllSupplierServiceGroups" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="supSvcDtlGroupSearchModel">
         select
-			SS.*, S01.list_grade_ids_str, ps.name as supplier_name, ps2.name as service_name
-		from PS_Suppliers_Service SS
+			ssg.*, ssd.list_grade_ids_str, ps1.name as supplier_name, ps2.name as service_name
+		from PS_Suppliers_Service_Group ssg
 		inner join (
 			select
 				group_id,
@@ -225,22 +214,40 @@
 			from PS_Suppliers_Service
         	where del_yn = 'N'
 			group by group_id
-		) S01 on SS.group_id = S01.group_id
-        left join PS_Suppliers ps on ps.id = SS.suppliers_id
-        left join PS_Service ps2 on ps2.id = SS.service_id
-        where SS.del_yn = 'N'
-        <if test="name !=null and name !=''">
+		) ssd on ssg.id = ssd.group_id
+        left join PS_Suppliers ps1 on ps1.id = ssg.supplier_id
+        left join PS_Service ps2 on ps2.id = ssg.service_id
+        where ssg.del_yn = 'N'
+        <if test="name != null and name != ''">
             <bind name="nameLike" value="'%' + name + '%'" />
-            AND SS.name like #{nameLike}
+            AND UPPER(SS.name) like UPPER(#{nameLike})
         </if>
-        group by group_id
+        group by ssg.id;
+    </select>
+    <select id="countSupplierServiceGroup" parameterType="com.studentslips.entities.SupplierServiceDetailGroup" resultType="int">
+        select
+			count(*)
+        from PS_Suppliers_Service_Group ssg
+        where ssg.del_yn = 'N'
+        <if test="schoolId != 0">
+			AND ssg.school_id = #{schoolId}
+        </if>
+        <if test="serviceId != 0">
+			AND ssg.service_id = #{serviceId}
+        </if>
+        <if test="supplierId != 0">
+			AND ssg.supplier_id = #{supplierId}
+        </if>
+        <if test="groupId != 0">
+			AND ssg.id != #{groupId}
+        </if>
     </select>
     
     <resultMap id = "supSvcDtlGroupSearchModel" type = "com.studentslips.entities.SupplierServiceDetailGroup">
-        <result property = "groupId" column = "group_id"/>
+        <result property = "groupId" column = "id"/>
         <result property = "listGradeIdsStr" column = "list_grade_ids_str"/>
         <result property = "name" column = "name"/>
-        <result property = "supplierId" column = "suppliers_id"/>
+        <result property = "supplierId" column = "supplier_id"/>
         <result property = "supplierName" column = "supplier_name"/>
         <result property = "serviceId" column = "service_id"/>
         <result property = "serviceName" column = "service_name"/>
@@ -261,29 +268,20 @@
         <result property = "amount12" column = "amount_12"/>
     </resultMap>
     
-    <select id="getSupplierServiceGroupByGroupId" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="supSvcDtlGroupUpdateModel">
-        select
-			SS.*, S01.list_grade_ids_str, ps.name as supplier_name, ps2.name as service_name
-		from PS_Suppliers_Service SS
-		inner join (
-			select
-				group_id,
-				GROUP_CONCAT(grade) as list_grade_ids_str
-			from PS_Suppliers_Service
-        	where del_yn = 'N'
-			group by group_id
-		) S01 on SS.group_id = S01.group_id
-        left join PS_Suppliers ps on ps.id = SS.suppliers_id
-        left join PS_Service ps2 on ps2.id = SS.service_id
-        where SS.del_yn = 'N'
-        and SS.group_id = #{groupId}
+    <select id="selectSupplierServiceGroupByGroupId" parameterType="com.studentslips.entities.SupplierServiceDetail"  resultMap="supSvcDtlGroupUpdateModel">
+		select
+			ssg.*, ssd.grade, ps1.name as supplier_name, ps2.name as service_name
+		from PS_Suppliers_Service_Group ssg
+        inner join PS_Suppliers_Service ssd on ssg.id = ssd.group_id and ssd.del_yn = 'N'
+        left join PS_Suppliers ps1 on ps1.id = ssg.supplier_id
+        left join PS_Service ps2 on ps2.id = ssg.service_id
+        where ssg.del_yn = 'N'
+        and ssg.id = #{groupId}
     </select>
-    
     <resultMap id = "supSvcDtlGroupUpdateModel" type = "com.studentslips.entities.SupplierServiceDetailGroup">
-        <result property = "groupId" column = "group_id"/>
-       	<result property = "listGradeIdsStr" column = "list_grade_ids_str"/>
+        <result property = "groupId" column = "id"/>
         <result property = "name" column = "name"/>
-        <result property = "supplierId" column = "suppliers_id"/>
+        <result property = "supplierId" column = "supplier_id"/>
         <result property = "supplierName" column = "supplier_name"/>
         <result property = "serviceId" column = "service_id"/>
         <result property = "serviceName" column = "service_name"/>
@@ -306,4 +304,27 @@
         	<result column="grade"/>
         </collection>
     </resultMap>
+    
+    
+    
+	<!-- 
+		**SECTION**
+	 -->
+    <select id="getAllInstallmentsByGradeAndService" parameterType="com.studentslips.entities.SupplierServiceDetail" resultMap="supSvcDtlGroupSearchModel">
+        select
+			ssg.*
+		from PS_Suppliers_Service ssd
+		left join PS_Suppliers_Service_Group ssg on ssg.id = ssd.group_id and ssg.del_yn = 'N'
+		where ssd.del_yn = 'N'
+        <if test="serviceId != 0">
+            AND ssd.service_id = #{serviceId}
+        </if>
+        <if test="schoolId != 0">
+            AND ssd.school_id = #{schoolId}
+        </if>
+        <if test="grade != 0">
+            AND ssd.grade = #{grade}
+        </if>
+        group by ssd.group_id
+    </select>
 </mapper>

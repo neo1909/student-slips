@@ -1,39 +1,45 @@
 package com.studentslips.entities;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class StudentsDebts {
 	private int id;
-    private int studentId;
-    private int schoolId;
-    private int suppliersId;
-    private int serviceId;
-    private String referenceNo;
-    private int quantity;
-    private String purpose;
-    private Timestamp debitDate;
-    private BigDecimal amountDebt;
-    private int grade;
-    private int sClass;
-    private String delYn;
-    private int insertId;
-    private Timestamp insertDate;
-    private int updateId;
-    private Timestamp updateDate;
+	private int studentId;
+	private int schoolId;
+	private int suppliersId;
+	private int serviceId;
+	private String referenceNo;
+	private int quantity;
+	private String purpose;
+	private Timestamp debitDate;
+	private BigDecimal amountDebt;
+	private int grade;
+	private int sClass;
+	private String delYn;
+	private int insertId;
+	private Timestamp insertDate;
+	private int updateId;
+	private Timestamp updateDate;
 
-    private String nameStudent;
-    private String nameService;
-    private BigDecimal price;
-    private int taskId;
+	private String nameStudent;
+	private String nameService;
+	private BigDecimal price;
+	private int taskId;
+	private int installment;
 
-    public StudentsDebts() {
-    }
-    
-    public int getTaskId() {
+	public StudentsDebts() {
+	}
+
+	public int getInstallment() {
+		return installment;
+	}
+
+	public void setInstallment(int installment) {
+		this.installment = installment;
+	}
+
+	public int getTaskId() {
 		return taskId;
 	}
 
@@ -50,154 +56,154 @@ public class StudentsDebts {
 	}
 
 	public BigDecimal getAmountDebt() {
-        return amountDebt;
-    }
+		return amountDebt;
+	}
 
-    public void setAmountDebt(BigDecimal amountDebt) {
-        this.amountDebt = amountDebt;
-    }
+	public void setAmountDebt(BigDecimal amountDebt) {
+		this.amountDebt = amountDebt;
+	}
 
-    public int getSuppliersId() {
-        return suppliersId;
-    }
+	public int getSuppliersId() {
+		return suppliersId;
+	}
 
-    public void setSuppliersId(int suppliersId) {
-        this.suppliersId = suppliersId;
-    }
+	public void setSuppliersId(int suppliersId) {
+		this.suppliersId = suppliersId;
+	}
 
-    public Timestamp getDebitDate() {
-        return debitDate;
-    }
+	public Timestamp getDebitDate() {
+		return debitDate;
+	}
 
-    public void setDebitDate(Timestamp debitDate) {
-        this.debitDate = debitDate;
-    }
+	public void setDebitDate(Timestamp debitDate) {
+		this.debitDate = debitDate;
+	}
 
-    public String getPurpose() {
-        return purpose;
-    }
+	public String getPurpose() {
+		return purpose;
+	}
 
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
-    }
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
+	}
 
-    public int getStudentId() {
-        return studentId;
-    }
+	public int getStudentId() {
+		return studentId;
+	}
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
-    }
+	public void setStudentId(int studentId) {
+		this.studentId = studentId;
+	}
 
-    public int getSchoolId() {
-        return schoolId;
-    }
+	public int getSchoolId() {
+		return schoolId;
+	}
 
-    public void setSchoolId(int schoolId) {
-        this.schoolId = schoolId;
-    }
+	public void setSchoolId(int schoolId) {
+		this.schoolId = schoolId;
+	}
 
-    public int getServiceId() {
-        return serviceId;
-    }
+	public int getServiceId() {
+		return serviceId;
+	}
 
-    public void setServiceId(int serviceId) {
-        this.serviceId = serviceId;
-    }
+	public void setServiceId(int serviceId) {
+		this.serviceId = serviceId;
+	}
 
-    public String getReferenceNo() {
-        return referenceNo;
-    }
+	public String getReferenceNo() {
+		return referenceNo;
+	}
 
-    public void setReferenceNo(String referenceNo) {
-        this.referenceNo = referenceNo;
-    }
+	public void setReferenceNo(String referenceNo) {
+		this.referenceNo = referenceNo;
+	}
 
-    public int getQuantity() {
-        return quantity;
-    }
+	public int getQuantity() {
+		return quantity;
+	}
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
-    public String getDelYn() {
-        return delYn;
-    }
+	public String getDelYn() {
+		return delYn;
+	}
 
-    public void setDelYn(String delYn) {
-        this.delYn = delYn;
-    }
+	public void setDelYn(String delYn) {
+		this.delYn = delYn;
+	}
 
-    public int getInsertId() {
-        return insertId;
-    }
+	public int getInsertId() {
+		return insertId;
+	}
 
-    public void setInsertId(int insertId) {
-        this.insertId = insertId;
-    }
+	public void setInsertId(int insertId) {
+		this.insertId = insertId;
+	}
 
-    public Timestamp getInsertDate() {
-        return insertDate;
-    }
+	public Timestamp getInsertDate() {
+		return insertDate;
+	}
 
-    public void setInsertDate(Timestamp insertDate) {
-        this.insertDate = insertDate;
-    }
+	public void setInsertDate(Timestamp insertDate) {
+		this.insertDate = insertDate;
+	}
 
-    public int getUpdateId() {
-        return updateId;
-    }
+	public int getUpdateId() {
+		return updateId;
+	}
 
-    public void setUpdateId(int updateId) {
-        this.updateId = updateId;
-    }
+	public void setUpdateId(int updateId) {
+		this.updateId = updateId;
+	}
 
-    public Timestamp getUpdateDate() {
-        return updateDate;
-    }
+	public Timestamp getUpdateDate() {
+		return updateDate;
+	}
 
-    public void setUpdateDate(Timestamp updateDate) {
-        this.updateDate = updateDate;
-    }
+	public void setUpdateDate(Timestamp updateDate) {
+		this.updateDate = updateDate;
+	}
 
-    public int getGrade() {
-        return grade;
-    }
+	public int getGrade() {
+		return grade;
+	}
 
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
 
-    public int getsClass() {
-        return sClass;
-    }
+	public int getsClass() {
+		return sClass;
+	}
 
-    public void setsClass(int sClass) {
-        this.sClass = sClass;
-    }
+	public void setsClass(int sClass) {
+		this.sClass = sClass;
+	}
 
-    public String getNameStudent() {
-        return nameStudent;
-    }
+	public String getNameStudent() {
+		return nameStudent;
+	}
 
-    public void setNameStudent(String nameStudent) {
-        this.nameStudent = nameStudent;
-    }
+	public void setNameStudent(String nameStudent) {
+		this.nameStudent = nameStudent;
+	}
 
-    public String getNameService() {
-        return nameService;
-    }
+	public String getNameService() {
+		return nameService;
+	}
 
-    public void setNameService(String nameService) {
-        this.nameService = nameService;
-    }
+	public void setNameService(String nameService) {
+		this.nameService = nameService;
+	}
 
-    public BigDecimal getPrice() {
-        return price;
-    }
+	public BigDecimal getPrice() {
+		return price;
+	}
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
 }

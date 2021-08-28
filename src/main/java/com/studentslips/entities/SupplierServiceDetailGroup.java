@@ -11,23 +11,11 @@ public class SupplierServiceDetailGroup implements Serializable {
 
 	private static final long serialVersionUID = -7983711816867532278L;
 
-	// Generate groupId = epoch time
 	private int groupId;
-	private String listGradeIdsStr;
-	private List<Integer> listGradeIds;
-
-	// Select -> Query dùng GROUP_CONCAT, store vào listGradeIdsStr = 1, 2, 3, 4,
-	// ...
-	// Insert -> Truyền vào listGradeIds = [1,2,3,4] và listGradeIdsStr = "1,2,3,4"
-	// => forEach để insert theo từng grade
-	// Update -> Truyền vào tr_update=[1,2,3,4] và tr_insert=[5,6] => forEach để
-	// update + forEach để insert. Hay dùng lệnh merge? Hay dùng lệnh insert if not
-	// exist?
-
+	private int schoolId;
 	private String name;
 	private int supplierId;
 	private String supplierName;
-	private int schoolId;
 	private int serviceId;
 	private String serviceName;
 	private BigDecimal price;
@@ -50,8 +38,46 @@ public class SupplierServiceDetailGroup implements Serializable {
 	private int updateId;
 	private Timestamp updateDate;
 
+	private String listGradeIdsStr;
+	private List<Integer> listGradeIds;
+	private List<Integer> trInsert;
+	private List<Integer> trUpdate;
+	private List<Integer> trDelete;
+
+	// Select -> Query dùng GROUP_CONCAT, store vào listGradeIdsStr = 1, 2, 3, 4,
+	// ...
+	// Insert -> Truyền vào listGradeIds = [1,2,3,4] và listGradeIdsStr = "1,2,3,4"
+	// => forEach để insert theo từng grade
+	// Update -> Truyền vào tr_update=[1,2,3,4] và tr_insert=[5,6] => forEach để
+	// update + forEach để insert. Hay dùng lệnh merge? Hay dùng lệnh insert if not
+	// exist?
+
 	public String getDelYn() {
 		return delYn;
+	}
+
+	public List<Integer> getTrInsert() {
+		return trInsert;
+	}
+
+	public void setTrInsert(List<Integer> trInsert) {
+		this.trInsert = trInsert;
+	}
+
+	public List<Integer> getTrUpdate() {
+		return trUpdate;
+	}
+
+	public void setTrUpdate(List<Integer> trUpdate) {
+		this.trUpdate = trUpdate;
+	}
+
+	public List<Integer> getTrDelete() {
+		return trDelete;
+	}
+
+	public void setTrDelete(List<Integer> trDelete) {
+		this.trDelete = trDelete;
 	}
 
 	public void setDelYn(String delYn) {

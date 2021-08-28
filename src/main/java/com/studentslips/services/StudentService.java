@@ -10,4 +10,5 @@ public interface StudentService {
     public int deleteStudentById(int id) throws Exception;
     public List<Student> selectAllStudent(Student student) throws Exception;
     public Student selectStudentById(int studentId);
+	public List<Student> getAllStudentsWithSchool(Student student) throws Exception;
 }

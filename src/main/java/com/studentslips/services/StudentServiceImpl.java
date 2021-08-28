@@ -49,4 +49,10 @@ public class StudentServiceImpl implements StudentService{
     public Student selectStudentById(int id) {
        return studentDao.selectStudentById(id);
     }
+
+	@Override
+	public List<Student> getAllStudentsWithSchool(Student student) throws Exception {
+        student.setSchoolId(SessionUtil.getSchoolId());
+		return studentDao.selectAllStudentsWithSchool(student);
+	}
 }

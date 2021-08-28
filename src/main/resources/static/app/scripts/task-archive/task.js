@@ -74,7 +74,7 @@ function createGrid() {
                 text: 'Grade',
                 datafield: 'grade',
                 align: 'center',
-                cellsalign: 'left',
+                cellsalign: 'right',
                 width: '10%',
                 editable: false,
             },
@@ -184,21 +184,24 @@ function onDelete(rowIndex) {
 
 function onUpdate(rowIndex) {
     let data = $("#grdTask").jqxGrid('getrowdata', rowIndex);
-    window.location.href = "/posting/student-debts?id=" + data.id;
+    window.location.href = "/posting/student-debts/update/" + data.id;
 }
 
 
 $(document).ready(function () {
-    localStorage.removeItem('task')
     init();
     createGrid();
-    setMinDate($("#iptFromDate").val('date'));
+    const date = new Date()
+    const year = date.getFullYear();
+    let month = date.getMonth();
+    const day = +date.getDate();
+    $("#iptFromDate").jqxDateTimeInput('setDate', new Date( year, month-1, day));
 
-    $('#iptFromDate').on('valueChanged', function (event)
-    {
-        const jsDate = event.args.date;
-        setMinDate(jsDate)
-    });
+//    $('#iptFromDate').on('valueChanged', function (event)
+//    {
+//        const jsDate = event.args.date;
+//        setMinDate(jsDate)
+//    });
     
     $(document).on('keypress', function(e) {
     	if (e.keyCode == 13) {

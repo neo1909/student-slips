@@ -68,6 +68,7 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
                 sd.setTaskId(studentDebtsObject.getTaskId());
                 sd.setInsertId(SessionUtil.getUserLoginId());
                 sd.setSchoolId(SessionUtil.getSchoolId());
+                sd.setInstallment(studentDebtsObject.getInstallment());
                 studentDebtsDao.insertStudentsDebts(sd);
             }
         }
@@ -123,6 +124,8 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
 		task.setNote(std.getPurpose());
 		task.setDebitDate(std.getDebitDate());
 		task.setInsertId(SessionUtil.getUserLoginId());
+		task.setInstallment(std.getInstallment());
+		task.setPrice(std.getPrice());
         studentDebtsDao.insertTaskArchive(task);
         return task;
 	}
