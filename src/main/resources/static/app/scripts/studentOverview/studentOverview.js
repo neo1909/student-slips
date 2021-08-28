@@ -173,7 +173,7 @@ let fn = {
                         toDate.setMilliseconds(0);
                         $('#iptToDate').val(toDate);
 
-                        fnPopup.onSearch(fromDate, toDate);
+                        fnPopup.onSearch( $('#iptFromDate').val(), $('#iptToDate').val());
                     }
                 );
             }
