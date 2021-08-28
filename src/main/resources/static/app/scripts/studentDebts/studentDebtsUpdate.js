@@ -21,8 +21,9 @@ function initUpdate() {
         		updateTaskOriginalData = data.lst[0];
         		$("#iptComment").val(updateTaskOriginalData.note);
         		
-        		onGetInstallments(updateTaskOriginalData.grade, updateTaskOriginalData.serviceId);
         	    onGetService(updateTaskOriginalData.grade);
+        		onGetInstallments(updateTaskOriginalData.grade, updateTaskOriginalData.serviceId);
+        		
         		$("#iptPriceSrch").val(updateTaskOriginalData.price);
         		let grade = $("#cmbStdGradeSrch").jqxDropDownList('getItemByValue', updateTaskOriginalData.grade == 0 ? '' : updateTaskOriginalData.grade);
         		$("#cmbStdGradeSrch").jqxDropDownList('selectItem', grade);
@@ -68,21 +69,19 @@ function onGetService(gradeId) {
 
         function onSuccess(data) {
             if (data && data.lst && data.lst.length > 0) {
-            	let dataList = [...data.lst].map(d => {
+            	let dataList = data.lst.map(d => {
             		return { serviceId: d.serviceId, serviceName: d.serviceName }
             	});
-            	console.log(dataList);
+            	let src = [{serviceId: '', serviceName: ''}, ...dataList];
+            	let idx = src.findIndex(d => d.serviceId == updateTaskOriginalData.serviceId);
                 $("#cmbStdServiceSrch").jqxDropDownList({
-                    source: [{serviceId: '', serviceName: ''}, ...dataList],
+                    source: src,
                     displayMember: "serviceName",
                     valueMember: "serviceId",
                     disabled: true,
-                    selectedIndex: 0
+                    selectedIndex: idx
                 });
                 
-        		let serviceItem = $("#cmbStdServiceSrch").jqxDropDownList('getItem', updateTaskOriginalData.serviceId);
-        		$("#cmbStdServiceSrch").jqxDropDownList('selectItem', serviceItem);
-            	
                 return;
             }
             $("#cmbStdServiceSrch").jqxDropDownList({
@@ -107,25 +106,24 @@ function onGetInstallments(gradeId, serviceId) {
         },
         function onSuccess(data) {
             if (data && data.obj) {
-            	let serviceInstallmentsMap = [];
-            	if (data.obj.noPayment > 0 && data.obj.amount1 > 0) serviceInstallmentsMap.push({name: '1st installment', value: '1-' + data.obj.amount1});
-            	if (data.obj.noPayment > 1 && data.obj.amount2 > 0) serviceInstallmentsMap.push({name: '2nd installment', value: '2-' + data.obj.amount2});
-            	if (data.obj.noPayment > 2 && data.obj.amount3 > 0) serviceInstallmentsMap.push({name: '3rd installment', value: '3-' + data.obj.amount3});
+            	let src = [];
+            	src.push({name: '', value: '0-' + data.obj.price});
+            	if (data.obj.noPayment > 0 && data.obj.amount1 > 0) src.push({name: '1st installment', value: '1-' + data.obj.amount1});
+            	if (data.obj.noPayment > 1 && data.obj.amount2 > 0) src.push({name: '2nd installment', value: '2-' + data.obj.amount2});
+            	if (data.obj.noPayment > 2 && data.obj.amount3 > 0) src.push({name: '3rd installment', value: '3-' + data.obj.amount3});
             	if (data.obj.noPayment > 3) {            		
             		for (let i = 4, len = data.obj.noPayment; i <= len; i++) {
-            			if (data.obj['amount'+i] > 0) serviceInstallmentsMap.push({name: `${i}th installment`, value: i + '-' + data.obj['amount'+i]});
+            			if (data.obj['amount'+i] > 0) src.push({name: `${i}th installment`, value: i + '-' + data.obj['amount'+i]});
             		}
             	}
+        		let idx = src.findIndex(i => i.value.includes(`${updateTaskOriginalData.installment}-`));
                 $("#cmbStdInstSrch").jqxDropDownList({
-                    source: [{name: '', value: '0-' + data.obj.price}, ...serviceInstallmentsMap],
+                    source: src,
                     displayMember: "name",
                     valueMember: "value",
                     disabled: true,
-                    selectedIndex: 0
+                    selectedIndex: idx
                 });
-
-        		let installments = $("#cmbStdInstSrch").jqxDropDownList('getItems').filter(i => i.value.includes(updateTaskOriginalData.installment + ""));
-        		$("#cmbStdInstSrch").jqxDropDownList('selectItem', installments[0]);
 
                 return;
             }
