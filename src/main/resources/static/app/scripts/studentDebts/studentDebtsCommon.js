@@ -412,7 +412,7 @@ $(document).ready(function() {
 
 			    </label>
 			    <label class="currency">
-			        RSDS
+			        RSD
 			    </label>
 			 </div>
         	`;
