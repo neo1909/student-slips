@@ -22,7 +22,7 @@ function initUpdate() {
         		$("#iptComment").val(updateTaskOriginalData.note);
         		
         		onGetInstallments(updateTaskOriginalData.grade, updateTaskOriginalData.serviceId);
-        	    onGetService(0);
+        	    onGetService(updateTaskOriginalData.grade);
         		$("#iptPriceSrch").val(updateTaskOriginalData.price);
         		let grade = $("#cmbStdGradeSrch").jqxDropDownList('getItemByValue', updateTaskOriginalData.grade == 0 ? '' : updateTaskOriginalData.grade);
         		$("#cmbStdGradeSrch").jqxDropDownList('selectItem', grade);

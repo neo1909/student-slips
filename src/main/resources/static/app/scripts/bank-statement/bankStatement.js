@@ -285,7 +285,7 @@ function createGrid() {
         ],
         theme: 'bootstrap',
         width: '100%',
-        height: 350,
+        height: SS.grid.height,
         rowsheight: 33
     });
     let localizationobj = {

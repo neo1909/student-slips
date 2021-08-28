@@ -131,7 +131,7 @@
 			ssd.school_id,
 			ps.name as supplier_name,
 			ps2.name as service_name
-		from ps_suppliers_service ssd
+		from PS_Suppliers_Service ssd
 		left join PS_Suppliers ps on ps.id = ssd.supplier_id
 		left join PS_Service ps2 on ps2.id = ssd.service_id
 		where 1=1

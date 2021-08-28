@@ -47,6 +47,10 @@ let SS = {
 	 },
   },
   
+  grid: {
+	height: 400  
+  },
+  
   locales: {
 	 number: "sr-RS"
   },

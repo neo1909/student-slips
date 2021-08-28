@@ -93,7 +93,7 @@ let fn = {
             ],
             theme: 'bootstrap',
             width: '100%',
-            height: '650',
+            height: SS.grid.height,
             rowsheight: 33
         });
         let localizationobj = {
