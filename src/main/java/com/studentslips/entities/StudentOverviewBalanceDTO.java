@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class StudentOverviewBalanceDTO {
+    private int studentDebtsId;
     private int id;
     private int serviceId;
     private String serviceNm;
@@ -98,5 +99,13 @@ public class StudentOverviewBalanceDTO {
 
     public void setServiceNm(String serviceNm) {
         this.serviceNm = serviceNm;
+    }
+
+    public int getStudentDebtsId() {
+        return studentDebtsId;
+    }
+
+    public void setStudentDebtsId(int studentDebtsId) {
+        this.studentDebtsId = studentDebtsId;
     }
 }

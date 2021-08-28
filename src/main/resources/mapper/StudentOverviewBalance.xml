@@ -4,6 +4,7 @@
 <mapper namespace="StudentOverviewBalanceDao">
 
     <resultMap id="result" type="com.studentslips.entities.StudentOverviewBalanceDTO">
+        <result property="studentDebtsId" column="student_debts_id"/>
         <result property="serviceId" column="service_id"/>
         <result property="serviceNm" column="service_nm"/>
         <result property="id" column="student_id"/>
@@ -28,6 +29,7 @@
 
         select T.* from (
                             Select
+                                sd.id as student_debts_id,
                                 service_id,
                                 (SELECT name FROM PS_Service where id = service_id) as service_nm,
                                 student_id,
@@ -43,6 +45,7 @@
                             UNION
 
                             SELECT
+                                sd.id as student_debts_id,
                                 sd.service_id,
                                 (SELECT name FROM PS_Service where id = sd.service_id) as service_nm,
                                 student_id,
@@ -86,7 +89,7 @@
             (select sc.bank_account_number from PS_Students st join PS_School sc on st.school_id = sc.id where st.id = #{id}) as payee_acc,
             reference_no
         FROM onetouch.PS_Students_Debts sd
-        WHERE sd.student_id = #{id} and debit_date = #{date}
+        WHERE sd.student_id = #{id} and debit_date = #{date} and sd.id = #{studentDebtsId}
     </select>
 
 

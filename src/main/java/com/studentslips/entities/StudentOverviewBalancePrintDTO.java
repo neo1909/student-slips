@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 public class StudentOverviewBalancePrintDTO {
 
     private Date date;
+    private int studentDebtsId;
     private int id;
     private String payerInfo;
     private String purpose;
@@ -88,5 +89,13 @@ public class StudentOverviewBalancePrintDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getStudentDebtsId() {
+        return studentDebtsId;
+    }
+
+    public void setStudentDebtsId(int studentDebtsId) {
+        this.studentDebtsId = studentDebtsId;
     }
 }
