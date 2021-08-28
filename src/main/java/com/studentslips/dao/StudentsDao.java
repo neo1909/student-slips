@@ -23,6 +23,10 @@ public class StudentsDao {
         return this.sqlSession.selectOne("selectStudentById",id);
     }
 
+    public List<Student> selectAllStudentsWithSchool(Student student) throws Exception {
+        return this.sqlSession.selectList("selectAllStudentsWithSchool", student);
+    }
+
     public int insertStudent(Student student){
         return this.sqlSession.insert("insertStudent", student);
     }

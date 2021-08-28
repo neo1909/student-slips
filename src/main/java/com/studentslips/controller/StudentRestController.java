@@ -55,6 +55,21 @@ public class StudentRestController {
         return result;
     }
 
+    @RequestMapping(value = "/ST_R_03", method = RequestMethod.POST)
+    public Map<String, ?> getAllStudentsWithSchool(@RequestBody Student student) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            result.put(Common.LIST, studentService.getAllStudentsWithSchool(student));
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
+        }
+
+        return result;
+    }
+
     @RequestMapping(value = "/ST_C_01", method = RequestMethod.POST)
     public Map<String,?> addStudent(@RequestBody Student std){
         Map<String, Object> result = new HashMap<>();

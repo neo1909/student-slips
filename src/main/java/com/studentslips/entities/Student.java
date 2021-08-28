@@ -15,11 +15,20 @@ public class Student {
     private Timestamp updateDate;
     private String schoolName;
     private String studentId;
+    private String schoolAccountNumber;
 
     public Student() {
     }
+    
+    public String getSchoolAccountNumber() {
+		return schoolAccountNumber;
+	}
 
-    public String getSchoolName() {
+	public void setSchoolAccountNumber(String schoolAccountNumber) {
+		this.schoolAccountNumber = schoolAccountNumber;
+	}
+
+	public String getSchoolName() {
         return schoolName;
     }
 

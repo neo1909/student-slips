@@ -1,42 +1,53 @@
-let screenType = "I";
+let screenType = "U";
 
-function initSearch() {
-    
-    $('#btnPrint').prop("disabled", true);
-
+function initUpdate() {
 	taskId = $("#iptTaskId").val() > 0 ? $("#iptTaskId").val() : 0;
 	
-	$("#btnCancelUpdate").remove();
-	$("#btnStdSrch").show();
+	$("#screen-title").html("Student Debts: Update task ID = " + taskId);
+	onSearchUpdate();
+    
+    $("#cmbStdGradeSrch").jqxDropDownList({ disabled: true });
+    $("#cmbStdClazzSrch").jqxDropDownList({ disabled: true });
+    $("#cmbStdServiceSrch").jqxDropDownList({ disabled: true });
+	$("#btnCancelUpdate").show();
+	$("#btnStdSrch").prop('disabled', true);
+	
+	SS.sendToServer(
+        'TA_R_01',
+        false,
+        { taskId: taskId },
+        function onSuccess(data) {
+        	if (data && data.lst && data.lst.length > 0) {	        		
+        		updateTaskOriginalData = data.lst[0];
+        		$("#iptComment").val(updateTaskOriginalData.note);
+        		
+        		onGetInstallments(updateTaskOriginalData.grade, updateTaskOriginalData.serviceId);
+        	    onGetService(0);
+        		$("#iptPriceSrch").val(updateTaskOriginalData.price);
+        		let grade = $("#cmbStdGradeSrch").jqxDropDownList('getItemByValue', updateTaskOriginalData.grade == 0 ? '' : updateTaskOriginalData.grade);
+        		$("#cmbStdGradeSrch").jqxDropDownList('selectItem', grade);
+        		let sClass = $("#cmbStdClazzSrch").jqxDropDownList('getItemByValue', updateTaskOriginalData.sClass == 0 ? '' : updateTaskOriginalData.sClass);
+        		$("#cmbStdClazzSrch").jqxDropDownList('selectItem', sClass);
+        	}
+        },
+        function onError(err) {
+            SS.alert( SS.title.ERROR, "Failed to get task data");
+        }
+    );
 }
 
-function resetFields() {
-	$("#iptComment").val('');
-};
-
-function onSearch() {
-	resetFields();
+function onSearchUpdate() {
 	tr_update = [];
-    let params = {
-        grade: $("#cmbStdGradeSrch").val() ? $("#cmbStdGradeSrch").val() : "",
-        sClass: $("#cmbStdClazzSrch").val() ? $("#cmbStdClazzSrch").val() : "",
-        serviceId: $("#cmbStdServiceSrch").val() ? $("#cmbStdServiceSrch").val() : "",
-        price: $("#iptPriceSrch").val(),
-    };
-    if(!params.serviceId) {
-        SS.alert('Notification', 'Please select service')
-        return;
-    }
     SS.sendToServer(
-    	'SD_R_02',
+    	'SD_R_01',
         false,
-        params,
+        { taskId: taskId },
         function onSuccess(data) {
         	if (data && data.status && data.status === 'NG') {
                 SS.alert( SS.title.ERROR, data.message);
                 return;
         	}
-            if(data) {
+            if(data && data.lst) {
                 source.localdata = data.lst;
                 originalData = data.lst;
                 $('#grdStudentDebts').jqxGrid('updatebounddata');
@@ -61,9 +72,13 @@ function onGetService(gradeId) {
                     source: [{serviceId: '', serviceName: ''}, ...data.lst],
                     displayMember: "serviceName",
                     valueMember: "serviceId",
-                    disabled: false,
+                    disabled: true,
                     selectedIndex: 0
                 });
+                
+        		let serviceItem = $("#cmbStdServiceSrch").jqxDropDownList('getItemByValue', updateTaskOriginalData.serviceId);
+        		$("#cmbStdServiceSrch").jqxDropDownList('selectItem', serviceItem);
+            	
                 return;
             }
             $("#cmbStdServiceSrch").jqxDropDownList({
@@ -80,7 +95,6 @@ function onGetService(gradeId) {
 }
 
 function onGetInstallments(gradeId, serviceId) {
-	if (!serviceId) return;
     SS.sendToServer(
         'SL_R_04',
         false, {
@@ -102,9 +116,13 @@ function onGetInstallments(gradeId, serviceId) {
                     source: [{name: '', value: '0-' + data.obj.price}, ...serviceInstallmentsMap],
                     displayMember: "name",
                     valueMember: "value",
-                    disabled: false,
+                    disabled: true,
                     selectedIndex: 0
-                })
+                });
+
+        		let installments = $("#cmbStdInstSrch").jqxDropDownList('getItems').filter(i => i.value.includes(updateTaskOriginalData.installment + ""));
+        		$("#cmbStdInstSrch").jqxDropDownList('selectItem', installments[0]);
+
                 return;
             }
         },
@@ -116,40 +134,10 @@ function onGetInstallments(gradeId, serviceId) {
 
 
 $(document).ready(function () {
+	initUpdate();
     
-	initSearch();
-    
-    onGetService(0);
-    
-    $(document).on('keypress', function(e) {
-    	if (e.keyCode == 13) {
-    		e.preventDefault();
-    		onSearch();
-    	}
-    });
-    
-    $('#btnStdSrch').click(function () {
-        $('#grdStudentDebts').jqxGrid('refresh');
-        onSearch();
-    });
-
-    $('#cmbStdGradeSrch').on('change', function (event) {
-        if (event.args && event.args.item) {
-            const gradeId = event.args.item.originalItem.id;
-            onGetService(gradeId);
-        }
-    })
-
-    $('#cmbStdServiceSrch').on('change', function (event) {
-    	let priceItem = event.args.item.originalItem.price ? event.args.item.originalItem.price : "";
-    	$("#iptPriceSrch").val(priceItem);
-    	selectedSupplierId = event.args.item.originalItem.supplierId ? event.args.item.originalItem.supplierId : 0;
-    	onGetInstallments($("#cmbStdGradeSrch").val(), $('#cmbStdServiceSrch').val());
-    });
-
-    $('#cmbStdInstSrch').on('change', function (event) {
-    	let installment = event.args.item.value ? event.args.item.value : "";
-    	$("#iptPriceSrch").val(Number(installment.split("-")[1]));
+    $("#btnCancelUpdate").on('click', function() {
+         window.location.href = "/archive/task-archive";
     });
 
     $("#btnApplyToAll").on('click', function() {
@@ -158,40 +146,31 @@ $(document).ready(function () {
             $("#grdStudentDebts").jqxGrid('setcellvalue', i, "quantity", rows[0].quantity);
     	}
     });
-    
 
     $('#btnSave').on('click', function () {
-	    if (!tr_update || tr_update.length === 0) {
-	        SS.alert('Notification', 'No data update')
-	        return;
-	    }
-	    
-	    let data = {
-	    	suppliersId: selectedSupplierId,
-	        serviceId: $('#cmbStdServiceSrch').val(),
-	        grade: $('#cmbStdGradeSrch').val(),
-	        sClass: $('#cmbStdClazzSrch').val(),
-	        price: $("#iptPriceSrch").val(),
-	        debitDate: $("#iptDateSrch").val(),
-	        purpose: $('#iptComment').val(),
-	        installment: Number($("#cmbStdInstSrch").val().split("-")[0]),
-	        studentsDebtsList: tr_update
-	    }
-	    SS.sendToServer(
-	        'SD_C_01',
-	        false,
-	        data,
-	        function onSuccess(data) {
-	        	if (data && data.status && data.status === 'NG') {
-	                SS.alert( SS.title.ERROR, data.message);
-	                return;
-	        	}
-	            isUpdateNote = false;
-	            tr_update = [];
-	            $('#btnPrint').prop("disabled", false);
-	            SS.alert('Notification', 'Save task successfully');
-	        }
-	    );
+        if ((!tr_update || tr_update.length === 0) && !isUpdateNote) {
+            SS.alert('Notification', 'No data update')
+            return;
+        }
+        let params = {
+        	taskId: taskId,
+        	purpose: $("#iptComment").val(),
+            studentsDebtsList: tr_update
+        }
+        SS.sendToServer(
+            'SD_U_01',
+            false,
+            params,
+            function onSuccess(data) {
+            	if (data && data.status && data.status === 'NG') {
+                    SS.alert( SS.title.ERROR, data.message);
+                    return;
+            	}
+                isUpdateNote = false;
+                tr_update = [];
+                SS.alert('Notification', 'Update task successfully');
+            }
+        );
     });
     
 })

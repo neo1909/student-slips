@@ -1,6 +1,7 @@
 package com.studentslips.entities;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class StudentsDebtsTask implements Serializable {
@@ -16,10 +17,28 @@ public class StudentsDebtsTask implements Serializable {
 	private String note;
 	private Timestamp debitDate;
 	private String delYn;
+	private int installment;
+	private BigDecimal price;
 	private int insertId;
 	private Timestamp insertDate;
 	private int updateId;
 	private Timestamp updateDate;
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+	public int getInstallment() {
+		return installment;
+	}
+
+	public void setInstallment(int installment) {
+		this.installment = installment;
+	}
 
 	public String getServiceName() {
 		return serviceName;
