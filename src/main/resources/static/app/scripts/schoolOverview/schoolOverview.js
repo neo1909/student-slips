@@ -64,12 +64,7 @@ let fnOverview = {
             height: 300,
             rowsheight: 33
         });
-        let localizationobj = {
-        	currencysymbol: "",
-    		decimalseparator: ",",
-    		thousandsseparator: "."
-        }
-        $("#grdSchoolOverview").jqxGrid('localizestrings', localizationobj);
+        $("#grdSchoolOverview").jqxGrid('localizestrings', SS.grid.localization);
 
         /*
         * Init Component Event
@@ -250,12 +245,7 @@ let fnDetail = {
             height: 300,
             rowsheight: 33
         });
-        let localizationobj = {
-        	currencysymbol: "",
-    		decimalseparator: ",",
-    		thousandsseparator: "."
-        }
-        $("#grdSchoolDetail").jqxGrid('localizestrings', localizationobj);
+        $("#grdSchoolDetail").jqxGrid('localizestrings', SS.grid.localization);
     },
 
     onSearch: function (rowdata) {

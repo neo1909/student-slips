@@ -140,7 +140,11 @@ function createGrid() {
                 cellsalign: 'right',
                 width: '15%',
                 editable: false,
-                cellsformat: 'd2'
+                cellsformat: 'd2',
+                cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
+                	let formatValue = SS.format.formatNumberByLocales(!value ? 0 : value);
+            		return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
+                }
             },
             {
                 text: 'Balance',
@@ -151,12 +155,12 @@ function createGrid() {
                 editable: false,
                 cellsformat: 'd2',
                 cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
-                	let formatValue = SS.format.formatNumberByLocales(value);
-                	if (value && value > 0) {
+                	let formatValue = SS.format.formatNumberByLocales(!value ? 0 : value);
+                	if (value && value < 0) {                    		
+                		return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; background-color: green; color: white">' + formatValue + '</div>';
+                	} else {
                 		return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
-					} else {
-						return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; background-color: green; color: white">' + formatValue + '</div>';
-					}
+                	}
                 }
             }
         ],
@@ -164,14 +168,9 @@ function createGrid() {
         width: '100%',
         height: 350,
         rowsheight: 33,
-        selectionmode: 'none'
+        selectionmode: 'row'
     });
-    let localizationobj = {
-    	currencysymbol: "",
-		decimalseparator: ",",
-		thousandsseparator: "."
-    }
-    $("#grdOverviewClass").jqxGrid('localizestrings', localizationobj);
+    $("#grdOverviewClass").jqxGrid('localizestrings', SS.grid.localization);
 }
 
 function createGridDetail() {
@@ -220,7 +219,11 @@ function createGridDetail() {
                 cellsalign: 'right',
                 width: '15%',
                 editable: false,
-                cellsformat: 'd2'
+                cellsformat: 'd2',
+                cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
+                	let formatValue = SS.format.formatNumberByLocales(!value ? 0 : value);
+            		return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
+                }
             },
             {
                 text: 'Balance',
@@ -231,12 +234,12 @@ function createGridDetail() {
                 editable: false,
                 cellsformat: 'd2',
                 cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
-                	let formatValue = SS.format.formatNumberByLocales(value);
-                	if (value && value > 0) {
+                	let formatValue = SS.format.formatNumberByLocales(!value ? 0 : value);
+                	if (value && value < 0) {                    		
+                		return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; background-color: green; color: white">' + formatValue + '</div>';
+                	} else {
                 		return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
-					} else {
-						return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; background-color: green; color: white">' + formatValue + '</div>';
-					}
+                	}
                 }
             },
         ],
@@ -245,12 +248,7 @@ function createGridDetail() {
         height: 300,
         rowsheight: 33
     });
-    let localizationobj = {
-    	currencysymbol: "",
-		decimalseparator: ",",
-		thousandsseparator: "."
-    }
-    $("#grdOverviewClassDetail").jqxGrid('localizestrings', localizationobj);
+    $("#grdOverviewClassDetail").jqxGrid('localizestrings', SS.grid.localization);
 }
 
 function onCalculateTotal(gridId) {
@@ -437,6 +435,7 @@ $(document).ready(function () {
         const jsDate = event.args.date;
         setMinDate(jsDate)
     });
+    
     $('#btnSearch').click(function () {
         $('#grdOverviewClass').jqxGrid('refresh');
         $('#grdOverviewClassDetail').jqxGrid('clear');
@@ -485,6 +484,8 @@ $(document).ready(function () {
 	});
     
     $("#cmbSrchService").jqxComboBox('checkIndex', 0);
+    
+    onSearch();
 
 })
 

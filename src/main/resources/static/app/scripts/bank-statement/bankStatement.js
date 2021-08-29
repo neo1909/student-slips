@@ -288,12 +288,7 @@ function createGrid() {
         height: SS.grid.height,
         rowsheight: 33
     });
-    let localizationobj = {
-    	currencysymbol: "",
-		decimalseparator: ",",
-		thousandsseparator: "."
-    }
-    $("#grdBank").jqxGrid('localizestrings', localizationobj);
+    $("#grdBank").jqxGrid('localizestrings', SS.grid.localization);
 }
 
 function ceateGridBank() {

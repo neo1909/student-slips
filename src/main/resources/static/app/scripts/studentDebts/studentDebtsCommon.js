@@ -191,12 +191,7 @@ function createGrid() {
         height: SS.grid.height,
         rowsheight: 33
     });
-    let localizationobj = {
-    	currencysymbol: "",
-		decimalseparator: ",",
-		thousandsseparator: "."
-    }
-    $("#grdStudentDebts").jqxGrid('localizestrings', localizationobj);
+    $("#grdStudentDebts").jqxGrid('localizestrings', SS.grid.localization);
 }
 
 function init() {

@@ -96,12 +96,7 @@ let fn = {
             height: SS.grid.height,
             rowsheight: 33
         });
-        let localizationobj = {
-        	currencysymbol: "",
-    		decimalseparator: ",",
-    		thousandsseparator: "."
-        }
-        $("#grdDetail").jqxGrid('localizestrings', localizationobj);
+        $("#grdDetail").jqxGrid('localizestrings', SS.grid.localization);
 
         // Search
         $("#iptNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });

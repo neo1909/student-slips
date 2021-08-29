@@ -48,7 +48,12 @@ let SS = {
   },
   
   grid: {
-	height: 400  
+	  height: 400,
+	  localization: {
+		  currencysymbol: "",
+		  decimalseparator: ",",
+		  thousandsseparator: "."
+	  }
   },
   
   locales: {
