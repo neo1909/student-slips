@@ -159,7 +159,7 @@ let fnPopup = {
                     }
                 },
                 {
-                    text: 'Print', datafield: 'print', cellsalign: 'center', width: '5%,'
+                    text: 'Print', datafield: 'print', cellsalign: 'center', width: '5%', exportable: false
                     , cellsrenderer: function (row, rowIndex, column, value) {
 
                         if (column === 'false') {
@@ -174,7 +174,7 @@ let fnPopup = {
             ],
             theme: 'bootstrap',
             width: '100%',
-            height: '90%',
+            autoheight: true,
             rowsheight: 33
         });
     }
@@ -214,17 +214,30 @@ let fnPopup = {
             false,
             params,
             function onSuccess(data) {
-                fnPopup.gridSource1.localdata = data.lst1;
-                $('#serviceLabel1').text(data.lst1.length <= 1 ? "No service" : data.lst1[0].serviceNm);
-                $("#grdStudentBalance1").jqxGrid({source: fnPopup.gridSource1});
+                $('#grdStudentBalance1').jqxGrid('clear');
+                $('#grdStudentBalance2').jqxGrid('clear');
+                $('#grdStudentBalance3').jqxGrid('clear');
+                $('#grdStudentBalance4').jqxGrid('clear');
+                $('#grdStudentBalance5').jqxGrid('clear');
 
+                fnPopup.gridSource1.localdata = data.lst1;
+                if(data.lst1 && data.lst1[0].serviceId != -1) {
+                    $('#serviceLabel1').text(data.lst1.length <= 1 ? "No service" : data.lst1[0].serviceNm);
+                    $("#grdStudentBalance1").jqxGrid({source: fnPopup.gridSource1});
+                    $('#serviceLabel1').show();
+                    $('#grdStudentBalance1').show();
+                } else {
+                    onHideGrid(1)
+                }
                 fnPopup.gridSource2.localdata = data.lst2;
                 if(data.lst2 && data.lst2[0].serviceId != -1) {
                     $('#serviceLabel2').text(data.lst2[0].serviceNm == null ? "" : data.lst2[0].serviceNm);
                     $("#grdStudentBalance2").jqxGrid({source: fnPopup.gridSource2});
+                    $('#serviceLabel2').show();
                     $('#grdStudentBalance2').show();
+
                 } else {
-                    $('#grdStudentBalance2').hide();
+                    onHideGrid(2)
                 }
 
                 fnPopup.gridSource3.localdata = data.lst3;
@@ -232,8 +245,9 @@ let fnPopup = {
                     $('#serviceLabel3').text(data.lst3[0].serviceNm == null ? "" : data.lst3[0].serviceNm);
                     $("#grdStudentBalance3").jqxGrid({source: fnPopup.gridSource3});
                     $('#grdStudentBalance3').show();
+                    $('#serviceLabel3').show();
                 } else {
-                    $('#grdStudentBalance3').hide();
+                    onHideGrid(3)
                 }
 
                 fnPopup.gridSource4.localdata = data.lst4;
@@ -241,8 +255,9 @@ let fnPopup = {
                     $('#serviceLabel4').text(data.lst4[0].serviceNm == null ? "" : data.lst4[0].serviceNm);
                     $("#grdStudentBalance4").jqxGrid({source: fnPopup.gridSource4});
                     $('#grdStudentBalance4').show();
+                    $('#serviceLabel4').show();
                 } else {
-                    $('#grdStudentBalance4').hide();
+                    onHideGrid(4)
                 }
 
                 fnPopup.gridSource5.localdata = data.lst5;
@@ -250,8 +265,9 @@ let fnPopup = {
                     $('#serviceLabel5').text(data.lst5[0].serviceNm == null ? "" : data.lst5[0].serviceNm);
                     $("#grdStudentBalance5").jqxGrid({source: fnPopup.gridSource5});
                     $('#grdStudentBalance5').show();
+                    $('#serviceLabel5').hide();
                 } else {
-                    $('#grdStudentBalance5').hide();
+                    onHideGrid(5)
                 }
 
                 onCalculateTotal();
@@ -450,6 +466,12 @@ let fnPopup = {
 
 };
 
+function onHideGrid(index) {
+    $('#grdStudentBalance'+index).hide();
+    $('#serviceLabel'+index).hide();
+    $('#grdStudentBalance'+index).jqxGrid('refresh');
+}
+
 function onCalculateTotal() {
 
     let totalDebit = 0;
@@ -479,6 +501,7 @@ function onPrint() {
             '<head>\n' +
             '<meta charset="utf-8" />\n' +
             '<title>Student Overview Balance</title>\n' +
+            '<h4>'+ $('#iptStdNmOverviewSrch').val() +'</h4>' +
             '</head>\n' +
             '<body>\n';
 

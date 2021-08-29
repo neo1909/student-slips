@@ -162,6 +162,7 @@ let fn = {
                         $('#cmbStdGradeOverviewSSrch').val(data.obj.grade);
                         $('#cmbStdClassOverviewSrch').val(data.obj.sClass);
                         let fromDate = new Date();
+                        fromDate.setDate(1);
                         fromDate.setHours(0);
                         fromDate.setMinutes(0);
                         fromDate.setMilliseconds(0);
