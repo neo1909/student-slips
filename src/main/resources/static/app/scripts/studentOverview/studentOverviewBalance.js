@@ -369,7 +369,7 @@ let fnPopup = {
             '        \n' +
             '<div class="invoice">\n' +
             '    <label class="name">\n' +
-            printData.purpose +
+            printData.payerInfo +
             '    </label>\n' +
             '    <label class="address">\n' +
             '     ' +
