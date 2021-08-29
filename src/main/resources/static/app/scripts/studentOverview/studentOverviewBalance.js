@@ -295,7 +295,7 @@ let fnPopup = {
         let mywindow = window.open('', 'PRINT', 'height=400,width=600');
 
         mywindow.document.write('<html><head>\n' +
-            '    <link href="https://fonts.googleapis.com/css?family=Oxygen+Mono" rel="stylesheet" type="text/css">\n' +
+           /* '    <link href="https://fonts.googleapis.com/css?family=Oxygen+Mono" rel="stylesheet" type="text/css">\n' +*/
             '        <style>\n' +
             '            @media print {\n' +
             '                * {-webkit-print-color-adjust:exact;}\n' +
@@ -360,9 +360,7 @@ let fnPopup = {
             '                width: 100%;\n' +
             '                font-size: 10px;\n' +
             '            }\n' +
-            '            #buttonPanel {\n' +
-            '                margin: 10px;\n' +
-            '            }\n' +
+
             '        </style>\n' +
             '    </head>\n' +
             '    <body cz-shortcut-listen="true">\n' +
