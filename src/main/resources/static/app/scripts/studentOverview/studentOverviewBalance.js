@@ -404,7 +404,7 @@ let fnPopup = {
             printData.payeeAcc +
             '    </label>\n' +
             '    <label class="model">\n' +
-            '        97\n' +
+            '        ' +
             '    </label>\n' +
             '    <label class="referenceNumber">\n' +
             printData.refNo +
