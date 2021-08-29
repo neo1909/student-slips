@@ -8,7 +8,7 @@
         from (
         select  XY.student_id,SUM(XY.amount_debt) as debit, SUM(XY.claims) as claims, SUM(XY.balance) as balance
         from (
-        select  XX.student_id,XX.amount_debt,XX.claims,(XX.amount_debt - XX.claims) as balance
+        select  XX.student_id,XX.amount_debt,XX.claims,(XX.amount_debt - IFNULL(XX.claims,0)) as balance
         from    (select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
         from    PS_Students_Debts sd
         Left outer join (select * from PS_Bank_Statement where bank_statement_date between #{fromDate} and  #{toDate} ) bs
@@ -41,7 +41,7 @@
     </select>
 
     <select id="searchDetailClass" parameterType="com.studentslips.entities.SchoolAndClassSearch" resultMap="resultDetailClass">
-        select  student_id,(select s.name from PS_Students s where XX.student_id = s.id ) as name_student,service_id,(select sr.name from PS_Service sr where XX.service_id = sr.id ) as name_service,XX.amount_debt,XX.claims,(XX.amount_debt - XX.claims) as balance
+        select  student_id,(select s.name from PS_Students s where XX.student_id = s.id ) as name_student,service_id,(select sr.name from PS_Service sr where XX.service_id = sr.id ) as name_service,XX.amount_debt,XX.claims,(XX.amount_debt - IFNULL(XX.claims,0)) as balance
         from(
         select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
         from    PS_Students_Debts sd
