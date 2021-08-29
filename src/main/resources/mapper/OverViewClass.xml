@@ -4,14 +4,16 @@
 <mapper namespace="OverViewClassDao">
 
     <select id="searchAllClass" parameterType="com.studentslips.entities.SchoolAndClassSearch" resultMap="resultAllClass">
-        select  X1.student_id,s.name   ,X1.debit, X1.claims, X1.balance, case when X1.debit > X1.claims then 0 else 1 end isHightColor
+        select  X1.student_id,s.name   ,X1.debit, X1.claims, X1.balance
         from (
         select  XY.student_id,SUM(XY.amount_debt) as debit, SUM(XY.claims) as claims, SUM(XY.balance) as balance
         from (
         select  XX.student_id,XX.amount_debt,XX.claims,(XX.amount_debt - XX.claims) as balance
         from    (select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
-        from    PS_Bank_Statement bs , PS_Students_Debts sd
-        where bs.reference_no = sd.reference_no
+        from    PS_Students_Debts sd
+        Left outer join (select * from PS_Bank_Statement where bank_statement_date between #{fromDate} and  #{toDate} ) bs
+        on bs.reference_no = sd.reference_no
+        where 1=1
         <if test="schoolId!=0 ">
             and sd.school_id = #{schoolId}
         </if>
@@ -22,7 +24,6 @@
             </foreach>
         </if>
         and sd.debit_date between #{fromDate} and  #{toDate}
-        and bs.bank_statement_date between #{fromDate} and  #{toDate}
         group by sd.student_id,sd.service_id,sd.amount_debt
         ) XX
         ) XY
@@ -40,11 +41,13 @@
     </select>
 
     <select id="searchDetailClass" parameterType="com.studentslips.entities.SchoolAndClassSearch" resultMap="resultDetailClass">
-        select  student_id,(select s.name from PS_Students s where XX.student_id = s.id ) as name_student,service_id,(select sr.name from PS_Service sr where XX.service_id = sr.id ) as name_service,XX.amount_debt,XX.claims,(XX.amount_debt - XX.claims) as balance,case when XX.amount_debt > XX.claims then 0 else 1 end isHightColor
+        select  student_id,(select s.name from PS_Students s where XX.student_id = s.id ) as name_student,service_id,(select sr.name from PS_Service sr where XX.service_id = sr.id ) as name_service,XX.amount_debt,XX.claims,(XX.amount_debt - XX.claims) as balance
         from(
         select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
-        from    PS_Bank_Statement bs , PS_Students_Debts sd
-        where bs.reference_no = sd.reference_no
+        from    PS_Students_Debts sd
+        Left outer join (select * from PS_Bank_Statement where bank_statement_date between #{fromDate} and  #{toDate} ) bs
+        on bs.reference_no = sd.reference_no
+        where 1=1
         <if test="schoolId!=0 ">
             and sd.school_id = #{schoolId}
         </if>
@@ -54,7 +57,6 @@
             </foreach>
         </if>
         and sd.debit_date between #{fromDate} and  #{toDate}
-        and bs.bank_statement_date between #{fromDate} and  #{toDate}
         <if test="studentId!=0 ">
             and sd.student_id = #{studentId}
         </if>
@@ -68,7 +70,7 @@
         <result property = "debit" column = "debit"/>
         <result property = "claims" column = "claims"/>
         <result property = "balance" column = "balance"/>
-        <result property = "isHightColor" column = "isHightColor"/>
+<!--        <result property = "isHightColor" column = "isHightColor"/>-->
     </resultMap>
     <resultMap id = "resultDetailClass" type = "com.studentslips.entities.SchoolAndClass">
         <result property = "studentId" column = "student_id"/>
@@ -78,6 +80,6 @@
         <result property = "debit" column = "amount_debt"/>
         <result property = "claims" column = "claims"/>
         <result property = "balance" column = "balance"/>
-        <result property = "isHightColor" column = "isHightColor"/>
+<!--        <result property = "isHightColor" column = "isHightColor"/>-->
     </resultMap>
 </mapper>
