@@ -16,11 +16,20 @@ public class Student {
     private String schoolName;
     private String studentId;
     private String schoolAccountNumber;
+    private String schoolAddress;
 
     public Student() {
     }
     
-    public String getSchoolAccountNumber() {
+    public String getSchoolAddress() {
+		return schoolAddress;
+	}
+
+	public void setSchoolAddress(String schoolAddress) {
+		this.schoolAddress = schoolAddress;
+	}
+
+	public String getSchoolAccountNumber() {
 		return schoolAccountNumber;
 	}
 

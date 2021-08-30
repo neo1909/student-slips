@@ -105,7 +105,7 @@ public class SupplierServiceImpl implements SupplierService {
 		ssdInsert.setSupplierId(ssg.getSupplierId());
 		ssdInsert.setServiceId(ssg.getServiceId());
 		ssdInsert.setGroupId(ssg.getGroupId());
-		ssdInsert.setSchoolId(ssg.getSchoolId());
+		ssdInsert.setSchoolId(SessionUtil.getSchoolId());
 		ssdInsert.setInsertId(SessionUtil.getUserLoginId());
     	if (!ssg.getTrInsert().isEmpty()) {
 	    	for (Integer grade: ssg.getTrInsert()) {
@@ -129,7 +129,7 @@ public class SupplierServiceImpl implements SupplierService {
 	    	ssdUpdate.setListGradeIds(ssg.getTrUpdate());
 	    	ssdUpdate.setSupplierId(ssg.getSupplierId());
 	    	ssdUpdate.setServiceId(ssg.getServiceId());
-	    	ssdUpdate.setSchoolId(ssg.getSchoolId());
+	    	ssdUpdate.setSchoolId(SessionUtil.getSchoolId());
 	    	ssdUpdate.setGroupId(ssg.getGroupId());
 	    	ssdUpdate.setUpdateId(SessionUtil.getUserLoginId());
 	    	supplierDao.updateSupplierService(ssdUpdate);

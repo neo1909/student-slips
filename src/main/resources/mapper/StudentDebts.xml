@@ -189,6 +189,7 @@
         <if test="schoolId != 0">
             AND T01.school_id = #{schoolId}
         </if>
+        order by T01.debit_date desc
     </select>
     <select id="countTaskArchive" parameterType="com.studentslips.entities.TaskArchiveSearch" resultType="int">
     	select count(T01.id)

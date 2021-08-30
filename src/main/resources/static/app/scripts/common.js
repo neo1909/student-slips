@@ -29,26 +29,37 @@ let SS = {
   noPayment: [ '', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ],
   
   dataSource: {
-	 grade: function(emptyValue) {
+	 grade: function(firstValue) {
 		 let src = [];
-		 if (emptyValue === 'All' || emptyValue === '') src.push({id: "", name: emptyValue});
+		 if (firstValue === 'All' || firstValue === '') src.push({id: "", name: firstValue});
 		 for (let i = 1; i <= 8; i++) {
 			 src.push({id: i, name: `${i}`});
 		 }
 		 return src;
 	 },
-	 clazz: function(emptyValue) {
+	 clazz: function(firstValue) {
 		 let src = [];
-		 if (emptyValue === 'All' || emptyValue === '') src.push({id: "", name: emptyValue});
+		 if (firstValue === 'All' || firstValue === '') src.push({id: "", name: firstValue});
 		 for (let i = 1; i <= 16; i++) {
 			 src.push({id: i, name: `${i}`});
 		 }
 		 return src;
 	 },
+	 noPayment: function(firstValue) {
+		 let src = [];
+		 if (firstValue) src.push({id: "", name: firstValue});
+		 for (let i = 1; i <= 12; i++) {
+			 src.push({id: i, name: `${i}`});
+		 }
+		 return src;
+	 }
   },
   
   grid: {
-	  height: 400,
+	  height: 750,
+	  customheight: function(height) {
+		  return height;
+	  },
 	  localization: {
 		  currencysymbol: "",
 		  decimalseparator: ",",

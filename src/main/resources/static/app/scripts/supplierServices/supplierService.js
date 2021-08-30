@@ -117,7 +117,7 @@ let fn = {
         $("#cmbSupplier").jqxDropDownList({ enableBrowserBoundsDetection: true, height: SS.IPT_HEIGHT, width: '100%' });
         $("#cmbService").jqxDropDownList({ enableBrowserBoundsDetection: true,source: [], selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', disabled: true });
         $("#cmbGrade").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.grade, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', checkboxes: true });
-        $("#cmbNoPayment").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.noPayment, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
+        $("#cmbNoPayment").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.noPayment(), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
 
         $("#iptPrice").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, min: 0, groupSeparator: ".", decimalSeparator: "," });
         $("#iptAmt01").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, groupSeparator: ".", decimalSeparator: "," });
@@ -170,11 +170,7 @@ let fn = {
                 { input: '#cmbGrade', message: 'Grade is required', action: 'blur', rule: function () {
         				return ($('#cmbGrade').val() && $('#cmbGrade').val() != '')
         			}
-                },
-                { input: '#cmbNoPayment', message: 'No. of Payment is required', action: 'change, keyup, blur', rule: function () {
-            			return ($('#cmbNoPayment').val() > 0)
-            		}
-                },
+                }
             ]
 		});
     },
@@ -452,12 +448,12 @@ $(document).ready(function () {
         $('#iptAmt11').val("");
         $('#iptAmt12').val("");
         if (event.args && event.args.item) {
-            const id = event.args.item.originalItem;
+            const id = event.args.item.originalItem.id;
             let arrPay = document.querySelectorAll('.amountPay');
-            for(let j=1; j<= arrPay.length; j++){
-                arrPay[j-1].style.display = "none";
+            for(let i = 1; i <= arrPay.length; i++){
+                arrPay[i-1].style.display = "none";
             }
-            for (let i = 1; i <= id; i++) {
+            for (let i = 1, len = id - 1; i <= len; i++) {
                 arrPay[i-1].style.display = "block";
             }
         }

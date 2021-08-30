@@ -5,10 +5,7 @@ function initUpdate() {
 	
 	$("#screen-title").html("Student Debts: Update task ID = " + taskId);
 	onSearchUpdate();
-    
-    $("#cmbStdGradeSrch").jqxDropDownList({ disabled: true });
-    $("#cmbStdClazzSrch").jqxDropDownList({ disabled: true });
-    $("#cmbStdServiceSrch").jqxDropDownList({ disabled: true });
+
 	$("#btnCancelUpdate").show();
 	$("#btnStdSrch").prop('disabled', true);
 	
@@ -20,15 +17,35 @@ function initUpdate() {
         	if (data && data.lst && data.lst.length > 0) {	        		
         		updateTaskOriginalData = data.lst[0];
         		$("#iptComment").val(updateTaskOriginalData.note);
+
+        		$("#cmbStdServiceSrch").jqxDropDownList({
+        	        source: [updateTaskOriginalData.serviceName],
+        	        disabled: true,
+        	        selectedIndex: 0
+        	    });
         		
-        	    onGetService(updateTaskOriginalData.grade);
-        		onGetInstallments(updateTaskOriginalData.grade, updateTaskOriginalData.serviceId);
+        		let src = [{name: '1st installment', value: '1'}, {name: '2nd installment', value: '2'}, {name: '3rd installment', value: '3'}];
+        		for (let i = 3, len = 12; i <= len; i++) {
+        			let order = i + 1;
+        			src.push({name: `${i}th installment`, value: `${i}`});
+        		}
+        		let idx = src.findIndex(i => i.value.includes(`${updateTaskOriginalData.installment}`));
+        		$("#cmbStdInstSrch").jqxDropDownList({
+        	        source: [...src],
+        	        displayMember: 'name',
+        	        valueMember: 'value',
+        	        disabled: true,
+        	        selectedIndex: idx
+        	    });
         		
         		$("#iptPriceSrch").val(updateTaskOriginalData.price);
+        		
         		let grade = $("#cmbStdGradeSrch").jqxDropDownList('getItemByValue', updateTaskOriginalData.grade == 0 ? '' : updateTaskOriginalData.grade);
         		$("#cmbStdGradeSrch").jqxDropDownList('selectItem', grade);
+        		$("#cmbStdGradeSrch").jqxDropDownList({ disabled: true });
         		let sClass = $("#cmbStdClazzSrch").jqxDropDownList('getItemByValue', updateTaskOriginalData.sClass == 0 ? '' : updateTaskOriginalData.sClass);
         		$("#cmbStdClazzSrch").jqxDropDownList('selectItem', sClass);
+        		$("#cmbStdClazzSrch").jqxDropDownList({ disabled: true });
         	}
         },
         function onError(err) {
@@ -59,81 +76,6 @@ function onSearchUpdate() {
         }
     );
 }
-
-function onGetService(gradeId) {
-    SS.sendToServer(
-        'SL_R_03',
-        false, {
-            grade: gradeId,
-        },
-
-        function onSuccess(data) {
-            if (data && data.lst && data.lst.length > 0) {
-            	let dataList = data.lst.map(d => {
-            		return { serviceId: d.serviceId, serviceName: d.serviceName }
-            	});
-            	let src = [{serviceId: '', serviceName: ''}, ...dataList];
-            	let idx = src.findIndex(d => d.serviceId == updateTaskOriginalData.serviceId);
-                $("#cmbStdServiceSrch").jqxDropDownList({
-                    source: src,
-                    displayMember: "serviceName",
-                    valueMember: "serviceId",
-                    disabled: true,
-                    selectedIndex: idx
-                });
-                
-                return;
-            }
-            $("#cmbStdServiceSrch").jqxDropDownList({
-                disabled: true,
-                source: [],
-            })
-            $("#iptPriceSrch").val("");
-
-        },
-        function onError(err) {
-            SS.alert(SS.title.ERROR, SS.message.ERROR);
-        }
-    )
-}
-
-function onGetInstallments(gradeId, serviceId) {
-    SS.sendToServer(
-        'SL_R_04',
-        false, {
-            grade: gradeId,
-            serviceId: serviceId,
-        },
-        function onSuccess(data) {
-            if (data && data.obj) {
-            	let src = [];
-            	src.push({name: '', value: '0-' + data.obj.price});
-            	if (data.obj.noPayment > 0 && data.obj.amount1 > 0) src.push({name: '1st installment', value: '1-' + data.obj.amount1});
-            	if (data.obj.noPayment > 1 && data.obj.amount2 > 0) src.push({name: '2nd installment', value: '2-' + data.obj.amount2});
-            	if (data.obj.noPayment > 2 && data.obj.amount3 > 0) src.push({name: '3rd installment', value: '3-' + data.obj.amount3});
-            	if (data.obj.noPayment > 3) {            		
-            		for (let i = 4, len = data.obj.noPayment; i <= len; i++) {
-            			if (data.obj['amount'+i] > 0) src.push({name: `${i}th installment`, value: i + '-' + data.obj['amount'+i]});
-            		}
-            	}
-        		let idx = src.findIndex(i => i.value.includes(`${updateTaskOriginalData.installment}-`));
-                $("#cmbStdInstSrch").jqxDropDownList({
-                    source: src,
-                    displayMember: "name",
-                    valueMember: "value",
-                    disabled: true,
-                    selectedIndex: idx
-                });
-
-                return;
-            }
-        },
-        function onError(err) {
-            SS.alert(SS.title.ERROR, SS.message.ERROR);
-        }
-    )
-}
-
 
 $(document).ready(function () {
 	initUpdate();

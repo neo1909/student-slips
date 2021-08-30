@@ -438,6 +438,9 @@ $(document).ready(function () {
 //         const jsDate = event.args.date;
 //         setMinDate(jsDate)
 //     });
+    
+	onSearch();
+	
     $('#btnStdSrch').click(function () {
         $('#grdBank').jqxGrid('refresh');
         onSearch();

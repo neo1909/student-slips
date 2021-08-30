@@ -196,6 +196,7 @@ $(document).ready(function () {
     let month = date.getMonth();
     const day = +date.getDate();
     $("#iptFromDate").jqxDateTimeInput('setDate', new Date( year, month-1, day));
+	onSearch();
 
 //    $('#iptFromDate').on('valueChanged', function (event)
 //    {

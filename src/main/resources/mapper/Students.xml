@@ -64,7 +64,8 @@
 	        (Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName,
 	        LPAD(S.id, 4, '0') as student_id,
 	        ps.name,
-	        ps.bank_account_number as school_account_number
+	        ps.bank_account_number as school_account_number,
+	        ps.address as school_address
         FROM PS_Students S
         left join PS_School ps on S.school_id = ps.id and ps.del_yn = 'N'
         where  S.del_yn='N'
@@ -98,5 +99,6 @@
         <result property = "updateDate" column = "update_date"/>
         <result property = "studentId" column = "student_id"/>
         <result property = "schoolAccountNumber" column = "school_account_number"/>
+        <result property = "schoolAddress" column = "school_address"/>
     </resultMap>
 </mapper>

@@ -72,14 +72,15 @@ function init() {
 		$("#cmbSrchService").jqxComboBox({ source: src, displayMember: "name", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});
 	});
     
-    let dataClass = [];
-    for (let i=1; i<=8; i++) {
-    	for (let j=1; j<=16; j++) {
-    		dataClass.push(i + "/" + j);
-    	}
-    }
+//    let dataClass = [];
+//    for (let i=1; i<=8; i++) {
+//    	for (let j=1; j<=16; j++) {
+//    		dataClass.push(i + "/" + j);
+//    	}
+//    }
     
-    $("#cmbSrchClass").jqxDropDownList({ source: dataClass, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
+    $("#cmbSrchGrade").jqxDropDownList({ source: SS.dataSource.grade(), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
+    $("#cmbSrchClass").jqxDropDownList({ source: SS.dataSource.clazz(), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
 
 };
 function setMinDate(time) {
@@ -166,7 +167,7 @@ function createGrid() {
         ],
         theme: 'bootstrap',
         width: '100%',
-        height: 350,
+        height: SS.grid.customheight(400),
         rowsheight: 33,
         selectionmode: 'row'
     });
@@ -245,7 +246,7 @@ function createGridDetail() {
         ],
         theme: 'bootstrap',
         width: '100%',
-        height: 300,
+        height: SS.grid.customheight(350),
         rowsheight: 33
     });
     $("#grdOverviewClassDetail").jqxGrid('localizestrings', SS.grid.localization);
@@ -316,8 +317,10 @@ function onSearch() {
 		serviceListString = serviceListString.slice(0, serviceListString.length-1);
 	}
 	
-	let srchGrade = $("#cmbSrchClass").val().split("/")[0];
-	let srchClass = $("#cmbSrchClass").val().split("/")[1];
+//	let srchGrade = $("#cmbSrchGrade").val().split("/")[0];
+//	let srchClass = $("#cmbSrchClass").val().split("/")[1];
+	let srchGrade = $("#cmbSrchGrade").val();
+	let srchClass = $("#cmbSrchClass").val();
 	
 	if (serviceListId.length == 0) {
 		SS.alert( SS.title.ERROR, "Service is required");
