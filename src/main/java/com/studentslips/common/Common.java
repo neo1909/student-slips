@@ -15,4 +15,6 @@ public class Common {
     public static final String STUDENT_ID = "studentId";
     public static final String SUPPLIER_ID = "supplierId";
     public static final String SERVICE_ID = "serviceId";
+
+    public static final String DATE_FORMAT_DOT_DD_MM_YYYY = "dd.MM.yyyy";
 }

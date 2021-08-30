@@ -167,7 +167,7 @@ let fnPopup = {
                         }
 
                         return '<div style="text-align: center; margin-top: 4px;">'
-                            + '<button alt="Edit" class="btn btn-success btn-icon btn-sm" style="margin-right: 10px" onclick="fnPopup.onPrint(' + row + ')"><span class="glyphicon glyphicon-print"></span></button>'
+                            + '<button alt="Edit" class="btn btn-success btn-icon btn-sm" style="margin-right: 10px" onclick="fnPopup.onPrint(' + i + ',' + row + ')"><span class="glyphicon glyphicon-print"></span></button>'
                             + '</div>';
                     }
                 }
@@ -299,9 +299,9 @@ let fnPopup = {
         }
     },
 
-    onPrint: function (rowIndex) {
+    onPrint: function (gridIndex, rowIndex) {
 
-        let data = $("#grdStudentBalance1").jqxGrid('getrowdata', rowIndex);
+        let data = $('#grdStudentBalance' + gridIndex).jqxGrid('getrowdata', rowIndex);
         let studentDebtsId = data.studentDebtsId;
         let studentId = data.id;
         let date = data.date;
