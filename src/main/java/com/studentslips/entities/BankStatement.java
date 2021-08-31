@@ -1,6 +1,7 @@
 package com.studentslips.entities;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class BankStatement {
@@ -11,7 +12,7 @@ public class BankStatement {
     private String filename;
 
     // DatumIzvoda
-    private Timestamp bankStatementDate;
+    private Date bankStatementDate;
 
 //    // RacunIzvoda
 //    private String accountNumber;
@@ -47,7 +48,7 @@ public class BankStatement {
     private String referenceNo;
 
     // DatumValute
-    private Timestamp currencyDate;
+    private Date currencyDate;
 
     private Timestamp insertDate;
     private int insertId;
@@ -70,11 +71,11 @@ public class BankStatement {
         this.id = id;
     }
 
-    public Timestamp getBankStatementDate() {
+    public Date getBankStatementDate() {
         return bankStatementDate;
     }
 
-    public void setBankStatementDate(Timestamp bankStatementDate) {
+    public void setBankStatementDate(Date bankStatementDate) {
         this.bankStatementDate = bankStatementDate;
     }
 
@@ -126,11 +127,11 @@ public class BankStatement {
         this.filename = filename;
     }
 
-    public Timestamp getCurrencyDate() {
+    public Date getCurrencyDate() {
         return currencyDate;
     }
 
-    public void setCurrencyDate(Timestamp currencyDate) {
+    public void setCurrencyDate(Date currencyDate) {
         this.currencyDate = currencyDate;
     }
 

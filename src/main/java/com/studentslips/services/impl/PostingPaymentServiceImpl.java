@@ -182,7 +182,7 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
                 //String id = element.getAttribute("id");
 
                 String bankStatementDate = element.getElementsByTagName("DatumIzvoda").item(0).getTextContent();
-                bankStatement.setBankStatementDate(DateUtil.converStringToTimeStamp(bankStatementDate));
+                bankStatement.setBankStatementDate(DateUtil.convertStringToDate(bankStatementDate));
             }
         }
     }
@@ -238,7 +238,7 @@ public class PostingPaymentServiceImpl implements PostingPaymentService {
             bankStatement.setClaims(CurrencyUtil.convertStringCommaToBigDecimal(claims));
             bankStatement.setReferenceNo(referenceNo);
             bankStatement.setPurpose(purpose);
-            bankStatement.setCurrencyDate(DateUtil.converStringToTimeStamp(currencyDate));
+            bankStatement.setCurrencyDate(DateUtil.convertStringToDate(currencyDate));
         }
     }
 
