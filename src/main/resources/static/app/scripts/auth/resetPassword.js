@@ -37,26 +37,30 @@ let fn = {
 		$("#btnResetPassword").on('click', function() {
 			if (!$('#formReset').jqxValidator('validate')) return;
 			
-			SS.sendToServer('A_R_02', false, {
-				username: $("#iptRsUsername").val(),
-				email: $("#iptRsEmail").val(),
-			}, function(res) {
-				if (res && res.status == 200) {
-					SS.confirm("Success", res.msg, function(result) {
-						if (result) {
-		        			_this.goToLogin();
+			SS.confirm("Confirmation", "Are you sure to reset your password?", function(result) {
+				if (result) {
+					SS.sendToServer('A_R_02', false, {
+						username: $("#iptRsUsername").val(),
+						email: $("#iptRsEmail").val(),
+					}, function(res) {
+						if (res && res.status == 200) {
+							SS.confirm("Success", res.msg, function(result) {
+								if (result) {
+				        			_this.goToLogin();
+								}
+							});
+						} else {
+							$("#iptRsUsername").val("");
+							$("#iptRsEmail").val("");
+							SS.alert(SS.title.ERROR, (res && res.msg) ? res.msg : SS.message.ERROR);
 						}
-					});
-				} else {
-					$("#iptRsUsername").val("");
-					$("#iptRsEmail").val("");
-					SS.alert(SS.title.ERROR, (res && res.msg) ? res.msg : SS.message.ERROR);
+					}, function(err) {
+						$("#iptRsUsername").val("");
+						$("#iptRsEmail").val("");
+						SS.alert(SS.title.ERROR, SS.message.ERROR);
+					})
 				}
-			}, function(err) {
-				$("#iptRsUsername").val("");
-				$("#iptRsEmail").val("");
-				SS.alert(SS.title.ERROR, SS.message.ERROR);
-			})
+			});
 		});
 	}
 }

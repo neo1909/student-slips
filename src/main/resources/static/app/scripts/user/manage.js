@@ -239,7 +239,7 @@ var fn = {
         let data = $("#grdUser").jqxGrid('getrowdata', rowIndex);
         let id = data.id;
         if (id) {
-            SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
+            SS.confirm(SS.title.CONFIRM, "Do you want to delete ? ", function (result) {
                 if (result ) {
                     SS.sendToServer(
                         'U_D_01',
