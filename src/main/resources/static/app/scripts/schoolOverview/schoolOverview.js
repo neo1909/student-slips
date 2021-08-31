@@ -49,7 +49,11 @@ let fnOverview = {
                 {text: 'Head Teacher', datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
                 {text: 'Services', datafield: 'serviceListString', align: 'center', cellsalign: 'center', width: '15%,'},
                 {text: 'Dedit', datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
-                {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
+                {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2',
+                    cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
+                        let formatValue = SS.format.formatNumberByLocales(!value ? 0 : value);
+                        return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
+                    }},
                 {text: 'Balance', datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
                 		let formatValue = SS.format.formatNumberByLocales(value);
                         if (value && value > 0) {
@@ -230,7 +234,11 @@ let fnDetail = {
                 {text: 'Head Teacher', datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
                 {text: 'Services', datafield: 'nameService', align: 'center', cellsalign: 'center', width: '15%,'},
                 {text: 'Dedit', datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
-                {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
+                {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2',
+                    cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
+                        let formatValue = SS.format.formatNumberByLocales(!value ? 0 : value);
+                        return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
+                    }},
                 {text: 'Balance', datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
                         let formatValue = SS.format.formatNumberByLocales(value);
                         if (value && value > 0) {
