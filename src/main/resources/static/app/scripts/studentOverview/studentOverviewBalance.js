@@ -392,7 +392,8 @@ let fnPopup = {
             printData.purpose +
             '    </label>\n' +
             '    <label class="institution">\n' +
-            printData.payee +
+            printData.payee + '<br>' +
+            printData.payeeAddress +
             '    </label>\n' +
             '    <label class="paymentCode">\n' +
             '        121\n' +
@@ -451,6 +452,7 @@ let fnPopup = {
                     amount: data.lst.amount,
                     payerAcc: data.lst.payerAcc,
                     payeeAcc: data.lst.payeeAcc,
+                    payeeAddress: data.lst.payeeAddress,
                     refNo: data.lst.refNo
                 }
             },
