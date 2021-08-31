@@ -346,7 +346,7 @@ $(document).ready(function() {
 			    <body cz-shortcut-listen="true">`
         	;
         for (let i = 1 ; i <= rows.length; i++) {
-        	if (rows[i-1].amountDebt == 0) continue;
+        	if (!rows[i-1].amountDebt || rows[i-1].amountDebt == 0) continue;
         	const student = studentsInfo.find(s => rows[i-1].studentId == s.id);
         	const schoolName = student && student.schoolName ? student.schoolName : '';
         	const schoolAddress = student && student.schoolAddress ? student.schoolAddress : '';
