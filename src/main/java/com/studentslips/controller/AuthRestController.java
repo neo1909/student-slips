@@ -1,7 +1,14 @@
 package com.studentslips.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +17,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.LocaleResolver;
 
 import com.studentslips.common.Common;
 import com.studentslips.entities.AuthRegister;
@@ -28,6 +37,17 @@ public class AuthRestController {
 	
 	@Autowired
 	private AuthenticationService authService;
+	
+	@Resource
+    private LocaleResolver localeResolver;
+
+	@RequestMapping(value = "/A_L_01", method = RequestMethod.GET)
+	public void setLocale(HttpServletResponse res, HttpServletRequest req, HttpSession session, @RequestParam("lang") String lang) throws IOException {
+		Locale locale = new Locale(lang, lang.toUpperCase());
+		localeResolver.setLocale(req, res, locale);
+		session.setAttribute("lang", lang);
+//		session.setAttribute("org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE", locale);
+	}
 	
 	@RequestMapping(value = "/A_R_01", method = RequestMethod.POST)
     public Map<String, ?> authRegister(@RequestBody AuthRegister authRegister){

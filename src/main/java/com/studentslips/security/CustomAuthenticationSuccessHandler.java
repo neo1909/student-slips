@@ -2,9 +2,9 @@ package com.studentslips.security;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Locale;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.web.servlet.LocaleResolver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,11 +33,17 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 	@Autowired
 	private UserService userService;
 	
+	@Resource
+    private LocaleResolver localeResolver;
+	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 		HttpSession session = request.getSession();
 		UserSession userSession = new UserSession();
 		userSession.setSessionId(session.getId());
+		
+		String language = request.getParameter("lang");
+		localeResolver.setLocale(request, response, new Locale(language, language.toUpperCase()));
 
 		try {
 			userSession.setUserId(SessionUtil.getUserLoginId());
@@ -59,6 +66,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 		session.setAttribute("user", SessionUtil.getAuthenticatedUser());
 		session.setAttribute("roles", SessionUtil.getAuthenticatedUserSimpleRoles());
 		session.setAttribute("login", "OK");
+		session.setAttribute("lang", language);
 		setDefaultTargetUrl("/index");
 
 		ResponseObject obj = new ResponseObject(HttpStatus.OK.value(), null, true);

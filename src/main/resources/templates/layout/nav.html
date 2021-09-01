@@ -14,12 +14,20 @@
 	                <img src="/lib/images/avatar5.png" class="img-circle" alt="User Image"  style="width: 100%;"/>
 	            </div>
                 <p>
-                    Hello, <span th:text=${session.user.fullName} th:unless="${session == null || session.user == null}"></span>
+                    <span th:text="#{lang.nav.hello}"></span>, <span th:text=${session.user.fullName} th:unless="${session == null || session.user == null}"></span>
                     ( ID: <span th:text=${session.user.id} th:unless="${session == null || session.user == null}"></span> )
                 </p>
             </div>
             <div class="info">
-            	<p>Role: <span th:text=${session.roles} th:unless="${session == null || session.roles == null}"></span></p>
+            	<p><span th:text="#{lang.nav.roles}"></span>: <span th:text=${session.roles} th:unless="${session == null || session.roles == null}"></span></p>
+            </div>
+            <div class="info">
+				<input type="hidden" id="iptSession" th:value="${session.lang}" />
+				<select id="locales" class="form-control">
+				    <option value="" th:text="#{lang.nav.selectlang}"></option>
+				    <option value="en" th:text="#{lang.nav.langEn}"></option>
+				    <option value="sr" th:text="#{lang.nav.langSr}"></option>
+				</select>
             </div>
         </div>
         <!-- search form -->
@@ -35,29 +43,29 @@
         <ul class="sidebar-menu">
             <li class="active">
                 <a href="/">
-                    <i class="fa fa-home"></i> <span>Home</span>
+                    <i class="fa fa-home"></i> <span th:text="#{lang.nav.home}"></span>
                 </a>
             </li>
 
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-info-circle"></i>
-                    <span>Data Entry</span>
+                    <span th:text="#{lang.nav.dataentry}"></span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="/data-entry/student"><i class="fa fa-angle-double-right"></i> Students</a></li>
-                    <li><a href="/data-entry/headteacher"><i class="fa fa-angle-double-right"></i> Head teachers</a></li>
-                    <li><a href="/data-entry/school"><i class="fa fa-angle-double-right"></i> School data</a></li>
-                    <li><a href="/data-entry/supplier"><i class="fa fa-angle-double-right"></i> Supplier</a></li>
-                    <li><a href="/data-entry/service"><i class="fa fa-angle-double-right"></i> Service</a></li>
-                    <li><a href="/data-entry/supplier-service"><i class="fa fa-angle-double-right"></i> Supplier detail</a></li>
+                    <li><a href="/data-entry/student"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.students}">Students</span></a></li>
+                    <li><a href="/data-entry/headteacher"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.headteachers}">Head teachers</span></a></li>
+                    <li><a href="/data-entry/school"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.schooldata}">School data</span></a></li>
+                    <li><a href="/data-entry/supplier"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.supplier}">Supplier</span></a></li>
+                    <li><a href="/data-entry/service"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.service}">Service</span></a></li>
+                    <li><a href="/data-entry/supplier-service"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.supplierdetail}">Supplier detail</span></a></li>
                 </ul>
             </li>
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-credit-card"></i>
-                    <span>Posting</span>
+                    <span th:text="#{lang.nav.posting}"></span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
@@ -67,7 +75,7 @@
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa fa-list"></i> <span>Overview</span>
+                    <i class="fa fa fa-list"></i> <span th:text="#{lang.nav.overview}"></span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
@@ -78,7 +86,7 @@
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-archive"></i> <span>Archive</span>
+                    <i class="fa fa-archive"></i> <span th:text="#{lang.nav.archive}"></span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
@@ -88,7 +96,7 @@
             </li>
             <li class="treeview" th:if="${session != null && session.roles != null && session.roles.contains('ADMIN')}">
                 <a href="#">
-                    <i class="fa fa-users"></i> <span>Admin</span>
+                    <i class="fa fa-users"></i> <span th:text="#{lang.nav.admin}"></span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
@@ -101,6 +109,24 @@
 
         </ul>
     </section>
+	<script type="text/javascript" src="/lib/scripts/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#locales").val($("#iptSession").val());
+		    $("#locales").on('change', function () {
+		    	if ($("#locales").val() == '') return;
+		    	$.ajax({
+	    	      async: false,
+	    	      contentType: 'application/json',
+	    	      url: "http://localhost:5000/api/A_L_01?lang=" + $("#locales").val(),
+	    	      type: 'GET',
+	    	      success: function() {
+	    	    	  location.reload();
+	    	      }
+		    	});
+		    });
+		});
+	</script>
     <!-- /.sidebar -->
 </aside>
 </body>

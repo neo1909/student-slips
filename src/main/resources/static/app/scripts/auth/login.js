@@ -1,7 +1,7 @@
 let fn = {
 	init : function() {
-		$("#iptLoginUsername").jqxInput({placeHolder: "Username *", height: SS.IPT_HEIGHT, width: '100%', maxLength: 45});
-		$("#iptLoginPassword").jqxInput({placeHolder: "Password *", height: SS.IPT_HEIGHT, width: '100%', maxLength: 45});
+		$("#iptLoginUsername").jqxInput({height: SS.IPT_HEIGHT, width: '100%', maxLength: 45});
+		$("#iptLoginPassword").jqxInput({height: SS.IPT_HEIGHT, width: '100%', maxLength: 45});
 
         $('#formLogin').jqxValidator({
             hintType: 'label',
@@ -24,7 +24,8 @@ let fn = {
 			type : 'POST',
 			data: {
             	username: username,
-            	password: CryptoJS.AES.encrypt(password, "!@#studentslips-2021").toString()
+            	password: CryptoJS.AES.encrypt(password, "!@#studentslips-2021").toString(),
+            	lang: $("#locales").val() || "sr"
             },
 			success : function(data) {
 				let result = JSON.parse(data);
@@ -92,4 +93,13 @@ let fn = {
 $(document).ready(function() {
 	fn.init();
 	fn.addEventListener();
+	
+	const urlSearchParams = new URLSearchParams(window.location.search);
+	const params = Object.fromEntries(urlSearchParams.entries());
+	console.log(params);
+	$("#locales").val(params.lang);
+	
+	$("#locales").on('change', function () {
+    	window.location.replace('login?lang=' + $(this).val());
+    });
 });

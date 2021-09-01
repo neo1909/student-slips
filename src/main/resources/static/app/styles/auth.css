@@ -142,18 +142,20 @@
 	justify-content: space-between;
 	position: relative;
 	z-index: 2;
-	padding-bottom: 120px;
+	/* padding-bottom: 120px; */
 }
 
 #form-login-panel {
 	margin-right: 0;
 	margin-left: auto;
 	margin-bottom: 2rem;
+	display: flex;
+	align-items: center;
 }
 
 @media (min-width: 992px) {
 	.wrap-login  {
-		padding: 177px 80px 150px 95px;
+		padding: 90px 80px 90px 0px;
 	}
 }
 

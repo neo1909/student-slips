@@ -1,44 +1,57 @@
 
-<div class="wrap-auth wrap-login col-12 col-md-10 col-lg-10 row" xmlns:th="http://www.thymeleaf.org">
+<div class="wrap-auth wrap-login col-12 col-md-12 col-lg-12 row" xmlns:th="http://www.thymeleaf.org">
 	<div class="col-xs-12 col-md-6">
 		<div class="col-12">
-			<img class="img-responsive" src="https://colorlib.com/etc/lf/Login_v1/images/img-01.png" alt="img-login">
+			<img class="img-responsive" src="/app/images/OneTouch-full-svg.svg" alt="img-login">
 		</div>
 	</div>
-	<div class="col-xs-12 col-md-6" id="form-login-panel">
-		<form class="row" id="formLogin">
-			<div class="col-12">
-				<h4>
-					<b>System Login</b>
-				</h4>
-			</div>
-			<div class="col-12">
-				<div class="form-group">
-					<input class="p-1" type="text" id="iptLoginUsername">
+	<div class="col-xs-12 col-md-6 d-flex align-items-center" id="form-login-panel">
+		<div class="w-100">
+			<div class="row d-flex justify-content-end">
+				<div class="col-sm-4 p-0">				
+					<select id="locales" class="form-control rounded">
+					    <option value="" th:text="#{lang.nav.selectlang}"></option>
+					    <option value="en" th:text="#{lang.nav.langEn}"></option>
+					    <option value="sr" th:text="#{lang.nav.langSr}"></option>
+					</select>
 				</div>
 			</div>
-			<div class="col-12">
-				<div class="form-group">
-					<input class="p-1" type="password" id="iptLoginPassword">
+			<form class="row" id="formLogin">
+				<div class="col-12">
+					<h4>
+						<b th:text="#{lang.login.systemlogin}"></b>
+					</h4>
 				</div>
-			</div>
-			<div class="col-12">
-				<button type="button" class="btn btn-primary mb-2 btn-block" id="btnLogin">Sign In</button>
+				<div class="col-12">
+					<div class="form-group">
+						<label th:text="#{lang.login.username}"></label>
+						<input class="p-1" type="text" id="iptLoginUsername">
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="form-group">
+						<label th:text="#{lang.login.password}"></label>
+						<input class="p-1" type="password" id="iptLoginPassword">
+					</div>
+				</div>
+				<div class="col-12">
+					<button type="button" class="btn btn-primary mb-2 btn-block" id="btnLogin" th:text="#{lang.login.signin}"></button>
+				</div>
+				<br />
+				<div class="col-12 d-flex justify-content-center">
+					<div class="btn btn-link" id="btnForgetPassword" th:text="#{lang.login.forgotpassword}"></div>
+				</div>
+			</form>
+			<br /> <br />
+			<div class="row">
+				<div class="col-12 d-flex justify-content-center">
+					<div class="btn btn-link" id="btnCreateAccount">
+						<span th:text="#{lang.login.createaccount}"></span> <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+					</div>
+				</div>
 			</div>
 			<br />
-			<div class="col-12 d-flex justify-content-center">
-				<div class="btn btn-link" id="btnForgetPassword">Forgot your password?</div>
-			</div>
-		</form>
-		<br /> <br />
-		<div class="row">
-			<div class="col-12 d-flex justify-content-center">
-				<div class="btn btn-link" id="btnCreateAccount">
-					Create your Account <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-				</div>
-			</div>
 		</div>
-		<br />
 	</div>
 </div>
 
