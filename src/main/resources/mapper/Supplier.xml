@@ -124,19 +124,17 @@
     </select>
     <select id="selectSupplierServiceAllGrades" parameterType="com.studentslips.entities.SupplierServiceDetail" resultMap="resultSupplierService">
         select
-			ssd.id,
-			ssd.name,
+			ssd.group_id,
 			ssd.supplier_id,
 			ssd.service_id,
-			ssd.school_id,
 			ps.name as supplier_name,
 			ps2.name as service_name
 		from PS_Suppliers_Service ssd
 		left join PS_Suppliers ps on ps.id = ssd.supplier_id
 		left join PS_Service ps2 on ps2.id = ssd.service_id
 		where 1=1
-		and ssd.del_yn = 'N'
-		group by ssd.group_id
+			and ssd.del_yn = 'N'
+		group by ssd.group_id, ssd.supplier_id, ssd.service_id
 		having count(ssd.grade) = 8
     </select>
     
