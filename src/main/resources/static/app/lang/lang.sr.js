@@ -1,26 +1,21 @@
-var common = {
-	vld_invalid: function(val) {
-		return `${val} nije ispravan`;
-	},
-	vld_required: function(val) {
-		return `${val} je obavezan podatak`;
-	},
-}
-
 var lang = {
-	login : {
+	common : {
+		msg_delConfirm: 'Da li želite da obrišete?',
+		vld_req_service: 'Usluga je neophodan podatak',
+		plh_enterSearch: 'Upišite pojam za pretragu...',
+	},
+	auth : {
 		plh_username: 'Korisničko ime *',
 		plh_password: 'Lozinka *',
-		vld_req_username: common.vld_required('Korisničko ime'),
-		vld_req_password: common.vld_required('Lozinka')
-	},
-	register : {
-		vld_req_username: common.vld_required('Korisničko ime'),
-		vld_req_password: common.vld_required('Lozinka'),
+		vld_req_username: 'Korisničko ime je obavezan podatak',
+		vld_req_password: 'Lozinka je obavezan podatak',
 		vld_min_password: 'Minimalna dužina = 8',
-		vld_min_password: 'Min length = 8',
-		vld_req_email: common.vld_required('Imejl'),
+		vld_req_email: 'Imejl je obavezan podatak',
 		vld_inv_email: 'Imejl nije ispravan',
+		vld_passwordMatch: 'Password does not match!',
+	},
+	overview : {
+		title_overviewStudentPopup: 'Pregled kartice stanja učenika',
 	}
 }
 

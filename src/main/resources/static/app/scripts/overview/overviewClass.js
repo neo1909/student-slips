@@ -72,13 +72,6 @@ function init() {
 		$("#cmbSrchService").jqxComboBox({ source: src, displayMember: "name", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});
 	});
     
-//    let dataClass = [];
-//    for (let i=1; i<=8; i++) {
-//    	for (let j=1; j<=16; j++) {
-//    		dataClass.push(i + "/" + j);
-//    	}
-//    }
-    
     $("#cmbSrchGrade").jqxDropDownList({ source: SS.dataSource.grade(), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
     $("#cmbSrchClass").jqxDropDownList({ source: SS.dataSource.clazz(), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
 
@@ -317,8 +310,6 @@ function onSearch() {
 		serviceListString = serviceListString.slice(0, serviceListString.length-1);
 	}
 	
-//	let srchGrade = $("#cmbSrchGrade").val().split("/")[0];
-//	let srchClass = $("#cmbSrchClass").val().split("/")[1];
 	let srchGrade = $("#cmbSrchGrade").val();
 	let srchClass = $("#cmbSrchClass").val();
 	

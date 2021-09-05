@@ -120,6 +120,7 @@ function createGrid() {
         height: SS.grid.height,
         rowsheight: 33
     });
+    $("#grdTask").jqxGrid('localizestrings', SS.grid.localization);
 }
 
 function init() {

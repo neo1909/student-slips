@@ -60,6 +60,7 @@ let fn = {
             height: SS.grid.height,
             rowsheight: 33
         });
+        $("#grdService").jqxGrid('localizestrings', SS.grid.localization);
 
         // Search
         $("#iptSvcNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });

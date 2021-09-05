@@ -18,11 +18,11 @@ let fn = {
             hintType: 'label',
             position: 'bottomright',
             rules: [
-                {input: '#iptRegUsername', message: i18n.lang.register.vld_req_username, action: 'keyup, blur', rule: 'required'},
-                {input: '#iptRegPassword', message: i18n.lang.register.vld_req_password, action: 'keyup, blur', rule: 'required'},
-                {input: '#iptRegPassword', message: i18n.lang.register.vld_min_password, action: 'keyup, blur', rule: 'minLength=8'},
-                {input: '#iptRegEmail', message: i18n.lang.register.vld_req_email, action: 'keyup, blur', rule: 'required'},
-                {input: '#iptRegEmail', message: i18n.lang.register.vld_inv_email, action: 'keyup, blur', rule: 'email'},
+                {input: '#iptRegUsername', message: i18n.lang.auth.vld_req_username, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptRegPassword', message: i18n.lang.auth.vld_req_password, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptRegPassword', message: i18n.lang.auth.vld_min_password, action: 'keyup, blur', rule: 'minLength=8'},
+                {input: '#iptRegEmail', message: i18n.lang.auth.vld_req_email, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptRegEmail', message: i18n.lang.auth.vld_inv_email, action: 'keyup, blur', rule: 'email'},
             ]
         });
 	},
@@ -58,7 +58,7 @@ let fn = {
 		$("#btnRegister").on('click', function() {
 			if (!$('#formReg').jqxValidator('validate')) return;
 			if ($("#iptRegConfirmPassword").val() != $("#iptRegPassword").val()) {
-				SS.alert(SS.title.ERROR, "Password does not match!");
+				SS.alert(SS.title.ERROR, i18n.lang.auth.vld_passwordMatch);
 				$("#iptRegPassword").val("");
 				$("#iptRegConfirmPassword").val("");
 				return;

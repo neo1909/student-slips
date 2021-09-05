@@ -165,7 +165,7 @@ let fnOverview = {
         let data = $("#grdSchoolOverview").jqxGrid('getrowdata', rowIndex);
         let id = data.id;
         if (id) {
-            SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
+            SS.confirm(SS.title.CONFIRM, i18n.lang.common.msg_delConfirm, function (result) {
                 if (result ) {
                     SS.sendToServer(
                         'SC_D_01',
@@ -257,7 +257,7 @@ let fnDetail = {
         }
 
         if (serviceListId.length == 0) {
-            SS.alert( SS.title.ERROR, "Service is required");
+            SS.alert( SS.title.ERROR, i18n.lang.common.vld_req_service);
             return;
         }
 

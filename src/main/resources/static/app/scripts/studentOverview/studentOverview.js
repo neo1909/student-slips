@@ -59,14 +59,15 @@ let fn = {
             ],
             theme: 'bootstrap',
             width: '100%',
-            height: 400,
+            height: SS.grid.height,
             rowsheight: 33
         });
+        $("#grdStudents").jqxGrid('localizestrings', SS.grid.localization);
 
         // Search
-        $("#iptStdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...',  });
-        $("#cmbStdGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.gradeAll, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
-        $("#cmbStdClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.clazzAll, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#iptStdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.plh_enterSearch });
+        $("#cmbStdGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_gradeAll(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbStdClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_clazzAll(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
 
         // Popup Student
         $("#popupStudent").jqxWindow({
@@ -75,7 +76,7 @@ let fn = {
             height: 720,
             width: 1280,
             theme: 'bootstrap',
-            title: 'Student Balance Overview',
+            title: i18n.lang.overview.title_overviewStudentPopup,
             position: 'center',
             resizable: false
         });
@@ -120,7 +121,7 @@ let fn = {
         let data = $("#grdStudents").jqxGrid('getrowdata', rowIndex);
         let studentId = data.id;
         if (studentId) {
-            SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
+            SS.confirm(SS.title.CONFIRM, i18n.lang.common.msg_delConfirm, function (result) {
                 if (result ) {
                     SS.sendToServer(
                         'ST_D_01',

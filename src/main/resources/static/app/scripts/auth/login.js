@@ -1,14 +1,14 @@
 let fn = {
 	init : function() {
-		$("#iptLoginUsername").jqxInput({placeHolder: i18n.lang.login.plh_username, height: SS.IPT_HEIGHT, width: '100%', maxLength: 45});
-		$("#iptLoginPassword").jqxInput({placeHolder: i18n.lang.login.plh_password, height: SS.IPT_HEIGHT, width: '100%', maxLength: 45});
+		$("#iptLoginUsername").jqxInput({placeHolder: i18n.lang.auth.plh_username, height: SS.IPT_HEIGHT, width: '100%', maxLength: 45});
+		$("#iptLoginPassword").jqxInput({placeHolder: i18n.lang.auth.plh_password, height: SS.IPT_HEIGHT, width: '100%', maxLength: 45});
 
         $('#formLogin').jqxValidator({
             hintType: 'label',
             position: 'bottomright',
             rules: [
-                {input: '#iptLoginUsername', message: i18n.lang.login.vld_req_username, action: 'keyup, blur', rule: 'required'},
-                {input: '#iptLoginPassword', message: i18n.lang.login.vld_req_password, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptLoginUsername', message: i18n.lang.auth.vld_req_username, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptLoginPassword', message: i18n.lang.auth.vld_req_password, action: 'keyup, blur', rule: 'required'},
             ]
         });
 	},

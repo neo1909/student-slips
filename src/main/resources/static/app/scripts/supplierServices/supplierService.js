@@ -116,7 +116,7 @@ let fn = {
         $('#iptNm').jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter name...' });
         $("#cmbSupplier").jqxDropDownList({ enableBrowserBoundsDetection: true, height: SS.IPT_HEIGHT, width: '100%' });
         $("#cmbService").jqxDropDownList({ enableBrowserBoundsDetection: true,source: [], selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', disabled: true });
-        $("#cmbGrade").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.grade, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', checkboxes: true });
+        $("#cmbGrade").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_grade(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', checkboxes: true });
         $("#cmbNoPayment").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.noPayment(), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
 
         $("#iptPrice").jqxNumberInput({ width: '100%', height: SS.IPT_HEIGHT, inputMode: 'simple', spinButtons: false, min: 0, groupSeparator: ".", decimalSeparator: "," });

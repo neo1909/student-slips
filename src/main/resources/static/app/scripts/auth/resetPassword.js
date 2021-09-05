@@ -8,9 +8,9 @@ let fn = {
             hintType: 'label',
             position: 'bottomright',
             rules: [
-                {input: '#iptRsUsername', message: 'Username is required', action: 'keyup, blur', rule: 'required'},
-                {input: '#iptRsEmail', message: 'E-mail is invalid', action: 'keyup, blur', rule: 'email'},
-                {input: '#iptRsEmail', message: 'E-mail is required', action: 'keyup, blur', rule: 'required'},
+                {input: '#iptRsUsername', message: i18n.lang.auth.vld_req_username, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptRsEmail', message: i18n.lang.auth.vld_inv_email, action: 'keyup, blur', rule: 'email'},
+                {input: '#iptRsEmail', message: i18n.lang.auth.vld_req_email, action: 'keyup, blur', rule: 'required'},
             ]
         });
 	},
