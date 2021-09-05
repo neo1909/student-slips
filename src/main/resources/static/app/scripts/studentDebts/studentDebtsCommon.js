@@ -322,22 +322,22 @@ $(document).ready(function() {
 			            .paymentPurpose{position:absolute;left:24px;top:170px;width:380px}
 			            .institution{position:absolute;left:24px;top:262px;width:380px}
 			
-			            .paymentCode{position:absolute;left:283px;top:85px;}
-			            .currency{position:absolute;left:340px;top:85px}
-			            .amount{position:absolute;right:325px;top:85px;}
+			            .paymentCode{position:absolute;left:283px;top:86px;}
+			            .currency{position:absolute;left:340px;top:86px}
+			            .amount{position:absolute;right:325px;top:86px;}
 			
 			            .account{position:absolute;left:275px;top:134px;}
 			            .model{position:absolute;left:290px;top:183px;}
-			            .referenceNumber{position:absolute;left:340px;top:183px;}
+			            .referenceNumber{position:absolute;left:340px;top:185px;}
 			
-			            .paymentCode-right{position:absolute;left:580px;top:85px;}
-			            .currency-right{position:absolute;left:642px;top:85px}
-			            .amount-right{position:absolute;right:24px;top:85px;}
+			            .paymentCode-right{position:absolute;left:580px;top:86px;}
+			            .currency-right{position:absolute;left:642px;top:86px}
+			            .amount-right{position:absolute;right:24px;top:86px;}
 			
 			            .account-right{position:absolute;left:575px;top:134px;}
 			            
 			            .model-right{position:absolute;left:575px;top:183px;}
-			            .referenceNumber-right{position:absolute;left:642px;top:183px;}
+			            .referenceNumber-right{position:absolute;left:642px;top:185px;}
 			            
 			            .name-right{position:absolute;left:575px;top:227px;width:380px}
 			            .paymentPurpose-right{position:absolute;left:575px;top:314px;width:380px}
