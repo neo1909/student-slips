@@ -162,10 +162,19 @@ let fn = {
                         $('#cmbStdGradeOverviewSSrch').val(data.obj.grade);
                         $('#cmbStdClassOverviewSrch').val(data.obj.sClass);
                         let fromDate = new Date();
+
+                        let currDate = fromDate.getDate();
+                        let currMonth = fromDate.getMonth();
+                        let currYear = fromDate.getFullYear();
+                        if(fromDate.getMonth()<=7){
+                            fromDate.setFullYear(currYear-1, currMonth, currDate);
+                        }
                         fromDate.setDate(1);
+                        fromDate.setMonth(8)
                         fromDate.setHours(0);
                         fromDate.setMinutes(0);
                         fromDate.setMilliseconds(0);
+
                         $('#iptFromDate').val(fromDate);
 
                         let toDate = new Date();
