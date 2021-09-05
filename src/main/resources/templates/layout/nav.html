@@ -22,9 +22,8 @@
             	<p><span th:text="#{lang.nav.roles}"></span>: <span th:text=${session.roles} th:unless="${session == null || session.roles == null}"></span></p>
             </div>
             <div class="info">
-				<input type="hidden" id="iptSession" th:value="${session.lang}" />
+				<!-- <input type="hidden" id="iptSession" th:value="${session.lang}" /> -->
 				<select id="locales" class="form-control">
-				    <option value="" th:text="#{lang.nav.selectlang}"></option>
 				    <option value="en" th:text="#{lang.nav.langEn}"></option>
 				    <option value="sr" th:text="#{lang.nav.langSr}"></option>
 				</select>
@@ -110,23 +109,8 @@
         </ul>
     </section>
 	<script type="text/javascript" src="/lib/scripts/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#locales").val($("#iptSession").val());
-		    $("#locales").on('change', function () {
-		    	if ($("#locales").val() == '') return;
-		    	$.ajax({
-	    	      async: false,
-	    	      contentType: 'application/json',
-	    	      url: "http://localhost:5000/api/A_L_01?lang=" + $("#locales").val(),
-	    	      type: 'GET',
-	    	      success: function() {
-	    	    	  location.reload();
-	    	      }
-		    	});
-		    });
-		});
-	</script>
+	<script type="text/javascript" src="/app/scripts/i18n.js"></script>
+	<script type="text/javascript" src="/app/scripts/nav/nav.js"></script>
     <!-- /.sidebar -->
 </aside>
 </body>

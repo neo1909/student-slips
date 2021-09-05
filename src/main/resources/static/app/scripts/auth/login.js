@@ -1,14 +1,14 @@
 let fn = {
 	init : function() {
-		$("#iptLoginUsername").jqxInput({height: SS.IPT_HEIGHT, width: '100%', maxLength: 45});
-		$("#iptLoginPassword").jqxInput({height: SS.IPT_HEIGHT, width: '100%', maxLength: 45});
+		$("#iptLoginUsername").jqxInput({placeHolder: i18n.lang.login.plh_username, height: SS.IPT_HEIGHT, width: '100%', maxLength: 45});
+		$("#iptLoginPassword").jqxInput({placeHolder: i18n.lang.login.plh_password, height: SS.IPT_HEIGHT, width: '100%', maxLength: 45});
 
         $('#formLogin').jqxValidator({
             hintType: 'label',
             position: 'bottomright',
             rules: [
-                {input: '#iptLoginUsername', message: 'Username is required', action: 'keyup, blur', rule: 'required'},
-                {input: '#iptLoginPassword', message: 'Password is required', action: 'keyup, blur', rule: 'required'},
+                {input: '#iptLoginUsername', message: i18n.lang.login.vld_req_username, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptLoginPassword', message: i18n.lang.login.vld_req_password, action: 'keyup, blur', rule: 'required'},
             ]
         });
 	},
@@ -25,7 +25,7 @@ let fn = {
 			data: {
             	username: username,
             	password: CryptoJS.AES.encrypt(password, "!@#studentslips-2021").toString(),
-            	lang: $("#locales").val() || "sr"
+            	lang: $("#locales").val()
             },
 			success : function(data) {
 				let result = JSON.parse(data);
@@ -87,6 +87,18 @@ let fn = {
 				error : onError
 			});
 		});
+	},
+	
+	initLanguageSetting: function() {
+		$("#locales").val(localStorage.getItem("lang"));
+			
+		$("#locales").on('change', function () {
+			if ($("#locales").val() == '') return;
+			i18n.changeLanguage($("#locales").val(), function() {
+		    	  localStorage.setItem("lang", $("#locales").val());
+		    	  location.reload();
+			}, function() {})
+		});
 	}
 }
 
@@ -94,12 +106,5 @@ $(document).ready(function() {
 	fn.init();
 	fn.addEventListener();
 	
-	const urlSearchParams = new URLSearchParams(window.location.search);
-	const params = Object.fromEntries(urlSearchParams.entries());
-	console.log(params);
-	$("#locales").val(params.lang);
-	
-	$("#locales").on('change', function () {
-    	window.location.replace('login?lang=' + $(this).val());
-    });
+	fn.initLanguageSetting();
 });

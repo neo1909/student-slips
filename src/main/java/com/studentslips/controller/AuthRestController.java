@@ -38,17 +38,6 @@ public class AuthRestController {
 	@Autowired
 	private AuthenticationService authService;
 	
-	@Resource
-    private LocaleResolver localeResolver;
-
-	@RequestMapping(value = "/A_L_01", method = RequestMethod.GET)
-	public void setLocale(HttpServletResponse res, HttpServletRequest req, HttpSession session, @RequestParam("lang") String lang) throws IOException {
-		Locale locale = new Locale(lang, lang.toUpperCase());
-		localeResolver.setLocale(req, res, locale);
-		session.setAttribute("lang", lang);
-//		session.setAttribute("org.springframework.web.servlet.i18n.SessionLocaleResolver.LOCALE", locale);
-	}
-	
 	@RequestMapping(value = "/A_R_01", method = RequestMethod.POST)
     public Map<String, ?> authRegister(@RequestBody AuthRegister authRegister){
         Map<String, Object> result = new HashMap<>();

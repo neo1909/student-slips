@@ -18,11 +18,11 @@ let fn = {
             hintType: 'label',
             position: 'bottomright',
             rules: [
-                {input: '#iptRegUsername', message: 'Username is required', action: 'keyup, blur', rule: 'required'},
-                {input: '#iptRegPassword', message: 'Password is required', action: 'keyup, blur', rule: 'required'},
-                {input: '#iptRegPassword', message: 'Min length = 8', action: 'keyup, blur', rule: 'minLength=8'},
-                {input: '#iptRegEmail', message: 'E-mail is required', action: 'keyup, blur', rule: 'required'},
-                {input: '#iptRegEmail', message: 'E-mail is invalid', action: 'keyup, blur', rule: 'email'},
+                {input: '#iptRegUsername', message: i18n.lang.register.vld_req_username, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptRegPassword', message: i18n.lang.register.vld_req_password, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptRegPassword', message: i18n.lang.register.vld_min_password, action: 'keyup, blur', rule: 'minLength=8'},
+                {input: '#iptRegEmail', message: i18n.lang.register.vld_req_email, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptRegEmail', message: i18n.lang.register.vld_inv_email, action: 'keyup, blur', rule: 'email'},
             ]
         });
 	},
