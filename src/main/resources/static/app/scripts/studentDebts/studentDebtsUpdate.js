@@ -25,8 +25,7 @@ function initUpdate() {
         	    });
         		
         		let src = [{name: '1st installment', value: '1'}, {name: '2nd installment', value: '2'}, {name: '3rd installment', value: '3'}];
-        		for (let i = 3, len = 12; i <= len; i++) {
-        			let order = i + 1;
+        		for (let i = 4, len = 12; i <= len; i++) {
         			src.push({name: `${i}th installment`, value: `${i}`});
         		}
         		let idx = src.findIndex(i => i.value.includes(`${updateTaskOriginalData.installment}`));

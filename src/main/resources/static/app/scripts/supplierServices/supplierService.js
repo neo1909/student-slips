@@ -449,11 +449,10 @@ $(document).ready(function () {
         $('#iptAmt12').val("");
         if (event.args && event.args.item) {
             const id = event.args.item.originalItem.id;
-            let arrPay = document.querySelectorAll('.amountPay');
-            for(let i = 1; i <= arrPay.length; i++){
-                arrPay[i-1].style.display = "none";
-            }
-            for (let i = 1, len = id - 1; i <= len; i++) {
+            let arrPay = $('.amountPay');
+            $('.amountPay').hide();
+            if (id == 1) return;
+            for (let i = 1; i <= id; i++) {
                 arrPay[i-1].style.display = "block";
             }
         }
