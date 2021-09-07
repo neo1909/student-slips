@@ -74,22 +74,27 @@
         <result property="amount" column="amount"/>
         <result property="payerAcc" column="payer_acc"/>
         <result property="payeeAcc" column="payee_acc"/>
+        <result property="payeeAddress" column="payee_address"/>
         <result property="refNo" column="reference_no"/>
     </resultMap>
 
     <select id="selectPrintData" parameterType="com.studentslips.entities.StudentOverviewBalancePrintDTO" resultMap="print-result">
         SELECT
-            student_id as id,
-            debit_date as date,
-            (select name from PS_Students where id = #{id}) as payer_info,
+            sd.student_id as id,
+            sd.debit_date as date,
+            st.name as payer_info,
             purpose,
-            (select sc.name from PS_Students st join PS_School sc on st.school_id = sc.id where st.id = #{id}) as payee,
+            sch.name as payee,
             amount_debt as amount,
             '' as payer_acc,
-            (select sc.bank_account_number from PS_Students st join PS_School sc on st.school_id = sc.id where st.id = #{id}) as payee_acc,
+            sch.bank_account_number as payee_acc,
+            sch.address as payee_address,
             reference_no
         FROM onetouch.PS_Students_Debts sd
+            LEFT JOIN PS_Students st ON sd.student_id = st.id
+            LEFT JOIN PS_School sch ON sch.id = st.school_id
         WHERE sd.student_id = #{id} and debit_date = #{date} and sd.id = #{studentDebtsId}
+
     </select>
 
 

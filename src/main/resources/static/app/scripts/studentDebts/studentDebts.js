@@ -92,18 +92,22 @@ function onGetInstallments(gradeId, serviceId) {
         },
         function onSuccess(data) {
             if (data && data.obj) {
-            	let serviceInstallmentsMap = [];
-            	if (data.obj.noPayment > 1 && data.obj.amount1 > 0) serviceInstallmentsMap.push({name: '2nd installment', value: `2-${data.obj.amount1}`});
-            	if (data.obj.noPayment > 2 && data.obj.amount2 > 0) serviceInstallmentsMap.push({name: '3rd installment', value: `3-${data.obj.amount2}`});
-            	if (data.obj.noPayment > 3) {            		
-            		for (let i = 3, len = data.obj.noPayment; i <= len; i++) {
-            			let order = i;
-            			if (data.obj[`amount${order}`] > 0) serviceInstallmentsMap.push({name: `${order}th installment`, value: `${order}-${data.obj['amount'+i]}`});
-            		}
+            	let src = [];
+            	if (data.obj.noPayment <= 1) {            		
+            		src = [{name: '1st installment', value: `1-${data.obj.price}`}] 
+            	} else {
+            		src = [{name: '1st installment', value: `1-${data.obj.amount1}`}];
+                	if (data.obj.noPayment > 1) src.push({name: '2nd installment', value: `2-${data.obj.amount2}`});
+                	if (data.obj.noPayment > 2) src.push({name: '3rd installment', value: `3-${data.obj.amount3}`});
+                	if (data.obj.noPayment > 3) {            		
+                		for (let i = 4, len = data.obj.noPayment; i <= len; i++) {
+                			src.push({name: `${i}th installment`, value: `${i}-${data.obj['amount'+i]}`});
+                		}
+                	}
             	}
-            	console.log(serviceInstallmentsMap)
+            	
                 $("#cmbStdInstSrch").jqxDropDownList({
-                    source: [{name: '1st installment', value: `1-${data.obj.price}`}, ...serviceInstallmentsMap],
+                    source: [...src],
                     displayMember: "name",
                     valueMember: "value",
                     disabled: false,

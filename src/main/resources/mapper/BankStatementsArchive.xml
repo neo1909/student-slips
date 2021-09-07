@@ -30,6 +30,7 @@
         </if>
          ) XX
         group by XX.file_name,XX.bank_statement_date,XX.no_of_bank_statement,XX.balance,XX.no_of_changes
+        order by XX.bank_statement_date DESC
     </select>
 
     <select id="selectBankStatementArchiveById" parameterType="com.studentslips.entities.BankStatementArchiveSearch" resultMap="result">

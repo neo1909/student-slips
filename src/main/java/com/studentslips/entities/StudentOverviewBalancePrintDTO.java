@@ -14,6 +14,7 @@ public class StudentOverviewBalancePrintDTO {
     private BigDecimal amount;
     private String payerAcc;
     private String payeeAcc;
+    private String payeeAddress;
     private String refNo;
 
     public StudentOverviewBalancePrintDTO() {
@@ -97,5 +98,13 @@ public class StudentOverviewBalancePrintDTO {
 
     public void setStudentDebtsId(int studentDebtsId) {
         this.studentDebtsId = studentDebtsId;
+    }
+
+    public String getPayeeAddress() {
+        return payeeAddress;
+    }
+
+    public void setPayeeAddress(String payeeAddress) {
+        this.payeeAddress = payeeAddress;
     }
 }
