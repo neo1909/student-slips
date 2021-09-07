@@ -30,12 +30,12 @@
     <div class="div-content ss-content">
         <aside class="right-side">
             <section class="content-header">
-                <h1>
+                <h1 th:text="#{lang.dataentry.supplierdetail}">
                     Supplier Detail
                 </h1>
                 <ol class="breadcrumb">
-                    <li></i> Data Entry</a></li>
-                    <li class="active">Supplier Detail</li>
+                    <li><a th:text="#{lang.dataentry}"> Data Entry</a></li>
+                    <li class="active" th:text="#{lang.dataentry.supplierdetail}">Supplier Detail</li>
                 </ol>
             </section>
 
@@ -46,19 +46,19 @@
                         <form role="form">
                             <div class="row">
                                 <div class="form-group col-md-10">
-                                    <label>Name</label>
+                                    <label th:text="#{lang.name}" >Name</label>
                                     <div >
                                         <input id="iptNmSrch" style="padding-left: 12px;"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <button id="btnSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search">Search</button>
+                                    <button id="btnSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search" th:text="#{lang.search}">Search</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="div-grid">
-                        <button id="btnCreate" class="btn btn-success btn-str" type="button" value="Create Supplier Detail" >
+                        <button id="btnCreate" class="btn btn-success btn-str" type="button" value="Create Supplier Detail" th:text="#{lang.dataentry.supplierdetail.create}">
                             Create Supplier Detail
                         </button>
 
@@ -76,24 +76,24 @@
 <div class="ss-popup ">
     <div class="ss-popup-content" id="popupDetail">
         <div >
-            <h3>Supplier - Service Detail</h3>
+            <h3 th:text="#{lang.dataentry.supplierdetail.supplierandservicedetail}">Supplier - Service Detail</h3>
             <form id="formCreateUpdateSupplierService">
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label>
+                        <label th:text="#{lang.name}">
                             Name <span class="lb-requried"> *</span>
                         </label>
                         <input name="iptNm" id="iptNm" style="padding-left: 12px;"/>
                         <input name="iptId" id="iptId" style="display: none;" disabled/>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>
+                        <label th:text="#{lang.dataentry.supplier}">
                             Supplier <span class="lb-requried"> *</span>
                         </label>
                         <div id="cmbSupplier" style="padding-left: 12px;"></div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>
+                        <label th:text="#{lang.dataentry.service}">
                             Service <span class="lb-requried"> *</span>
                         </label>
                         <div id="cmbService" style="padding-left: 12px;"></div>
@@ -102,19 +102,19 @@
 
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label>
+                        <label th:text="#{lang.grade}">
                             Grade <span class="lb-requried"> *</span>
                         </label>
                         <div id="cmbGrade" style="padding-left: 12px;"></div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>
+                        <label th:text="#{lang.price}">
                             Price <span class="lb-requried"> *</span>
                         </label>
                         <div id="iptPrice" style="padding-left: 12px;"></div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label>
+                        <label th:text="#{lang.dataentry.supplierdetail.noinstallment}">
                             No. of installment <span class="lb-requried"> *</span>
                         </label>
                         <div id="cmbNoPayment" style="padding-left: 12px;"></div>
@@ -122,81 +122,81 @@
                 </div>
                     <div class="row">
                         <div class="form-group col-md-4 amountPay"  style="display: none">
-                            <label>
+                            <label th:text="#{lang.dataentry.supplierdetail.amount} + ' ' +1">
                                 Amount 1
                             </label>
                             <div id="iptAmt01" style="padding-left: 12px;"></div>
                         </div>
                         <div class="form-group col-md-4 amountPay" style="display: none">
-                            <label>
+                            <label th:text="#{lang.dataentry.supplierdetail.amount} + ' ' +2">
                                 Amount 2
                             </label>
                             <div id="iptAmt02" style="padding-left: 12px;"></div>
                         </div>
                         <div class="form-group col-md-4 amountPay" style="display: none">
-                            <label>
+                            <label th:text="#{lang.dataentry.supplierdetail.amount} + ' ' +3">
                                 Amount 3
                             </label>
                             <div id="iptAmt03" style="padding-left: 12px;"></div>
                         </div>
                         <div class="form-group col-md-4 amountPay" style="display: none">
-                            <label>
+                            <label th:text="#{lang.dataentry.supplierdetail.amount} + ' ' +4">
                                 Amount 4
                             </label>
                             <div id="iptAmt04" style="padding-left: 12px;"></div>
                         </div>
                         <div class="form-group col-md-4 amountPay" style="display: none">
-                            <label>
+                            <label th:text="#{lang.dataentry.supplierdetail.amount} + ' ' +5">
                                 Amount 5
                             </label>
                             <div id="iptAmt05" style="padding-left: 12px;"></div>
                         </div>
                         <div class="form-group col-md-4 amountPay" style="display: none">
-                            <label>
+                            <label th:text="#{lang.dataentry.supplierdetail.amount} + ' ' +6">
                                 Amount 6
                             </label>
                             <div id="iptAmt06" style="padding-left: 12px;"></div>
                         </div>
                         <div class="form-group col-md-4 amountPay" style="display: none">
-                            <label>
+                            <label th:text="#{lang.dataentry.supplierdetail.amount} + ' ' +7">
                                 Amount 7
                             </label>
                             <div id="iptAmt07" style="padding-left: 12px;"></div>
                         </div>
                         <div class="form-group col-md-4 amountPay" style="display: none">
-                            <label>
+                            <label th:text="#{lang.dataentry.supplierdetail.amount} + ' ' +8">
                                 Amount 8
                             </label>
                             <div id="iptAmt08" style="padding-left: 12px;"></div>
                         </div>
                         <div class="form-group col-md-4 amountPay" style="display: none">
-                            <label>
+                            <label th:text="#{lang.dataentry.supplierdetail.amount} + ' ' +9">
                                 Amount 9
                             </label>
                             <div id="iptAmt09" style="padding-left: 12px;"></div>
                         </div>
                         <div class="form-group col-md-4 amountPay" style="display: none">
-                            <label>
+                            <label th:text="#{lang.dataentry.supplierdetail.amount} + ' ' +10">
                                 Amount 10
                             </label>
                             <div id="iptAmt10" style="padding-left: 12px;"></div>
                         </div>
                         <div class="form-group col-md-4 amountPay" style="display: none">
-                            <label>
+                            <label th:text="#{lang.dataentry.supplierdetail.amount} + ' ' +11">
                                 Amount 11
                             </label>
                             <div id="iptAmt11" style="padding-left: 12px;"></div>
                         </div>
                         <div class="form-group col-md-4 amountPay" style="display: none">
-                            <label>
+                            <label th:text="#{lang.dataentry.supplierdetail.amount} + ' ' +12">
                                 Amount 12
                             </label>
                             <div id="iptAmt12" style="padding-left: 12px;"></div>
                         </div>
                     </div>
                 <div style="margin-top: 15px; text-align: right">
-                    <button id="btnCancel" class="btn btn-default btn-str btn-left" type="button" value="Cancel">Cancel</button>
-                    <button id="btnSave" class="btn btn-primary btn-str" type="button" value="Save">Save</button>
+                    <button id="btnCancel" class="btn btn-default btn-str btn-left" type="button" value="Cancel" th:text="#{lang.cancel}">Cancel</button>
+                    <button id="btnSave" class="btn btn-primary btn-str" type="button" value="Save" th:text="#{lang.save}">Save</button>
                 </div>
             </form>
 

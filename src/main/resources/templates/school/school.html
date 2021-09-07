@@ -29,12 +29,12 @@
     <div class="div-content ss-content">
         <aside class="right-side">
             <section class="content-header">
-                <h1>
+                <h1 th:text="#{lang.dataentry.schooldata}">
                     School Data
                 </h1>
                 <ol class="breadcrumb">
-                    <li></i> Data Entry</a></li>
-                    <li class="active">School data</li>
+                    <li><a th:text="#{lang.dataentry}"> Data Entry</a></li>
+                    <li class="active" th:text="#{lang.dataentry.schooldata}">School data</li>
                 </ol>
             </section>
 
@@ -45,19 +45,19 @@
                         <form role="form">
                             <div class="row">
                                 <div class="form-group col-md-5">
-                                    <label >School Name</label>
+                                    <label th:text="#{lang.dataentry.schooldata.name}">School Name</label>
                                     <div >
                                         <input id="iptStdNmSrch" style="padding-left: 12px;"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <button id="btnStdSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search">Search</button>
+                                    <button id="btnStdSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search" th:text="#{lang.search}">Search</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="div-grid">
-                        <button id="btnStdCreate" class="btn btn-success btn-str" type="button" value="Create Student" >
+                        <button id="btnStdCreate" class="btn btn-success btn-str" type="button" value="Create Student" th:text="#{lang.dataentry.schooldata.create}">
                             Create School
                         </button>
 
@@ -78,14 +78,14 @@
             <form id="frmSchool" style="margin-top: 16px">
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label>
+                        <label th:text="#{lang.dataentry.schooldata.name}">
                             School Name<span class="lb-requried"> *</span>
                         </label>
                         <input name="schoolName" id="iptSchoolName"/>
                         <input name="id" id="iptId" style="display: none;" disabled/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>
+                        <label th:text="#{lang.dataentry.schooldata.address}">
                             Address <span class="lb-requried"> *</span>
                         </label>
                         <input name="address" id="iptAddress"/>
@@ -93,13 +93,13 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label>
+                        <label th:text="#{lang.dataentry.schooldata.zcode}">
                             Zip Code <span class="lb-requried"> *</span>
                         </label>
                         <input name="zipCode" id="iptZipCode"/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>
+                        <label th:text="#{lang.dataentry.schooldata.city}">
                             City <span class="lb-requried"> *</span>
                         </label>
                         <input name="city" id="iptCity"/>
@@ -107,13 +107,13 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label>
+                        <label th:text="#{lang.dataentry.schooldata.municipality}">
                             Municipality <span class="lb-requried"> *</span>
                         </label>
                         <input name="municipality" id="iptMunicipality"/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>
+                        <label th:text="#{lang.dataentry.schooldata.bankaccountnumber}">
                             Bank Account Number <span class="lb-requried"> *</span>
                         </label>
                         <input name="bankAcc" id="iptBankAcc"/>
@@ -121,8 +121,8 @@
                 </div>
 
                 <div style="margin-top: 15px; text-align: right">
-                    <button id="btnCancel" class="btn btn-default btn-str btn-left" type="button" value="Cancel">Cancel</button>
-                    <button id="btnSave" class="btn btn-primary btn-str" type="button" value="Save">Save</button>
+                    <button id="btnCancel" class="btn btn-default btn-str btn-left" type="button" value="Cancel" th:text="#{lang.cancel}">Cancel</button>
+                    <button id="btnSave" class="btn btn-primary btn-str" type="button" value="Save" th:text="#{lang.save}">Save</button>
                 </div>
             </form>
 

@@ -31,12 +31,12 @@
         <div class="div-content ss-content">
             <aside class="right-side">
                 <section class="content-header">
-                    <h1 id="screen-title">
+                    <h1 id="screen-title" th:text="#{lang.posting.studentdebt}">
                         Student Debts
                     </h1>
                     <ol class="breadcrumb">
-                        <li></i> Posting</a></li>
-                        <li class="active">Student Debts</li>
+                        <li><a th:text="#{lang.posting}"> Posting</a></li>
+                        <li class="active" th:text="#{lang.posting.studentdebt}">Student Debts</li>
                     </ol>
                 </section>
 
@@ -49,13 +49,13 @@
                             		<div class="col-md-8">
 		                                <div class="row search-condition-panel">
 		                                    <div class="form-group col-md-6">
-		                                        <label>Grade</label>
+		                                        <label th:text="#{lang.grade}">Grade</label>
 		                                        <div>
 		                                            <div id="cmbStdGradeSrch"></div>
 		                                        </div>
 		                                    </div>
 		                                    <div class="form-group col-md-6">
-		                                        <label>Class</label>
+		                                        <label th:text="#{lang.class}">Class</label>
 		                                        <div>
 		                                            <div id="cmbStdClazzSrch"></div>
 		                                        </div>
@@ -63,25 +63,25 @@
 		                                </div>
 		                                <div class="row search-condition-panel">
 		                                    <div class="form-group col-md-3">
-		                                        <label>Service</label>
+		                                        <label th:text="#{lang.dataentry.service}">Service</label>
 		                                        <div>
 		                                            <div id="cmbStdServiceSrch"></div>
 		                                        </div>
 		                                    </div>
 		                                    <div class="form-group col-md-3">
-		                                        <label>Installments</label>
+		                                        <label th:text="#{lang.posting.studentdebt.installment}">Installments</label>
 		                                        <div>
 		                                            <div id="cmbStdInstSrch"></div>
 		                                        </div>
 		                                    </div>
 		                                    <div class="form-group col-md-3">
-		                                        <label>Price</label>
+		                                        <label th:text="#{lang.price}">Price</label>
 		                                        <div>
 		                                            <input id="iptPriceSrch">
 		                                        </div>
 		                                    </div>
 		                                    <div class="form-group col-md-3">
-		                                        <label>Debit date</label>
+		                                        <label th:text="#{lang.debitdate}">Debit date</label>
 		                                        <div>
 		                                            <input id="iptDateSrch">
 		                                        </div>
@@ -91,9 +91,9 @@
                             		<div class="col-md-4">
 		                                <div class="row d-flex justify-content-end">
 		                                    <div class="form-group col-md-12 text-right">
-		                                        <button id="btnCancelUpdate" class="btn btn-primary btn-str btn-search mx-1" type="button">Back</button>
-		                                        <button id="btnStdSrch" class="btn btn-primary btn-str btn-search mx-1" type="button">Search</button>
-		                                        <button id="btnApplyToAll" class="btn btn-primary btn-str btn-search mx-1" type="button">Apply to all</button>
+		                                        <button id="btnCancelUpdate" class="btn btn-primary btn-str btn-search mx-1" type="button" th:text="#{lang.back}">Back</button>
+		                                        <button id="btnStdSrch" class="btn btn-primary btn-str btn-search mx-1" type="button" th:text="#{lang.search}">Search</button>
+		                                        <button id="btnApplyToAll" class="btn btn-primary btn-str btn-search mx-1" type="button" th:text="#{lang.posting.studentdebt.applytoall}">Apply to all</button>
 		                                    </div>
 		                                </div>
                             		</div>
@@ -110,15 +110,15 @@
                         <div class="action">
                         	<br/>
                             <div>
-                                <label>Purpose of payment</label>
+                                <label th:text="#{lang.posting.studentdebt.purpose}">Purpose of payment</label>
                                 <textarea id="iptComment"> </textarea>
                             </div>
                         	<br/>
                             <div>
-                                <button id="btnSave" class="btn btn-primary btn-str mx-1" type="button" value="Save">
+                                <button id="btnSave" class="btn btn-primary btn-str mx-1" type="button" value="Save" th:text="#{lang.save}">
                                     Save
                                 </button>
-                                <button id="btnPrint" class="btn btn-primary btn-str mx-1" type="button" value="Print">
+                                <button id="btnPrint" class="btn btn-primary btn-str mx-1" type="button" value="Print" th:text="#{lang.print}">
                                     Print
                                 </button>
                             </div>

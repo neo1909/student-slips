@@ -31,12 +31,12 @@
     <div class="div-content ss-content">
         <aside class="right-side">
             <section class="content-header">
-                <h1>
+                <h1 th:text="#{lang.dataentry.supplier}">
                     Supplier
                 </h1>
                 <ol class="breadcrumb">
-                    <li></i> Data Entry</a></li>
-                    <li class="active">Supplier</li>
+                    <li><a th:text="#{lang.dataentry}"> Data Entry</a></li>
+                    <li class="active" th:text="#{lang.dataentry.supplier}">Supplier</li>
                 </ol>
             </section>
 
@@ -47,19 +47,19 @@
                         <form role="form">
                             <div class="row">
                                 <div class="form-group col-md-10">
-                                    <label>Supplier Name</label>
+                                    <label th:text="#{lang.dataentry.supplier.suppliername}">Supplier Name</label>
                                     <div >
                                         <input id="iptSplNmSrch" style="padding-left: 12px;"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <button id="btnSplSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search">Search</button>
+                                    <button id="btnSplSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search" th:text="#{lang.search}">Search</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="div-grid">
-                        <button id="btnSplCreate" class="btn btn-success btn-str" type="button" value="Create Supplier" >
+                        <button id="btnSplCreate" class="btn btn-success btn-str" type="button" value="Create Supplier" th:text="#{lang.dataentry.supplier.createsupplier}">
                             Create Supplier
                         </button>
 
@@ -80,7 +80,7 @@
             <h3>Supplier</h3>
             <form id="frmSupplier">
                 <div class="form-group">
-                    <label>
+                    <label th:text="#{lang.dataentry.supplier.suppliername}">
                         Supplier name <span class="lb-requried"> *</span>
                     </label>
                     <input name="iptSplNm" id="iptSplNm" style="padding-left: 12px;"/>
@@ -88,8 +88,8 @@
                 </div>
 
                 <div style="margin-top: 15px; text-align: right">
-                    <button id="btnCancel" class="btn btn-default btn-str btn-left" type="button" value="Cancel">Cancel</button>
-                    <button id="btnSave" class="btn btn-primary btn-str" type="button" value="Save">Save</button>
+                    <button id="btnCancel" class="btn btn-default btn-str btn-left" type="button" value="Cancel" th:text="#{lang.cancel}">Cancel</button>
+                    <button id="btnSave" class="btn btn-primary btn-str" type="button" value="Save" th:text="#{lang.save}">Save</button>
                 </div>
             </form>
 

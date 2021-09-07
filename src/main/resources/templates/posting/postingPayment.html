@@ -30,12 +30,12 @@
     <div class="div-content ss-content">
         <aside class="right-side">
             <section class="content-header">
-                <h1>
+                <h1 th:text="#{lang.posting.postingpayment}">
                     Posting Payment
                 </h1>
                 <ol class="breadcrumb">
-                    <li></i> Posting</a></li>
-                    <li class="active">Posting Payment </li>
+                    <li><a th:text="#{lang.posting}"> Posting</a></li>
+                    <li class="active" th:text="#{lang.posting.postingpayment}">Posting Payment </li>
                 </ol>
             </section>
 
@@ -51,11 +51,11 @@
                         </div>
                     </form>
 
-                    <button id="btnPostUploadBankStmt" class="btn btn-success btn-str" type="button" value="Create Student" >
+                    <button id="btnPostUploadBankStmt" class="btn btn-success btn-str" type="button" value="Create Student" th:text="#{lang.posting.postingpayment.uploadbankstatement}">
                         Upload Bank Statement
                     </button>
 
-                    <button id="btnPostSavePost" class="btn btn-success btn-str" type="button" value="Create Student" >
+                    <button id="btnPostSavePost" class="btn btn-success btn-str" type="button" value="Create Student" th:text="#{lang.posting.postingpayment.saveandpostpayments}">
                         Save And Post payments
                     </button>
 

@@ -33,12 +33,12 @@
     <div class="div-content ss-content">
         <aside class="right-side">
             <section class="content-header">
-                <h1>
+                <h1 th:text="#{lang.overview.class}">
                    Overview Class
                 </h1>
                 <ol class="breadcrumb">
-                    <li></i>Overview</a></li>
-                    <li class="active">Class</li>
+                    <li><a th:text="#{lang.overview}">Overview</a></li>
+                    <li class="active" th:text="#{lang.overview.class}">Class</li>
                 </ol>
             </section>
 
@@ -49,77 +49,77 @@
                         <form role="form" id ="formSrchOverviewClass">
                             <div class="row d-flex align-items-center">
                                 <div class="form-group col-md-2">
-                                    <label >Grade</label>
+                                    <label th:text="#{lang.grade}">Grade</label>
                                     <div >
                                         <div id="cmbSrchGrade"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label >Class</label>
+                                    <label th:text="#{lang.class}">Class</label>
                                     <div >
                                         <div id="cmbSrchClass"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-				    				<label>Service</label>
+				    				<label th:text="#{lang.dataentry.service}">Service</label>
 									<div id="cmbSrchService"></div>
                                 </div>
                                 <div class="form-group col-md-2">
-				    				<label>From Date</label>
+				    				<label th:text="#{lang.fromdate}">From Date</label>
 									<div id="iptSrchFromDate"></div>
                                 </div>
                                 <div class="form-group col-md-2">
-				    				<label>To Date</label>
+				    				<label th:text="#{lang.todate}">To Date</label>
 									<div id="iptSrchToDate"></div>
                                 </div>
 								<div class="col-md-4 justify-content-end align-items-center d-flex">
-									<button id="btnSearch" class="btn btn-primary btn-str mx-2" type="button">Search</button>
+									<button id="btnSearch" class="btn btn-primary btn-str mx-2" type="button" th:text="#{lang.search}">Search</button>
 	                            </div>
                             </div>
                         </form>
                     </div>
                     <div id="div-grids">
 	                    <div class="div-grid">
-	                    	<div><h3 class="text-red">In total</h3></div>
+	                    	<div><h3 class="text-red" th:text="#{lang.intotal}">In total</h3></div>
 	                    	<br/>
 	                        <div class="ss-grid">
 	                            <div id="grdOverviewClass"></div>
 	                        </div>
 	                    	<div class="d-flex align-items-center justify-content-end" id="grdMaster-total">
-	                    		<div class="ml-auto mr-3"><h4 class="text-red">Total</h4></div>
+	                    		<div class="ml-auto mr-3"><h4 class="text-red" th:text="#{lang.total}">Total</h4></div>
 	                    		<div class="d-flex align-items-center">
-		                    		<div class="mx-2">Debit: <span class="debit"></span></div>
-		                    		<div class="mx-2">Claims: <span class="claims"></span></div>
-		                    		<div class="mx-2">Balance: <span class="balance"></span></div>
+		                    		<div class="mx-2"><span th:text="#{lang.debit}">Debit</span>: <span class="debit"></span></div>
+		                    		<div class="mx-2"><span th:text="#{lang.claim}">Claims</span>: <span class="claims"></span></div>
+		                    		<div class="mx-2"><span th:text="#{lang.balance}">Balance</span>: <span class="balance"></span></div>
 	                    		</div>
 	                    	</div>
 	                    </div>
 	                    <br/>
 	                    <div class="div-grid">
-	                    	<div><h3 class="text-red">In detail</h3></div>
+	                    	<div><h3 class="text-red" th:text="#{lang.indetail}">In detail</h3></div>
 	                    	<br/>
 	                        <div class="ss-grid">
 	                            <div id="grdOverviewClassDetail"></div>
 	                        </div>	
 	                    	<div class="d-flex align-items-center" id="grdDetail-total">
-	                    		<div class="ml-auto mr-3"><h4 class="text-red">Total</h4></div>
+	                    		<div class="ml-auto mr-3"><h4 class="text-red" th:text="#{lang.total}">Total</h4></div>
 	                    		<div class="d-flex align-items-center">
-		                    		<div class="mx-2">Debit: <span class="debit"></span></div>
-		                    		<div class="mx-2">Claims: <span class="claims"></span></div>
-		                    		<div class="mx-2">Balance: <span class="balance"></span></div>
+		                    		<div class="mx-2"><span th:text="#{lang.debit}">Debit</span>: <span class="debit"></span></div>
+		                    		<div class="mx-2"><span th:text="#{lang.claim}">Claims</span>: <span class="claims"></span></div>
+		                    		<div class="mx-2"><span th:text="#{lang.balance}">Balance</span>: <span class="balance"></span></div>
 	                    		</div>
 	                    	</div>
 	                    </div>
                     </div>
 					<div style="margin-top: 15px;">
-						<button id="btnPrint" class="btn btn-primary btn-str" type="button">Print</button>
+						<button id="btnPrint" class="btn btn-primary btn-str" type="button" th:text="#{lang.print}">Print</button>
 						<div class="float-right">
 							<div class="d-flex align-items-center" id="summary-total">
-	                    		<div class="ml-auto mr-3"><h4 class="text-red">In total</h4></div>
+	                    		<div class="ml-auto mr-3"><h4 class="text-red" th:text="#{lang.intotal}">In total</h4></div>
 	                    		<div class="d-flex align-items-center">
-		                    		<div class="mx-2">Debit: <span class="debit"></span></div>
-		                    		<div class="mx-2">Claims: <span class="claims"></span></div>
-		                    		<div class="mx-2">Balance: <span class="balance"></span></div>
+		                    		<div class="mx-2"><span th:text="#{lang.debit}">Debit</span>: <span class="debit"></span></div>
+		                    		<div class="mx-2"><span th:text="#{lang.claim}">Claims</span>: <span class="claims"></span></div>
+		                    		<div class="mx-2"><span th:text="#{lang.balance}">Balance</span>: <span class="balance"></span></div>
 	                    		</div>
 	                    	</div>
 						</div>

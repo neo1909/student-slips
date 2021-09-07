@@ -32,12 +32,12 @@
     <div class="div-content ss-content">
         <aside class="right-side">
             <section class="content-header">
-                <h1>
+                <h1 th:text="#{lang.school}">
                     School Overview
                 </h1>
                 <ol class="breadcrumb">
-                    <li></i>Overview</a></li>
-                    <li class="active">School Overview</li>
+                    <li><a th:text="#{lang.overview}">Overview</a></li>
+                    <li class="active" th:text="#{lang.school}">School Overview</li>
                 </ol>
             </section>
 
@@ -48,19 +48,19 @@
                         <form role="form">
                             <div class="row">
                                 <div class="form-group col-md-2">
-                                    <label >From Date</label>
+                                    <label th:text="#{lang.fromdate}">From Date</label>
                                     <div >
                                         <input id="iptFromDate">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label >To Date</label>
+                                    <label th:text="#{lang.todate}">To Date</label>
                                     <div >
                                         <input id="iptToDate">
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label >Grade</label>
+                                    <label th:text="#{lang.grade}">Grade</label>
                                     <div >
                                         <div id="cmbStdGradeSrch" style="padding-left: 12px;"></div>
                                     </div>
@@ -72,57 +72,57 @@
                                     </div>
                                 </div>-->
                                 <div class="form-group col-md-2">
-                                    <label >Service</label>
+                                    <label th:text="#{lang.dataentry.service}">Service</label>
                                     <div >
                                         <div id="cmbServiceSrch" style="padding-left: 12px;"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <button id="btnStdSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search">Search</button>
+                                    <button id="btnStdSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search" th:text="#{lang.search}">Search</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="div-grids">
                         <div class="div-grid">
-                            <div><h3 class="text-red">In total</h3></div>
+                            <div><h3 class="text-red" th:text="#{lang.intotal}">In total</h3></div>
                             <br/>
                             <div class="ss-grid">
                                 <div id="grdSchoolOverview"></div>
                             </div>
                             <div class="d-flex" id="grdMaster-total">
-                                <div class="mr-auto"><h4 class="text-red">Total</h4></div>
+                                <div class="mr-auto"><h4 class="text-red" th:text="#{lang.total}">Total</h4></div>
                                 <div class="d-flex align-items-center">
-                                    <div class="mr-2">Debit: <span id="grdMaster-debit"></span></div>
-                                    <div class="mr-2">Claims: <span id="grdMaster-claims"></span></div>
-                                    <div>Balance: <span id="grdMaster-balance"></span></div>
+                                    <div class="mr-2"><span th:text="#{lang.debit}">Debit</span>: <span id="grdMaster-debit"></span></div>
+                                    <div class="mr-2"><span th:text="#{lang.claim}">Claims</span>: <span id="grdMaster-claims"></span></div>
+                                    <div><span th:text="#{lang.balance}">Balance</span>: <span id="grdMaster-balance"></span></div>
                                 </div>
                             </div>
                         </div>
                         <br/>
                         <div class="div-grid">
-                            <div><h3 class="text-red">In detail</h3></div>
+                            <div><h3 class="text-red" th:text="#{lang.indetail}" >In detail</h3></div>
                             <div class="ss-grid">
                                 <div id="grdSchoolDetail"></div>
                             </div>
                             <div class="d-flex align-items-center" id="grdDetail-total">
-                                <div class="mr-auto"><h4 class="text-red">Total</h4></div>
+                                <div class="mr-auto"><h4 class="text-red" th:text="#{lang.total}">Total</h4></div>
                                 <div class="d-flex align-items-center">
-                                    <div class="mr-2">Debit: <span id="grdDetail-debit"></span></div>
-                                    <div class="mr-2">Claims: <span id="grdDetail-claims"></span></div>
-                                    <div>Balance: <span id="grdDetail-balance"></span></div>
+                                    <div class="mr-2"><span th:text="#{lang.debit}">Debit</span>: <span id="grdDetail-debit"></span></div>
+                                    <div class="mr-2"><span th:text="#{lang.claim}">Claims</span>: <span id="grdDetail-claims"></span></div>
+                                    <div><span th:text="#{lang.balance}">Balance</span>: <span id="grdDetail-balance"></span></div>
                                 </div>
                             </div>
                         </div>
                         <div style="margin-top: 15px;">
-                            <button id="btnPrint" class="btn btn-primary btn-str" type="button">Print</button>
+                            <button id="btnPrint" class="btn btn-primary btn-str" type="button" th:text="#{lang.print}">Print</button>
                             <div class="float-right">
                                 <div class="d-flex align-items-center">
-                                    <div class="ml-auto mr-3"><h4 class="text-red">In total</h4></div>
+                                    <div class="ml-auto mr-3"><h4 class="text-red" th:text="#{lang.intotal}">In total</h4></div>
                                     <div class="d-flex align-items-center">
-                                        <div class="mx-2">Debit: <span id="intotal-debit"></span></div>
-                                        <div class="mx-2">Claims: <span id="intotal-claims"></span></div>
-                                        <div class="mx-2">Balance: <span id="intotal-balance"></span></div>
+                                        <div class="mx-2"><span th:text="#{lang.debit}">Debit</span>: <span id="intotal-debit"></span></div>
+                                        <div class="mx-2"><span th:text="#{lang.claim}">Claims</span>: <span id="intotal-claims"></span></div>
+                                        <div class="mx-2"><span th:text="#{lang.balance}">Balance</span>: <span id="intotal-balance"></span></div>
                                     </div>
                                 </div>
                             </div>

@@ -29,12 +29,12 @@
     <div class="div-content ss-content">
         <aside class="right-side">
             <section class="content-header">
-                <h1>
+                <h1 th:text="#{lang.dataentry.students}">
                     Students
                 </h1>
                 <ol class="breadcrumb">
-                    <li></i> Data Entry</a></li>
-                    <li class="active">Students</li>
+                    <li><a th:text="#{lang.dataentry}"> Data Entry</a></li>
+                    <li class="active" th:text="#{lang.dataentry.students}">Students</li>
                 </ol>
             </section>
 
@@ -45,31 +45,31 @@
                         <form role="form">
                             <div class="row">
                                 <div class="form-group col-md-5">
-                                    <label >Name and surname</label>
+                                    <label th:text="#{lang.namensurname}">Name and surname</label>
                                     <div >
                                         <input id="iptStdNmSrch" style="padding-left: 12px;"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label >Grade</label>
+                                    <label th:text="#{lang.grade}">Grade</label>
                                     <div >
                                         <div id="cmbStdGradeSrch" style="padding-left: 12px;"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label >Class</label>
+                                    <label th:text="#{lang.class}">Class</label>
                                     <div >
                                         <div id="cmbStdClazzSrch" style="padding-left: 12px;"></div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <button id="btnStdSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search">Search</button>
+                                    <button id="btnStdSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search" th:text="#{lang.search}">Search</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="div-grid">
-                        <button id="btnStdCreate" class="btn btn-success btn-str" type="button" value="Create Student" >
+                        <button id="btnStdCreate" class="btn btn-success btn-str" type="button" value="Create Student" th:text="#{lang.dataentry.students}">
                             Create Student
                         </button>
 
@@ -87,10 +87,10 @@
 <div class="ss-popup ">
     <div class="ss-popup-content" id="popupStudent">
         <div >
-            <h3>Student</h3>
+            <h3 th:text="#{lang.dataentry.students}">Student</h3>
             <form id="frmStudent">
                 <div class="form-group">
-                    <label>
+                    <label th:text="#{lang.namensurname}">
                         Name and surname <span class="lb-requried"> *</span>
                     </label>
                     <input name="iptStdNm" id="iptStdNm" style="padding-left: 12px;"/>
@@ -98,13 +98,13 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label>
+                        <label th:text="#{lang.grade}">
                             Grade <span class="lb-requried"> *</span>
                         </label>
                         <div id="cmbStdGrade" style="padding-left: 12px;"></div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>
+                        <label th:text="#{lang.class}">
                             Class <span class="lb-requried"> *</span>
                         </label>
                         <div id="cmbStdClass" style="padding-left: 12px;"></div>
@@ -112,8 +112,8 @@
                 </div>
 
                 <div style="margin-top: 15px; text-align: right">
-                    <button id="btnCancel" class="btn btn-default btn-str btn-left" type="button" value="Cancel">Cancel</button>
-                    <button id="btnSave" class="btn btn-primary btn-str" type="button" value="Save">Save</button>
+                    <button id="btnCancel" class="btn btn-default btn-str btn-left" type="button" value="Cancel" th:text="#{lang.cancel}">Cancel</button>
+                    <button id="btnSave" class="btn btn-primary btn-str" type="button" value="Save" th:text="#{lang.save}">Save</button>
                 </div>
             </form>
 

@@ -31,12 +31,12 @@
     <div class="div-content ss-content">
         <aside class="right-side">
             <section class="content-header">
-                <h1>
+                <h1 th:text="#{lang.dataentry.service}">
                     Service
                 </h1>
                 <ol class="breadcrumb">
-                    <li></i> Data Entry</a></li>
-                    <li class="active">Service</li>
+                    <li><a th:text="#{lang.dataentry}"> Data Entry</a></li>
+                    <li class="active" th:text="#{lang.dataentry.service}">Service</li>
                 </ol>
             </section>
 
@@ -47,19 +47,19 @@
                         <form role="form">
                             <div class="row">
                                 <div class="form-group col-md-10">
-                                    <label>Service Name</label>
+                                    <label th:text="#{lang.dataentry.service.servicename}">Service Name</label>
                                     <div >
                                         <input id="iptSvcNmSrch" style="padding-left: 12px;"/>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <button id="btnSvcSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search">Search</button>
+                                    <button id="btnSvcSrch" class="btn btn-primary btn-str btn-search" type="button" value="Search" th:text="#{lang.search}">Search</button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="div-grid">
-                        <button id="btnSvcCreate" class="btn btn-success btn-str" type="button" value="Create Service" >
+                        <button id="btnSvcCreate" class="btn btn-success btn-str" type="button" value="Create Service" th:text="#{lang.dataentry.service.createservice}">
                             Create Service
                         </button>
 
@@ -77,25 +77,25 @@
 <div class="ss-popup ">
     <div class="ss-popup-content" id="popupService">
         <div >
-            <h3>Service</h3>
+            <h3 th:text="#{lang.dataentry.service}">Service</h3>
             <form id="frmService">
                 <div class="form-group">
-                    <label>
+                    <label th:text="#{lang.dataentry.service.servicename}">
                         Service name <span class="lb-requried"> *</span>
                     </label>
                     <input name="iptSvcNm" id="iptSvcNm" style="padding-left: 12px;"/>
                     <input name="iptSvcId" id="iptSvcId" style="display: none;" disabled/>
                 </div>
 				<div class="form-group">
-    				<label>
+    				<label th:text="#{lang.dataentry.supplier}">
     					Supplier <span class="lb-requried"> *</span>
     				</label>
 					<div id="cmbSupplier"></div>
 				</div>
 				
                 <div style="margin-top: 15px; text-align: right">
-                    <button id="btnCancel" class="btn btn-default btn-str btn-left" type="button" value="Cancel">Cancel</button>
-                    <button id="btnSave" class="btn btn-primary btn-str" type="button" value="Save">Save</button>
+                    <button id="btnCancel" class="btn btn-default btn-str btn-left" type="button" value="Cancel" th:text="#{lang.cancel}">Cancel</button>
+                    <button id="btnSave" class="btn btn-primary btn-str" type="button" value="Save" th:text="#{lang.save}">Save</button>
                 </div>
             </form>
 
