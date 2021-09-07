@@ -31,6 +31,7 @@ public class CustomExceptionHandlerFilter extends OncePerRequestFilter {
 			log.error("# CustomExceptionHandlerFilter || Class=[{}]; Code=[{}]; Message=[{}]", ex.getClass().getSimpleName(), ((StudentSlipException) ex).getCode(), ex.getMessage());
 			
 			ResponseObject obj = new ResponseObject(ex.getCode(), ex.getMessage(), false);
+			response.setCharacterEncoding("UTF-8");
 			response.setStatus(ex.getCode());
 			response.getWriter().write(convertObjectToJson(obj));
 		}
