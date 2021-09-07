@@ -52,12 +52,12 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="/data-entry/student"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.students}">Students</span></a></li>
-                    <li><a href="/data-entry/headteacher"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.headteachers}">Head teachers</span></a></li>
-                    <li><a href="/data-entry/school"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.schooldata}">School data</span></a></li>
-                    <li><a href="/data-entry/supplier"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.supplier}">Supplier</span></a></li>
-                    <li><a href="/data-entry/service"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.service}">Service</span></a></li>
-                    <li><a href="/data-entry/supplier-service"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.supplierdetail}">Supplier detail</span></a></li>
+                    <li><a href="/data-entry/student"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.students}"></span></a></li>
+                    <li><a href="/data-entry/headteacher"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.headteachers}"></span></a></li>
+                    <li><a href="/data-entry/school"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.schooldata}"></span></a></li>
+                    <li><a href="/data-entry/supplier"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.supplier}"></span></a></li>
+                    <li><a href="/data-entry/service"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.service}"></span></a></li>
+                    <li><a href="/data-entry/supplier-service"><i class="fa fa-angle-double-right"></i> <span th:text="#{lang.nav.dataentry.supplierdetail}"></span></a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -67,8 +67,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="/posting/student-debts"><i class="fa fa-angle-double-right"></i> Students debts</a></li>
-                    <li><a href="/posting/posting-payment"><i class="fa fa-angle-double-right"></i> Posting payments</a></li>
+                    <li><a href="/posting/student-debts"><i class="fa fa-angle-double-right"></i><span th:text="#{lang.nav.posting.studentsdebts}"></span></a></li>
+                    <li><a href="/posting/posting-payment"><i class="fa fa-angle-double-right"></i><span th:text="#{lang.nav.posting.postingpayments}"></span></a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -77,9 +77,9 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="/overview/student"><i class="fa fa-angle-double-right"></i> Student</a></li>
-                    <li><a href="/overview/class"><i class="fa fa-angle-double-right"></i> Class</a></li>
-                    <li><a href="/overview/school"><i class="fa fa-angle-double-right"></i> School</a></li>
+                    <li><a href="/overview/student"><i class="fa fa-angle-double-right"></i><span th:text="#{lang.nav.overview.student}"></span></a></li>
+                    <li><a href="/overview/class"><i class="fa fa-angle-double-right"></i><span th:text="#{lang.nav.overview.class}"></span></a></li>
+                    <li><a href="/overview/school"><i class="fa fa-angle-double-right"></i><span th:text="#{lang.nav.overview.school}"></span></a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -88,8 +88,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="/archive/task-archive"><i class="fa fa-angle-double-right"></i> Task archive</a></li>
-                    <li><a href="/archive/bank-statement"><i class="fa fa-angle-double-right"></i> Bank statements archive</a></li>
+                    <li><a href="/archive/task-archive"><i class="fa fa-angle-double-right"></i><span th:text="#{lang.nav.archive.task}"></span></a></li>
+                    <li><a href="/archive/bank-statement"><i class="fa fa-angle-double-right"></i><span th:text="#{lang.nav.archive.bankstatements}"></span></a></li>
                 </ul>
             </li>
             <li class="treeview" th:if="${session != null && session.roles != null && session.roles.contains('ADMIN')}">
