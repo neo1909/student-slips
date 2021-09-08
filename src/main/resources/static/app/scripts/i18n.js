@@ -1,5 +1,6 @@
 var i18n = {
 	API: 'http://localhost:5000/api/',
+//	API: 'http://onetouchapp-env.eba-px6uytgm.ap-southeast-1.elasticbeanstalk.com/api/',
 	lang: {},
 		
 	changeLanguage: function(lang, onSuccess, onError) {
