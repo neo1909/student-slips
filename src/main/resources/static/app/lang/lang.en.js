@@ -60,6 +60,7 @@ var lang = {
 		student: {
 			studentId: 'Student ID',
 			nameAndSurname: 'Name and surname',
+			title_popup: 'Student Detail',
 		},
 		headteacher: {
 			title_popup: 'Head Teachers',

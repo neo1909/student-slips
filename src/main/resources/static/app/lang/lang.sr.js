@@ -60,6 +60,7 @@ var lang = {
 		student: {
 			studentId: 'ID učenika',
 			nameAndSurname: 'Ime i prezime',
+			title_popup: 'Detalji učenika',
 		},
 		headteacher: {
 			title_popup: 'Odeljenske starešine',

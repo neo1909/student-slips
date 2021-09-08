@@ -78,7 +78,7 @@ let fn = {
             height: 380,
             width: 700,
             theme: 'bootstrap',
-            title: 'Student detail',
+            title: i18n.lang.dataentry.student.title_popup,
             position: 'center',
             resizable: false
         });
