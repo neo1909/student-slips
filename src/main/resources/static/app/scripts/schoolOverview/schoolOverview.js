@@ -106,7 +106,7 @@ let fnOverview = {
             let src = [];
             if (data && data.lst) src = [...data.lst];
             originalServiceIdList = data.lst.map(i => i.id);
-            src.unshift({id: "", name: "All"});
+            src.unshift({id: "", name: i18n.lang.common.all});
             $("#cmbServiceSrch").jqxComboBox({ source: src, displayMember: "name", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});
         });
     },

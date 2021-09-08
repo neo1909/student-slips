@@ -104,7 +104,7 @@ function createGrid() {
                 editable: false,
             },
             {
-                text: i18n.lang.common.vld_actions,
+                text: '',
                 align: 'center',
                 width: '10%,',
                 cellsrenderer: function (rowIndex, column, value) {

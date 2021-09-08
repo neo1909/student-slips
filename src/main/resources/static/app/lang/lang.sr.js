@@ -14,6 +14,7 @@ var lang = {
 		clazz: 'Odeljenje',
 		actions: 'Izmena/Brisanje',
 		name: 'Naziv',
+		all: 'Sve',
 		
 		vld_date: 'Datum',
 		vld_noOfBankstatement: 'Broj izvoda',
@@ -37,6 +38,8 @@ var lang = {
 		vld_nameAndSurname: 'Ime i prezime',
 		vld_school: 'Škola',
 		vld_balanceSheet: 'Kartica stanja',
+		vld_gradeClass: 'Razred/Odeljenje',
+		vld_headTeacher: 'Odeljenske starešine'
 	},
 	auth : {
 		plh_username: 'Korisničko ime *',

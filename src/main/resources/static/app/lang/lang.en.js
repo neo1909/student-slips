@@ -14,6 +14,7 @@ var lang = {
 		clazz: 'Class',
 		actions: 'Actions',
 		name: 'Name',
+		all: 'All',
 		
 		vld_date: 'Date',
 		vld_noOfBankstatement: 'No of Bank Statement',
