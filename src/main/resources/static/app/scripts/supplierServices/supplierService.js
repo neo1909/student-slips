@@ -67,22 +67,22 @@ let fn = {
             pageable: true,
             columns: [
                 {
-                    text: 'No.', datafield: '', align: 'center', cellsalign: 'center', width: '5%'
+                    text: i18n.lang.common.no, datafield: '', align: 'center', cellsalign: 'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
                         return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">' +
                             + (rowIndex + 1)
                             + '</div>';
                     }
                 },
-                { text: 'Name', datafield: 'name', align: 'center', cellsalign: 'left', width: '15%' },
-                { text: 'Supplier Name', datafield: 'supplierName', align: 'center', cellsalign: 'left', width: '15%' },
-                { text: 'Service Name', datafield: 'serviceName', align: 'center', cellsalign: 'left', width: '15%' },
-                { text: 'Price', datafield: 'price', align: 'center', cellsalign: 'right', width: '20%', cellsformat: 'd2' },
-                { text: 'No. Payment', datafield: 'noPayment', align: 'center', cellsalign: 'right', width: '10%' },
-                { text: 'Grade', datafield: 'listGradeIdsStr', align: 'center', cellsalign: 'center', width: '10%' },
+                { text: i18n.lang.common.name, datafield: 'name', align: 'center', cellsalign: 'left', width: '15%' },
+                { text: i18n.lang.dataentry.supplierservice.supplierName, datafield: 'supplierName', align: 'center', cellsalign: 'left', width: '15%' },
+                { text: i18n.lang.dataentry.supplierservice.serviceName, datafield: 'serviceName', align: 'center', cellsalign: 'left', width: '15%' },
+                { text: i18n.lang.dataentry.supplierservice.price, datafield: 'price', align: 'center', cellsalign: 'right', width: '20%', cellsformat: 'd2' },
+                { text: i18n.lang.dataentry.supplierservice.noPayment, datafield: 'noPayment', align: 'center', cellsalign: 'right', width: '10%' },
+                { text: i18n.lang.common.grade, datafield: 'listGradeIdsStr', align: 'center', cellsalign: 'center', width: '10%' },
 
                 {
-                    text: 'Actions', cellsalign: 'center', width: '10%,'
+                    text: '', cellsalign: 'center', width: '10%,'
                     , cellsrenderer: function (rowIndex, column, value) {
                         return '<div style="text-align: center; margin-top: 4px;">'
                             + '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + rowIndex + ')"><span class="glyphicon glyphicon-edit"></span></button>'

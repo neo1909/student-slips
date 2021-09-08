@@ -134,7 +134,7 @@ function createGrid() {
         selectionmode: 'singlecell',
         editable: true,
         columns: [{
-                text: 'Name student',
+                text: i18n.lang.posting.studentdebts.studentName,
                 datafield: 'nameStudent',
                 align: 'center',
                 cellsalign: 'center',
@@ -142,7 +142,7 @@ function createGrid() {
                 editable: false,
             },
             {
-                text: 'Reference No',
+                text: i18n.lang.posting.studentdebts.referenceNo,
                 datafield: 'referenceNo',
                 align: 'center',
                 cellsalign: 'center',
@@ -150,7 +150,7 @@ function createGrid() {
                 editable: false,
             },
             {
-                text: 'Service',
+                text: i18n.lang.posting.studentdebts.serviceName,
                 datafield: 'nameService',
                 align: 'center',
                 cellsalign: 'center',
@@ -158,7 +158,7 @@ function createGrid() {
                 editable: false,
             },
             {
-                text: 'Quantity',
+                text: i18n.lang.posting.studentdebts.quantity,
                 columntype: 'textbox',
                 datafield: 'quantity',
                 align: 'center',
@@ -168,7 +168,7 @@ function createGrid() {
                 cellsformat: 'd'
             },
             {
-                text: 'Price',
+                text: i18n.lang.posting.studentdebts.price,
                 datafield: 'price',
                 align: 'center',
                 cellsalign: 'right',
@@ -177,7 +177,7 @@ function createGrid() {
                 cellsformat: 'd2'
             },
             {
-                text: 'Amount of debit',
+                text: i18n.lang.posting.studentdebts.amountDebit,
                 datafield: 'amountDebt',
                 columntype: 'textbox',
                 align: 'center',

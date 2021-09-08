@@ -19,6 +19,7 @@ public class Common {
     public static final String DATE_FORMAT_DOT_DD_MM_YYYY = "dd.MM.yyyy";
     
     public class Message {
+    	public static final String CONTACT_ADMIN = "lang.msg.contactAdmin";
     	public static final String USER_NOT_EXIST = "lang.msg.userNotExist";
     	public static final String TOO_MANY_TRY = "lang.msg.tooManyTry";
     	public static final String PLS_PROCEED_AFTER = "lang.msg.plsProceedAfter";

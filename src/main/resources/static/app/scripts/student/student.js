@@ -38,18 +38,18 @@ let fn = {
             source: dataAdapter,
             pageable: true,
             columns: [
-                { text: 'No.', datafield: '', align: 'center', cellsalign:'center', width: '5%'
+                { text: i18n.lang.common.no, datafield: '', align: 'center', cellsalign:'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
                         return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">'+
                             + (rowIndex + 1)
                             + '</div>';
                     }
                 },
-                { text: 'Student Id', datafield: 'studentId', align: 'center', cellsalign:'left', width: '10%,'},
-                { text: 'Name and surname', datafield: 'name', align: 'center', cellsalign:'left', width: '30%,'},
-                { text: 'School', datafield: 'schoolName', align: 'center', cellsalign:'left', width: '30%,'},
-                { text: 'Grade', datafield: 'grade', align: 'center', cellsalign:'center', width: '9%,'},
-                { text: 'Class', datafield: 'sClass', align: 'center', cellsalign:'center', width: '9%,'},
+                { text: i18n.lang.dataentry.student.studentId, datafield: 'studentId', align: 'center', cellsalign:'left', width: '10%,'},
+                { text: i18n.lang.dataentry.student.nameAndSurname, datafield: 'name', align: 'center', cellsalign:'left', width: '30%,'},
+                { text: i18n.lang.common.school, datafield: 'schoolName', align: 'center', cellsalign:'left', width: '30%,'},
+                { text: i18n.lang.common.grade, datafield: 'grade', align: 'center', cellsalign:'center', width: '9%,'},
+                { text: i18n.lang.common.clazz, datafield: 'sClass', align: 'center', cellsalign:'center', width: '9%,'},
                 { text: '', cellsalign:'center', width: '7%,'
                     , cellsrenderer: function (rowIndex, column, value) {
                         return '<div style="text-align: center; margin-top: 4px;">'

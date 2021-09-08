@@ -8,6 +8,37 @@ var lang = {
 		vld_req_supplier: 'Supplier is required',
 		plh_enterSearch: 'Enter to search...',
 		plh_enterName: 'Enter name ...',
+		no: 'No.',
+		school: 'School',
+		grade: 'Grade',
+		clazz: 'Class',
+		actions: 'Actions',
+		name: 'Name',
+		
+		vld_date: 'Date',
+		vld_noOfBankstatement: 'No of Bank Statement',
+		vld_balance: 'Balance',
+		vld_noOfChanges: 'No of Changes',
+		vld_actions: 'Actions',
+		vld_accountNumber: 'Account Number',
+		vld_payer: 'Payer',
+		vld_purposeOfPayment: 'Purpose of Payment',
+		vld_referenceNumber: 'Reference Number',
+		vld_amount: 'Amount',
+		vld_grade: 'Grade',
+		vld_class: 'Class',
+		vld_service: 'Service',
+		vld_note: 'Note',
+		vld_descriptionOfService: 'Description of Service',
+		vld_debit: 'Debit',
+		vld_claim: 'Claim',
+		vld_print: 'Print',
+		vld_no: 'No.',
+		vld_nameAndSurname: 'Name and Surname',
+		vld_school: 'School',
+		vld_balanceSheet: 'Balance Sheet',
+		vld_gradeClass: 'Grade/Class',
+		vld_headTeacher: 'Head Teacher'
 	},
 	auth : {
 		plh_username: 'Username *',
@@ -25,8 +56,14 @@ var lang = {
 	dataentry: {
 		vld_req_name: 'Name is required',
 		vld_inv_name: 'Name is invalid',
+		student: {
+			studentId: 'Student ID',
+			nameAndSurname: 'Name and surname',
+		},
 		headteacher: {
 			title_popup: 'Head Teachers',
+			studentId: 'Student ID',
+			nameAndSurname: 'Name and surname',
 		},
 		school: {
 			vld_req_addr: 'Address is required',
@@ -40,9 +77,25 @@ var lang = {
 			vld_req_bankNo: 'Bank account number is required',
 			vld_inv_bankNo: 'Bank account number is invalid',
 			title_createSchool : 'Create School',
+			schoolName: 'School Name',
+			address: 'Address',
+			city: 'City',
+			municipality: 'Municipality',
+			bankAccountNo: 'Bank Account Number',
+		},
+		supplier: {
+			supplierName: 'Supplier Name',
+		},
+		service: {
+			serviceName: 'Service Name',
+			supplierName: 'Supplier Name',
 		},
 		supplierservice: {
 			vld_zero_price: 'Price must be equals or greater than 0',
+			serviceName: 'Service Name',
+			supplierName: 'Supplier Name',
+			price: 'Price',
+			noPayment: 'No. Payment',
 		}
 	},
 	posting: {
@@ -51,6 +104,12 @@ var lang = {
 			msg_saved: 'Save task successfully',
 			plh_enterPaymentPurpose: 'Enter note on the purpose of the payment...',
 			msg_saveBeforePrinding: 'Please save or undo the change before printing',
+			studentName: 'Student Name',
+			referenceNo: 'Reference No',
+			serviceName: 'Service Name',
+			quantity: 'Quantity',
+			price: 'Price',
+			amountDebit: 'Amount of Debit',
 		}
 	},
 	overview : {
