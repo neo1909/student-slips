@@ -220,6 +220,9 @@
             <bind name="nameLike" value="'%' + name + '%'" />
             AND UPPER(SS.name) like UPPER(#{nameLike})
         </if>
+        <if test="schoolId != 0 ">
+            AND ssg.school_id = #{schoolId}
+        </if>
         group by ssg.id;
     </select>
     <select id="countSupplierServiceGroup" parameterType="com.studentslips.entities.SupplierServiceDetailGroup" resultType="int">

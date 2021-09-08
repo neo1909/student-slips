@@ -60,7 +60,8 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public void insertSupplierServiceDetail(SupplierServiceDetailGroup ssg) throws Exception {    	
+    public void insertSupplierServiceDetail(SupplierServiceDetailGroup ssg) throws Exception {
+    	ssg.setSchoolId(SessionUtil.getSchoolId());
     	int count = supplierDao.countSupplierServiceGroup(ssg);
     	if (count > 0) {
         	throw new StudentSlipException("No Insert. Supplier - Service ID has already been existed.");
@@ -91,7 +92,7 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public void updateSupplierServiceDetail(SupplierServiceDetailGroup ssg) throws Exception {
-    	
+    	ssg.setSchoolId(SessionUtil.getSchoolId());
     	int count = supplierDao.countSupplierServiceGroup(ssg);
     	if (count > 0) {
         	throw new StudentSlipException("No Update. Supplier - Service ID has already been existed.");
@@ -148,17 +149,20 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
 	@Override
-	public List<SupplierServiceDetailGroup> getAllSupplierServiceGroups(SupplierServiceDetail ssd) {
+	public List<SupplierServiceDetailGroup> getAllSupplierServiceGroups(SupplierServiceDetail ssd) throws Exception {
+		ssd.setSchoolId(SessionUtil.getSchoolId());
 		return supplierDao.selectAllSupplierServiceGroups(ssd);
 	}
 
 	@Override
-	public SupplierServiceDetailGroup getSupplierServiceGroupByGroupId(SupplierServiceDetail ssd) {
+	public SupplierServiceDetailGroup getSupplierServiceGroupByGroupId(SupplierServiceDetail ssd) throws Exception {
+		ssd.setSchoolId(SessionUtil.getSchoolId());
 		return supplierDao.selectSupplierServiceGroupByGroupId(ssd);
 	}
     
     @Override
-    public SupplierServiceDetailGroup getAllInstallmentsByGradeAndService(SupplierServiceDetail ssd) {
+    public SupplierServiceDetailGroup getAllInstallmentsByGradeAndService(SupplierServiceDetail ssd) throws Exception {
+		ssd.setSchoolId(SessionUtil.getSchoolId());
     	return supplierDao.getAllInstallmentsByGradeAndService(ssd);
     }
 }

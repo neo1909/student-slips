@@ -25,10 +25,10 @@ public interface SupplierService {
 
 	public void deleteSupplierServiceDetail(SupplierServiceDetailGroup ssg) throws Exception;
 
-	public List<SupplierServiceDetailGroup> getAllSupplierServiceGroups(SupplierServiceDetail std);
+	public List<SupplierServiceDetailGroup> getAllSupplierServiceGroups(SupplierServiceDetail std) throws Exception;
 
-	public SupplierServiceDetailGroup getSupplierServiceGroupByGroupId(SupplierServiceDetail std);
+	public SupplierServiceDetailGroup getSupplierServiceGroupByGroupId(SupplierServiceDetail std) throws Exception;
 
-	public SupplierServiceDetailGroup getAllInstallmentsByGradeAndService(SupplierServiceDetail ssd);
+	public SupplierServiceDetailGroup getAllInstallmentsByGradeAndService(SupplierServiceDetail ssd) throws Exception;
 
 }
