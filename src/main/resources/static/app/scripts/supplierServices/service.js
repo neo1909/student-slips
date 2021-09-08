@@ -37,15 +37,15 @@ let fn = {
             source: dataAdapter,
             pageable: true,
             columns: [
-                { text: 'No.', datafield: '', align: 'center', cellsalign:'center', width: '5%'
+                { text: i18n.lang.common.no, datafield: '', align: 'center', cellsalign:'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
                         return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">'+
                             + (rowIndex + 1)
                             + '</div>';
                     }
                 },
-                { text: 'Service Name', datafield: 'name', align: 'center', cellsalign:'left', width: '40%'},
-                { text: 'Supplier Name', datafield: 'supplierName', align: 'center', cellsalign:'left', width: '40%'},
+                { text: i18n.lang.dataentry.service.serviceName, datafield: 'name', align: 'center', cellsalign:'left', width: '40%'},
+                { text: i18n.lang.dataentry.service.supplierName, datafield: 'supplierName', align: 'center', cellsalign:'left', width: '40%'},
                 { text: '', cellsalign:'center', width: '15%,'
                     , cellsrenderer: function (rowIndex, column, value) {
                         return '<div style="text-align: center; margin-top: 4px;">'

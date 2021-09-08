@@ -229,7 +229,7 @@ function createGrid() {
         source: dataAdapter,
         pageable: true,
         columns: [{
-                text: 'Date',
+                text: i18n.lang.common.vld_date,
                 datafield: 'bankStatementDate',
                 cellsformat: 'dd.MM.yyyy',
                 align: 'center',
@@ -238,7 +238,7 @@ function createGrid() {
                 editable: false,
             },
             {
-                text: 'No of Bank Statements',
+                text: i18n.lang.common.vld_noOfBankstatement,
                 datafield: 'noOfBankStatement',
                 align: 'center',
                 cellsalign: 'right',
@@ -254,7 +254,7 @@ function createGrid() {
                 }
             },
             {
-                text: 'Balance',
+                text: i18n.lang.common.vld_balance,
                 datafield: 'balance',
                 align: 'center',
                 cellsalign: 'right',
@@ -263,7 +263,7 @@ function createGrid() {
                 cellsformat: 'd2'
             },
             {
-                text: 'No of Changes',
+                text: i18n.lang.common.vld_noOfChanges,
                 columntype: 'textbox',
                 datafield: 'noOfChanges',
                 align: 'center',
@@ -273,7 +273,7 @@ function createGrid() {
                 cellsformat: 'd'
             },
             {
-                text: 'Actions',
+                text: '',
                 align: 'center',
                 width: '10%,',
                 cellsrenderer: function (rowIndex, column, value) {
@@ -299,7 +299,7 @@ function ceateGridBank() {
         pageable: true,
         editable: true,
             columns: [{
-                text: 'Account Number',
+                text: i18n.lang.common.vld_accountNumber,
                 datafield: 'payerAccount',
                 align: 'center',
                 cellsalign: 'left',
@@ -307,7 +307,7 @@ function ceateGridBank() {
                 editable: false,
             },
             {
-                text: 'Payer',
+                text: i18n.lang.common.vld_payer,
                 datafield: 'payer',
                 align: 'center',
                 cellsalign: 'left',
@@ -315,7 +315,7 @@ function ceateGridBank() {
                 editable: false,
             },
             {
-                text: 'Purpose of payment',
+                text: i18n.lang.common.vld_purposeOfPayment,
                 datafield: 'purpose',
                 align: 'center',
                 cellsalign: 'right',
@@ -323,7 +323,7 @@ function ceateGridBank() {
                 editable: false,
             },
             {
-                text: 'Reference Number',
+                text: i18n.lang.common.vld_referenceNumber,
                 columntype: 'textbox',
                 datafield: 'referenceNo',
                 align: 'center',
@@ -339,7 +339,7 @@ function ceateGridBank() {
                 }
             },
             {
-                text: 'Amount',
+                text: i18n.lang.common.vld_amount,
                 columntype: 'textbox',
                 datafield: 'claims',
                 align: 'center',

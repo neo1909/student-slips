@@ -27,7 +27,7 @@ public class StudentSlipException extends RuntimeException {
 	}
 
 	public StudentSlipException(String message, int code) {
-		super(StringUtils.hasText(message) ? message : "Please retry or contact the administrators");
+		super(StringUtils.hasText(message) ? message : i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.CONTACT_ADMIN));
 		this.code = code;
 	}
 

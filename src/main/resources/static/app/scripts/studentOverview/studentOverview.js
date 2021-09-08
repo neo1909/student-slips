@@ -37,18 +37,18 @@ let fn = {
             source: dataAdapter,
             pageable: true,
             columns: [
-                { text: 'No.', datafield: '', align: 'center', cellsalign:'center', width: '5%'
+                { text: i18n.lang.common.vld_no, datafield: '', align: 'center', cellsalign:'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
                         return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">'+
                             + (rowIndex + 1)
                             + '</div>';
                     }
                 },
-                { text: 'Name and surname', datafield: 'name', align: 'center', cellsalign:'left', width: '35%,'},
-                { text: 'School', datafield: 'schoolName', align: 'center', cellsalign:'left', width: '35%,'},
-                { text: 'Grade', datafield: 'grade', align: 'center', cellsalign:'center', width: '9%,'},
-                { text: 'Class', datafield: 'sClass', align: 'center', cellsalign:'center', width: '9%,'},
-                { text: 'Balance Sheet', cellsalign:'center', width: '7%,'
+                { text: i18n.lang.common.vld_nameAndSurname, datafield: 'name', align: 'center', cellsalign:'left', width: '35%,'},
+                { text: i18n.lang.common.vld_school, datafield: 'schoolName', align: 'center', cellsalign:'left', width: '35%,'},
+                { text: i18n.lang.common.vld_grade, datafield: 'grade', align: 'center', cellsalign:'center', width: '9%,'},
+                { text: i18n.lang.common.vld_class, datafield: 'sClass', align: 'center', cellsalign:'center', width: '9%,'},
+                { text: i18n.lang.common.vld_balanceSheet, cellsalign:'center', width: '7%,'
                     , cellsrenderer: function (rowIndex, column, value) {
                         return '<div style="text-align: center; margin-top: 4px;">'
                             + '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + rowIndex +')"><span class="glyphicon glyphicon-menu-right"></span></button>'
@@ -66,8 +66,8 @@ let fn = {
 
         // Search
         $("#iptStdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.plh_enterSearch });
-        $("#cmbStdGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_gradeAll(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
-        $("#cmbStdClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_clazzAll(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbStdGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.grade('All'), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbStdClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.clazz('All'), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
 
         // Popup Student
         $("#popupStudent").jqxWindow({
@@ -90,8 +90,8 @@ let fn = {
 
     onSearch: function () {
         let stdNm = $('#iptStdNmSrch').val();
-        let stdGrade = $('#cmbStdGradeSrch').val() != 'All' ? $('#cmbStdGradeSrch').val() : '';
-        let stdClazz = $('#cmbStdClazzSrch').val() != 'All' ? $('#cmbStdClazzSrch').val() : '';
+        let stdGrade = $('#cmbStdGradeSrch').val();
+        let stdClazz = $('#cmbStdClazzSrch').val();
         if (stdNm) {
             stdNm = stdNm.trim();
         }

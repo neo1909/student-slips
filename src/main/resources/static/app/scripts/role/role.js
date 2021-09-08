@@ -32,7 +32,7 @@ var fn = {
 	            { text: 'Name', datafield: 'name', align: 'center', cellsalign: 'center', width: '30%', editable: false },
 	            { text: 'Description', datafield: 'description', align: 'center', cellsalign: 'center', width: '40%', editable: false },
 	            { text: 'Del  Y/N', datafield: 'delYn', align: 'center', cellsalign: 'center', width: '10%', editable: false },
-	            { text: 'Actions', align: 'center', width: '15%',
+	            { text: '', align: 'center', width: '15%',
 	                    cellsrenderer: function (rowIndex, column, value) {
 	                        return '<div style="text-align: center; margin-top: 4px;">' +
 	                            '<button alt="Delete" class="btn btn-danger btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onDelete(' + rowIndex + ')"><span class="glyphicon glyphicon-trash"></span></button>' +

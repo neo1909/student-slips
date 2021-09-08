@@ -55,7 +55,8 @@ let SS = {
 	 // Source OBJECT: displayMember: name, valueMember: id
 	 grade: function(firstValue) {
 		 let src = [];
-		 if (firstValue === SSUtils.getI18nValue('All', 'Sve') || firstValue === '') src.push({id: "", name: firstValue});
+		 if (firstValue === 'All') src.push({id: "", name: SSUtils.getI18nValue('All', 'Sve')});
+		 else if (firstValue === '') src.push({id: "", name: firstValue});
 		 for (let i = 1; i <= 8; i++) {
 			 src.push({id: i, name: `${i}`});
 		 }
@@ -63,7 +64,8 @@ let SS = {
 	 },
 	 clazz: function(firstValue) {
 		 let src = [];
-		 if (firstValue === SSUtils.getI18nValue('All', 'Sve') || firstValue === '') src.push({id: "", name: firstValue});
+		 if (firstValue === 'All') src.push({id: "", name: SSUtils.getI18nValue('All', 'Sve')});
+		 else if (firstValue === '') src.push({id: "", name: firstValue});
 		 for (let i = 1; i <= 16; i++) {
 			 src.push({id: i, name: `${i}`});
 		 }

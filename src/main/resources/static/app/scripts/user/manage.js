@@ -47,7 +47,7 @@ var fn = {
 	            { text: 'Last Login Date', cellsformat: 'dd/MM/yyyy', datafield: 'lastLoginDate', align: 'left', cellsalign: 'center', width: '15%', editable: false },
 	            { text: 'Status', datafield: 'status', align: 'center', cellsalign: 'center', width: '10%', editable: false },
 	            { text: 'Del  Y/N', datafield: 'delYn', align: 'center', cellsalign: 'center', width: '10%', editable: false },
-	            { text: 'Actions', align: 'center', width: '10%',
+	            { text: '', align: 'center', width: '10%',
 	                    cellsrenderer: function (rowIndex, column, value) {
 	                        return '<div style="text-align: center; margin-top: 4px;">' +
 	                            '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + rowIndex + ')"><span class="glyphicon glyphicon-edit"></span></button>' +

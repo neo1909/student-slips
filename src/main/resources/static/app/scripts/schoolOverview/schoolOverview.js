@@ -38,23 +38,23 @@ let fnOverview = {
             pageable: true,
             columns: [
                 {
-                    text: 'No.', datafield: '', align: 'center', cellsalign: 'center', width: '5%'
+                    text: i18n.lang.common.vld_no, datafield: '', align: 'center', cellsalign: 'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
                         return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">' +
                             +(rowIndex + 1)
                             + '</div>';
                     }
                 },
-                {text: 'Grade/Class', datafield: 'gradeClass', align: 'center', cellsalign: 'center', width: '10%,'},
-                {text: 'Head Teacher', datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
-                {text: 'Services', datafield: 'serviceListString', align: 'center', cellsalign: 'center', width: '15%,'},
-                {text: 'Dedit', datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
-                {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2',
+                {text: i18n.lang.common.vld_gradeClass, datafield: 'gradeClass', align: 'center', cellsalign: 'center', width: '10%,'},
+                {text: i18n.lang.common.vld_headTeacher, datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
+                {text: i18n.lang.common.vld_service, datafield: 'serviceListString', align: 'center', cellsalign: 'center', width: '15%,'},
+                {text: i18n.lang.common.vld_debit, datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
+                {text: i18n.lang.common.vld_claim, datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2',
                     cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
                         let formatValue = SS.format.formatNumberByLocales(!value ? 0 : value);
                         return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
                     }},
-                {text: 'Balance', datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
+                {text: i18n.lang.common.vld_balance, datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
                 		let formatValue = SS.format.formatNumberByLocales(value);
                         if (value && value > 0) {
                             return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
@@ -106,7 +106,7 @@ let fnOverview = {
             let src = [];
             if (data && data.lst) src = [...data.lst];
             originalServiceIdList = data.lst.map(i => i.id);
-            src.unshift({id: "", name: "All"});
+            src.unshift({id: "", name: i18n.lang.common.all});
             $("#cmbServiceSrch").jqxComboBox({ source: src, displayMember: "name", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});
         });
     },
@@ -123,7 +123,7 @@ let fnOverview = {
         let serviceListString = '';
         if (checkedAllServices) {
             serviceListId = [...originalServiceIdList];
-            serviceListString = 'All';
+            serviceListString = i18n.lang.common.all;
         } else {
             serviceListId = $("#cmbServiceSrch").jqxComboBox('getCheckedItems').map(i=>i.value);
             $("#cmbServiceSrch").jqxComboBox('getCheckedItems').forEach(i => {
@@ -223,23 +223,23 @@ let fnDetail = {
             pageable: true,
             columns: [
                 {
-                    text: 'No.', datafield: '', align: 'center', cellsalign: 'center', width: '5%'
+                    text: i18n.lang.common.vld_no, datafield: '', align: 'center', cellsalign: 'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
                         return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">' +
                             +(rowIndex + 1)
                             + '</div>';
                     }
                 },
-                {text: 'Grade/Class', datafield: 'gradeClass', align: 'center', cellsalign: 'center', width: '10%,'},
-                {text: 'Head Teacher', datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
-                {text: 'Services', datafield: 'nameService', align: 'center', cellsalign: 'center', width: '15%,'},
-                {text: 'Dedit', datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
-                {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2',
+                {text: i18n.lang.common.vld_gradeClass, datafield: 'gradeClass', align: 'center', cellsalign: 'center', width: '10%,'},
+                {text: i18n.lang.common.vld_headTeacher, datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
+                {text: i18n.lang.common.vld_service, datafield: 'nameService', align: 'center', cellsalign: 'center', width: '15%,'},
+                {text: i18n.lang.common.vld_debit, datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
+                {text: i18n.lang.common.vld_claim, datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2',
                     cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
                         let formatValue = SS.format.formatNumberByLocales(!value ? 0 : value);
                         return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
                     }},
-                {text: 'Balance', datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
+                {text: i18n.lang.common.vld_balance, datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
                         let formatValue = SS.format.formatNumberByLocales(value);
                         if (value && value > 0) {
                             return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
@@ -397,7 +397,7 @@ $(document).ready(function() {
             var value = item.value;
             var label = item.label;
             var checked = item.checked;
-            if (label === 'All') {
+            if (label === i18n.lang.common.all) {
                 let allItems = $("#cmbServiceSrch").jqxComboBox('getItems');
                 if (checked) {
                     for (let i=1; i<allItems.length; i++) {

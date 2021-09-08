@@ -39,20 +39,20 @@ let fn = {
             pageable: true,
             columns: [
                 {
-                    text: 'No.', datafield: '', align: 'center', cellsalign: 'center', width: '5%'
+                    text: i18n.lang.common.no, datafield: '', align: 'center', cellsalign: 'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
                         return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">' +
                             +(rowIndex + 1)
                             + '</div>';
                     }
                 },
-                {text: 'School Name', datafield: 'schoolName', align: 'center', cellsalign: 'left', width: '22%'},
-                {text: 'Address', datafield: 'address', align: 'center', cellsalign: 'left', width: '30%'},
-                {text: 'City', datafield: 'city', align: 'center', cellsalign: 'center', width: '10%'},
-                {text: 'Municipality', datafield: 'municipality', align: 'center', cellsalign: 'center', width: '10%'},
-                {text: 'Bank Account Number', datafield: 'backAccountNumber', align: 'center', cellsalign: 'center', width: '15%'},
+                {text: i18n.lang.dataentry.school.schoolName, datafield: 'schoolName', align: 'center', cellsalign: 'left', width: '22%'},
+                {text: i18n.lang.dataentry.school.address, datafield: 'address', align: 'center', cellsalign: 'left', width: '30%'},
+                {text: i18n.lang.dataentry.school.city, datafield: 'city', align: 'center', cellsalign: 'center', width: '10%'},
+                {text: i18n.lang.dataentry.school.municipality, datafield: 'municipality', align: 'center', cellsalign: 'center', width: '10%'},
+                {text: i18n.lang.dataentry.school.bankAccountNo, datafield: 'backAccountNumber', align: 'center', cellsalign: 'center', width: '15%'},
                 {
-                    text: 'Actions', align: 'center', width: '8%'
+                    text: '', align: 'center', width: '8%'
                     , cellsrenderer: function (rowIndex, column, value) {
                         return '<div style="text-align: center; margin-top: 4px;">'
                             + '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + rowIndex + ')"><span class="glyphicon glyphicon-edit"></span></button>'

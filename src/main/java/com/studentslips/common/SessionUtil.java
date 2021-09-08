@@ -1,5 +1,6 @@
 package com.studentslips.common;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,7 +16,8 @@ public class SessionUtil {
     	return getAuthenticatedUser() != null ? getAuthenticatedUser().getId() : -1;
     }
     public static String getLang() {
-    	return getAuthenticatedUser() != null ? getAuthenticatedUser().getLang() : null;
+    	String lang = getAuthenticatedUser() != null ? getAuthenticatedUser().getLang() : "sr";
+    	return !StringUtils.isEmpty(lang) ? lang : "sr";
     }
     public static void setLang(String lang) {
     	if (getAuthenticatedUser() == null) return;

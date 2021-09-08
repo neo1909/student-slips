@@ -39,7 +39,7 @@ var fn = {
 	            { text: 'Expiry Time', cellsformat: 'dd/MM/yyyy HH:mm:ss', datafield: 'expiryTime', align: 'center', cellsalign: 'left', width: '15%', editable: false },
 //	            { text: 'Principal Name', datafield: 'principalName', align: 'center', cellsalign: 'center', width: '10%', editable: false },
 	            { text: 'User Fullname', datafield: 'fullName', align: 'center', cellsalign: 'center', width: '15%', editable: false },
-	            { text: 'Actions', align: 'center', width: '10%',
+	            { text: '', align: 'center', width: '10%',
 	                    cellsrenderer: function (rowIndex, column, value) {
 	                        return '<div style="text-align: center; margin-top: 4px;">' +
 	                            '<button alt="Delete" class="btn btn-danger btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onDelete(' + rowIndex + ')"><span class="glyphicon glyphicon-trash"></span></button>' +

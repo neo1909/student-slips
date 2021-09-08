@@ -39,17 +39,17 @@ let fn = {
             source: dataAdapter,
             pageable: true,
             columns: [
-                { text: 'No.', datafield: '', align: 'center', cellsalign:'center', width: '5%'
+                { text: i18n.lang.common.no, datafield: '', align: 'center', cellsalign:'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
                         return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">'+
                             + (rowIndex + 1)
                             + '</div>';
                     }
                 },
-                { text: 'Name and surname', datafield: 'name', align: 'center', cellsalign:'left', width: '35%,'},
-                { text: 'School', datafield: 'schoolName', align: 'center', cellsalign:'left', width: '35%,'},
-                { text: 'Grade', datafield: 'grade', align: 'center', cellsalign:'center', width: '9%,'},
-                { text: 'Class', datafield: 'sClass', align: 'center', cellsalign:'center', width: '9%,'},
+                { text: i18n.lang.dataentry.student.nameAndSurname, datafield: 'name', align: 'center', cellsalign:'left', width: '35%,'},
+                { text: i18n.lang.common.school, datafield: 'schoolName', align: 'center', cellsalign:'left', width: '35%,'},
+                { text: i18n.lang.common.grade, datafield: 'grade', align: 'center', cellsalign:'center', width: '9%,'},
+                { text: i18n.lang.common.clazz, datafield: 'sClass', align: 'center', cellsalign:'center', width: '9%,'},
                 { text: '', cellsalign:'center', width: '7%,'
                     , cellsrenderer: function (rowIndex, column, value) {
                         return '<div style="text-align: center; margin-top: 4px;">'
@@ -67,9 +67,9 @@ let fn = {
         $("#grdHeadTeacher").jqxGrid('localizestrings', SS.grid.localization);
 
         // Search
-        $("#iptHTdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.enterSearch });
-        $("#cmbHTGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_gradeAll(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
-        $("#cmbHTClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_clazzAll(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#iptHTdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.plh_enterSearch });
+        $("#cmbHTGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.grade('All'), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbHTClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.clazz('All'), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
 
         // Popup Head Teacher
         $("#popupHeadTeacher").jqxWindow({
@@ -131,8 +131,8 @@ let fn = {
 
         let params = {
             name: headTeacherNm,
-            grade: htGrade == 'All' ? '' : htGrade,
-            sClass: htClazz == 'All' ? '' : htClazz
+            grade: htGrade,
+            sClass: htClazz
         };
 
         SS.sendToServer(
