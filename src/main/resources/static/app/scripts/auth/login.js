@@ -34,7 +34,7 @@ let fn = {
 				}
             },
 			error : function(err) {
-				let message = "Failed to login";
+				let message = i18n.lang.auth.vld_failToLogin;
 				if (err && err.responseText) {
 					let result = JSON.parse(err.responseText);
 					if (result.status == 'NG' && result.message) {

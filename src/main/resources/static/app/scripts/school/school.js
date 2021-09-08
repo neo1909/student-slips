@@ -93,18 +93,18 @@ let fn = {
         $('#frmSchool').jqxValidator({
             hintType: 'label',
             rules: [
-                {input: '#iptSchoolName', message: 'Name is required!', action: 'keyup, blur', rule: 'required'},
-                {input: '#iptSchoolName', message: 'Name is invalid!', action: 'keyup, blur', rule: 'length=1,250'},
-                {input: '#iptAddress', message: 'Address is required!', action: 'keyup, blur', rule: 'required'},
-                {input: '#iptAddress', message: 'Adress is invalid!', action: 'keyup, blur', rule: 'length=1,500'},
-                {input: '#iptZipCode', message: 'ZipCode is required!', action: 'keyup, blur', rule: 'required'},
-                {input: '#iptZipCode', message: 'ZipCode is invalid!', action: 'keyup, blur', rule: 'length=1,150'},
-                {input: '#iptCity', message: 'City is required!', action: 'keyup, blur', rule: 'required'},
-                {input: '#iptCity', message: 'City is invalid!', action: 'keyup, blur', rule: 'length=1,250'},
-                {input: '#iptMunicipality', message: 'Municipality is required!', action: 'keyup, blur', rule: 'required'},
-                {input: '#iptMunicipality', message: 'Municipality is invalid!', action: 'keyup, blur', rule: 'length=1,150'},
-                {input: '#iptBankAcc', message: 'Bankaccount number is required!', action: 'keyup, blur', rule: 'required'},
-                {input: '#iptBankAcc', message: 'Bankaccount number is invalid!', action: 'keyup, blur', rule: 'length=1,150'},
+                {input: '#iptSchoolName', message: i18n.lang.dataentry.vld_req_name, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptSchoolName', message: i18n.lang.dataentry.vld_inv_name, action: 'keyup, blur', rule: 'length=1,250'},
+                {input: '#iptAddress', message: i18n.lang.dataentry.school.vld_req_addr, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptAddress', message: i18n.lang.dataentry.school.vld_inv_addr, action: 'keyup, blur', rule: 'length=1,500'},
+                {input: '#iptZipCode', message: i18n.lang.dataentry.school.vld_req_zip, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptZipCode', message: i18n.lang.dataentry.school.vld_inv_zip, action: 'keyup, blur', rule: 'length=1,150'},
+                {input: '#iptCity', message: i18n.lang.dataentry.school.vld_req_city, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptCity', message: i18n.lang.dataentry.school.vld_inv_city, action: 'keyup, blur', rule: 'length=1,250'},
+                {input: '#iptMunicipality', message: i18n.lang.dataentry.school.vld_req_mun, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptMunicipality', message: i18n.lang.dataentry.school.vld_inv_mun, action: 'keyup, blur', rule: 'length=1,150'},
+                {input: '#iptBankAcc', message: i18n.lang.dataentry.school.vld_req_bankNo, action: 'keyup, blur', rule: 'required'},
+                {input: '#iptBankAcc', message: i18n.lang.dataentry.school.vld_inv_bankNo, action: 'keyup, blur', rule: 'length=1,150'},
             ]
         });
 
@@ -117,7 +117,7 @@ let fn = {
         });
 
         $('#btnStdCreate').click(function () {
-        	$("#popupSchool").jqxWindow({title: 'Create School'});
+        	$("#popupSchool").jqxWindow({title: i18n.lang.dataentry.school.createSchool});
             $("#popupSchool").jqxWindow('open', fn.popup.open());
         });
 
@@ -223,7 +223,7 @@ let fn = {
         let data = $("#grdSchool").jqxGrid('getrowdata', rowIndex);
         let id = data.id;
         if (id) {
-            SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
+            SS.confirm(SS.title.CONFIRM, i18n.lang.common.msg_delConfirm, function (result) {
                 if (result ) {
                     SS.sendToServer(
                         'SC_D_01',

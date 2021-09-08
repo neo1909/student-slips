@@ -454,7 +454,7 @@ $(document).ready(function () {
     });
 
     $('#btnSave').click(function () {
-    	SS.confirm(SS.title.CONFIRM, "Do you want to Save and Post payment? ", function (result) {
+    	SS.confirm(SS.title.CONFIRM, i18n.lang.archive.bankstatement.msg_confirmSaveAndPost, function (result) {
             if (result) {
                 onSave()
             }

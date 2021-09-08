@@ -17,6 +17,7 @@ import com.studentslips.common.Common;
 import com.studentslips.common.SessionUtil;
 import com.studentslips.common.StudentSlipConstants;
 import com.studentslips.common.StudentSlipException;
+import com.studentslips.common.i18nUtil;
 import com.studentslips.entities.School;
 import com.studentslips.services.SchoolService;
 
@@ -79,15 +80,15 @@ public class SchoolRestController {
         try {
     		School school = schoolService.selectSchoolById(SessionUtil.getSchoolId());
 			if (school != null) {
-	            throw new StudentSlipException("Your school has been already existed");
+	            throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.DATAENTRY_EXISTED_SCHOOL));
 			}
 			
             int dataStd = schoolService.insertSchool(std);
             if (dataStd == 1) {
                 result.put(Common.STATUS, HttpStatus.OK.value());
-	            result.put(Common.MESSAGE, "School is registered successfully");
+	            result.put(Common.MESSAGE, i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.DATAENTRY_SAVE_SCHOOL_OK));
             } else {
-	            throw new StudentSlipException("Failed to register new school");
+	            throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.DATAENTRY_SAVE_SCHOOL_NG));
             }
         } catch (StudentSlipException e) {
         	throw e;
@@ -118,7 +119,7 @@ public class SchoolRestController {
         Map<String, Object> result = new HashMap<>();
         
         if (!SessionUtil.getAuthenticatedUserSimpleRoles().contains(StudentSlipConstants.Role.ADMIN)) {
-            throw new StudentSlipException("No Permission. Please contact administrators");
+            throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.NO_PERMISSION));
         }
         
         try {

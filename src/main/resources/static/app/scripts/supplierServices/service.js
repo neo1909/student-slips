@@ -63,7 +63,7 @@ let fn = {
         $("#grdService").jqxGrid('localizestrings', SS.grid.localization);
 
         // Search
-        $("#iptSvcNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
+        $("#iptSvcNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.plh_enterSearch });
 
         // Popup Student
         $("#popupService").jqxWindow({
@@ -77,13 +77,13 @@ let fn = {
             resizable: false
         });
 
-        $('#iptSvcNm').jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter name...' });
+        $('#iptSvcNm').jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.plh_enterName });
 
         $('#frmService').jqxValidator({
             hintType: 'label',
             rules: [
-                { input: '#iptSvcNm', message: 'Name is required!', action: 'keyup, blur', rule: 'required' },
-                { input: '#iptSvcNm', message: 'Data is invalid!', action: 'keyup, blur', rule: 'length=1,250' },
+                { input: '#iptSvcNm', message: i18n.lang.dataentry.vld_req_name, action: 'keyup, blur', rule: 'required' },
+                { input: '#iptSvcNm', message: i18n.lang.dataentry.vld_inv_name, action: 'keyup, blur', rule: 'length=1,250' },
             ]
         });
 
@@ -184,7 +184,7 @@ let fn = {
         let data = $("#grdService").jqxGrid('getrowdata', rowIndex);
         let serviceId = data.id;
         if (serviceId) {
-            SS.confirm(SS.title.CONFIRM, "Do you want delete ?", function (result) {
+            SS.confirm(SS.title.CONFIRM, i18n.lang.common.msg_delConfirm, function (result) {
                 if (result ) {
                     SS.sendToServer(
                         'SV_D_01',

@@ -33,15 +33,7 @@ public class CustomExceptionHandlerFilter extends OncePerRequestFilter {
 			ResponseObject obj = new ResponseObject(ex.getCode(), ex.getMessage(), false);
 			response.setCharacterEncoding("UTF-8");
 			response.setStatus(ex.getCode());
-			response.getWriter().write(convertObjectToJson(obj));
+			response.getWriter().write(obj.toJSONString());
 		}
 	}
-
-    public String convertObjectToJson(Object object) throws JsonProcessingException {
-        if (object == null) {
-            return null;
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(object);
-    }
 }

@@ -168,7 +168,7 @@ function onDelete(rowIndex) {
     let data = $("#grdTask").jqxGrid('getrowdata', rowIndex);
     let id = data.id;
     if (id) {
-        SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
+        SS.confirm(SS.title.CONFIRM, i18n.lang.common.msg_delConfirm, function (result) {
             if (result ) {
                 SS.sendToServer(
                     'TA_D_01',

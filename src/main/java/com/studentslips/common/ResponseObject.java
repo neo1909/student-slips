@@ -2,6 +2,11 @@ package com.studentslips.common;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @Usage
@@ -40,6 +45,35 @@ public class ResponseObject {
 		this.timestamp = sdformat.format(os);
 		this.message = message;
 		this.data = data;
+	}
+	
+	public Map<String, Object> toMap() {
+		/**
+		 * Convert using object mapper
+		 * 
+		 * @Impl
+		 * ObjectMapper mapper = new ObjectMapper();
+		 * return mapper.convertValue(this, HashMap.class);
+		 * ================================================
+		 * 
+		 * */
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("status", this.status);
+		result.put("code", this.code);
+		result.put("timestamp", this.timestamp);
+		result.put("message", this.message);
+		result.put("data", this.data);
+		return result;
+	}
+	
+	public String toJSONString() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+			return mapper.writeValueAsString(this);
+		} catch (JsonProcessingException e) {
+			return null;
+		}
 	}
 
 	public int getCode() {

@@ -20,10 +20,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studentslips.common.Common;
 import com.studentslips.common.SecurityUtil;
 import com.studentslips.common.StudentSlipException;
 import com.studentslips.common.i18nUtil;
+import com.studentslips.entities.SessionUser;
 import com.studentslips.entities.User;
 import com.studentslips.services.UserService;
 
@@ -77,7 +79,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		try {
 			password = SecurityUtil.decryptAESCBCPKCS5(encryptedPassword, secret);
 		} catch (Exception e) {
-			throw new StudentSlipException("Unable to verify authentication");
+			throw new StudentSlipException(i18nUtil.getMessage(lang, Common.Message.VERIFY_AUTH_NG));
 		}
 
 		if (!passwordEncoder.matches(password, loginedUser.getPassword()) && "ACTIVE".equals(loginedUser.getStatus())) {
@@ -85,21 +87,34 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 			if (loginedUser.getLoginRetryCount() >= 5) {
 				loginedUser.setStatus("DEACTIVE");
 				userService.updateUser(loginedUser);
-				throw new StudentSlipException("Account is locked due to too many try. Please contact admin for support");
+				throw new StudentSlipException(i18nUtil.getMessage(lang, Common.Message.LOCKED_ACCOUNT));
 			}
 			int currentLoginCount = loginedUser.getLoginRetryCount() + 1;
 			loginedUser.setLastLoginDate(new Timestamp(current));
 			loginedUser.setLoginRetryCount(currentLoginCount);
 			userService.updateUser(loginedUser);
-			throw new StudentSlipException("Password is not correct (" + currentLoginCount + "/6).");
+			throw new StudentSlipException(i18nUtil.getMessage(lang, Common.Message.INCORRECT_PWD) + " (" + currentLoginCount + "/6).");
 		}
 
 		if (!"ACTIVE".equals(loginedUser.getStatus())) {
 			logger.debug("# CustomAuthenticationFilter || Locked account [{}]", loginedUser);
-			throw new StudentSlipException("Account is locked. Please contact the administrator for support.");
+			throw new StudentSlipException(i18nUtil.getMessage(lang, Common.Message.LOCKED_ACCOUNT));
 		}
+		
+		SessionUser sessionUser = new SessionUser();
+		sessionUser.setId(loginedUser.getId());
+		sessionUser.setUsername(loginedUser.getUsername());
+		sessionUser.setPassword(loginedUser.getPassword());
+		sessionUser.setSchoolId(loginedUser.getSchoolId());
+		sessionUser.setEmail(loginedUser.getEmail());
+		sessionUser.setFullName(loginedUser.getFullName());
+		sessionUser.setStatus(loginedUser.getStatus());
+		sessionUser.setRoles(loginedUser.getRoles());
+		sessionUser.setUserType(loginedUser.getUserType());
+		sessionUser.setDelYn(loginedUser.getDelYn());
+		sessionUser.setLang(lang);
 
-		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(loginedUser, loginedUser.getPassword(), loginedUser.getAuthorities());
+		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(sessionUser, sessionUser.getPassword(), sessionUser.getAuthorities());
 
 		return authRequest;
 	}

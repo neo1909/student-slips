@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.studentslips.common.Common;
+import com.studentslips.common.SessionUtil;
+import com.studentslips.common.i18nUtil;
 import com.studentslips.entities.AuthRegister;
 import com.studentslips.entities.User;
 import com.studentslips.services.AuthenticationService;
@@ -45,7 +47,7 @@ public class AuthRestController {
         try {
         	userService.register(authRegister);
             result.put(Common.STATUS, HttpStatus.OK.value());
-            result.put(Common.MESSAGE, "Register successfully");
+            result.put(Common.MESSAGE, i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.REGISTER_OK));
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
             result.put(Common.MESSAGE, ex.getMessage());
@@ -61,15 +63,15 @@ public class AuthRestController {
         try {
         	if (authService.checkPassword(user) == 0) {
                 result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-                result.put(Common.MESSAGE, "E-mail is not correct.");
+                result.put(Common.MESSAGE, i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.INCORRECT_EMAIL));
         	} else {
             	int cnt = authService.resetPassword(user);
             	if (cnt > 0) {        		
             		result.put(Common.STATUS, HttpStatus.OK.value());
-                    result.put(Common.MESSAGE, "Your password has been reset. Please check your e-mail.");
+                    result.put(Common.MESSAGE, i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.RESET_PWD_OK));
             	} else {
                     result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-                    result.put(Common.MESSAGE, "Unable to reset password. Please contact admin for support.");
+                    result.put(Common.MESSAGE, i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.RESET_PWD_NG));
             	}
         	}
         } catch (Exception ex) {

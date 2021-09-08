@@ -2,6 +2,8 @@ package com.studentslips.controller;
 
 
 import com.studentslips.common.Common;
+import com.studentslips.common.SessionUtil;
+import com.studentslips.common.i18nUtil;
 import com.studentslips.services.PostingPaymentService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -35,20 +37,20 @@ public class PostingPaymentRestController {
                 .filter(StringUtils::isNotEmpty).collect(Collectors.joining(" , "));
 
         if (StringUtils.isEmpty(uploadedFileName)) {
-            result.put("errMsg", "Please select a file!");
+            result.put("errMsg", i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.POSTING_PLS_SELECT_FILE));
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
             return result;
         }
 
         if (!postingPaymentService.validateBeforeUpload(Arrays.asList(uploadFiles))){
-            result.put("errMsg", "Bank Statement is existed!");
+            result.put("errMsg", i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.POSTING_EXISTED_BANK_STATEMENT));
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
             return result;
         }
 
         try {
             String msg = postingPaymentService.saveUploadedFiles(Arrays.asList(uploadFiles));
-            result.put("msg", "Bank statement " + msg + " is uploaded" );
+            result.put("msg", i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.POSTING_UPLOAD_BS_OK) + ": " + msg );
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception e) {
             e.printStackTrace();
@@ -86,7 +88,7 @@ public class PostingPaymentRestController {
 
         try {
             String msg = postingPaymentService.saveAndPostPayment();
-            result.put("msg","Bank statement " + msg + " is saved and archived" );
+            result.put("msg", i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.POSTING_SAVE_BS_OK) + ": " + msg );
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception e) {
             e.printStackTrace();

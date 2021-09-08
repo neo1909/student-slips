@@ -24,9 +24,9 @@ function initUpdate() {
         	        selectedIndex: 0
         	    });
         		
-        		let src = [{name: '1st installment', value: '1'}, {name: '2nd installment', value: '2'}, {name: '3rd installment', value: '3'}];
+        		let src = [{name: `1st ${i18n.lang.posting.installment}`, value: '1'}, {name: `2nd ${i18n.lang.posting.installment}`, value: '2'}, {name: `3rd ${i18n.lang.posting.installment}`, value: '3'}];
         		for (let i = 4, len = 12; i <= len; i++) {
-        			src.push({name: `${i}th installment`, value: `${i}`});
+        			src.push({name: `${i}th ${i18n.lang.posting.installment}`, value: `${i}`});
         		}
         		let idx = src.findIndex(i => i.value.includes(`${updateTaskOriginalData.installment}`));
         		$("#cmbStdInstSrch").jqxDropDownList({
@@ -92,7 +92,7 @@ $(document).ready(function () {
 
     $('#btnSave').on('click', function () {
         if ((!tr_update || tr_update.length === 0) && !isUpdateNote) {
-            SS.alert('Notification', 'No data update')
+            SS.alert('Notification', i18n.lang.common.msg_noDataUpdate)
             return;
         }
         let params = {
@@ -111,7 +111,7 @@ $(document).ready(function () {
             	}
                 isUpdateNote = false;
                 tr_update = [];
-                SS.alert('Notification', 'Update task successfully');
+                SS.alert('Notification', i18n.lang.posting.studentdebts.msg_saved);
             }
         );
     });

@@ -1,10 +1,11 @@
 package com.studentslips.common;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.studentslips.entities.User;
+import com.studentslips.entities.SessionUser;
 
 public class SessionUtil {
     public static int getSchoolId() throws Exception {
@@ -13,15 +14,32 @@ public class SessionUtil {
     public static int getUserLoginId() throws Exception {
     	return getAuthenticatedUser() != null ? getAuthenticatedUser().getId() : -1;
     }
+    public static String getLang() {
+    	return getAuthenticatedUser() != null ? getAuthenticatedUser().getLang() : null;
+    }
+    public static void setLang(String lang) {
+    	if (getAuthenticatedUser() == null) return;
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	if (authentication != null) {
+    		SessionUser user = (SessionUser) authentication.getPrincipal();
+    		user.setLang(lang);
+    		updateAuthentication(user);
+    	}
+    }
+    public static void updateAuthentication(SessionUser user) {
+		Authentication newAuth = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(newAuth);
+    }
     public static boolean isAuthenticated() {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	boolean isAuthenticated = authentication != null && !(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated();
     	return isAuthenticated;
     }
-    public static User getAuthenticatedUser() {
+    public static SessionUser getAuthenticatedUser() {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     	if (authentication != null) {
-    		User user = (User) authentication.getPrincipal();
+    		if (authentication.getPrincipal().equals("anonymousUser")) return null;
+    		SessionUser user = (SessionUser) authentication.getPrincipal();
     		user.setPassword(null);
     		return user;
     	}

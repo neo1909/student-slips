@@ -99,7 +99,7 @@ let fn = {
         $("#grdDetail").jqxGrid('localizestrings', SS.grid.localization);
 
         // Search
-        $("#iptNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
+        $("#iptNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.plh_enterSearch });
 
         // Popup
         $("#popupDetail").jqxWindow({
@@ -113,7 +113,7 @@ let fn = {
             resizable: false
         });
 
-        $('#iptNm').jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter name...' });
+        $('#iptNm').jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.plh_enterName });
         $("#cmbSupplier").jqxDropDownList({ enableBrowserBoundsDetection: true, height: SS.IPT_HEIGHT, width: '100%' });
         $("#cmbService").jqxDropDownList({ enableBrowserBoundsDetection: true,source: [], selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', disabled: true });
         $("#cmbGrade").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_grade(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', checkboxes: true });
@@ -154,20 +154,20 @@ let fn = {
 		$("#formCreateUpdateSupplierService").jqxValidator({
 			hintType: 'label',
             rules: [
-                { input: '#iptNm', message: 'Name is required', action: 'keyup, blur', rule: 'required' },
-                { input: '#iptPrice', message: 'Price must be equals or greater than 0', action: 'change, keyup, blur', rule: function () {
+                { input: '#iptNm', message: i18n.lang.dataentry.vld_req_name, action: 'keyup, blur', rule: 'required' },
+                { input: '#iptPrice', message: i18n.lang.dataentry.supplierservice.vld_zero_price, action: 'change, keyup, blur', rule: function () {
 	            		return ($('#iptPrice').val() >= 0)
 	            	} 
 	            },
-                { input: '#cmbSupplier', message: 'Supplier is required', action: 'change, keyup, blur', rule: function () {
+                { input: '#cmbSupplier', message: i18n.lang.common.vld_req_supplier, action: 'change, keyup, blur', rule: function () {
                 		return ($('#cmbSupplier').val() > 0)
                 	} 
                 },
-                { input: '#cmbService', message: 'Service is required', action: 'change, keyup, blur', rule: function () {
+                { input: '#cmbService', message: i18n.lang.common.vld_req_service, action: 'change, keyup, blur', rule: function () {
             			return ($('#cmbService').val() > 0)
             		}  
                 },
-                { input: '#cmbGrade', message: 'Grade is required', action: 'blur', rule: function () {
+                { input: '#cmbGrade', message: i18n.lang.common.vld_req_grade, action: 'blur', rule: function () {
         				return ($('#cmbGrade').val() && $('#cmbGrade').val() != '')
         			}
                 }
@@ -263,7 +263,7 @@ let fn = {
         let data = $("#grdDetail").jqxGrid('getrowdata', rowIndex);
         let id = data.groupId;
         if (id) {
-            SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
+            SS.confirm(SS.title.CONFIRM, i18n.lang.common.msg_delConfirm, function (result) {
                 if (result) {
                     SS.sendToServer(
                         'SL_D_03',

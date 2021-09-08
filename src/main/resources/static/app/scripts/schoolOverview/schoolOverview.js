@@ -133,7 +133,7 @@ let fnOverview = {
         }
 
         if (serviceListId.length == 0) {
-            SS.alert( SS.title.ERROR, "Service is required");
+            SS.alert( SS.title.ERROR, i18n.lang.common.vld_req_service);
             return;
         }
 

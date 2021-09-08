@@ -67,7 +67,7 @@ let fn = {
         $("#grdStudents").jqxGrid('localizestrings', SS.grid.localization);
 
         // Search
-        $("#iptStdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
+        $("#iptStdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder:  i18n.lang.common.plh_enterSearch });
         $("#cmbStdGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_gradeAll(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
         $("#cmbStdClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_clazzAll(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
 
@@ -83,15 +83,15 @@ let fn = {
             resizable: false
         });
 
-        $('#iptStdNm').jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter name...' });
+        $('#iptStdNm').jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.plh_enterName });
         $("#cmbStdGrade").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_grade(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
         $("#cmbStdClass").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_clazz(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
 
         $('#frmStudent').jqxValidator({
             hintType: 'label',
             rules: [
-                { input: '#iptStdNm', message: 'Name is required!', action: 'keyup, blur', rule: 'required' },
-                { input: '#iptStdNm', message: 'Name is invalid!', action: 'keyup, blur', rule: 'length=1,150' },
+                { input: '#iptStdNm', message: i18n.lang.dataentry.vld_req_name, action: 'keyup, blur', rule: 'required' },
+                { input: '#iptStdNm', message: i18n.lang.dataentry.vld_inv_name, action: 'keyup, blur', rule: 'length=1,150' },
             ]
         });
 
@@ -185,7 +185,7 @@ let fn = {
         let data = $("#grdStudents").jqxGrid('getrowdata', rowIndex);
         let studentId = data.id;
         if (studentId) {
-            SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
+            SS.confirm(SS.title.CONFIRM, i18n.lang.common.msg_delConfirm, function (result) {
                 if (result ) {
                     SS.sendToServer(
                         'ST_D_01',

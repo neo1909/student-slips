@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.LocaleResolver;
 
+import com.studentslips.common.SessionUtil;
+
 @RestController
 @RequestMapping("api")
 public class IndexRestController {
@@ -29,6 +31,7 @@ public class IndexRestController {
 		Locale locale = new Locale(lang, lang.toUpperCase());
 		localeResolver.setLocale(req, res, locale);
 		session.setAttribute("lang", lang);
+		SessionUtil.setLang(lang);
 	}
 	
 	@RequestMapping(value = "/LANG_02", method = RequestMethod.GET)

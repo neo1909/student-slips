@@ -71,7 +71,7 @@ let fn = {
 				email: $("#iptRegEmail").val(),
 				fullName: $("#iptRegFullName").val()
 			}, function(res) {
-				if (res.status === 200) {
+				if (res.status == 'OK') {
 					SS.confirm("Success", res.msg, function(result) {
 						if (result) {
 							_this.goToLogin();
@@ -81,12 +81,12 @@ let fn = {
 				} else {					
 					$("#iptRegPassword").val("");
 					$("#iptRegConfirmPassword").val("");
-					SS.alert(SS.title.ERROR, (res && res.msg) ? res.msg : "Register failed, please retry");
+					SS.alert(SS.title.ERROR, (res && res.msg) ? res.msg : i18n.lang.auth.vld_failToRegister);
 				}
 			}, function(err) {
 				$("#iptRegPassword").val("");
 				$("#iptRegConfirmPassword").val("");
-				SS.alert(SS.title.ERROR, err ? err.msg : "Register failed, please retry");
+				SS.alert(SS.title.ERROR, err ? err.msg : i18n.lang.auth.vld_failToRegister);
 			})
 		});
 	}

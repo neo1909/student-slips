@@ -244,7 +244,7 @@ function init() {
     $("#iptComment").jqxTextArea({
         width: 450,
         height: 100,
-        placeHolder: 'Enter note on the purpose of the payment...'
+        placeHolder: i18n.lang.posting.studentdebts.plh_enterPaymentPurpose
     });
 }
 
@@ -276,7 +276,7 @@ $(document).ready(function() {
 
     $('#btnPrint').on('click', function() {
     	if (tr_update && tr_update.length > 0) {
-    		SS.alert(SS.title.ERROR, "Please save or undo the change before printing");
+    		SS.alert(SS.title.ERROR, i18n.lang.posting.studentdebts.msg_saveBeforePrinding);
     		return;
     	}
     	let studentsInfo = [];

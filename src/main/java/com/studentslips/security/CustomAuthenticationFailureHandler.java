@@ -26,24 +26,15 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-		String errorMessage = StringUtils.hasText(exception.getMessage()) ? exception.getMessage() : "Failed to login";
-		
 		logger.error("# CustomAuthenticationFailureHandler || Class=[{}]; Message=[{}]", exception.getClass().getSimpleName(), exception.getMessage());
 		
-//		ResponseObject obj = new ResponseObject(HttpStatus.UNAUTHORIZED.value(), errorMessage, false);
-//		response.setStatus(HttpStatus.UNAUTHORIZED.value());
-//		response.getWriter().write(convertObjectToJson(obj));
+		// response.sendError(HttpStatus.UNAUTHORIZED.value(), errorMessage);
 		
-		response.sendError(HttpStatus.UNAUTHORIZED.value(), errorMessage);
+		ResponseObject obj = new ResponseObject(HttpStatus.UNAUTHORIZED.value(), exception.getMessage(), false);
+		response.setCharacterEncoding("UTF-8");
+		response.setStatus(HttpStatus.OK.value());
+		response.getWriter().write(obj.toJSONString());
 		
 		// super.onAuthenticationFailure(request, response, exception);
 	}
-
-    public String convertObjectToJson(Object object) throws JsonProcessingException {
-        if (object == null) {
-            return null;
-        }
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(object);
-    }
 }

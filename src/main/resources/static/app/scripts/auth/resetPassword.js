@@ -37,7 +37,7 @@ let fn = {
 		$("#btnResetPassword").on('click', function() {
 			if (!$('#formReset').jqxValidator('validate')) return;
 			
-			SS.confirm("Confirmation", "Are you sure to reset your password?", function(result) {
+			SS.confirm("Confirmation", i18n.lang.auth.msg_resetPasswordConfirm, function(result) {
 				if (result) {
 					SS.sendToServer('A_R_02', false, {
 						username: $("#iptRsUsername").val(),

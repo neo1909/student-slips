@@ -67,7 +67,7 @@ let fn = {
         $("#grdHeadTeacher").jqxGrid('localizestrings', SS.grid.localization);
 
         // Search
-        $("#iptHTdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...' });
+        $("#iptHTdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.enterSearch });
         $("#cmbHTGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_gradeAll(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
         $("#cmbHTClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_clazzAll(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
 
@@ -78,20 +78,20 @@ let fn = {
             height: 380,
             width: 700,
             theme: 'bootstrap',
-            title: 'Head teacher detail',
+            title: i18n.lang.dataentry.headteacher.title_popup,
             position: 'center',
             resizable: false
         });
 
-        $('#iptHTNm').jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter name...' });
+        $('#iptHTNm').jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.plh_enterName });
         $("#cmbHTGrade").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_grade(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
         $("#cmbHTClass").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_clazz(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });
 
         $('#frmHeadTeacher').jqxValidator({
             hintType: 'label',
             rules: [
-                { input: '#iptHTNm', message: 'Name is required!', action: 'keyup, blur', rule: 'required' },
-                { input: '#iptHTNm', message: 'Name is invalid!', action: 'keyup, blur', rule: 'length=1,150' },
+                { input: '#iptHTNm', message: i18n.lang.dataentry.vld_req_name, action: 'keyup, blur', rule: 'required' },
+                { input: '#iptHTNm', message: i18n.lang.dataentry.vld_inv_name, action: 'keyup, blur', rule: 'length=1,150' },
             ]
         });
 
@@ -195,7 +195,7 @@ let fn = {
         let data = $("#grdHeadTeacher").jqxGrid('getrowdata', rowIndex);
         let headTeacherId = data.id;
         if (headTeacherId) {
-            SS.confirm(SS.title.CONFIRM, "Do you want delete ? ", function (result) {
+            SS.confirm(SS.title.CONFIRM, i18n.lang.common.msg_delConfirm, function (result) {
                 if (result ) {
                     SS.sendToServer(
                         'HT_D_01',
