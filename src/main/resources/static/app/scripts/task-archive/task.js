@@ -62,7 +62,7 @@ function createGrid() {
         source: dataAdapter,
         pageable: true,
         columns: [{
-                text: 'Date',
+                text: i18n.lang.common.vld_date,
                 datafield: 'debitDate',
                 cellsformat: 'dd/MM/yyyy',
                 align: 'center',
@@ -71,7 +71,7 @@ function createGrid() {
                 editable: false,
             },
             {
-                text: 'Grade',
+                text: i18n.lang.common.vld_grade,
                 datafield: 'grade',
                 align: 'center',
                 cellsalign: 'right',
@@ -79,7 +79,7 @@ function createGrid() {
                 editable: false,
             },
             {
-                text: 'Class',
+                text: i18n.lang.common.vld_class,
                 datafield: 'sClass',
                 align: 'center',
                 cellsalign: 'right',
@@ -87,7 +87,7 @@ function createGrid() {
                 editable: false,
             },
             {
-                text: 'Service',
+                text: i18n.lang.common.vld_service,
                 columntype: 'textbox',
                 datafield: 'serviceName',
                 align: 'center',
@@ -96,7 +96,7 @@ function createGrid() {
                 editable: false,
             },
             {
-                text: 'Note',
+                text: i18n.lang.common.vld_note,
                 datafield: 'note',
                 align: 'center',
                 cellsalign: 'center',
@@ -104,7 +104,7 @@ function createGrid() {
                 editable: false,
             },
             {
-                text: 'Actions',
+                text: i18n.lang.common.vld_actions,
                 align: 'center',
                 width: '10%,',
                 cellsrenderer: function (rowIndex, column, value) {

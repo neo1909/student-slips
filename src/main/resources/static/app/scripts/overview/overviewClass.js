@@ -96,7 +96,7 @@ function createGrid() {
         source: dataAdapter,
         pageable: true,
         columns: [{
-                text: 'Name and surname',
+                text: i18n.lang.common.vld_nameAndSurname,
                 datafield: 'studentId',
                 displayfield: 'nameStudent',
                 align: 'center',
@@ -105,7 +105,7 @@ function createGrid() {
                 editable: false,
             },
             {
-                text: 'Services',
+                text: i18n.lang.common.vld_service,
                 datafield: 'serviceListString',
                 align: 'center',
                 cellsalign: 'center',
@@ -119,7 +119,7 @@ function createGrid() {
                 }
             },
             {
-                text: 'Debit',
+                text: i18n.lang.common.vld_debit,
                 datafield: 'debit',
                 align: 'center',
                 cellsalign: 'right',
@@ -128,7 +128,7 @@ function createGrid() {
                 cellsformat: 'd2'
             },
             {
-                text: 'Claims',
+                text: i18n.lang.common.vld_claim,
                 datafield: 'claims',
                 align: 'center',
                 cellsalign: 'right',
@@ -141,7 +141,7 @@ function createGrid() {
                 }
             },
             {
-                text: 'Balance',
+                text: i18n.lang.common.vld_balance,
                 datafield: 'balance',
                 align: 'center',
                 cellsalign: 'right',
@@ -174,7 +174,7 @@ function createGridDetail() {
         pageable: true,
         editable: true,
             columns: [{
-                text: 'Name and surname',
+                text: i18n.lang.common.vld_nameAndSurname,
                 datafield: 'studentId',
                 displayfield: 'nameStudent',
                 align: 'center',
@@ -183,7 +183,7 @@ function createGridDetail() {
                 editable: false,
             },
             {
-                text: 'Services',
+                text: i18n.lang.common.vld_service,
                 datafield: 'serviceId',
                 displayfield: 'nameService',
                 align: 'center',
@@ -198,7 +198,7 @@ function createGridDetail() {
                 }
             },
             {
-                text: 'Debit',
+                text: i18n.lang.common.vld_debit,
                 datafield: 'debit',
                 align: 'center',
                 cellsalign: 'right',
@@ -207,7 +207,7 @@ function createGridDetail() {
                 cellsformat: 'd2'
             },
             {
-                text: 'Claims',
+                text: i18n.lang.common.vld_claim,
                 datafield: 'claims',
                 align: 'center',
                 cellsalign: 'right',
@@ -220,7 +220,7 @@ function createGridDetail() {
                 }
             },
             {
-                text: 'Balance',
+                text: i18n.lang.common.vld_balance,
                 datafield: 'balance',
                 align: 'center',
                 cellsalign: 'right',

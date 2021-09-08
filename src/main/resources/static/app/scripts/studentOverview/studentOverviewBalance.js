@@ -113,7 +113,7 @@ let fnPopup = {
             source: dataAdapter ,
             columns: [
                 {
-                    text: 'Date',
+                    text: i18n.lang.common.vld_date,
                     datafield: 'date',
                     align: 'center',
                     cellsalign: 'center',
@@ -122,14 +122,14 @@ let fnPopup = {
                 },
 
                 {
-                    text: 'Description of Service',
+                    text: i18n.lang.common.vld_descriptionOfService,
                     datafield: 'description',
                     align: 'center',
                     cellsalign: 'left',
                     width: '30%'
                 },
                 {
-                    text: 'Debit',
+                    text: i18n.lang.common.vld_debit,
                     datafield: 'debit',
                     align: 'center',
                     cellsalign: 'center',
@@ -137,7 +137,7 @@ let fnPopup = {
                     cellsformat: 'c2'
                 },
                 {
-                    text: 'Claim',
+                    text: i18n.lang.common.vld_claim,
                     datafield: 'claims',
                     align: 'center',
                     cellsalign: 'center',
@@ -145,7 +145,7 @@ let fnPopup = {
                     cellsformat: 'c2'
                 },
                 {
-                    text: 'Balance',
+                    text: i18n.lang.common.vld_balance,
                     datafield: 'balance',
                     align: 'center',
                     cellsalign: 'center',
@@ -159,7 +159,7 @@ let fnPopup = {
                     }
                 },
                 {
-                    text: 'Print', datafield: 'print', cellsalign: 'center', width: '5%', exportable: false
+                    text: i18n.lang.common.vld_print, datafield: 'print', cellsalign: 'center', width: '5%', exportable: false
                     , cellsrenderer: function (row, rowIndex, column, value) {
 
                         if (column === 'false') {

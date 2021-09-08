@@ -38,23 +38,23 @@ let fnOverview = {
             pageable: true,
             columns: [
                 {
-                    text: 'No.', datafield: '', align: 'center', cellsalign: 'center', width: '5%'
+                    text: i18n.lang.common.vld_no, datafield: '', align: 'center', cellsalign: 'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
                         return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">' +
                             +(rowIndex + 1)
                             + '</div>';
                     }
                 },
-                {text: 'Grade/Class', datafield: 'gradeClass', align: 'center', cellsalign: 'center', width: '10%,'},
-                {text: 'Head Teacher', datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
-                {text: 'Services', datafield: 'serviceListString', align: 'center', cellsalign: 'center', width: '15%,'},
-                {text: 'Dedit', datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
-                {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2',
+                {text: i18n.lang.common.vld_gradeClass, datafield: 'gradeClass', align: 'center', cellsalign: 'center', width: '10%,'},
+                {text: i18n.lang.common.vld_headTeacher, datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
+                {text: i18n.lang.common.vld_service, datafield: 'serviceListString', align: 'center', cellsalign: 'center', width: '15%,'},
+                {text: i18n.lang.common.vld_debit, datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
+                {text: i18n.lang.common.vld_claim, datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2',
                     cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
                         let formatValue = SS.format.formatNumberByLocales(!value ? 0 : value);
                         return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
                     }},
-                {text: 'Balance', datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
+                {text: i18n.lang.common.vld_balance, datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
                 		let formatValue = SS.format.formatNumberByLocales(value);
                         if (value && value > 0) {
                             return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
@@ -223,23 +223,23 @@ let fnDetail = {
             pageable: true,
             columns: [
                 {
-                    text: 'No.', datafield: '', align: 'center', cellsalign: 'center', width: '5%'
+                    text: i18n.lang.common.vld_no, datafield: '', align: 'center', cellsalign: 'center', width: '5%'
                     , cellsrenderer: function (rowIndex, column, value, defaultHtml) {
                         return '<div class="jqx-grid-cell-middle-align" style="margin-top: 9px;">' +
                             +(rowIndex + 1)
                             + '</div>';
                     }
                 },
-                {text: 'Grade/Class', datafield: 'gradeClass', align: 'center', cellsalign: 'center', width: '10%,'},
-                {text: 'Head Teacher', datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
-                {text: 'Services', datafield: 'nameService', align: 'center', cellsalign: 'center', width: '15%,'},
-                {text: 'Dedit', datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
-                {text: 'Claim', datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2',
+                {text: i18n.lang.common.vld_gradeClass, datafield: 'gradeClass', align: 'center', cellsalign: 'center', width: '10%,'},
+                {text: i18n.lang.common.vld_headTeacher, datafield: 'headTeacherName', align: 'center', cellsalign: 'left', width: '25%,'},
+                {text: i18n.lang.common.vld_service, datafield: 'nameService', align: 'center', cellsalign: 'center', width: '15%,'},
+                {text: i18n.lang.common.vld_debit, datafield: 'debit', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2'},
+                {text: i18n.lang.common.vld_claim, datafield: 'claims', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2',
                     cellsrenderer: function(row, columnfield, value, defaulthtml, columnproperties) {
                         let formatValue = SS.format.formatNumberByLocales(!value ? 0 : value);
                         return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
                     }},
-                {text: 'Balance', datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
+                {text: i18n.lang.common.vld_balance, datafield: 'balance', align: 'center', cellsalign: 'center', width: '15%,', cellsformat: 'd2', cellsrenderer: function (row, columnfield, value, defaulthtml, columnproperties){
                         let formatValue = SS.format.formatNumberByLocales(value);
                         if (value && value > 0) {
                             return '<div style="padding: 4px; padding-top: 9.5px; width: 100%; height: 100%; text-align: ' + columnproperties.cellsalign + '; ">' + formatValue + '</div>';
