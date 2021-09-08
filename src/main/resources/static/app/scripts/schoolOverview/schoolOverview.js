@@ -123,7 +123,7 @@ let fnOverview = {
         let serviceListString = '';
         if (checkedAllServices) {
             serviceListId = [...originalServiceIdList];
-            serviceListString = 'All';
+            serviceListString = i18n.lang.common.all;
         } else {
             serviceListId = $("#cmbServiceSrch").jqxComboBox('getCheckedItems').map(i=>i.value);
             $("#cmbServiceSrch").jqxComboBox('getCheckedItems').forEach(i => {
@@ -397,7 +397,7 @@ $(document).ready(function() {
             var value = item.value;
             var label = item.label;
             var checked = item.checked;
-            if (label === 'All') {
+            if (label === i18n.lang.common.all) {
                 let allItems = $("#cmbServiceSrch").jqxComboBox('getItems');
                 if (checked) {
                     for (let i=1; i<allItems.length; i++) {

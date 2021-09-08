@@ -66,8 +66,8 @@ let fn = {
 
         // Search
         $("#iptStdNmSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.plh_enterSearch });
-        $("#cmbStdGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_gradeAll(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
-        $("#cmbStdClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_clazzAll(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbStdGradeSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.grade('All'), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbStdClazzSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.clazz('All'), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
 
         // Popup Student
         $("#popupStudent").jqxWindow({
@@ -90,8 +90,8 @@ let fn = {
 
     onSearch: function () {
         let stdNm = $('#iptStdNmSrch').val();
-        let stdGrade = $('#cmbStdGradeSrch').val() != 'All' ? $('#cmbStdGradeSrch').val() : '';
-        let stdClazz = $('#cmbStdClazzSrch').val() != 'All' ? $('#cmbStdClazzSrch').val() : '';
+        let stdGrade = $('#cmbStdGradeSrch').val();
+        let stdClazz = $('#cmbStdClazzSrch').val();
         if (stdNm) {
             stdNm = stdNm.trim();
         }

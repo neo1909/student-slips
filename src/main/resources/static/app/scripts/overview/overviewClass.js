@@ -68,7 +68,7 @@ function init() {
     	let src = [];
 		if (data && data.lst) src = [...data.lst];
 		originalServiceIdList = data.lst.map(i => i.id);
-		src.unshift({id: "", name: "All"});
+		src.unshift({id: "", name: i18n.lang.common.all});
 		$("#cmbSrchService").jqxComboBox({ source: src, displayMember: "name", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});
 	});
     
@@ -301,7 +301,7 @@ function onSearch() {
 	let serviceListString = '';
 	if (checkedAllServices) {
 		serviceListId = [...originalServiceIdList];
-		serviceListString = 'All';
+		serviceListString = i18n.lang.common.all;
 	} else {
 		serviceListId = $("#cmbSrchService").jqxComboBox('getCheckedItems').map(i=>i.value);
 		$("#cmbSrchService").jqxComboBox('getCheckedItems').forEach(i => {			
@@ -459,7 +459,7 @@ $(document).ready(function () {
 		    var value = item.value;
 		    var label = item.label;
 		    var checked = item.checked;
-		    if (label === 'All') {
+		    if (label === i18n.lang.common.all) {
 		    	let allItems = $("#cmbSrchService").jqxComboBox('getItems');
 		    	if (checked) {
 			    	for (let i=1; i<allItems.length; i++) {
