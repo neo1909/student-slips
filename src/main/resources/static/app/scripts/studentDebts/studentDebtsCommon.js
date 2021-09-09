@@ -199,7 +199,8 @@ function init() {
     $("#iptDateSrch").jqxDateTimeInput({
         height: SS.IPT_HEIGHT,
         width: '100%',
-        disabled: true
+        disabled: true,
+        culture: SSUtils.getCurrentLocale()
     });
     $("#iptPriceSrch").jqxInput({
         height: SS.IPT_HEIGHT,

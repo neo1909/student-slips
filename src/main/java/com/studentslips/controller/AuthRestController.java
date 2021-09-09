@@ -1,13 +1,8 @@
 package com.studentslips.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -17,12 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.LocaleResolver;
 
 import com.studentslips.common.Common;
-import com.studentslips.common.SessionUtil;
 import com.studentslips.common.i18nUtil;
 import com.studentslips.entities.AuthRegister;
 import com.studentslips.entities.User;
@@ -41,13 +33,14 @@ public class AuthRestController {
 	private AuthenticationService authService;
 	
 	@RequestMapping(value = "/A_R_01", method = RequestMethod.POST)
-    public Map<String, ?> authRegister(@RequestBody AuthRegister authRegister){
+    public Map<String, ?> authRegister(@RequestBody AuthRegister authRegister, HttpSession session){
         Map<String, Object> result = new HashMap<>();
+        String lang = session.getAttribute("lang") != null ? (String) session.getAttribute("lang") : "sr";
         
         try {
         	userService.register(authRegister);
             result.put(Common.STATUS, HttpStatus.OK.value());
-            result.put(Common.MESSAGE, i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.REGISTER_OK));
+            result.put(Common.MESSAGE, i18nUtil.getMessage(lang, Common.Message.REGISTER_OK));
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
             result.put(Common.MESSAGE, ex.getMessage());
@@ -57,21 +50,22 @@ public class AuthRestController {
     }
 	
 	@RequestMapping(value = "/A_R_02", method = RequestMethod.POST)
-    public Map<String, ?> resetPassword(@RequestBody User user){
+    public Map<String, ?> resetPassword(@RequestBody User user, HttpSession session){
         Map<String, Object> result = new HashMap<>();
+        String lang = session.getAttribute("lang") != null ? (String) session.getAttribute("lang") : "sr";
         
         try {
         	if (authService.checkPassword(user) == 0) {
                 result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-                result.put(Common.MESSAGE, i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.INCORRECT_EMAIL));
+                result.put(Common.MESSAGE, i18nUtil.getMessage(lang, Common.Message.INCORRECT_EMAIL));
         	} else {
             	int cnt = authService.resetPassword(user);
             	if (cnt > 0) {        		
             		result.put(Common.STATUS, HttpStatus.OK.value());
-                    result.put(Common.MESSAGE, i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.RESET_PWD_OK));
+                    result.put(Common.MESSAGE, i18nUtil.getMessage(lang, Common.Message.RESET_PWD_OK));
             	} else {
                     result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
-                    result.put(Common.MESSAGE, i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.RESET_PWD_NG));
+                    result.put(Common.MESSAGE, i18nUtil.getMessage(lang, Common.Message.RESET_PWD_NG));
             	}
         	}
         } catch (Exception ex) {

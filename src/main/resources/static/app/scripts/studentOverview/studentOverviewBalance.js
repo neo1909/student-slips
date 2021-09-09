@@ -134,7 +134,7 @@ let fnPopup = {
                     align: 'center',
                     cellsalign: 'center',
                     width: '15%',
-                    cellsformat: 'c2'
+                    cellsformat: 'd2'
                 },
                 {
                     text: i18n.lang.common.vld_claim,
@@ -142,7 +142,7 @@ let fnPopup = {
                     align: 'center',
                     cellsalign: 'center',
                     width: '15%',
-                    cellsformat: 'c2'
+                    cellsformat: 'd2'
                 },
                 {
                     text: i18n.lang.common.vld_balance,
@@ -150,7 +150,7 @@ let fnPopup = {
                     align: 'center',
                     cellsalign: 'center',
                     width: '15%',
-                    cellsformat: 'c2',
+                    cellsformat: 'd2',
                     cellclassname: function (row, columnfield, value) {
                         let convertedValue = parseFloat(value);
                         if (convertedValue < 0) {
@@ -177,13 +177,16 @@ let fnPopup = {
             autoheight: true,
             rowsheight: 33
         });
+        
+
     }
+        $('.grdStudentBalance').jqxGrid('localizestrings', SS.grid.localization);
         // Search
         $("#iptStdNmOverviewSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...', disabled: true  });
         $("#cmbStdGradeOverviewSSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_gradeEmpty(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right', disabled: true  });
         $("#cmbStdClassOverviewSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_clazzEmpty(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right', disabled: true  });
-        $("#iptFromDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy"});
-        $("#iptToDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy"});
+        $("#iptFromDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy", culture: SSUtils.getCurrentLocale()});
+        $("#iptToDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy", culture: SSUtils.getCurrentLocale()});
 
         $('#btnStudentBalanceSearch').click(function () {
 
@@ -502,7 +505,7 @@ function onPrint() {
             '<html>\n' +
             '<head>\n' +
             '<meta charset="utf-8" />\n' +
-            '<title>Student Overview Balance</title>\n' +
+            '<title></title>\n' +
             '<h4>'+ $('#iptStdNmOverviewSrch').val() +'</h4>' +
             '</head>\n' +
             '<body>\n';
@@ -520,9 +523,9 @@ function onPrint() {
             }
         }
         pageContent +=
-           '<div style="margin-right: 1rem">Debit:' + $('#grdStudentBalance-debit').html() + '</div>' +
-            '<div style="margin-right: 1rem">Claims:' + $('#grdStudentBalance-claims').html() + '</div>' +
-            '<div style="margin-right: 1rem">Balance:' + $('#grdStudentBalance-balance').html() + '</div>' +
+           '<div style="margin-right: 1rem">' + i18n.lang.common.vld_debit + ': ' + $('#grdStudentBalance-debit').html() + '</div>' +
+            '<div style="margin-right: 1rem">' + i18n.lang.common.vld_claim + ': ' + $('#grdStudentBalance-claims').html() + '</div>' +
+            '<div style="margin-right: 1rem">' + i18n.lang.common.vld_balance + ': ' + $('#grdStudentBalance-balance').html() + '</div>' +
             '\n</body>\n</html>';
     document.write(pageContent);
     document.close();
@@ -536,13 +539,6 @@ $(document).ready(function() {
     $('#grdStudentBalance4').hide();
     $('#grdStudentBalance5').hide();
 //    fnPopup.onSearch(fromDate, toDate);
-
-
-    $('#grdStudentBalance1').jqxGrid('localizestrings', SS.grid.localization);
-    $('#grdStudentBalance2').jqxGrid('localizestrings', SS.grid.localization);
-    $('#grdStudentBalance3').jqxGrid('localizestrings', SS.grid.localization);
-    $('#grdStudentBalance4').jqxGrid('localizestrings', SS.grid.localization);
-    $('#grdStudentBalance5').jqxGrid('localizestrings', SS.grid.localization);
 
 
     $('#btnPrint').click(function () {

@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-2">
-                                    <label >Class</label>
+                                    <label th:text="#{lang.class}">Class</label>
                                     <div >
                                         <div id="cmbStdClazzSrch" style="padding-left: 12px;"></div>
                                     </div>
@@ -138,19 +138,19 @@
                 <div class="div-grid" id="print-grids">
                     <div class="ss-grid">
                         <h4 id="serviceLabel1" class="text-red"></h4>
-                        <div id="grdStudentBalance1"></div>
+                        <div id="grdStudentBalance1" class="grdStudentBalance"></div>
                         <br><br>
                         <h4 id="serviceLabel2" class="text-red"></h4>
-                        <div id="grdStudentBalance2"></div>
+                        <div id="grdStudentBalance2" class="grdStudentBalance"></div>
                         <br><br>
                         <h4 id="serviceLabel3" class="text-red"></h4>
-                        <div id="grdStudentBalance3"></div>
+                        <div id="grdStudentBalance3" class="grdStudentBalance"></div>
                         <br><br>
                         <h4 id="serviceLabel4" class="text-red"></h4>
-                        <div id="grdStudentBalance4"></div>
+                        <div id="grdStudentBalance4" class="grdStudentBalance"></div>
                         <br><br>
                         <h4 id="serviceLabel5" class="text-red"></h4>
-                        <div id="grdStudentBalance5"></div>
+                        <div id="grdStudentBalance5" class="grdStudentBalance"></div>
                     </div>
                 </div>
                 <div class="d-flex align-items-center" id="grdStudentBalance-total">
@@ -158,7 +158,7 @@
                     <div class="d-flex align-items-center">
                         <div class="mr-2"><span th:text="#{lang.debit}">Debit</span>: <span id="grdStudentBalance-debit"></span></div>
                         <div class="mr-2"><span th:text="#{lang.claim}">Claims</span>: <span id="grdStudentBalance-claims"></span></div>
-                        <div><span th:text="#{lang.claim}">Balance</span>: <span id="grdStudentBalance-balance"></span></div>
+                        <div><span th:text="#{lang.balance}">Balance</span>: <span id="grdStudentBalance-balance"></span></div>
                     </div>
                 </div>
                 <div style="margin-top: 15px;">

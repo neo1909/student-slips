@@ -197,12 +197,14 @@ function init() {
     $("#iptFromDate").jqxDateTimeInput({
         height: SS.IPT_HEIGHT,
         width: '100%',
-        formatString: "dd/MM/yyyy"
+        formatString: "dd/MM/yyyy",
+        culture: SSUtils.getCurrentLocale()
     });
     $("#iptToDate").jqxDateTimeInput({
         height: SS.IPT_HEIGHT,
         width: '100%',
-        formatString: "dd/MM/yyyy"
+        formatString: "dd/MM/yyyy",
+        culture: SSUtils.getCurrentLocale()
     });
     $("#bankpopup").jqxWindow({
         isModal: true,
@@ -210,7 +212,7 @@ function init() {
         height: 450,
         width: 900,
         theme: 'bootstrap',
-        title: 'Bank Statement',
+        title: i18n.lang.archive.bankstatement.title_popup,
         position: 'center',
         resizable: false
     });
@@ -353,6 +355,7 @@ function ceateGridBank() {
         height: 300,
         rowsheight: 20
     });
+    $("#grdBankDetail").jqxGrid('localizestrings', SS.grid.localization);
 }
 
 function onSearch() {

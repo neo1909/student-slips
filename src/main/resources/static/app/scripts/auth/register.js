@@ -71,12 +71,10 @@ let fn = {
 				email: $("#iptRegEmail").val(),
 				fullName: $("#iptRegFullName").val()
 			}, function(res) {
-				if (res.status == 'OK') {
+				if (res.status == 200) {
 					SS.confirm("Success", res.msg, function(result) {
-						if (result) {
-							_this.goToLogin();
-							return;
-						}
+						_this.goToLogin();
+						return;
 					});
 				} else {					
 					$("#iptRegPassword").val("");

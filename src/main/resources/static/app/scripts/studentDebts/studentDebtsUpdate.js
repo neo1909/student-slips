@@ -3,7 +3,7 @@ let screenType = "U";
 function initUpdate() {
 	taskId = $("#iptTaskId").val() > 0 ? $("#iptTaskId").val() : 0;
 	
-	$("#screen-title").html("Student Debts: Update task ID = " + taskId);
+	$("#screen-title").html(`${i18n.lang.posting.studentdebts.screen_titleUpdate} ID = ${taskId}`);
 	onSearchUpdate();
 
 	$("#btnCancelUpdate").show();
@@ -24,9 +24,9 @@ function initUpdate() {
         	        selectedIndex: 0
         	    });
         		
-        		let src = [{name: `1st ${i18n.lang.posting.installment}`, value: '1'}, {name: `2nd ${i18n.lang.posting.installment}`, value: '2'}, {name: `3rd ${i18n.lang.posting.installment}`, value: '3'}];
+        		let src = [{name: `${i18n.lang.posting.installment} 1`, value: '1'}, {name: `${i18n.lang.posting.installment} 2`, value: '2'}, {name: `${i18n.lang.posting.installment} 3`, value: '3'}];
         		for (let i = 4, len = 12; i <= len; i++) {
-        			src.push({name: `${i}th ${i18n.lang.posting.installment}`, value: `${i}`});
+        			src.push({name: `${i18n.lang.posting.installment} ${i}`, value: `${i}`});
         		}
         		let idx = src.findIndex(i => i.value.includes(`${updateTaskOriginalData.installment}`));
         		$("#cmbStdInstSrch").jqxDropDownList({
@@ -92,7 +92,7 @@ $(document).ready(function () {
 
     $('#btnSave').on('click', function () {
         if ((!tr_update || tr_update.length === 0) && !isUpdateNote) {
-            SS.alert('Notification', i18n.lang.common.msg_noDataUpdate)
+            SS.alert(i18n.lang.common.notification, i18n.lang.common.msg_noDataUpdate)
             return;
         }
         let params = {
@@ -111,7 +111,7 @@ $(document).ready(function () {
             	}
                 isUpdateNote = false;
                 tr_update = [];
-                SS.alert('Notification', i18n.lang.posting.studentdebts.msg_saved);
+                SS.alert(i18n.lang.common.notification, i18n.lang.posting.studentdebts.msg_saved);
             }
         );
     });

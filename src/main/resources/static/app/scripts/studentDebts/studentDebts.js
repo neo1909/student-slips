@@ -24,7 +24,7 @@ function onSearch() {
         price: $("#iptPriceSrch").val(),
     };
     if(!params.serviceId) {
-        SS.alert('Notification', i18n.lang.common.msg_selectService)
+        SS.alert(i18n.lang.common.notification, i18n.lang.common.msg_selectService)
         return;
     }
     SS.sendToServer(
@@ -94,14 +94,14 @@ function onGetInstallments(gradeId, serviceId) {
             if (data && data.obj) {
             	let src = [];
             	if (data.obj.noPayment <= 1) {            		
-            		src = [{name: `1st ${i18n.lang.posting.installment}`, value: `1-${data.obj.price}`}] 
+            		src = [{name: `${i18n.lang.posting.installment} 1`, value: `1-${data.obj.price}`}] 
             	} else {
-            		src = [{name: `1st ${i18n.lang.posting.installment}`, value: `1-${data.obj.amount1}`}];
-                	if (data.obj.noPayment > 1) src.push({name: `2nd ${i18n.lang.posting.installment}`, value: `2-${data.obj.amount2}`});
-                	if (data.obj.noPayment > 2) src.push({name: `3rd ${i18n.lang.posting.installment}`, value: `3-${data.obj.amount3}`});
+            		src = [{name: `${i18n.lang.posting.installment} 1`, value: `1-${data.obj.amount1}`}];
+                	if (data.obj.noPayment > 1) src.push({name: `${i18n.lang.posting.installment} 2`, value: `2-${data.obj.amount2}`});
+                	if (data.obj.noPayment > 2) src.push({name: `${i18n.lang.posting.installment} 3`, value: `3-${data.obj.amount3}`});
                 	if (data.obj.noPayment > 3) {            		
                 		for (let i = 4, len = data.obj.noPayment; i <= len; i++) {
-                			src.push({name: `${i}th ${i18n.lang.posting.installment}`, value: `${i}-${data.obj['amount'+i]}`});
+                			src.push({name: `${i18n.lang.posting.installment} ${i}`, value: `${i}-${data.obj['amount'+i]}`});
                 		}
                 	}
             	}
@@ -170,7 +170,7 @@ $(document).ready(function () {
 
     $('#btnSave').on('click', function () {
 	    if (!tr_update || tr_update.length === 0) {
-	        SS.alert('Notification', i18n.lang.common.msg_noDataUpdate)
+	        SS.alert(i18n.lang.common.notification, i18n.lang.common.msg_noDataUpdate)
 	        return;
 	    }
 	    
@@ -197,7 +197,7 @@ $(document).ready(function () {
 	            isUpdateNote = false;
 	            tr_update = [];
 	            $('#btnPrint').prop("disabled", false);
-	            SS.alert('Notification', i18n.lang.posting.studentdebts.msg_saved);
+	            SS.alert(i18n.lang.common.notification, i18n.lang.posting.studentdebts.msg_saved);
 	        }
 	    );
     });

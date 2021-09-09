@@ -72,7 +72,7 @@ let fn = {
             height: 350,
             width: 700,
             theme: 'bootstrap',
-            title: 'Service detail',
+            title: i18n.lang.dataentry.service.title_popup,
             position: 'center',
             resizable: false
         });

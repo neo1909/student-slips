@@ -3,6 +3,7 @@ var lang = {
 		msg_delConfirm: 'Do you want to delete ?',
 		msg_selectService: 'Please select service',
 		msg_noDataUpdate: 'No data update',
+		notification: 'Notification',
 		vld_req_service: 'Service is required',
 		vld_req_grade: 'Grade is required',
 		vld_req_supplier: 'Supplier is required',
@@ -15,6 +16,8 @@ var lang = {
 		actions: 'Actions',
 		name: 'Name',
 		all: 'All',
+		inTotal: 'In Total',
+		inDetail: 'In Detail',
 		
 		vld_date: 'Date',
 		vld_noOfBankstatement: 'No of Bank Statement',
@@ -79,6 +82,7 @@ var lang = {
 			vld_req_bankNo: 'Bank account number is required',
 			vld_inv_bankNo: 'Bank account number is invalid',
 			title_createSchool : 'Create School',
+			title_updateSchool : 'Update School',
 			schoolName: 'School Name',
 			address: 'Address',
 			city: 'City',
@@ -87,10 +91,13 @@ var lang = {
 		},
 		supplier: {
 			supplierName: 'Supplier Name',
+			title_popup: 'Supplier Detail',
+			title_createSupplier: 'Create Supplier',
 		},
 		service: {
 			serviceName: 'Service Name',
 			supplierName: 'Supplier Name',
+			title_popup: 'Service Detail',
 		},
 		supplierservice: {
 			vld_zero_price: 'Price must be equals or greater than 0',
@@ -112,14 +119,23 @@ var lang = {
 			quantity: 'Quantity',
 			price: 'Price',
 			amountDebit: 'Amount of Debit',
+			screen_titleUpdate: 'Student Debts: Update',
+		},
+		payment: {
+			choosefiles: 'Choose File',
+			nofilechoosen: 'No file choosen',
 		}
 	},
 	overview : {
 		title_overviewStudentPopup: 'Student Balance Overview',
+		clazz: {
+			title_print: 'Overview Class'
+		}
 	},
 	archive: {
 		bankstatement: {
 			msg_confirmSaveAndPost: 'Do you want to Save and Post payment?',
+			title_popup: 'Bank Statement',
 		}
 	}
 }

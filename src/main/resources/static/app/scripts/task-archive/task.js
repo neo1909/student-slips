@@ -127,12 +127,14 @@ function init() {
     $("#iptFromDate").jqxDateTimeInput({
         height: SS.IPT_HEIGHT,
         width: '100%',
-        formatString: "dd/MM/yyyy"
+        formatString: "dd/MM/yyyy",
+        culture: SSUtils.getCurrentLocale()
     });
     $("#iptToDate").jqxDateTimeInput({
         height: SS.IPT_HEIGHT,
         width: '100%',
-        formatString: "dd/MM/yyyy"
+        formatString: "dd/MM/yyyy",
+        culture: SSUtils.getCurrentLocale()
     });
 }
 
