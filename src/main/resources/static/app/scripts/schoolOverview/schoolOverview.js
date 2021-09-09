@@ -92,8 +92,8 @@ let fnOverview = {
         });
        // $("#cmbStdClazzSrch").jqxDropDownList({enableBrowserBoundsDetection: true, source: SS.clazzEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
         $("#cmbServiceSrch").jqxDropDownList({enableBrowserBoundsDetection: true, source: fnCommon.commonService, displayMember: "name", valueMember: "id", selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
-        $("#iptFromDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy"});
-        $("#iptToDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy"});
+        $("#iptFromDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy", culture: SSUtils.getCurrentLocale()});
+        $("#iptToDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy", culture: SSUtils.getCurrentLocale()});
 
         $("#grdSchoolOverview").on('rowselect', function (event) {
             rowindex = event.args.rowindex;
@@ -354,15 +354,15 @@ function onPrint() {
             '<html>\n' +
             '<head>\n' +
             '<meta charset="utf-8" />\n' +
-            '<title>School Overview Balance</title>\n' +
+            '<title></title>\n' +
             '</head>\n' +
             '<body>\n' +
-            '<div>In Total</div>' +
+            '<div>' + i18n.lang.common.vld_inTotal +'</div>' +
             '<div>\n' + gridContent + '\n</div>' +
             $('#grdMaster-total').html() +
             '<br/>\n' +
             '<br/>\n' +
-            '<div>In Detail</div>' +
+            '<div>' + i18n.lang.common.vld_inDetail + '</div>' +
             '<div>\n' + gridDetailContent + '\n</div>' +
             $('#grdDetail-total').html() +
             '\n</body>\n</html>';

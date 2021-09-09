@@ -1,6 +1,8 @@
 package com.studentslips.services.impl;
 
 import com.studentslips.common.Common;
+import com.studentslips.common.SessionUtil;
+import com.studentslips.common.i18nUtil;
 import com.studentslips.dao.BankStatementDao;
 import com.studentslips.dao.StudentOverviewBalanceDao;
 import com.studentslips.entities.*;
@@ -9,6 +11,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import com.studentslips.common.i18nUtil;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -111,7 +114,7 @@ public class StudentOverviewServiceImpl implements StudentOverviewService {
             }
             StudentOverviewBalanceDTO totalObj = new StudentOverviewBalanceDTO();
             totalObj.setDate(null);
-            totalObj.setDescription("TOTAL");
+            totalObj.setDescription(i18nUtil.getMessage(SessionUtil.getLang(), "lang.total"));
             totalObj.setDebit(totalDebit);
             totalObj.setPrint(false);
             totalObj.setClaims(totalClaims);
