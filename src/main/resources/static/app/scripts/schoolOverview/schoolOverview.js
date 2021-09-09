@@ -357,12 +357,12 @@ function onPrint() {
             '<title></title>\n' +
             '</head>\n' +
             '<body>\n' +
-            '<div>' + i18n.lang.common.vld_inTotal +'</div>' +
+            '<div>' + i18n.lang.common.inTotal +'</div>' +
             '<div>\n' + gridContent + '\n</div>' +
             $('#grdMaster-total').html() +
             '<br/>\n' +
             '<br/>\n' +
-            '<div>' + i18n.lang.common.vld_inDetail + '</div>' +
+            '<div>' + i18n.lang.common.inDetail + '</div>' +
             '<div>\n' + gridDetailContent + '\n</div>' +
             $('#grdDetail-total').html() +
             '\n</body>\n</html>';
