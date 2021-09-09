@@ -46,7 +46,9 @@
                     <form id="formUpload" method="POST" enctype="multipart/form-data" action="/api/PP_R_01">
                         <div class="form-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFile" name="files" multiple accept="text/xml">
+                                <label for="customFile" class="btn btn-primary" th:text="#{lang.posting.postingpayment.choosefiles}"></label>
+                                <input type="file" class="custom-file-input" id="customFile" name="files" multiple accept="text/xml" onchange="pressed()" style="display:none;">
+                                <span id="fileLabel" th:text="#{lang.posting.postingpayment.nofilechoosen}"></span>
                             </div>
                         </div>
                     </form>
@@ -80,6 +82,19 @@
 
 <script type="text/javascript" src="/app/scripts/common.js"></script>
 <script type="text/javascript" src="/app/scripts/posting/postingPayment.js"></script>
-
+<script>
+    window.pressed = function(){
+        var a = document.getElementById('customFile');
+        if(a.value == "")
+        {
+            fileLabel.innerHTML = i18n.lang.posting.payment.choosefiles;
+        }
+        else
+        {
+            var theSplit = a.value.split('\\');
+            fileLabel.innerHTML = theSplit[theSplit.length-1];
+        }
+    };
+</script>
 </body>
 </html>

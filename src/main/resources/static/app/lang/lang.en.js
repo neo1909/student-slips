@@ -120,6 +120,10 @@ var lang = {
 			price: 'Price',
 			amountDebit: 'Amount of Debit',
 			screen_titleUpdate: 'Student Debts: Update',
+		},
+		payment: {
+			choosefiles: 'Choose File',
+			nofilechoosen: 'No file choosen',
 		}
 	},
 	overview : {

@@ -120,6 +120,10 @@ var lang = {
 			price: 'Cena',
 			amountDebit: 'Iznos zaduženja',
 			screen_titleUpdate: 'Zaduživanje studenata: Izmena naloga',
+		},
+		payment: {
+			choosefiles: 'Izaberite fajl',
+			nofilechoosen: 'Fajl nije izabran',
 		}
 	},
 	overview : {
