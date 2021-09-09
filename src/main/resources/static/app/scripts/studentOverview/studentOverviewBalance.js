@@ -134,7 +134,7 @@ let fnPopup = {
                     align: 'center',
                     cellsalign: 'center',
                     width: '15%',
-                    cellsformat: 'c2'
+                    cellsformat: 'd2'
                 },
                 {
                     text: i18n.lang.common.vld_claim,
@@ -142,7 +142,7 @@ let fnPopup = {
                     align: 'center',
                     cellsalign: 'center',
                     width: '15%',
-                    cellsformat: 'c2'
+                    cellsformat: 'd2'
                 },
                 {
                     text: i18n.lang.common.vld_balance,
@@ -150,7 +150,7 @@ let fnPopup = {
                     align: 'center',
                     cellsalign: 'center',
                     width: '15%',
-                    cellsformat: 'c2',
+                    cellsformat: 'd2',
                     cellclassname: function (row, columnfield, value) {
                         let convertedValue = parseFloat(value);
                         if (convertedValue < 0) {
@@ -177,8 +177,10 @@ let fnPopup = {
             autoheight: true,
             rowsheight: 33
         });
+        
 
     }
+        $('.grdStudentBalance').jqxGrid('localizestrings', SS.grid.localization);
         // Search
         $("#iptStdNmOverviewSrch").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...', disabled: true  });
         $("#cmbStdGradeOverviewSSrch").jqxDropDownList({ enableBrowserBoundsDetection: true, source: SS.dataSource.arr_gradeEmpty(), selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right', disabled: true  });
@@ -537,13 +539,6 @@ $(document).ready(function() {
     $('#grdStudentBalance4').hide();
     $('#grdStudentBalance5').hide();
 //    fnPopup.onSearch(fromDate, toDate);
-
-
-    $('#grdStudentBalance1').jqxGrid('localizestrings', SS.grid.localization);
-    $('#grdStudentBalance2').jqxGrid('localizestrings', SS.grid.localization);
-    $('#grdStudentBalance3').jqxGrid('localizestrings', SS.grid.localization);
-    $('#grdStudentBalance4').jqxGrid('localizestrings', SS.grid.localization);
-    $('#grdStudentBalance5').jqxGrid('localizestrings', SS.grid.localization);
 
 
     $('#btnPrint').click(function () {

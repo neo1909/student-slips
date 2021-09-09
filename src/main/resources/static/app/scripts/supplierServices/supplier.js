@@ -71,7 +71,7 @@ let fn = {
             height: 250,
             width: 700,
             theme: 'bootstrap',
-            title: 'Supplier detail',
+            title: i18n.lang.dataentry.supplier.title_popup,
             position: 'center',
             resizable: false
         });

@@ -56,12 +56,14 @@ function init() {
     $("#iptSrchFromDate").jqxDateTimeInput({
         height: SS.IPT_HEIGHT,
         width: '100%',
-        formatString: "dd/MM/yyyy"
+        formatString: "dd/MM/yyyy",
+        culture: SSUtils.getCurrentLocale()
     });
     $("#iptSrchToDate").jqxDateTimeInput({
         height: SS.IPT_HEIGHT,
         width: '100%',
-        formatString: "dd/MM/yyyy"
+        formatString: "dd/MM/yyyy",
+        culture: SSUtils.getCurrentLocale()
     });
     
     SS.sendToServer('SV_R_01', false, {}, function onSuccess(data) {
@@ -390,15 +392,15 @@ function onPrint() {
         '<html>\n' +
         '<head>\n' +
         '<meta charset="utf-8" />\n' +
-        '<title>Overview / Class</title>\n' +
+        '<title>' + i18n.lang.overview.clazz.title_print + '</title>\n' +
         '</head>\n' +
         '<body>\n' +
-        '<div>In Total</div>' +
+        '<div>' + i18n.lang.common.inTotal + '</div>' +
         '<div>\n' + gridContent + '\n</div>' +
         $('#grdMaster-total').html() +
         '<br/>\n' +
         '<br/>\n' +
-        '<div>In Detail</div>' +
+        '<div>' + i18n.lang.common.inDetail + '</div>' +
         '<div>\n' + gridDetailContent + '\n</div>' +
         $('#grdDetail-total').html() +
         '<br/>\n' +

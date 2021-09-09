@@ -69,7 +69,7 @@ let fn = {
         $("#grdSchool").jqxGrid('localizestrings', SS.grid.localization);
 
         // Search
-        $("#iptStdNmSrch").jqxInput({height: SS.IPT_HEIGHT, width: '100%', placeHolder: 'Enter search...'});
+        $("#iptStdNmSrch").jqxInput({height: SS.IPT_HEIGHT, width: '100%', placeHolder: i18n.lang.common.plh_enterSearch});
 
         // Popup Student
         $("#popupSchool").jqxWindow({
@@ -78,7 +78,7 @@ let fn = {
             height: 330,
             width: 700,
             theme: 'bootstrap',
-            title: 'Create School',
+            title: i18n.lang.dataentry.school.title_createSchool,
             position: 'center',
             resizable: false
         });
@@ -214,7 +214,7 @@ let fn = {
         let data = $("#grdSchool").jqxGrid('getrowdata', rowIndex);
         let id = data.id;
         if (id != null) {
-        	$("#popupSchool").jqxWindow({title: 'Update School ID = ' + id });
+        	$("#popupSchool").jqxWindow({title: `${i18n.lang.dataentry.school.title_updateSchool} ID = ${id}` });
             $("#popupSchool").jqxWindow('open', fn.popup.open(id));
         }
     },

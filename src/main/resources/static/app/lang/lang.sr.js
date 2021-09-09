@@ -3,18 +3,21 @@ var lang = {
 		msg_delConfirm: 'Da li želite da obrišete?',
 		msg_selectService: 'Molim vas odaberite uslugu',
 		msg_noDataUpdate: 'Nema novih promena',
+		notification: 'Obaveštenje',
 		vld_req_service: 'Usluga je neophodan podatak',
 		vld_req_grade: 'Razred je neophodan podatak',
 		vld_req_supplier: 'Dobavljač je neophodan podatak',
 		plh_enterSearch: 'Upišite pojam za pretragu...',
 		plh_enterName: 'Upišite ime i prezime ...',
 		no: 'Br.',
-		school: 'škole',
+		school: 'Škola',
 		grade: 'Razred',
 		clazz: 'Odeljenje',
 		actions: 'Izmena/Brisanje',
 		name: 'Naziv',
 		all: 'Sve',
+		inTotal: 'Zbirno',
+		inDetail: 'Detaljno',
 		
 		vld_date: 'Datum',
 		vld_noOfBankstatement: 'Broj izvoda',
@@ -78,7 +81,8 @@ var lang = {
 			vld_inv_mun: 'Opština nije ispravan',
 			vld_req_bankNo: 'Broj bankovnovnog računa je neophodan podatak',
 			vld_inv_bankNo: 'Broj bankovnovnog računa nije ispravan',
-			title_createSchool : 'Unesite škole',
+			title_createSchool : 'Kreiranje škole',
+			title_updateSchool : 'Unesite školu',
 			schoolName: 'Naziv škole',
 			address: 'Adresa',
 			city: 'Grad',
@@ -87,10 +91,13 @@ var lang = {
 		},
 		supplier: {
 			supplierName: 'Naziv dobavljača',
+			title_popup: 'Podaci o dobavljaču',
+			title_createSupplier: 'Unesite dobavlja\u010Da',
 		},
 		service: {
 			serviceName: 'Naziv usluge',
 			supplierName: 'Naziv dobavljača',
+			title_popup: 'Podaci o usluzi',
 		},
 		supplierservice: {
 			vld_zero_price: 'Cena mora biti pozitivan broj',
@@ -101,25 +108,30 @@ var lang = {
 		}
 	},
 	posting: {
-		installment: 'rata',
+		installment: 'Iznos',
 		studentdebts: {
 			msg_saved: 'Nalog je uspešno sačuvan',
 			plh_enterPaymentPurpose: 'Unesite svrhu uplate ...',
 			msg_saveBeforePrinding: 'Molim vas snimite izmene ili ih obrišite pre štampe',
-			studentName: 'Ime I prezime učenika',
+			studentName: 'Ime i prezime učenika',
 			referenceNo: 'Poziv na broj',
 			serviceName: 'Naziv usluge',
 			quantity: 'Količina',
 			price: 'Cena',
 			amountDebit: 'Iznos zaduženja',
+			screen_titleUpdate: 'Zaduživanje studenata: Izmena naloga',
 		}
 	},
 	overview : {
 		title_overviewStudentPopup: 'Pregled kartice stanja učenika',
+		clazz: {
+			title_print: 'Pregled po odeljenju'
+		}
 	},
 	archive: {
 		bankstatement: {
 			msg_confirmSaveAndPost: 'Da li želite da sačuvate i rasknjižite uplate?',
+			title_popup: 'Stavke izvoda',
 		}
 	}
 }

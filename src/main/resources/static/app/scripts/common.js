@@ -3,6 +3,17 @@
 $.jqx.theme = "bootstrap";
 
 let SSUtils = {
+  getCurrentLang : function() {
+		return localStorage.getItem('lang');
+  },
+  getCurrentLocale : function() {
+		let lang = localStorage.getItem('lang');
+		switch (lang) {
+			case 'en' : return 'en-US';
+			case 'sr' : return 'sr-RS';
+			default: return '';
+		}
+  },
   getI18nValue : function(enVal, srVal, defaultVal) {
 		if (!defaultVal) defaultVal = srVal;
 		let lang = localStorage.getItem('lang');
@@ -21,14 +32,14 @@ let SS = {
 
   // Literal
   title: {
-    CONFIRM: "Confirm",
-    ERROR: "Error",
-    INFO: "Info",
-    WARNING: "Warning",
+    CONFIRM: SSUtils.getI18nValue('Confirm', 'Potvrda'),
+    ERROR: SSUtils.getI18nValue('Error', 'Greška'),
+    INFO: SSUtils.getI18nValue('Info', 'Informacije'),
+    WARNING: SSUtils.getI18nValue('Warning', 'Upozorenje'),
   },
 
   message: {
-    ERROR: "Contact admin!"
+    ERROR: SSUtils.getI18nValue('Please contact the administrators', 'Molimo Vas kontaktirajte podršku'),
   },
 
   dataSource: {
@@ -94,6 +105,15 @@ let SS = {
 		  pagergotopagestring: SSUtils.getI18nValue('Go to page:', 'Idite na stranu:'),
 		  pagershowrowsstring: SSUtils.getI18nValue('Show rows:', 'Broj redova:'),
 		  pagerrangestring: SSUtils.getI18nValue(' of ', ' od '),
+		  days: {
+            names: (SSUtils.getCurrentLang() == 'en') ? ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] : ['Nedelja', 'Ponedeljak', 'Utorak', 'Sreda', 'Četvrtak', 'Petak', 'Subota'],
+            namesAbbr: (SSUtils.getCurrentLang() == 'en') ? ['Sun', 'Mom', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] : ['Ned', 'Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub'],
+            namesShort: (SSUtils.getCurrentLang() == 'en') ? ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'] : ['Ne', 'Po', 'Ut', 'Sr', 'Če', 'Pe', 'Su'], 
+		  },
+		  months: {
+	          names: (SSUtils.getCurrentLang() == 'en') ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', ''] : ['Januar', 'Februar', 'Mart', 'April', 'Maj', 'Jun', 'Jul', 'Avgust', 'Septembar', 'Oktobar', 'Novembar', 'Decembar', ''],
+	          namesAbbr: (SSUtils.getCurrentLang() == 'en') ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', ''] : ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Avg', 'Sep', 'Okt', 'Nov', 'Dec', '']
+		  }
 	  }
   },
   
@@ -146,6 +166,7 @@ let SS = {
   alert: function (title, message) {
     bootbox.alert({
       size: "small",
+      locale: SSUtils.getCurrentLang(),
       title: title,
       message: message,
       callback: function () {}
@@ -155,9 +176,17 @@ let SS = {
   confirm: function (title, message, callback) {
     bootbox.confirm({
       size: "small",
+      locale: SSUtils.getCurrentLang(),
       title: title,
       message: message,
       callback: callback
     });
   },
 };
+
+
+bootbox.addLocale("sr", {
+    OK : 'Da',
+    CANCEL : 'Otkaži',
+    CONFIRM : 'Da',
+});
