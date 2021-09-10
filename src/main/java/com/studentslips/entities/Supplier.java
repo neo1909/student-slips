@@ -15,6 +15,7 @@ public class Supplier {
     private String delYn;
     private List<SupplierServiceDetail> lstSupplierServiceDetail;
     private String schoolName;
+    private int supplierId;
 
     public Supplier() {
     }
@@ -97,5 +98,13 @@ public class Supplier {
 
     public void setLstSupplierServiceS(List<SupplierServiceDetail> lstSupplierServiceDetail) {
         this.lstSupplierServiceDetail = lstSupplierServiceDetail;
+    }
+
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
     }
 }

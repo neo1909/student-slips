@@ -5,7 +5,7 @@
 
     <select id="selectAllSupplier" parameterType="com.studentslips.entities.Supplier"  resultMap="resultSupplier">
         SELECT S.id,S.name,S.school_id, (Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
-        ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn
+        ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn,S.supplier_id
         FROM onetouch.PS_Suppliers S
         where S.del_yn='N'
         <if test="name !=null and name !=''">
@@ -18,13 +18,13 @@
     </select>
     <select id="selectSupplierById" parameterType="int"  resultMap="resultSupplier">
         SELECT S.id,S.name,S.school_id, (Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
-        ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn
+        ,S.insert_date,S.insert_id,S.update_date,S.update_id,S.del_yn,S.supplier_id
         FROM onetouch.PS_Suppliers S
         where S.del_yn='N' and S.id =#{id}
     </select>
     <insert id="insertSupplier" parameterType="com.studentslips.entities.Supplier"  useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO onetouch.PS_Suppliers (NAME, school_id, del_yn, insert_date, insert_id)
-        VALUES (#{name}, #{schoolId}, 'N', SYSDATE(), #{insertId});
+        INSERT INTO onetouch.PS_Suppliers (supplier_id,NAME, school_id, del_yn, insert_date, insert_id)
+        VALUES (#{supplierId},#{name}, #{schoolId}, 'N', SYSDATE(), #{insertId});
     </insert>
     <update id="updateSupplier" parameterType="com.studentslips.entities.Supplier">
         UPDATE onetouch.PS_Suppliers  SET
@@ -50,6 +50,7 @@
         <result property = "insertDate" column = "insert_date"/>
         <result property = "updateId" column = "update_id"/>
         <result property = "updateDate" column = "update_date"/>
+        <result property = "supplierId" column = "supplier_id"/>
     </resultMap>
     
     
@@ -107,8 +108,8 @@
             ps.name as supplier_name,
             ps2.name as service_name
         from PS_Suppliers_Service ssd
-        left join PS_Suppliers ps on ps.id = ssd.supplier_id
-        left join PS_Service ps2 on ps2.id = ssd.service_id
+        left join PS_Suppliers ps on ps.supplier_id = ssd.supplier_id and ps.school_id = ssd.school_id
+        left join PS_Service ps2 on ps2.service_id = ssd.service_id and ps2.school_id = ssd.school_id
         where ssd.del_yn = 'N'
         <if test="schoolId != 0">
 			AND ssd.school_id = #{schoolId}
@@ -130,8 +131,8 @@
 			ps.name as supplier_name,
 			ps2.name as service_name
 		from PS_Suppliers_Service ssd
-		left join PS_Suppliers ps on ps.id = ssd.supplier_id
-		left join PS_Service ps2 on ps2.id = ssd.service_id
+         left join PS_Suppliers ps on ps.supplier_id = ssd.supplier_id and ps.school_id = ssd.school_id
+         left join PS_Service ps2 on ps2.service_id = ssd.service_id and ps2.school_id = ssd.school_id
 		where 1=1
 			and ssd.del_yn = 'N'
 		group by ssd.group_id, ssd.supplier_id, ssd.service_id
@@ -213,8 +214,8 @@
         	where del_yn = 'N'
 			group by group_id
 		) ssd on ssg.id = ssd.group_id
-        left join PS_Suppliers ps1 on ps1.id = ssg.supplier_id
-        left join PS_Service ps2 on ps2.id = ssg.service_id
+        left join PS_Suppliers ps1 on ps1.supplier_id = ssg.supplier_id and ps1.school_id = ssg.school_id
+        left join PS_Service ps2 on ps2.service_id = ssg.service_id and ps2.school_id = ssg.school_id
         where ssg.del_yn = 'N'
         <if test="name != null and name != ''">
             <bind name="nameLike" value="'%' + name + '%'" />
@@ -274,8 +275,8 @@
 			ssg.*, ssd.grade, ps1.name as supplier_name, ps2.name as service_name
 		from PS_Suppliers_Service_Group ssg
         inner join PS_Suppliers_Service ssd on ssg.id = ssd.group_id and ssd.del_yn = 'N'
-        left join PS_Suppliers ps1 on ps1.id = ssg.supplier_id
-        left join PS_Service ps2 on ps2.id = ssg.service_id
+        left join PS_Suppliers ps1 on ps1.supplier_id = ssg.supplier_id and ps1.school_id = ssg.school_id
+        left join PS_Service ps2 on ps2.service_id = ssg.service_id and ps2.school_id = ssg.school_id
         where ssg.del_yn = 'N'
         and ssg.id = #{groupId}
     </select>
@@ -327,5 +328,19 @@
             AND ssd.grade = #{grade}
         </if>
         group by ssd.group_id
+    </select>
+
+    <select id="selectSupplierExist" parameterType="com.studentslips.entities.Supplier" resultMap="resultSupplier">
+        SELECT S.*
+        FROM PS_Suppliers S
+        WHERE S.supplier_id = #{supplierId}
+          AND S.school_id = #{schoolId}
+          AND S.del_yn='N'
+    </select>
+
+    <select id="selectMaxSupplierId" parameterType="int" resultType="string">
+        SELECT Max(supplier_id)
+        FROM PS_Suppliers S
+        WHERE  S.school_id = #{id}
     </select>
 </mapper>

@@ -3,8 +3,8 @@
 
 <mapper namespace="ServicesDao">
     <insert id="insertService" parameterType="com.studentslips.entities.Services">
-        INSERT INTO PS_Service (NAME, school_id, del_yn, insert_date, insert_id, supplier_id)
-        VALUES (#{name},#{schoolId}, 'N', SYSDATE(), #{insertId}, #{supplierId});
+        INSERT INTO PS_Service (service_id,NAME, school_id, del_yn, insert_date, insert_id, supplier_id)
+        VALUES (#{serviceId},#{name},#{schoolId}, 'N', SYSDATE(), #{insertId}, #{supplierId});
     </insert>
 
     <update id="updateService" parameterType="com.studentslips.entities.Services">
@@ -48,7 +48,19 @@
         left join PS_Suppliers S01 on S.supplier_id = S01.id and S01.del_yn = 'N'
         WHERE S.ID = #{id} AND S.del_yn='N';
     </select>
+    <select id="selectServiceExist" parameterType="com.studentslips.entities.Services" resultMap="result">
+        SELECT S.*
+        FROM PS_Service S
+        WHERE S.service_id = #{serviceId}
+          AND S.school_id = #{schoolId}
+          AND S.del_yn='N'
+    </select>
 
+    <select id="selectMaxServiceId" parameterType="int" resultType="string">
+        SELECT Max(service_id)
+        FROM PS_Service S
+        WHERE  S.school_id = #{id}
+    </select>
     <resultMap id = "result" type = "com.studentslips.entities.Services">
         <result property = "id" column = "ID"/>
         <result property = "name" column = "NAME"/>
@@ -59,5 +71,6 @@
         <result property = "updateDate" column = "update_date"/>
         <result property = "supplierId" column = "supplier_id"/>
         <result property = "supplierName" column = "supplier_name"/>
+        <result property = "serviceId" column = "service_id"/>
     </resultMap>
 </mapper>

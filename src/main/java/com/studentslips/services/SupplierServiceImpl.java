@@ -32,6 +32,19 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public void insertSupplier(Supplier supplier) throws Exception {
+
+		int sqSupplierId =  genSupplierId(supplierDao.selectMaxSupplierId(SessionUtil.getSchoolId()));
+
+		Supplier supplierExist = new Supplier();
+		supplierExist.setSupplierId(sqSupplierId);
+		supplierExist.setSchoolId(SessionUtil.getSchoolId());
+		supplierExist = supplierDao.selectSupplierExist(supplierExist);
+
+		if(supplierExist !=null && supplierExist.getId()!=0){
+			throw new StudentSlipException("Supplier has already exist.");
+		}
+
+		supplier.setSupplierId(sqSupplierId);
         supplier.setInsertId(SessionUtil.getUserLoginId());
         supplier.setSchoolId(SessionUtil.getSchoolId());
         supplierDao.insertSupplier(supplier);
@@ -165,4 +178,12 @@ public class SupplierServiceImpl implements SupplierService {
 		ssd.setSchoolId(SessionUtil.getSchoolId());
     	return supplierDao.getAllInstallmentsByGradeAndService(ssd);
     }
+
+	private int genSupplierId(String supplierId){
+		int  number = 1;
+		if (supplierId == null || supplierId.equals("")){
+			return number;
+		}
+		return  Integer.valueOf(supplierId) + 1;
+	}
 }

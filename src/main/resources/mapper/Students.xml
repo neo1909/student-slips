@@ -86,7 +86,7 @@
     <select id="selectStudentExist" parameterType="com.studentslips.entities.Student" resultMap="result">
         SELECT S.*
         FROM PS_Students S
-        WHERE S.student_id = #{id}
+        WHERE S.student_id = #{studentId}
           AND S.school_id = #{schoolId}
           AND S.del_yn='N'
     </select>

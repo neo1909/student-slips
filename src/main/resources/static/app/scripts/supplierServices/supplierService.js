@@ -300,7 +300,7 @@ let fn = {
                         $("#cmbService").jqxDropDownList({
                             source: [...data.lst],
                             displayMember: "name",
-                            valueMember: "id",
+                            valueMember: "serviceId",
                             disabled: false,
                             selectedIndex: 0
                         })
@@ -353,7 +353,7 @@ let fn = {
                     name: ""
                 },
                 function onSuccess(data) {
-                    $("#cmbSupplier").jqxDropDownList({ source: [{}, ...data.lst], displayMember: 'name', valueMember: 'id' })
+                    $("#cmbSupplier").jqxDropDownList({ source: [{}, ...data.lst], displayMember: 'name', valueMember: 'supplierId' })
                 },
                 function onError(err) {
                     SS.alert(SS.title.ERROR, SS.message.ERROR);
@@ -426,7 +426,7 @@ $(document).ready(function () {
     
     $('#cmbSupplier').on('change', function (event) {
         if (event.args && event.args.item && event.args.item.originalItem.id) {
-            const supplierId = event.args.item.originalItem.id;
+            const supplierId = event.args.item.originalItem.supplierId;
             return fn.getService(supplierId);
         }
         $("#cmbService").jqxDropDownList({

@@ -223,7 +223,7 @@ let fn = {
     		SS.sendToServer('SL_R_01', false, {}, function onSuccess(data) {
     	    	var src = [];
     			if (data && data.lst) src = data.lst;;
-    			$("#cmbSupplier").jqxDropDownList({ source: src, selectedIndex: 0, displayMember: "name", valueMember: "id", width: '100%', height: SS.IPT_HEIGHT});
+    			$("#cmbSupplier").jqxDropDownList({ source: src, selectedIndex: 0, displayMember: "name", valueMember: "supplierId", width: '100%', height: SS.IPT_HEIGHT});
     		}, function onError(err) {
     		})
 
