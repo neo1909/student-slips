@@ -3,8 +3,8 @@
 
 <mapper namespace="StudentsDao">
     <insert id="insertStudent" parameterType="com.studentslips.entities.Student">
-        INSERT INTO PS_Students (name,grade, class, school_id, del_yn, insert_date, insert_id)
-        VALUES (#{name}, #{grade}, #{sClass}, #{schoolId}, 'N', SYSDATE(), #{insertId});
+        INSERT INTO PS_Students (student_id,name,grade, class, school_id, del_yn, insert_date, insert_id)
+        VALUES (#{studentId},#{name}, #{grade}, #{sClass}, #{schoolId}, 'N', SYSDATE(), #{insertId});
     </insert>
 
     <update id="updateStudent" parameterType="com.studentslips.entities.Student">
@@ -40,7 +40,7 @@
     </delete>
 
     <select id="selectAllStudent" parameterType="com.studentslips.entities.Student" resultMap="result">
-        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName,LPAD(S.id, 4, '0') as student_id
+        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
         FROM PS_Students S
         where  S.del_yn='N'
         <if test="schoolId!=0 ">
@@ -62,7 +62,6 @@
         SELECT
 	        S.*,
 	        (Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName,
-	        LPAD(S.id, 4, '0') as student_id,
 	        ps.name,
 	        ps.bank_account_number as school_account_number,
 	        CONCAT(ps.address, ', ', ps.zipcode, ' ', ps.city) as school_address
@@ -79,10 +78,23 @@
     </select>
 
     <select id="selectStudentById" parameterType="int" resultMap="result">
-        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName,LPAD(S.id, 4, '0') as student_id
+        SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
         FROM PS_Students S
         WHERE S.id = #{id}
           AND S.del_yn='N'
+    </select>
+    <select id="selectStudentExist" parameterType="com.studentslips.entities.Student" resultMap="result">
+        SELECT S.*
+        FROM PS_Students S
+        WHERE S.student_id = #{id}
+          AND S.school_id = #{schoolId}
+          AND S.del_yn='N'
+    </select>
+
+    <select id="selectMaxStudentId" parameterType="int" resultType="string">
+        SELECT Max(student_id)
+        FROM PS_Students S
+        WHERE  S.school_id = #{id}
     </select>
 
     <resultMap id = "result" type = "com.studentslips.entities.Student">
