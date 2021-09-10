@@ -1,12 +1,11 @@
 var i18n = {
 	API: 'http://localhost:5000/api/',
-//	API: 'http://onetouchapp-env.eba-px6uytgm.ap-southeast-1.elasticbeanstalk.com/api/',
+	// API: 'http://onetouchapp-env.eba-px6uytgm.ap-southeast-1.elasticbeanstalk.com/api/',
 	lang: {},
 		
 	changeLanguage: function(lang, onSuccess, onError) {
 		$.ajax({
 	      async: false,
-	      contentType: 'application/json',
 	      url: `${this.API}LANG_01?lang=${lang}`,
 	      type: 'GET',
 	      success: onSuccess,
@@ -17,8 +16,6 @@ var i18n = {
 	syncLanguageFromServer: function() {
 		$.ajax({
 			async: false,
-			contentType: 'application/json',
-		    dataType: 'json',
 			url: `${this.API}LANG_02`,
 			type: 'GET',
 			success: function(data) {
@@ -28,10 +25,9 @@ var i18n = {
 		});
 	},
 	
-	setLanguage: async function() {
+	setLanguage: function() {
 		let language = localStorage.getItem("lang") || "sr";
-		let lang = await import(`/app/lang/lang.${language}.js`);
-		this.lang = lang.default;
+		this.lang = i18nLang[language];
 	}
 }
 
