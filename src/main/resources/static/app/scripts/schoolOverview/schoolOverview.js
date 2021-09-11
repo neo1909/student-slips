@@ -115,9 +115,14 @@ let fnOverview = {
         $("#grdMaster-debit").html(0);
         $("#grdMaster-claims").html(0);
         $("#grdMaster-balance").html(0);
+        
         $("#grdDetail-debit").html(0);
         $("#grdDetail-claims").html(0);
         $("#grdDetail-balance").html(0);
+
+        $("#intotal-debit").html(0);
+        $("#intotal-claims").html(0);
+        $("#intotal-balance").html(0);
 
         let serviceListId = [];
         let serviceListString = '';
@@ -332,15 +337,15 @@ function onCalculateTotal(gridId) {
             $("#grdMaster-debit").html(SS.format.formatNumberByLocales(totalDebit));
             $("#grdMaster-claims").html(SS.format.formatNumberByLocales(totalClaims));
             $("#grdMaster-balance").html(SS.format.formatNumberByLocales(totalBalance));
+
+            $("#intotal-debit").html(SS.format.formatNumberByLocales(totalDebit));
+            $("#intotal-claims").html(SS.format.formatNumberByLocales(totalClaims));
+            $("#intotal-balance").html(SS.format.formatNumberByLocales(totalBalance));
         } else {
             $("#grdDetail-debit").html(SS.format.formatNumberByLocales(totalDebit));
             $("#grdDetail-claims").html(SS.format.formatNumberByLocales(totalClaims));
             $("#grdDetail-balance").html(SS.format.formatNumberByLocales(totalBalance));
         }
-        $("#intotal-debit").html(SS.format.formatNumberByLocales(totalDebit));
-        $("#intotal-claims").html(SS.format.formatNumberByLocales(totalClaims));
-        $("#intotal-balance").html(SS.format.formatNumberByLocales(totalBalance));
-
     }
 }
 
