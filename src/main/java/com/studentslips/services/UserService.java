@@ -15,4 +15,5 @@ public interface UserService {
 	public int updateUser(User user);
 	public int deleteUserById(User user);
 	public int updateUserForAdmin(User user);
+	public int approveUser(User user);
 }

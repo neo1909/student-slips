@@ -1,0 +1,52 @@
+<div class="h-100">
+	<h3>Approve User: Username = <span th:text="${user.username}"></span></h3>
+	<form id="frmApprove" class="form-popup">
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Property</th>
+					<th scope="col">Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>User ID</td>
+					<td><div id="iptId"><span th:text="${user.id}"></span></div></td>
+				</tr>
+				<tr>
+					<td>Username</td>
+					<td><div id="iptUsername"><span th:text="${user.username}"></span></div></td>
+				</tr>
+				<tr>
+					<td>Full Name</td>
+					<td><div id="iptFullName"><span th:text="${user.fullName}"></span></div></td>
+				</tr>
+				<tr>
+					<td>School ID</td>
+					<td><div id="iptSchoolId"><span th:text="${user.schoolId}"></span></div></td>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td><div id="iptEmail"><span th:text="${user.email}"></span></div></td>
+				</tr>
+				<tr>
+					<td>Status</td>
+					<td><div id="iptStatus"><span th:text="${user.status}"></span></div></td>
+				</tr>
+				<tr>
+					<td>Approve Status</td>
+					<td><div id="iptApproveStatus"><span th:text="${user.approveStatus}"></span></div></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div style="margin-top: 15px; text-align: right" id="btnGroupPopup">
+			<button id="btnCancel" class="btn btn-default btn-str btn-left"
+				type="button" value="Cancel">Cancel</button>
+			<button id="btnApprove" class="btn btn-primary btn-str btn-left" type="button"
+				value="Save">Approve <span class="glyphicon glyphicon-ok"></span></button>
+			<button id="btnReject" class="btn btn-danger btn-str btn-left" type="button"
+				value="Save">Reject <span class="glyphicon glyphicon-remove"></span></button>
+		</div>
+	</form>
+</div>

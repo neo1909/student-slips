@@ -1,7 +1,9 @@
 package com.studentslips.services;
 
+import com.studentslips.common.Common;
 import com.studentslips.common.SessionUtil;
 import com.studentslips.common.StudentSlipException;
+import com.studentslips.common.i18nUtil;
 import com.studentslips.dao.StudentsDao;
 import com.studentslips.entities.Student;
 import org.apache.commons.lang3.StringUtils;
@@ -28,7 +30,7 @@ public class StudentServiceImpl implements StudentService{
         studentExist = studentDao.selectStudentExist(studentExist);
 
         if(studentExist !=null && studentExist.getId()!=0){
-            throw new StudentSlipException("Student has already exist.");
+            throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.EXISTED_STUDENT));
         }
 
         student.setStudentId(sqStudentId);

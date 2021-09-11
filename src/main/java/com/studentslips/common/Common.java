@@ -18,12 +18,23 @@ public class Common {
 
     public static final String DATE_FORMAT_DOT_DD_MM_YYYY = "dd.MM.yyyy";
     
+    public class User {
+    	public static final String ACTIVE = "ACTIVE";
+    	public static final String DEACTIVE = "DEACTIVE";
+    	public static final String PENDING = "PENDING";
+    	public static final String APPROVED = "APPROVED";
+    	public static final String REJECTED = "REJECTED";
+    }
+    
     public class Message {
     	public static final String CONTACT_ADMIN = "lang.msg.contactAdmin";
     	public static final String USER_NOT_EXIST = "lang.msg.userNotExist";
     	public static final String TOO_MANY_TRY = "lang.msg.tooManyTry";
     	public static final String PLS_PROCEED_AFTER = "lang.msg.plsProceedAfter";
 		public static final String LOCKED_ACCOUNT = "lang.msg.lockedAccount";
+		public static final String NOT_APPROVED_ACCOUNT = "lang.msg.notApprovedAccount";
+		public static final String PENDING_APPROVE_ACCOUNT = "lang.msg.pendingApproveAccount";
+		public static final String NO_APPROVAL_CHANGE_WAS_MADE = "lang.msg.noApprovalChangeWasMade";
 		public static final String VERIFY_AUTH_NG = "lang.msg.verifyAuthNg";
 		public static final String INCORRECT_PWD = "lang.msg.incorrectPassword";
 		public static final String INCORRECT_EMAIL = "lang.msg.incorrectEmail";
@@ -39,6 +50,18 @@ public class Common {
 		public static final String DATAENTRY_SAVE_SCHOOL_OK = "lang.msg.saveSchoolOk";
 		public static final String DATAENTRY_SAVE_SCHOOL_NG = "lang.msg.saveSchoolNg";
 		public static final String NO_PERMISSION = "lang.msg.noPermission";
+		public static final String CLASS_EXIST_HEADTEACHER = "lang.msg.classExistHeadteacher";
+
+		public static final String SUPPLIER_SERVICE_EXISTED_NO_INSERT = "lang.msg.supplierServiceExistedNoInsert";
+		public static final String SUPPLIER_SERVICE_EXISTED_NO_UPDATE = "lang.msg.supplierServiceExistedNoUpdate";
 		
+		public static final String EXISTED_SERVICE = "lang.msg.existedService";
+		public static final String EXISTED_SUPPLIER = "lang.msg.existedSupplier";
+		public static final String EXISTED_STUDENT = "lang.msg.existedStudent";
+
+		public static final String REGISTER_USERNAME_TAKEN = "lang.msg.registerUsernameTaken";
+		public static final String REGISTER_EMAIL_TAKEN = "lang.msg.registerEmailTaken";
+
+		public static final String INVALID_SUPPLIER_OR_SERVICE = "lang.msg.invalidSupplierOrService";
     }
 }

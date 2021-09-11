@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.studentslips.common.Common;
 import com.studentslips.common.SessionUtil;
 import com.studentslips.common.StudentSlipException;
+import com.studentslips.common.i18nUtil;
 import com.studentslips.dao.SupplierDao;
 import com.studentslips.entities.Supplier;
 import com.studentslips.entities.SupplierServiceDetail;
@@ -41,7 +43,7 @@ public class SupplierServiceImpl implements SupplierService {
 		supplierExist = supplierDao.selectSupplierExist(supplierExist);
 
 		if(supplierExist !=null && supplierExist.getId()!=0){
-			throw new StudentSlipException("Supplier has already exist.");
+			throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.EXISTED_SUPPLIER));
 		}
 
 		supplier.setSupplierId(sqSupplierId);
@@ -77,7 +79,7 @@ public class SupplierServiceImpl implements SupplierService {
     	ssg.setSchoolId(SessionUtil.getSchoolId());
     	int count = supplierDao.countSupplierServiceGroup(ssg);
     	if (count > 0) {
-        	throw new StudentSlipException("No Insert. Supplier - Service ID has already been existed.");
+        	throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.SUPPLIER_SERVICE_EXISTED_NO_INSERT));
     	}
     	
     	ssg.setInsertId(SessionUtil.getUserLoginId());
@@ -108,7 +110,7 @@ public class SupplierServiceImpl implements SupplierService {
     	ssg.setSchoolId(SessionUtil.getSchoolId());
     	int count = supplierDao.countSupplierServiceGroup(ssg);
     	if (count > 0) {
-        	throw new StudentSlipException("No Update. Supplier - Service ID has already been existed.");
+        	throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.SUPPLIER_SERVICE_EXISTED_NO_UPDATE));
     	}
     	
     	ssg.setUpdateId(SessionUtil.getUserLoginId());

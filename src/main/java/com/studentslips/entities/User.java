@@ -30,6 +30,8 @@ public class User implements UserDetails, Serializable {
 	private Timestamp insertDate;
 	private int updateId;
 	private Timestamp updateDate;
+	private String approveStatus; // APPROVED, PENDING, REJECTED 
+	private Timestamp approveDate;
 
 	private List<Role> roles;
 	
@@ -179,6 +181,22 @@ public class User implements UserDetails, Serializable {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
+	
+	public String getApproveStatus() {
+		return approveStatus;
+	}
+
+	public void setApproveStatus(String approveStatus) {
+		this.approveStatus = approveStatus;
+	}
+
+	public Timestamp getApproveDate() {
+		return approveDate;
+	}
+
+	public void setApproveDate(Timestamp approveDate) {
+		this.approveDate = approveDate;
+	}
 
 	public String getSimpleRoles() {
 		StringBuilder sb = new StringBuilder();
@@ -197,17 +215,17 @@ public class User implements UserDetails, Serializable {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return "ACTIVE".equals(this.status);
+		return "ACTIVE".equals(this.status) && "APPROVED".equals(this.approveStatus);
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return "ACTIVE".equals(this.status);
+		return "ACTIVE".equals(this.status) && "APPROVED".equals(this.approveStatus);
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return "ACTIVE".equals(this.status);
+		return "ACTIVE".equals(this.status) && "APPROVED".equals(this.approveStatus);
 	}
 
 	@Override

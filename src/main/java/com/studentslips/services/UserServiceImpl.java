@@ -8,7 +8,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.studentslips.common.Common;
+import com.studentslips.common.SessionUtil;
 import com.studentslips.common.StudentSlipException;
+import com.studentslips.common.i18nUtil;
 import com.studentslips.dao.RoleDao;
 import com.studentslips.dao.UserDao;
 import com.studentslips.dao.UserRoleDao;
@@ -38,11 +41,11 @@ public class UserServiceImpl implements UserService {
 		
 		User checkUsernameUser = new User();
 		checkUsernameUser.setUsername(authRegister.getUsername());
-		if (isUserExisted(checkUsernameUser)) throw new StudentSlipException("Username has already been taken.");
+		if (isUserExisted(checkUsernameUser)) throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.REGISTER_USERNAME_TAKEN));
 
 		User checkEmailUser = new User();
 		checkEmailUser.setEmail(authRegister.getEmail());
-		if (isUserExisted(checkEmailUser)) throw new StudentSlipException("E-mail has already been taken.");
+		if (isUserExisted(checkEmailUser)) throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.REGISTER_EMAIL_TAKEN));
 		
 		User user = new User();
 		user.setFullName(authRegister.getFullName());
@@ -50,8 +53,9 @@ public class UserServiceImpl implements UserService {
 		user.setUsername(authRegister.getUsername());
 		user.setPassword(crypt.encode(authRegister.getPassword()));
 		user.setLoginRetryCount(0);
-		user.setStatus("ACTIVE");
+		user.setStatus(Common.User.ACTIVE);
 		user.setSchoolId(authRegister.getSchoolId());
+		user.setApproveStatus(Common.User.PENDING);
 		Role roleUser = roleDao.selectByName("USER");
 		List<Role> roles = new ArrayList<>();
 		roles.add(roleUser);
@@ -123,6 +127,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updateUserForAdmin(User user) {
 		return userDao.updateUserForAdmin(user);
+	}
+
+	@Override
+	public int approveUser(User user) {
+		return userDao.approveUser(user);
 	}
 
 }

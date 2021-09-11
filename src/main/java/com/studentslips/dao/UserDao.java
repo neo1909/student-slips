@@ -44,4 +44,8 @@ public class UserDao {
 	public int updateUserForAdmin(User user) {
 		return this.sqlSession.update("updateUserForAdmin", user);
 	}
+
+	public int approveUser(User user) {
+		return this.sqlSession.update("approveUser", user);
+	}
 }

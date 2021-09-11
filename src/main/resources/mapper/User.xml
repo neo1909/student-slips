@@ -14,7 +14,9 @@
 	        U.status,
 	        U.description,
 	        U.del_yn,
-	        U.insert_date
+	        U.insert_date,
+	        U.approve_status,
+	        U.approve_date
         FROM PS_Users U
         where 1=1
         	and U.del_yn = 'N'
@@ -49,6 +51,9 @@
         <if test="status != null and status !=''">
         	and U.status = #{status}
         </if>
+        <if test="approveStatus != null and approveStatus !=''">
+        	and U.approve_status = #{approveStatus}
+        </if>
         <if test="schoolId != -1">
         	and U.school_id = #{schoolId}
         </if>
@@ -59,9 +64,18 @@
 	    <selectKey resultType="int" keyProperty="id" order="AFTER" >
 		  SELECT LAST_INSERT_ID() as id
 		</selectKey>
-        INSERT INTO PS_Users (username, password, full_name, school_id, email, user_type, login_retry_count, last_login_date, status, description, del_yn, insert_date, insert_id, update_date, update_id)
-        VALUES (#{username}, #{password}, #{fullName}, #{schoolId}, #{email}, #{userType}, #{loginRetryCount}, #{lastLoginDate}, #{status}, #{description}, 'N', SYSDATE(), null, null, null);
+        INSERT INTO PS_Users (username, password, full_name, school_id, email, user_type, login_retry_count, last_login_date, status, description, del_yn, insert_date, insert_id, update_date, update_id, approve_status, approve_date)
+        VALUES (#{username}, #{password}, #{fullName}, #{schoolId}, #{email}, #{userType}, #{loginRetryCount}, #{lastLoginDate}, #{status}, #{description}, 'N', SYSDATE(), null, null, null, #{approveStatus}, null);
     </insert>
+
+    <update id="approveUser" parameterType="com.studentslips.entities.User">
+        UPDATE PS_Users SET
+        approve_status = #{approveStatus},
+        approve_date = SYSDATE(),
+        update_id = #{updateId},
+        update_date = SYSDATE()
+        WHERE id = #{id}
+    </update>
 
     <update id="updateUser" parameterType="com.studentslips.entities.User">
         UPDATE PS_Users SET
@@ -130,7 +144,9 @@
         	U.last_login_date,
         	U.login_retry_count,
         	R.id as roleId,
-        	R.name as roleName
+        	R.name as roleName,
+	        U.approve_status,
+	        U.approve_date
         FROM PS_Users U
         left join PS_User_Role UR on U.id = UR.user_id
         inner join PS_Roles R on UR.role_id = R.id
@@ -159,6 +175,8 @@
         <result property = "description" column = "description"/>
         <result property = "delYn" column = "del_yn"/>
         <result property = "insertDate" column = "insert_date"/>
+        <result property = "approveStatus" column = "approve_status"/>
+        <result property = "approveDate" column = "approve_date"/>
     </resultMap>
     
     <resultMap id="userModel" type = "com.studentslips.entities.User">
@@ -173,6 +191,8 @@
         <result property = "description" column = "description"/>
         <result property = "delYn" column = "del_yn"/>
         <result property = "insertDate" column = "insert_date"/>
+        <result property = "approveStatus" column = "approve_status"/>
+        <result property = "approveDate" column = "approve_date"/>
     </resultMap>
     
     <resultMap id="userWithRolesModel" type = "com.studentslips.entities.User">
@@ -185,6 +205,8 @@
         <result property = "status" column = "status"/>
         <result property = "lastLoginDate" column = "last_login_date"/>
         <result property = "loginRetryCount" column = "login_retry_count"/>
+        <result property = "approveStatus" column = "approve_status"/>
+        <result property = "approveDate" column = "approve_date"/>
 		<collection property="roles" ofType="com.studentslips.entities.Role">
 			<id property="id" column="roleId" />
 			<id property="name" column="roleName" />

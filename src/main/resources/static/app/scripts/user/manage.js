@@ -21,7 +21,9 @@ var fn = {
             	{ name: 'insertId',type: 'int' },
             	{ name: 'insertDate', type: 'string' },
             	{ name: 'updateId', type : 'int' },
-            	{ name: 'updateDate', type : 'string' }
+            	{ name: 'updateDate', type : 'string' },
+            	{ name: 'approveStatus', type : 'string' },
+            	{ name: 'approveDate', type : 'date' }
             ],
             datatype: "array",
             localdata: fn.dataset
@@ -43,13 +45,16 @@ var fn = {
 	            { text: 'Email', datafield: 'email', align: 'center', cellsalign: 'center', width: '15%', editable: false },
 	            { text: 'School', datafield: 'schoolId', displayfield: 'schoolName', align: 'center', cellsalign: 'center', width: '15%', editable: false },
 	            { text: 'Full name', datafield: 'fullName', align: 'center', cellsalign: 'center', width: '15%', editable: false },
-	            { text: 'User Type', datafield: 'userType', align: 'center', cellsalign: 'center', width: '15%', editable: false },
-	            { text: 'Last Login Date', cellsformat: 'dd/MM/yyyy', datafield: 'lastLoginDate', align: 'left', cellsalign: 'center', width: '15%', editable: false },
+	            { text: 'User Type', datafield: 'userType', align: 'center', cellsalign: 'center', width: '5%', editable: false },
+	            { text: 'Last Login Date', datafield: 'lastLoginDate', cellsformat: 'dd/MM/yyyy', align: 'center', cellsalign: 'center', width: '10%', editable: false },
 	            { text: 'Status', datafield: 'status', align: 'center', cellsalign: 'center', width: '10%', editable: false },
+	            { text: 'Approve Status', datafield: 'approveStatus', align: 'center', cellsalign: 'center', width: '10%', editable: false },
+	            { text: 'Approve Date', datafield: 'approveDate', cellsformat: 'dd/MM/yyyy HH:mm:ss', align: 'center', cellsalign: 'center', width: '10%', editable: false },
 	            { text: 'Del  Y/N', datafield: 'delYn', align: 'center', cellsalign: 'center', width: '10%', editable: false },
 	            { text: '', align: 'center', width: '10%',
 	                    cellsrenderer: function (rowIndex, column, value) {
 	                        return '<div style="text-align: center; margin-top: 4px;">' +
+	                        	'<button alt="Approve" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onOpenApprovePopup(' + rowIndex + ')"><span class="glyphicon glyphicon-check"></span></button>' +
 	                            '<button alt="Edit" class="btn btn-info btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onUpdate(' + rowIndex + ')"><span class="glyphicon glyphicon-edit"></span></button>' +
 	                            '<button alt="Delete" class="btn btn-danger btn-icon btn-sm" style="margin-right: 10px" onclick="fn.onDelete(' + rowIndex + ')"><span class="glyphicon glyphicon-trash"></span></button>' +
 	                            '<button alt="AssignRole" class="btn btn-primary btn-icon btn-sm" onclick="fn.onAssignRole(' + rowIndex + ')"><span class="glyphicon glyphicon-lock"></span></button>' +
@@ -68,8 +73,16 @@ var fn = {
     	this.initGrid();
     	
     	fn.data.statusList = [
+    		{value: "", name: "All"},
     		{value: "ACTIVE", name: "ACTIVE"},
     		{value: "DEACTIVE", name: "DEACTIVE"},
+    	];
+    	
+    	fn.data.approveStatusList = [
+    		{value: "", name: "All"},
+    		{value: "APPROVED", name: "APPROVED"},
+    		{value: "PENDING", name: "PENDING"},
+    		{value: "REJECTED", name: "REJECTED"}
     	];
     	
         $("#iptSrchUsername").jqxInput({ height: SS.IPT_HEIGHT, width: '100%', maxLength: 45 });
@@ -85,7 +98,7 @@ var fn = {
     	});
         
         $("#iptSrchStatus").jqxDropDownList({ source: fn.data.statusList, displayMember: "name", valueMember: "value", selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%'});
-        
+        $("#iptSrchApproveStatus").jqxDropDownList({ source: fn.data.approveStatusList, displayMember: "name", valueMember: "value", selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%'});
 
         $("#id-ss-popup").jqxWindow({
             isModal: true,
@@ -105,7 +118,8 @@ var fn = {
             username:  $("#iptSrchUsername").val(),
             fullName:  $("#iptSrchFullName").val(),
             schoolId: $("#iptSrchSchool").val(),
-            status: $("#iptSrchStatus").val()
+            status: $("#iptSrchStatus").val(),
+            approveStatus: $("#iptSrchApproveStatus").val()
         }
         SS.sendToServer(
             'U_R_01',
@@ -161,6 +175,69 @@ var fn = {
 			}, function onError(err) {
 				SS.alert(SS.title.ERROR, SS.message.ERROR);
 			});
+		});
+    },
+
+    onOpenApprovePopup: function(rowIndex) {
+        var data = $("#grdUser").jqxGrid('getrowdata', rowIndex);
+        let id = data.id;
+        if (id) {
+        	this.onPopupOpen('user/approve?id=' + id, 'Approve User', function() {
+        		fn.initPopupApprove(data);
+        	});
+        }
+    },
+    
+    initPopupApprove: function(data) {
+    	
+		$("#btnCancel").click(function() {	
+			$("#id-ss-popup").jqxWindow('close');
+		});
+		
+		$("#btnApprove").click(function() {
+	    	if (data.approveStatus == "APPROVED") {
+	    		SS.alert(SS.title.ERROR, 'No approval change was made');
+	    		return;
+	    	}
+            SS.confirm(SS.title.CONFIRM, "Do you want to approve? ", function (result) {
+                if (result) {
+        			let params = {
+        				id: data.id,
+        				approveStatus: "APPROVED"
+        			};
+        			SS.sendToServer('U_A_01', false, params, function onSuccess(data) {
+        				$("#id-ss-popup").jqxWindow('close');
+        				
+        				$('#grdUser').jqxGrid('refresh');
+        	            fn.onSearch();
+        			}, function onError(err) {
+        				SS.alert(SS.title.ERROR, SS.message.ERROR);
+        			});
+                }
+            });
+		});
+		
+		$("#btnReject").click(function() {
+	    	if (data.approveStatus == "REJECTED") {
+	    		SS.alert(SS.title.ERROR, 'No approval change was made');
+	    		return;
+	    	}
+            SS.confirm(SS.title.CONFIRM, "Do you want to reject? ", function (result) {
+                if (result) {
+        			let params = {
+        				id: data.id,
+        				approveStatus: "REJECTED"
+        			};
+        			SS.sendToServer('U_A_01', false, params, function onSuccess(data) {
+        				$("#id-ss-popup").jqxWindow('close');
+        				
+        				$('#grdUser').jqxGrid('refresh');
+        	            fn.onSearch();
+        			}, function onError(err) {
+        				SS.alert(SS.title.ERROR, SS.message.ERROR);
+        			});
+                }
+            });
 		});
     },
 
@@ -226,7 +303,6 @@ var fn = {
 
     onUpdate: function(rowIndex) {
         var data = $("#grdUser").jqxGrid('getrowdata', rowIndex);
-        console.log(data);
         let id = data.id;
         if (id) {
         	this.onPopupOpen('user/update?id=' + id, 'Update User', function() {
@@ -246,7 +322,15 @@ var fn = {
                         false,
                         { id : id },
                         function onSuccess(data) {
+                        	if (data && data.status == 'NG' && data.message) {
+                        		SS.alert(SS.title.ERROR, data.message);
+                        	}
                             fn.onSearch();
+                        },
+                        function onError(err) {
+                        	if (err && err.msg) {
+                        		SS.alert(SS.title.ERROR, err.msg);
+                        	}
                         }
                     );
                 }
@@ -319,6 +403,7 @@ var fn = {
 
 $(document).ready(function() {
 	fn.init();
+    fn.onSearch();
     
     $(document).on('keypress', function(e) {
     	if (e.keyCode == 13) {

@@ -20,6 +20,8 @@ public class UserSearchResult {
 	private Timestamp insertDate;
 	private int updateId;
 	private Timestamp updateDate;
+	private String approveStatus;
+	private Timestamp approveDate;
 
 	public int getRnum() {
 		return rnum;
@@ -27,6 +29,22 @@ public class UserSearchResult {
 
 	public void setRnum(int rnum) {
 		this.rnum = rnum;
+	}
+
+	public String getApproveStatus() {
+		return approveStatus;
+	}
+
+	public void setApproveStatus(String approveStatus) {
+		this.approveStatus = approveStatus;
+	}
+
+	public Timestamp getApproveDate() {
+		return approveDate;
+	}
+
+	public void setApproveDate(Timestamp approveDate) {
+		this.approveDate = approveDate;
 	}
 
 	public int getId() {

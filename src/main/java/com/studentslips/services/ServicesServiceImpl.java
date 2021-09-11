@@ -1,7 +1,9 @@
 package com.studentslips.services;
 
+import com.studentslips.common.Common;
 import com.studentslips.common.SessionUtil;
 import com.studentslips.common.StudentSlipException;
+import com.studentslips.common.i18nUtil;
 import com.studentslips.dao.ServicesDao;
 import com.studentslips.entities.Services;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,7 @@ public class ServicesServiceImpl implements ServicesService{
         servicesExist = servicesDao.selectServiceExist(servicesExist);
 
         if(servicesExist !=null && servicesExist.getId()!=0){
-            throw new StudentSlipException("Service has already exist.");
+            throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.EXISTED_SERVICE));
         }
 
         services.setServiceId(sqServiceId);
