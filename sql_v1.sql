@@ -288,3 +288,9 @@ ALTER TABLE `onetouch`.`ps_students_debts_task`
 ADD COLUMN `installment` INT NULL AFTER `debit_date`,
 ADD COLUMN `price` DECIMAL(10,2) NULL AFTER `installment`;
 -- 28/08/2021 Change `supplier_service` and `supplier_service-group` ===== END
+
+-- 12/09/2021 Add approval flows
+ALTER TABLE `onetouch`.`ps_users` 
+ADD COLUMN `approval_status` VARCHAR(45) NULL AFTER `update_id`;
+ADD COLUMN `approval_date` DATETIME NULL AFTER `approval_status`;
+--------------------------------
