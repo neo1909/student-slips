@@ -70,7 +70,13 @@ public class StudentServiceImpl implements StudentService{
 		return studentDao.selectAllStudentsWithSchool(student);
 	}
 
-	private String genStudentId(String studentId){
+    @Override
+    public Student selectStudentExist(Student student) throws Exception {
+        student.setSchoolId(SessionUtil.getSchoolId());
+        return studentDao.selectStudentExist(student);
+    }
+
+    private String genStudentId(String studentId){
         String  formattedNumber = "0001";
         if (studentId==null || studentId.equals("")){
             return formattedNumber;

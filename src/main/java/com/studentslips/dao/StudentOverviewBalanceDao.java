@@ -25,7 +25,7 @@ public class StudentOverviewBalanceDao {
     }
 
 
-    public List<Integer> selectDistinctServiceStdDebts(int studentId) throws Exception {
-        return this.sqlSession.selectList("selectDistinctServiceStdDebts", studentId);
+    public List<Integer> selectDistinctServiceStdDebts(StudentOverviewBalanceRequestDTO dto) throws Exception {
+        return this.sqlSession.selectList("selectDistinctServiceStdDebts", dto);
     }
 }

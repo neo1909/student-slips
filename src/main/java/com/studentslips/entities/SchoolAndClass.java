@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class SchoolAndClass {
 
-    private int studentId;
+    private String studentId;
     private String nameStudent;
     private int serviceId;
     private String nameService;
@@ -27,12 +27,12 @@ public class SchoolAndClass {
 	public void setServiceListString(String serviceListString) {
 		this.serviceListString = serviceListString;
 	}
-	
-	public int getStudentId() {
+
+    public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
 

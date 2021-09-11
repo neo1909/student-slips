@@ -5,7 +5,7 @@ let sourceMaster = {
         },
         {
             name: 'studentId',
-            type: 'int'
+            type: 'string'
         },
         {
             name: 'nameStudent',
@@ -69,9 +69,9 @@ function init() {
     SS.sendToServer('SV_R_01', false, {}, function onSuccess(data) {
     	let src = [];
 		if (data && data.lst) src = [...data.lst];
-		originalServiceIdList = data.lst.map(i => i.id);
+		originalServiceIdList = data.lst.map(i => i.serviceId);
 		src.unshift({id: "", name: i18n.lang.common.all});
-		$("#cmbSrchService").jqxComboBox({ source: src, displayMember: "name", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});
+		$("#cmbSrchService").jqxComboBox({ source: src, displayMember: "name", valueMember: "serviceId", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});
 	});
     
     $("#cmbSrchGrade").jqxDropDownList({ source: SS.dataSource.grade(), displayMember: 'name', valueMember: 'id', selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%' });

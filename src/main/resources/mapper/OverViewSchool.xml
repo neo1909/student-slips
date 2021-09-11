@@ -9,13 +9,13 @@
                XY.name,sum(XX.amount_debt) as debit,
                sum(XX.claims) as claims,sum(XX.balance) as balance,
                XX.service_id,
-               (select name from PS_Service svc where svc.id = XX.service_id) as name_service
+               (select name from PS_Service svc where svc.service_id = XX.service_id and svc.school_id = #{schoolId}) as name_service
         from (
              select X1.student_id,X1.service_id,X1.amount_debt,X1.claims,(X1.amount_debt - IFNULL(X1.claims,0)) as balance
              from (
                     select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
                     from PS_Students_Debts sd
-                    Left outer join (select * from PS_Bank_Statement  where bank_statement_date between #{fromDate} and  #{toDate}) bs
+                    Left outer join (select * from PS_Bank_Statement  where school_id = #{schoolId} and bank_statement_date between #{fromDate} and  #{toDate}) bs
                     on bs.reference_no = sd.reference_no
                     where 1=1
                     <if test="serviceListId !=null and !serviceListId.isEmpty()">
@@ -27,7 +27,7 @@
               group by sd.student_id,sd.service_id,sd.amount_debt
           ) X1
         ) XX,
-        (select s.id as student_id,ht.id as head_teacher_id,ht.name,ht.class,ht.grade,ht.school_id from PS_Students s, PS_Head_Teachers ht
+        (select s.student_id,ht.id as head_teacher_id,ht.name,ht.class,ht.grade,ht.school_id from PS_Students s, PS_Head_Teachers ht
         where s.class=ht.class
         and s.grade =ht.grade
         and s.school_id= ht.school_id) XY
@@ -43,13 +43,13 @@
     </select>
 
     <select id="searchDetailSchool" parameterType="com.studentslips.entities.SchoolAndClassSearch" resultMap="resultDetailSchool">
-        select  concat(XY.grade , '/' , XY.class) as grade_class,XY.head_teacher_id,XY.name,XX.service_id,(select name from PS_Service where XX.service_id = id) as name_service,sum(XX.amount_debt) as debit,sum(XX.claims) as claims,SUM(XX.balance) as balance
+        select  concat(XY.grade , '/' , XY.class) as grade_class,XY.head_teacher_id,XY.name,XX.service_id,(select name from PS_Service where XX.service_id = service_id and school_id = #{schoolId}) as name_service,sum(XX.amount_debt) as debit,sum(XX.claims) as claims,SUM(XX.balance) as balance
         from (
                 select X1.student_id,X1.service_id,X1.amount_debt,X1.claims,(X1.amount_debt - IFNULL(X1.claims,0)) as balance
                 from (
                       select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
                       from PS_Students_Debts sd
-                      Left outer join (select * from PS_Bank_Statement  where bank_statement_date between #{fromDate} and  #{toDate}) bs
+                      Left outer join (select * from PS_Bank_Statement  where school_id = #{schoolId} and bank_statement_date between #{fromDate} and  #{toDate}) bs
                       on bs.reference_no = sd.reference_no
                       where 1=1
                         <if test="serviceListId !=null and !serviceListId.isEmpty()">
@@ -61,7 +61,7 @@
                       group by sd.student_id,sd.service_id,sd.amount_debt
                   ) X1
         ) XX,
-        (select s.id as student_id,ht.id as head_teacher_id,ht.name,ht.class,ht.grade,ht.school_id from PS_Students s, PS_Head_Teachers ht
+        (select s.student_id,ht.id as head_teacher_id,ht.name,ht.class,ht.grade,ht.school_id from PS_Students s, PS_Head_Teachers ht
          where s.class=ht.class
            and s.grade =ht.grade
            and s.school_id= ht.school_id) XY

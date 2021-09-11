@@ -32,7 +32,8 @@ public class StudentOverviewServiceImpl implements StudentOverviewService {
     @Override
     public  Map<String, Object> selectStudentOverviewBalance(StudentOverviewBalanceRequestDTO requestDTO) throws Exception {
         Map<String, Object> result = new HashMap<>();
-        List<Integer> serviceList = studentOverviewBalanceDao.selectDistinctServiceStdDebts(requestDTO.getId());
+        requestDTO.setSchoolId(SessionUtil.getSchoolId());
+        List<Integer> serviceList = studentOverviewBalanceDao.selectDistinctServiceStdDebts(requestDTO);
         result.put(Common.LIST + 1,new ArrayList<>());
         if (CollectionUtils.isEmpty(serviceList)) {
             return result;
@@ -130,7 +131,8 @@ public class StudentOverviewServiceImpl implements StudentOverviewService {
     }
 
     @Override
-    public StudentOverviewBalancePrintDTO selectPrintData(StudentOverviewBalancePrintDTO dto) {
+    public StudentOverviewBalancePrintDTO selectPrintData(StudentOverviewBalancePrintDTO dto) throws Exception {
+        dto.setSchoolId(SessionUtil.getSchoolId());
         dto = studentOverviewBalanceDao.selectPrintData(dto);
         return dto;
     }

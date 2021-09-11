@@ -10,5 +10,5 @@ public interface StudentOverviewService {
 
     Map<String, Object> selectStudentOverviewBalance(StudentOverviewBalanceRequestDTO requestDTO) throws Exception;
 
-    StudentOverviewBalancePrintDTO selectPrintData(StudentOverviewBalancePrintDTO dto);
+    StudentOverviewBalancePrintDTO selectPrintData(StudentOverviewBalancePrintDTO dto) throws Exception;
 }

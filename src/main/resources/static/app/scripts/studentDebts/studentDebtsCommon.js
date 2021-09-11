@@ -8,7 +8,7 @@ let updateTaskOriginalData = [];
 let source = {
     datafields: [{
             name: 'studentId',
-            type: 'int'
+            type: 'string'
         },
         {
             name: 'schoolId',
@@ -348,7 +348,7 @@ $(document).ready(function() {
         	;
         for (let i = 1 ; i <= rows.length; i++) {
         	if (!rows[i-1].amountDebt || rows[i-1].amountDebt == 0) continue;
-        	const student = studentsInfo.find(s => rows[i-1].studentId == s.id);
+        	const student = studentsInfo.find(s => rows[i-1].studentId == s.studentId);
         	const schoolName = student && student.schoolName ? student.schoolName : '';
         	const schoolAddress = student && student.schoolAddress ? student.schoolAddress : '';
         	const schoolAccountNumber = student && student.schoolAccountNumber ? student.schoolAccountNumber : '';

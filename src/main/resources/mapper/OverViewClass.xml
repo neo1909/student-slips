@@ -11,7 +11,7 @@
         select  XX.student_id,XX.amount_debt,XX.claims,(XX.amount_debt - IFNULL(XX.claims,0)) as balance
         from    (select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
         from    PS_Students_Debts sd
-        Left outer join (select * from PS_Bank_Statement where bank_statement_date between #{fromDate} and  #{toDate} ) bs
+        Left outer join (select * from PS_Bank_Statement where school_id = #{schoolId} and bank_statement_date between #{fromDate} and  #{toDate} ) bs
         on bs.reference_no = sd.reference_no
         where 1=1
         <if test="schoolId!=0 ">
@@ -30,7 +30,7 @@
         group by XY.student_id
         ) X1
         left outer join PS_Students s
-        on s.id = X1.student_id
+        on s.student_id = X1.student_id and s.school_id = #{schoolId}
         where  1=1
         <if test="sClass !=0 ">
             AND    s.class= #{sClass}
@@ -41,11 +41,11 @@
     </select>
 
     <select id="searchDetailClass" parameterType="com.studentslips.entities.SchoolAndClassSearch" resultMap="resultDetailClass">
-        select  student_id,(select s.name from PS_Students s where XX.student_id = s.id ) as name_student,service_id,(select sr.name from PS_Service sr where XX.service_id = sr.id ) as name_service,XX.amount_debt,XX.claims,(XX.amount_debt - IFNULL(XX.claims,0)) as balance
+        select  student_id,(select s.name from PS_Students s where XX.student_id = s.student_id and s.school_id = #{schoolId} ) as name_student,service_id,(select sr.name from PS_Service sr where XX.service_id = sr.service_id and  sr.school_id = #{schoolId}) as name_service,XX.amount_debt,XX.claims,(XX.amount_debt - IFNULL(XX.claims,0)) as balance
         from(
         select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
         from    PS_Students_Debts sd
-        Left outer join (select * from PS_Bank_Statement where bank_statement_date between #{fromDate} and  #{toDate} ) bs
+        Left outer join (select * from PS_Bank_Statement where school_id = #{schoolId} and bank_statement_date between #{fromDate} and  #{toDate} ) bs
         on bs.reference_no = sd.reference_no
         where 1=1
         <if test="schoolId!=0 ">
@@ -57,7 +57,7 @@
             </foreach>
         </if>
         and sd.debit_date between #{fromDate} and  #{toDate}
-        <if test="studentId!=0 ">
+        <if test="studentId!=null and  studentId!=''">
             and sd.student_id = #{studentId}
         </if>
         group by sd.student_id,sd.service_id,sd.amount_debt
