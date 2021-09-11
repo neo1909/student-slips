@@ -4,15 +4,58 @@
 <mapper namespace="OverViewClassDao">
 
     <select id="searchAllClass" parameterType="com.studentslips.entities.SchoolAndClassSearch" resultMap="resultAllClass">
-        select  X1.student_id,s.name   ,X1.debit, X1.claims, X1.balance
-        from (
-        select  XY.student_id,SUM(XY.amount_debt) as debit, SUM(XY.claims) as claims, SUM(XY.balance) as balance
-        from (
-        select  XX.student_id,XX.amount_debt,XX.claims,(XX.amount_debt - IFNULL(XX.claims,0)) as balance
-        from    (select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
+        select  X3.student_id,X3.name   ,sum(X3.debit) as debit, sum(X3.claims) as claims, sum(X3.balance) as balance
+        FROM (
+            select  X1.student_id,s.name   ,X1.debit, X2.claims, (X1.debit - IFNULL(X2.claims,0)) as balance
+            from (  select sd.student_id,sd.school_id,sd.service_id,sum(sd.amount_debt) as debit,'' as claims,sd.reference_no
+            from    PS_Students_Debts sd
+            where 1=1
+            <if test="schoolId!=0 ">
+                and sd.school_id = #{schoolId}
+            </if>
+
+            <if test="serviceListId !=null and !serviceListId.isEmpty()">
+                <foreach item="item" index="index" collection="serviceListId" open="and sd.service_id in (" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            and sd.del_yn='N'
+            and sd.debit_date between #{fromDate} and  #{toDate}
+            group by sd.student_id,sd.school_id,sd.reference_no
+            ) X1
+            Left outer join (
+            select '' as student_id,bs.school_id,'' as service_id,'' as debit,sum(bs.claims) as claims,bs.reference_no
+            from PS_Bank_Statement bs
+            where 1=1
+            <if test="schoolId!=0 ">
+                and bs.school_id = #{schoolId}
+            </if>
+            and bs.bank_statement_date between #{fromDate} and  #{toDate}
+            and bs.del_yn='N'
+            and bs.post_payment_yn='Y'
+            group by bs.school_id,bs.reference_no
+            ) X2
+            on X1.reference_no = X2.reference_no and X1.school_id = X2.school_id
+            left outer join PS_Students s
+            on s.student_id = X1.student_id
+            <if test="schoolId!=0 ">
+                and s.school_id = #{schoolId}
+            </if>
+            where  1=1
+            <if test="sClass !=0 ">
+                AND    s.class= #{sClass}
+            </if>
+            <if test="grade !=0 ">
+                AND   s.grade = #{grade}
+            </if>
+        ) X3
+        group by X3.student_id,X3.name
+    </select>
+
+    <select id="searchDetailClass" parameterType="com.studentslips.entities.SchoolAndClassSearch" resultMap="resultDetailClass">
+        SELECT		X1.student_id,(select s.name from PS_Students s where X1.student_id = s.student_id and s.school_id = #{schoolId} ) as name_student,X1.service_id,(select sr.name from PS_Service sr where X1.service_id = sr.service_id and  sr.school_id = #{schoolId}) as name_service,X1.debit,X2.claims,(X1.debit - IFNULL(X2.claims,0)) as balance
+        from (  select sd.student_id,sd.school_id,sd.service_id,sum(sd.amount_debt) as debit,'' as claims,sd.reference_no
         from    PS_Students_Debts sd
-        Left outer join (select * from PS_Bank_Statement where school_id = #{schoolId} and bank_statement_date between #{fromDate} and  #{toDate} ) bs
-        on bs.reference_no = sd.reference_no
         where 1=1
         <if test="schoolId!=0 ">
             and sd.school_id = #{schoolId}
@@ -23,14 +66,28 @@
                 #{item}
             </foreach>
         </if>
+        and sd.del_yn='N'
         and sd.debit_date between #{fromDate} and  #{toDate}
-        group by sd.student_id,sd.service_id,sd.amount_debt
-        ) XX
-        ) XY
-        group by XY.student_id
+        group by sd.student_id,sd.school_id,sd.reference_no
         ) X1
+        Left outer join (
+        select '' as student_id,bs.school_id,'' as service_id,'' as debit,sum(bs.claims) as claims,bs.reference_no
+        from PS_Bank_Statement bs
+        where 1=1
+        <if test="schoolId!=0 ">
+            and bs.school_id = #{schoolId}
+        </if>
+        and bs.bank_statement_date between #{fromDate} and  #{toDate}
+        and bs.del_yn='N'
+        and bs.post_payment_yn='Y'
+        group by bs.school_id,bs.reference_no
+        ) X2
+        on X1.reference_no = X2.reference_no and X1.school_id = X2.school_id
         left outer join PS_Students s
-        on s.student_id = X1.student_id and s.school_id = #{schoolId}
+        on s.student_id = X1.student_id
+        <if test="schoolId!=0 ">
+            and s.school_id = #{schoolId}
+        </if>
         where  1=1
         <if test="sClass !=0 ">
             AND    s.class= #{sClass}
@@ -38,30 +95,9 @@
         <if test="grade !=0 ">
             AND   s.grade = #{grade}
         </if>
-    </select>
-
-    <select id="searchDetailClass" parameterType="com.studentslips.entities.SchoolAndClassSearch" resultMap="resultDetailClass">
-        select  student_id,(select s.name from PS_Students s where XX.student_id = s.student_id and s.school_id = #{schoolId} ) as name_student,service_id,(select sr.name from PS_Service sr where XX.service_id = sr.service_id and  sr.school_id = #{schoolId}) as name_service,XX.amount_debt,XX.claims,(XX.amount_debt - IFNULL(XX.claims,0)) as balance
-        from(
-        select sd.student_id,sd.service_id,sd.amount_debt,sum(bs.claims) as claims
-        from    PS_Students_Debts sd
-        Left outer join (select * from PS_Bank_Statement where school_id = #{schoolId} and bank_statement_date between #{fromDate} and  #{toDate} ) bs
-        on bs.reference_no = sd.reference_no
-        where 1=1
-        <if test="schoolId!=0 ">
-            and sd.school_id = #{schoolId}
+        <if test="studentId != null and studentId != ''">
+            AND    s.student_id= #{studentId}
         </if>
-        <if test="serviceListId !=null and !serviceListId.isEmpty()">
-            <foreach item="item" index="index" collection="serviceListId" open="and sd.service_id in (" separator="," close=")">
-                #{item}
-            </foreach>
-        </if>
-        and sd.debit_date between #{fromDate} and  #{toDate}
-        <if test="studentId!=null and  studentId!=''">
-            and sd.student_id = #{studentId}
-        </if>
-        group by sd.student_id,sd.service_id,sd.amount_debt
-        ) XX
     </select>
 
     <resultMap id = "resultAllClass" type = "com.studentslips.entities.SchoolAndClass">
@@ -77,7 +113,7 @@
         <result property = "nameStudent" column = "name_student"/>
         <result property = "serviceId" column = "service_id"/>
         <result property = "nameService" column = "name_service"/>
-        <result property = "debit" column = "amount_debt"/>
+        <result property = "debit" column = "debit"/>
         <result property = "claims" column = "claims"/>
         <result property = "balance" column = "balance"/>
 <!--        <result property = "isHightColor" column = "isHightColor"/>-->

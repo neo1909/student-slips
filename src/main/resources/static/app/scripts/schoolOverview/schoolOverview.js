@@ -91,7 +91,7 @@ let fnOverview = {
             dropDownHorizontalAlignment: 'right'
         });
        // $("#cmbStdClazzSrch").jqxDropDownList({enableBrowserBoundsDetection: true, source: SS.clazzEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
-        $("#cmbServiceSrch").jqxDropDownList({enableBrowserBoundsDetection: true, source: fnCommon.commonService, displayMember: "name", valueMember: "id", selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbServiceSrch").jqxDropDownList({enableBrowserBoundsDetection: true, source: fnCommon.commonService, displayMember: "name", valueMember: "studentId", selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
         $("#iptFromDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy", culture: SSUtils.getCurrentLocale()});
         $("#iptToDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy", culture: SSUtils.getCurrentLocale()});
 
@@ -105,7 +105,7 @@ let fnOverview = {
         SS.sendToServer('SV_R_01', false, {}, function onSuccess(data) {
             let src = [];
             if (data && data.lst) src = [...data.lst];
-            originalServiceIdList = data.lst.map(i => i.id);
+            originalServiceIdList = data.lst.map(i => i.serviceId);
             src.unshift({id: "", name: i18n.lang.common.all});
             $("#cmbServiceSrch").jqxComboBox({ source: src, displayMember: "name", valueMember: "serviceId", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});
         });
