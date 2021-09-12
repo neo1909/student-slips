@@ -291,6 +291,6 @@ ADD COLUMN `price` DECIMAL(10,2) NULL AFTER `installment`;
 
 -- 12/09/2021 Add approval flows
 ALTER TABLE `onetouch`.`ps_users` 
-ADD COLUMN `approval_status` VARCHAR(45) NULL AFTER `update_id`;
-ADD COLUMN `approval_date` DATETIME NULL AFTER `approval_status`;
+ADD COLUMN `approve_status` VARCHAR(45) NULL AFTER `update_id`;
+ADD COLUMN `approve_date` DATETIME NULL AFTER `approve_status`;
 --------------------------------

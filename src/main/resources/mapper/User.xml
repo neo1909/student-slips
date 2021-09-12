@@ -119,6 +119,9 @@
         <if test="delYn != null and delYn !=''">
             del_yn = #{delYn},
         </if>
+        <if test="password != null and password !=''">
+            password = #{password},
+        </if>
         update_id = #{updateId},
         update_date = SYSDATE()
         WHERE id = #{id}
@@ -152,6 +155,9 @@
         inner join PS_Roles R on UR.role_id = R.id
         where 1=1
         	and U.del_yn = 'N'
+        <if test="id > 0">
+        	and U.id = #{id}
+        </if>
         <if test="username != null and username !=''">
         	and U.username = #{username}
         </if>

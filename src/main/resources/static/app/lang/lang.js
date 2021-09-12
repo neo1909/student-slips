@@ -45,6 +45,14 @@ var i18nLang = {
 			vld_gradeClass: 'Grade/Class',
 			vld_headTeacher: 'Head Teacher'
 		},
+		profile: {
+			msg_newOldPwdDifferent: 'New password must be different from the old password',
+			msg_newPwdNotMatch: 'New password confirmation does not match',
+			vld_req_currPwd: 'Current password is required',
+			vld_req_newPwd: 'New password is required',
+			vld_min_newPwd: 'Min length = 8',
+			vld_req_cfNewPwd: 'Confirm New password is required',
+		},
 		auth : {
 			plh_username: 'Username *',
 			plh_password: 'Password *',
@@ -186,6 +194,14 @@ var i18nLang = {
 			vld_balanceSheet: 'Kartica stanja',
 			vld_gradeClass: 'Razred/Odeljenje',
 			vld_headTeacher: 'Odeljenske starešine'
+		},
+		profile: {
+			msg_newOldPwdDifferent: 'Nova lozinka mora biti različita od stare lozinke',
+			msg_newPwdNotMatch: 'Nove lozinke se ne podudaraju',
+			vld_req_currPwd: 'Trenutna lozinka je obavezan podatak',
+			vld_req_newPwd: 'Nova lozinka je obavezan podatak',
+			vld_min_newPwd: 'Minimalna dužina = 8',
+			vld_req_cfNewPwd: 'Potvrdite novu lozinku je obavezan podatak',
 		},
 		auth : {
 			plh_username: 'Korisničko ime *',

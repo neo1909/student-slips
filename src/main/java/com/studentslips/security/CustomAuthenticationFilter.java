@@ -99,7 +99,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		if (Common.User.PENDING.equals(loginedUser.getApproveStatus())) {
 			logger.debug("# CustomAuthenticationFilter || Pending for approval account [{}]", loginedUser);
 			throw new StudentSlipException(i18nUtil.getMessage(lang, Common.Message.PENDING_APPROVE_ACCOUNT));
-		} else if (Common.User.REJECTED.equals(loginedUser.getApproveStatus())) {
+		} else if (Common.User.REJECTED.equals(loginedUser.getApproveStatus()) || StringUtils.isEmpty(loginedUser.getApproveStatus())) {
 			logger.debug("# CustomAuthenticationFilter || Not approved account [{}]", loginedUser);
 			throw new StudentSlipException(i18nUtil.getMessage(lang, Common.Message.NOT_APPROVED_ACCOUNT));
 		}
@@ -121,6 +121,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		sessionUser.setUserType(loginedUser.getUserType());
 		sessionUser.setDelYn(loginedUser.getDelYn());
 		sessionUser.setLang(lang);
+		sessionUser.setApproveStatus(loginedUser.getApproveStatus());
 
 		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(sessionUser, sessionUser.getPassword(), sessionUser.getAuthorities());
 
