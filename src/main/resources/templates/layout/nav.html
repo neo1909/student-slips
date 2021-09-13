@@ -21,7 +21,7 @@
             <div class="info">
             	<p><span th:text="#{lang.nav.roles}"></span>: <span th:text=${session.roles} th:unless="${session == null || session.roles == null}"></span></p>
             </div>
-            <div class="info">
+            <div class="info" th:if="${session != null && session.roles != null && session.roles.contains('ADMIN')}">
 				<select id="locales" class="form-control">
 				    <option value="en" th:text="#{lang.nav.langEn}"></option>
 				    <option value="sr" th:text="#{lang.nav.langSr}"></option>
