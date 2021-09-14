@@ -390,7 +390,7 @@ $(document).ready(function() {
 			        ${paymentPurpose}
 			    </label>
 			    <label class="paymentCode-right">
-			        121
+			        189
 			    </label>
 			    <label class="amount-right">
 			        ${SS.format.formatNumberByLocales(rows[i-1].amountDebt)}
