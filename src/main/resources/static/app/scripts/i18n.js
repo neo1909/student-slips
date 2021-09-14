@@ -19,14 +19,18 @@ var i18n = {
 			url: `${this.API}LANG_02`,
 			type: 'GET',
 			success: function(data) {
-				localStorage.setItem("lang", data.lang);
+				localStorage.setItem("lang", data && data.lang ? data.lang : "sr");
+				i18n.setLanguage();
+			},
+			error : function() {
+				localStorage.setItem("lang", "sr");
 				i18n.setLanguage();
 			}
 		});
 	},
 	
 	setLanguage: function() {
-		let language = localStorage.getItem("lang") || "sr";
+		let language = localStorage.getItem("lang");
 		this.lang = i18nLang[language];
 	}
 }
