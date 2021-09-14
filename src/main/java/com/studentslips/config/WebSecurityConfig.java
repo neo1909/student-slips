@@ -77,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(new String[]{"https://onetouch.link, http://onetouch.link, http://localhost:5000, http://onetouchapp-env.eba-px6uytgm.ap-southeast-1.elasticbeanstalk.com, http://onetouchapp-env.eba-mebd8vmg.eu-central-1.elasticbeanstalk.com"}));
+        configuration.setAllowedOrigins(Arrays.asList(new String[]{"https://onetouch.link", "http://onetouch.link", "http://localhost:5000", "http://onetouchapp-env.eba-px6uytgm.ap-southeast-1.elasticbeanstalk.com", "http://onetouchapp-env.eba-mebd8vmg.eu-central-1.elasticbeanstalk.com"}));
         configuration.setAllowedMethods(Arrays.asList("GET","POST"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
