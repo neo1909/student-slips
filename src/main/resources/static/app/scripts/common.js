@@ -26,8 +26,10 @@ let SSUtils = {
 }
 
 let SS = {
-    API: 'http://localhost:5000/api/',  // local
+	//API: 'http://localhost:5000/api/',  // local
    //API: 'http://onetouchapp-env.eba-px6uytgm.ap-southeast-1.elasticbeanstalk.com/api/',    // test
+	//API: 'http://onetouchapp-env.eba-mebd8vmg.eu-central-1.elasticbeanstalk.com/api/', //production
+	API: 'https://onetouch.link/api/', //domain
   IPT_HEIGHT: 32,
 
   // Literal
