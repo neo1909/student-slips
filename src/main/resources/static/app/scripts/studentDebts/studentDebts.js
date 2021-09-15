@@ -56,7 +56,17 @@ function onGetService(gradeId) {
         },
 
         function onSuccess(data) {
+            $("#cmbStdServiceSrch").jqxDropDownList({
+                disabled: true,
+                source: [],
+            })
+            $("#cmbStdInstSrch").jqxDropDownList({
+                source: [],
+                disabled: true
+            })
+            $("#iptPriceSrch").val("");
             if (data && data.lst && data.lst.length > 0) {
+
             	let dataList = [...data.lst].map(d => {
             		return { serviceId: d.serviceId, serviceName: d.serviceName }
             	});
@@ -69,11 +79,7 @@ function onGetService(gradeId) {
                 });
                 return;
             }
-            $("#cmbStdServiceSrch").jqxDropDownList({
-                disabled: true,
-                source: [],
-            })
-            $("#iptPriceSrch").val("");
+
 
         },
         function onError(err) {
@@ -196,6 +202,7 @@ $(document).ready(function () {
 	        	}
 	            isUpdateNote = false;
 	            tr_update = [];
+                $('#btnSave').prop("disabled", true);
 	            $('#btnPrint').prop("disabled", false);
 	            SS.alert(i18n.lang.common.notification, i18n.lang.posting.studentdebts.msg_saved);
 	        }

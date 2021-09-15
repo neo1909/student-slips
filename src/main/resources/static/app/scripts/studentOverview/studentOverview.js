@@ -19,7 +19,8 @@ let fn = {
                 { name: 'insertId', type: 'int'},
                 { name: 'insertDate', type: 'string'},
                 { name: 'updateId', type: 'int'},
-                { name: 'updateDate', type: 'string'}
+                { name: 'updateDate', type: 'string'},
+                { name: 'studentId', type: 'string'}
             ],
             datatype: "array",
             localdata: fn.dataset
@@ -44,8 +45,9 @@ let fn = {
                             + '</div>';
                     }
                 },
-                { text: i18n.lang.common.vld_nameAndSurname, datafield: 'name', align: 'center', cellsalign:'left', width: '35%,'},
-                { text: i18n.lang.common.vld_school, datafield: 'schoolName', align: 'center', cellsalign:'left', width: '35%,'},
+                { text: i18n.lang.dataentry.student.studentId, datafield: 'studentId', align: 'center', cellsalign:'left', width: '10%,'},
+                { text: i18n.lang.common.vld_nameAndSurname, datafield: 'name', align: 'center', cellsalign:'left', width: '30%,'},
+                { text: i18n.lang.common.vld_school, datafield: 'schoolName', align: 'center', cellsalign:'left', width: '30%,'},
                 { text: i18n.lang.common.vld_grade, datafield: 'grade', align: 'center', cellsalign:'center', width: '9%,'},
                 { text: i18n.lang.common.vld_class, datafield: 'sClass', align: 'center', cellsalign:'center', width: '9%,'},
                 { text: i18n.lang.common.vld_balanceSheet, cellsalign:'center', width: '7%,'
@@ -158,7 +160,7 @@ let fn = {
                     false,
                     { id : studentId },
                     function onSuccess(data) {
-                        $('#iptStdId').val(data.obj.id);
+                        $('#iptStdId').val(data.obj.studentId);
                         $('#iptStdNmOverviewSrch').val(data.obj.name);
                         $('#cmbStdGradeOverviewSSrch').val(data.obj.grade);
                         $('#cmbStdClassOverviewSrch').val(data.obj.sClass);

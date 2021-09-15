@@ -1,5 +1,6 @@
 package com.studentslips.dao;
 
+import com.studentslips.entities.Services;
 import com.studentslips.entities.Supplier;
 import com.studentslips.entities.SupplierServiceDetail;
 import com.studentslips.entities.SupplierServiceDetailGroup;
@@ -76,5 +77,13 @@ public class SupplierDao {
     
     public SupplierServiceDetailGroup getAllInstallmentsByGradeAndService(SupplierServiceDetail supplierServiceDetail) {
     	return this.sqlSession.selectOne("getAllInstallmentsByGradeAndService", supplierServiceDetail);
+    }
+
+    public String selectMaxSupplierId(int schoolId){
+        return this.sqlSession.selectOne("selectMaxSupplierId",schoolId);
+    }
+
+    public Supplier selectSupplierExist(Supplier supplier){
+        return this.sqlSession.selectOne("selectSupplierExist",supplier);
     }
 }

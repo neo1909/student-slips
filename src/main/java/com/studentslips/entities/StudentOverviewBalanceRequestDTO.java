@@ -13,6 +13,8 @@ public class StudentOverviewBalanceRequestDTO {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date toDate;
 
+    private int schoolId;
+
     public int getId() {
         return id;
     }
@@ -43,5 +45,13 @@ public class StudentOverviewBalanceRequestDTO {
 
     public void setToDate(Date toDate) {
         this.toDate = toDate;
+    }
+
+    public int getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(int schoolId) {
+        this.schoolId = schoolId;
     }
 }

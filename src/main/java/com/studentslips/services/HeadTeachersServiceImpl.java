@@ -1,7 +1,9 @@
 package com.studentslips.services;
 
+import com.studentslips.common.Common;
 import com.studentslips.common.SessionUtil;
 import com.studentslips.common.StudentSlipException;
+import com.studentslips.common.i18nUtil;
 import com.studentslips.dao.HeadTeachersDao;
 import com.studentslips.entities.HeadTeachers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class HeadTeachersServiceImpl implements HeadTeachersService{
         List<HeadTeachers> lst = headTeachersDao.selectAllHeadTeachers(checkHT);
 
         if (lst !=null && !lst.isEmpty()){
-            throw new StudentSlipException("Class already exists head teacher !");
+            throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.CLASS_EXIST_HEADTEACHER));
         }
 
         headTeachers.setInsertId(SessionUtil.getUserLoginId());
@@ -48,7 +50,7 @@ public class HeadTeachersServiceImpl implements HeadTeachersService{
         if (lst !=null && !lst.isEmpty()){
             for (HeadTeachers ht : lst) {
                 if (headTeachers.getId() != 0 && headTeachers.getId() != ht.getId()) {
-                    throw new StudentSlipException("Class already exists head teacher !");
+                    throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.CLASS_EXIST_HEADTEACHER));
                 }
             }
         }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.studentslips.common.Common;
 import com.studentslips.entities.User;
 import com.studentslips.entities.UserRole;
 import com.studentslips.services.UserRoleService;
@@ -27,6 +28,14 @@ public class AdminController {
 	public String manageUser(Model model) {
 		return "user/manage";
 	}
+	
+	@GetMapping("user/approve")
+	public String approveUser(Model model, @RequestParam("id") String id) {
+		User searchUser = new User(Integer.parseInt(id));
+		model.addAttribute("user", userService.selectUser(searchUser));
+		return "user/approve";
+	}
+	
 	
 	@GetMapping("user/create")
 	public String createUser(Model model) {

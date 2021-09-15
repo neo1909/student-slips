@@ -34,4 +34,9 @@ public class IndexController {
 	public String error(HttpServletResponse res, HttpServletRequest req, @RequestParam(required = false) String code) throws IOException {
 		return "error/404";
 	}
+
+	@GetMapping("changePassword")
+	public String changePassword(HttpServletRequest req, HttpSession session) throws Exception {
+		return "profile/changePassword";
+	}
 }

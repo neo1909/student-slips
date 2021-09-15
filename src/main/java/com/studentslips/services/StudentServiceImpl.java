@@ -1,6 +1,9 @@
 package com.studentslips.services;
 
+import com.studentslips.common.Common;
 import com.studentslips.common.SessionUtil;
+import com.studentslips.common.StudentSlipException;
+import com.studentslips.common.i18nUtil;
 import com.studentslips.dao.StudentsDao;
 import com.studentslips.entities.Student;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +21,19 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public int insertStudent(Student student) throws Exception {
+
+        String sqStudentId =  genStudentId(studentDao.selectMaxStudentId(SessionUtil.getSchoolId()));
+
+        Student studentExist = new Student();
+        studentExist.setStudentId(sqStudentId);
+        studentExist.setSchoolId(SessionUtil.getSchoolId());
+        studentExist = studentDao.selectStudentExist(studentExist);
+
+        if(studentExist !=null && studentExist.getId()!=0){
+            throw new StudentSlipException(i18nUtil.getMessage(SessionUtil.getLang(), Common.Message.EXISTED_STUDENT));
+        }
+
+        student.setStudentId(sqStudentId);
         student.setInsertId(SessionUtil.getUserLoginId());
         student.setSchoolId(SessionUtil.getSchoolId());
 
@@ -55,4 +71,22 @@ public class StudentServiceImpl implements StudentService{
         student.setSchoolId(SessionUtil.getSchoolId());
 		return studentDao.selectAllStudentsWithSchool(student);
 	}
+
+    @Override
+    public Student selectStudentExist(Student student) throws Exception {
+        student.setSchoolId(SessionUtil.getSchoolId());
+        return studentDao.selectStudentExist(student);
+    }
+
+    private String genStudentId(String studentId){
+        String  formattedNumber = "0001";
+        if (studentId==null || studentId.equals("")){
+            return formattedNumber;
+        }
+        int tmpStudentId = Integer.valueOf(studentId);
+
+         formattedNumber = String.format("%04d", tmpStudentId+1);
+        return  formattedNumber;
+    }
+
 }

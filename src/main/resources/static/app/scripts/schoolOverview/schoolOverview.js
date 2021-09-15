@@ -8,7 +8,7 @@ let fnOverview = {
         * */
         fnOverview.gridSource = {
             datafields: [
-                {name: 'studentId', type: 'int'},
+                {name: 'studentId', type: 'string'},
                 {name: 'nameStudent', type: 'string'},
                 {name: 'serviceId', type: 'int'},
                 {name: 'nameService', type: 'string'},
@@ -91,7 +91,7 @@ let fnOverview = {
             dropDownHorizontalAlignment: 'right'
         });
        // $("#cmbStdClazzSrch").jqxDropDownList({enableBrowserBoundsDetection: true, source: SS.clazzEmpty, selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
-        $("#cmbServiceSrch").jqxDropDownList({enableBrowserBoundsDetection: true, source: fnCommon.commonService, displayMember: "name", valueMember: "id", selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
+        $("#cmbServiceSrch").jqxDropDownList({enableBrowserBoundsDetection: true, source: fnCommon.commonService, displayMember: "name", valueMember: "studentId", selectedIndex: 0, height: SS.IPT_HEIGHT, width: '100%', dropDownHorizontalAlignment:'right' });
         $("#iptFromDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy", culture: SSUtils.getCurrentLocale()});
         $("#iptToDate").jqxDateTimeInput({height: SS.IPT_HEIGHT, width: '100%', formatString: "dd/MM/yyyy", culture: SSUtils.getCurrentLocale()});
 
@@ -105,9 +105,9 @@ let fnOverview = {
         SS.sendToServer('SV_R_01', false, {}, function onSuccess(data) {
             let src = [];
             if (data && data.lst) src = [...data.lst];
-            originalServiceIdList = data.lst.map(i => i.id);
+            originalServiceIdList = data.lst.map(i => i.serviceId);
             src.unshift({id: "", name: i18n.lang.common.all});
-            $("#cmbServiceSrch").jqxComboBox({ source: src, displayMember: "name", valueMember: "id", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});
+            $("#cmbServiceSrch").jqxComboBox({ source: src, displayMember: "name", valueMember: "serviceId", height: SS.IPT_HEIGHT, width: '100%', checkboxes: true});
         });
     },
 
@@ -115,9 +115,14 @@ let fnOverview = {
         $("#grdMaster-debit").html(0);
         $("#grdMaster-claims").html(0);
         $("#grdMaster-balance").html(0);
+        
         $("#grdDetail-debit").html(0);
         $("#grdDetail-claims").html(0);
         $("#grdDetail-balance").html(0);
+
+        $("#intotal-debit").html(0);
+        $("#intotal-claims").html(0);
+        $("#intotal-balance").html(0);
 
         let serviceListId = [];
         let serviceListString = '';
@@ -332,15 +337,15 @@ function onCalculateTotal(gridId) {
             $("#grdMaster-debit").html(SS.format.formatNumberByLocales(totalDebit));
             $("#grdMaster-claims").html(SS.format.formatNumberByLocales(totalClaims));
             $("#grdMaster-balance").html(SS.format.formatNumberByLocales(totalBalance));
+
+            $("#intotal-debit").html(SS.format.formatNumberByLocales(totalDebit));
+            $("#intotal-claims").html(SS.format.formatNumberByLocales(totalClaims));
+            $("#intotal-balance").html(SS.format.formatNumberByLocales(totalBalance));
         } else {
             $("#grdDetail-debit").html(SS.format.formatNumberByLocales(totalDebit));
             $("#grdDetail-claims").html(SS.format.formatNumberByLocales(totalClaims));
             $("#grdDetail-balance").html(SS.format.formatNumberByLocales(totalBalance));
         }
-        $("#intotal-debit").html(SS.format.formatNumberByLocales(totalDebit));
-        $("#intotal-claims").html(SS.format.formatNumberByLocales(totalClaims));
-        $("#intotal-balance").html(SS.format.formatNumberByLocales(totalBalance));
-
     }
 }
 

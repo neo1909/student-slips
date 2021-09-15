@@ -37,11 +37,11 @@ public class StudentsDao {
         return this.sqlSession.delete("deleteStudentById", student);
     }
 
-//    public String selectAutoIncrement(){
-//        return this.sqlSession.selectOne("selectAutoIncrement");
-//    }
-//
-//    public Student selectStudentByStudentId(String studentId){
-//        return this.sqlSession.selectOne("selectStudentByStudentId",studentId);
-//    }
+    public String selectMaxStudentId(int schoolId){
+        return this.sqlSession.selectOne("selectMaxStudentId",schoolId);
+    }
+
+    public Student selectStudentExist(Student student){
+        return this.sqlSession.selectOne("selectStudentExist",student);
+    }
 }

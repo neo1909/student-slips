@@ -67,7 +67,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		// Can't login if exceed 5 times retry within 15 mins
 		long currentInUTC = System.currentTimeMillis();
 		long current = currentInUTC + TimeZone.getDefault().getOffset(currentInUTC);
-		if (loginedUser.getLastLoginDate() != null && "ACTIVE".equals(loginedUser.getStatus())) {
+		if (loginedUser.getLastLoginDate() != null && Common.User.ACTIVE.equals(loginedUser.getStatus())) {
 			long lastLoginTime = loginedUser.getLastLoginDate().getTime();
 			long timeDiff = 1000 * 60 * 5 - (current - lastLoginTime);
 			if (loginedUser.getLoginRetryCount() > 3 && timeDiff > 0) {
@@ -82,10 +82,10 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 			throw new StudentSlipException(i18nUtil.getMessage(lang, Common.Message.VERIFY_AUTH_NG));
 		}
 
-		if (!passwordEncoder.matches(password, loginedUser.getPassword()) && "ACTIVE".equals(loginedUser.getStatus())) {
+		if (!passwordEncoder.matches(password, loginedUser.getPassword()) && Common.User.ACTIVE.equals(loginedUser.getStatus())) {
 			logger.debug("# CustomAuthenticationFilter || Wrong password [{}]", loginedUser);
 			if (loginedUser.getLoginRetryCount() >= 5) {
-				loginedUser.setStatus("DEACTIVE");
+				loginedUser.setStatus(Common.User.DEACTIVE);
 				userService.updateUser(loginedUser);
 				throw new StudentSlipException(i18nUtil.getMessage(lang, Common.Message.LOCKED_ACCOUNT));
 			}
@@ -96,7 +96,15 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 			throw new StudentSlipException(i18nUtil.getMessage(lang, Common.Message.INCORRECT_PWD) + " (" + currentLoginCount + "/6).");
 		}
 
-		if (!"ACTIVE".equals(loginedUser.getStatus())) {
+		if (Common.User.PENDING.equals(loginedUser.getApproveStatus())) {
+			logger.debug("# CustomAuthenticationFilter || Pending for approval account [{}]", loginedUser);
+			throw new StudentSlipException(i18nUtil.getMessage(lang, Common.Message.PENDING_APPROVE_ACCOUNT));
+		} else if (Common.User.REJECTED.equals(loginedUser.getApproveStatus()) || StringUtils.isEmpty(loginedUser.getApproveStatus())) {
+			logger.debug("# CustomAuthenticationFilter || Not approved account [{}]", loginedUser);
+			throw new StudentSlipException(i18nUtil.getMessage(lang, Common.Message.NOT_APPROVED_ACCOUNT));
+		}
+
+		if (!Common.User.ACTIVE.equals(loginedUser.getStatus())) {
 			logger.debug("# CustomAuthenticationFilter || Locked account [{}]", loginedUser);
 			throw new StudentSlipException(i18nUtil.getMessage(lang, Common.Message.LOCKED_ACCOUNT));
 		}
@@ -113,6 +121,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 		sessionUser.setUserType(loginedUser.getUserType());
 		sessionUser.setDelYn(loginedUser.getDelYn());
 		sessionUser.setLang(lang);
+		sessionUser.setApproveStatus(loginedUser.getApproveStatus());
 
 		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(sessionUser, sessionUser.getPassword(), sessionUser.getAuthorities());
 

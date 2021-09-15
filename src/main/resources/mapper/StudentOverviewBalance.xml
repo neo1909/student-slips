@@ -20,10 +20,11 @@
     <select id="selectStudentOverviewBalance" parameterType="com.studentslips.entities.StudentOverviewBalanceRequestDTO" resultMap="result">
         WITH student_debts as (
             SELECT sd.*, CONCAT((
-                                    select name from PS_Service where id = sd.service_id
+                                    select name from PS_Service where service_id = sd.service_id and school_id = sd.school_id
                                 ), ' - ', MONTHNAME(debit_date) , ' 1/1 ') AS descriptions
             FROM PS_Students_Debts sd
             where student_id = #{id} and sd.service_id = #{serviceId} and del_yn = 'N'
+            and school_id = #{schoolId}
                 -- and sd.debit_date between '2021-08-10' and  '2021-09-11'
         )
 
@@ -31,7 +32,7 @@
                             Select
                                 sd.id as student_debts_id,
                                 service_id,
-                                (SELECT name FROM PS_Service where id = service_id) as service_nm,
+                                (SELECT name FROM PS_Service where service_id = sd.service_id and school_id = sd.school_id) as service_nm,
                                 student_id,
                                 sd.debit_date AS dateA,
                                 sd.descriptions,
@@ -45,10 +46,10 @@
                             UNION
 
                             SELECT
-                                sd.id as student_debts_id,
-                                sd.service_id,
-                                (SELECT name FROM PS_Service where id = sd.service_id) as service_nm,
-                                student_id,
+                                '' as student_debts_id,
+                                '' as service_id,
+                                '' as service_nm,
+                                '' as student_id,
                                 bank_statement_date AS dateA,
                                 CONCAT('Bank statement ', no_of_bank_statement) AS descriptions,
                                 0 AS debit,
@@ -57,8 +58,7 @@
                                 0 as balance,
                                 2 AS row_type
                             FROM PS_Bank_Statement sb
-                                     INNER join student_debts sd on sd.reference_no = sb.reference_no
-                            WHERE sb.del_yn = 'N'
+                            WHERE sb.del_yn = 'N' and school_id = #{schoolId} and  sb.post_payment_yn='Y' and sb.reference_no in (select distinct reference_no from student_debts)
                     --              and sb.bank_statement_date between '2021-08-10' and  '2021-09-11'
                         ) AS T
         Order by T.dateA
@@ -91,15 +91,15 @@
             sch.address as payee_address,
             reference_no
         FROM onetouch.PS_Students_Debts sd
-            LEFT JOIN PS_Students st ON sd.student_id = st.id
+            LEFT JOIN PS_Students st ON sd.student_id = st.student_id and sd.school_id = st.school_id
             LEFT JOIN PS_School sch ON sch.id = st.school_id
-        WHERE sd.student_id = #{id} and debit_date = #{date} and sd.id = #{studentDebtsId}
+        WHERE sd.student_id = #{id} and debit_date = #{date} and sd.id = #{studentDebtsId} and sd.school_id = #{schoolId}
 
     </select>
 
 
-    <select id="selectDistinctServiceStdDebts" parameterType="int" resultType="int">
-        SELECT distinct service_id FROM PS_Students_Debts where student_id = #{studentId};
+    <select id="selectDistinctServiceStdDebts" parameterType="com.studentslips.entities.StudentOverviewBalanceRequestDTO" resultType="int">
+        SELECT distinct service_id FROM PS_Students_Debts where student_id = #{id} and school_id=#{schoolId};
     </select>
 
 </mapper>

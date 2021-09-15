@@ -16,6 +16,7 @@ public class StudentOverviewBalancePrintDTO {
     private String payeeAcc;
     private String payeeAddress;
     private String refNo;
+    private int schoolId;
 
     public StudentOverviewBalancePrintDTO() {
     }
@@ -106,5 +107,13 @@ public class StudentOverviewBalancePrintDTO {
 
     public void setPayeeAddress(String payeeAddress) {
         this.payeeAddress = payeeAddress;
+    }
+
+    public int getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(int schoolId) {
+        this.schoolId = schoolId;
     }
 }

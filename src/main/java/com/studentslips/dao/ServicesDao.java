@@ -30,4 +30,12 @@ public class ServicesDao {
     public Services selectServicesById(int id){
         return this.sqlSession.selectOne("selectServiceById", id);
     }
+
+    public String selectMaxServiceId(int schoolId){
+        return this.sqlSession.selectOne("selectMaxServiceId",schoolId);
+    }
+
+    public Services selectServiceExist(Services services){
+        return this.sqlSession.selectOne("selectServiceExist",services);
+    }
 }

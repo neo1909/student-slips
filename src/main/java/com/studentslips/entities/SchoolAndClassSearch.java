@@ -13,7 +13,7 @@ public class SchoolAndClassSearch {
     private Date toDate;
 
     private int schoolId;
-    private int studentId;
+    private String studentId;
     private List<Integer> serviceListId;
     private String serviceListString;
     private int sClass;
@@ -55,11 +55,11 @@ public class SchoolAndClassSearch {
         this.schoolId = schoolId;
     }
 
-    public int getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(int studentId) {
+    public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
 

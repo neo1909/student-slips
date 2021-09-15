@@ -14,6 +14,7 @@ public class Services {
     private String schoolName;
     private int supplierId;
     private String supplierName;
+    private int serviceId;
 
     public Services() {
     }
@@ -104,5 +105,13 @@ public class Services {
 
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public int getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(int serviceId) {
+        this.serviceId = serviceId;
     }
 }

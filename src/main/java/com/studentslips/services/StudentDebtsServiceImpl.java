@@ -25,24 +25,28 @@ public class StudentDebtsServiceImpl implements StudentDebtsService{
 
     @Override
     public List<StudentsDebts> selectStudentDebts(StudentsDebts studentsDebts) throws Exception {
+        studentsDebts.setSchoolId(SessionUtil.getSchoolId());
         return studentDebtsDao.selectStudentDebts(studentsDebts);
     }
 
     @Override
     public int insertStudentsDebts(StudentsDebts studentsDebts) throws Exception {
         studentsDebts.setInsertId(SessionUtil.getUserLoginId());
+        studentsDebts.setSchoolId(SessionUtil.getSchoolId());
         return studentDebtsDao.insertStudentsDebts(studentsDebts);
     }
 
     @Override
     public int updateStudentsDebts(StudentsDebts studentsDebts) throws Exception {
         studentsDebts.setUpdateId(SessionUtil.getUserLoginId());
+        studentsDebts.setSchoolId(SessionUtil.getSchoolId());
         return studentDebtsDao.updateStudentsDebts(studentsDebts);
     }
 
     @Override
     public int deleteStudentsDebtsById(StudentsDebts studentsDebts) throws Exception {
         studentsDebts.setUpdateId(SessionUtil.getUserLoginId());
+        studentsDebts.setSchoolId(SessionUtil.getSchoolId());
         return studentDebtsDao.deleteStudentsDebtsById(studentsDebts);
     }
 
