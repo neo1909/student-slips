@@ -6,6 +6,8 @@ import com.studentslips.common.StudentSlipException;
 import com.studentslips.common.i18nUtil;
 import com.studentslips.dao.StudentsDao;
 import com.studentslips.entities.Student;
+import com.studentslips.entities.StudentSearch;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -88,5 +90,11 @@ public class StudentServiceImpl implements StudentService{
          formattedNumber = String.format("%04d", tmpStudentId+1);
         return  formattedNumber;
     }
+
+	@Override
+	public List<Student> getStudentsWithSchool(StudentSearch studentSearch) throws Exception {
+		studentSearch.setSchoolId(SessionUtil.getSchoolId());
+		return studentDao.getStudentsWithSchool(studentSearch);
+	}
 
 }
