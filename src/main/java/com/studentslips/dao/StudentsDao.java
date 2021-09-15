@@ -1,8 +1,6 @@
 package com.studentslips.dao;
 
 import com.studentslips.entities.Student;
-import com.studentslips.entities.StudentSearch;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -46,8 +44,4 @@ public class StudentsDao {
     public Student selectStudentExist(Student student){
         return this.sqlSession.selectOne("selectStudentExist",student);
     }
-
-	public List<Student> getStudentsWithSchool(StudentSearch studentSearch) {
-        return this.sqlSession.selectList("selectStudentsWithSchool", studentSearch);
-	}
 }

@@ -77,28 +77,6 @@
         </if>
     </select>
 
-    <select id="selectStudentsWithSchool" parameterType="com.studentslips.entities.StudentSearch" resultMap="result">
-        SELECT
-	        S.*,
-	        (Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName,
-	        ps.name,
-	        ps.bank_account_number as school_account_number,
-	        CONCAT(ps.address, ', ', ps.zipcode, ' ', ps.city) as school_address
-        FROM PS_Students S
-        left join PS_School ps on S.school_id = ps.id and ps.del_yn = 'N'
-        where  S.del_yn='N'
-        <if test="schoolId!=0 ">
-        AND  S.school_id = #{schoolId}
-        </if>
-        <if test="name!=null and name !=''">
-            <bind name="nameLike" value="'%' + name + '%'" />
-         AND   UPPER(S.name) like UPPER (#{nameLike})
-        </if>
-		<if test="listStudentIds != null and !listStudentIds.isEmpty()">
-			<foreach item="item" index="index" collection="listStudentIds" open="AND S.student_id IN (" separator="," close=")">#{item}</foreach>
-		</if>
-    </select>
-
     <select id="selectStudentById" parameterType="int" resultMap="result">
         SELECT S.*,(Select name from PS_School SL where S.school_id=SL.id AND del_yn='N') AS schoolName
         FROM PS_Students S
