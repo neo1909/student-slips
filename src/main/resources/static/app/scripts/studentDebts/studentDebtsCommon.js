@@ -280,11 +280,16 @@ $(document).ready(function() {
     		SS.alert(SS.title.ERROR, i18n.lang.posting.studentdebts.msg_saveBeforePrinding);
     		return;
     	}
+    	
+    	let rows = $("#grdStudentDebts").jqxGrid('getrows');
+    	
     	let studentsInfo = [];
     	SS.sendToServer(
-	        'ST_R_03',
+	        'ST_R_04',
 	        false,
-	        {},
+	        {
+	        	listStudentIds: rows.map(studentDebt => studentDebt.studentId)
+	        },
 	        function onSuccess(data) {
 	        	if (data && data.lst) {
 	        		studentsInfo.push(...data.lst);
@@ -292,8 +297,6 @@ $(document).ready(function() {
 	        }
 	    );
     	let paymentPurpose = $("#iptComment").val();
-    	
-    	let rows = $("#grdStudentDebts").jqxGrid('getrows');
         let newWindow = window.open('', '', 'width=800, height=500'),
         document = newWindow.document.open(),
         pageContent =

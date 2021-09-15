@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.studentslips.common.Common;
 import com.studentslips.entities.Student;
+import com.studentslips.entities.StudentSearch;
 import com.studentslips.services.StudentService;
 
 @RestController
@@ -61,6 +62,21 @@ public class StudentRestController {
 
         try {
             result.put(Common.LIST, studentService.getAllStudentsWithSchool(student));
+            result.put(Common.STATUS, HttpStatus.OK.value());
+        } catch (Exception ex) {
+            result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            logger.error(ex.getMessage());
+        }
+
+        return result;
+    }
+
+    @RequestMapping(value = "/ST_R_04", method = RequestMethod.POST)
+    public Map<String, ?> getStudentsWithSchool(@RequestBody StudentSearch studentSearch) {
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            result.put(Common.LIST, studentService.getStudentsWithSchool(studentSearch));
             result.put(Common.STATUS, HttpStatus.OK.value());
         } catch (Exception ex) {
             result.put(Common.STATUS, HttpStatus.INTERNAL_SERVER_ERROR.value());
