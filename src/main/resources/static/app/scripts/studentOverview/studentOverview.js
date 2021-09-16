@@ -161,6 +161,7 @@ let fn = {
                     { id : studentId },
                     function onSuccess(data) {
                         $('#iptStdId').val(data.obj.studentId);
+                        $('#iptSeqNo').val(data.obj.id);
                         $('#iptStdNmOverviewSrch').val(data.obj.name);
                         $('#cmbStdGradeOverviewSSrch').val(data.obj.grade);
                         $('#cmbStdClassOverviewSrch').val(data.obj.sClass);

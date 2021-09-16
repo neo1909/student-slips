@@ -7,6 +7,7 @@ import java.sql.Date;
 public class StudentOverviewBalanceRequestDTO {
     private int id;
     private int serviceId;
+    private int seqNo;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date fromDate;
@@ -53,5 +54,13 @@ public class StudentOverviewBalanceRequestDTO {
 
     public void setSchoolId(int schoolId) {
         this.schoolId = schoolId;
+    }
+
+    public int getSeqNo() {
+        return seqNo;
+    }
+
+    public void setSeqNo(int seqNo) {
+        this.seqNo = seqNo;
     }
 }

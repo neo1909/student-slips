@@ -208,6 +208,7 @@ let fnPopup = {
 
         let params = {
             id: studentId,
+            seqNo: $('#iptSeqNo').val(),
             fromDate: fromDate,
             toDate: toDate
         };

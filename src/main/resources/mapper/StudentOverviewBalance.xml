@@ -24,7 +24,7 @@
                                 ), ' - ', MONTHNAME(debit_date) , ' 1/1 ') AS descriptions
             FROM PS_Students_Debts sd
             where student_id = #{id} and sd.service_id = #{serviceId} and del_yn = 'N'
-            and school_id = #{schoolId}
+            and school_id = (Select school_id from PS_Students where id = #{seqNo})
                 -- and sd.debit_date between '2021-08-10' and  '2021-09-11'
         )
 
@@ -58,7 +58,7 @@
                                 0 as balance,
                                 2 AS row_type
                             FROM PS_Bank_Statement sb
-                            WHERE sb.del_yn = 'N' and school_id = #{schoolId} and  sb.post_payment_yn='Y' and sb.reference_no in (select distinct reference_no from student_debts)
+                            WHERE sb.del_yn = 'N' and school_id = (Select school_id from PS_Students where id = #{seqNo}) and  sb.post_payment_yn='Y' and sb.reference_no in (select distinct reference_no from student_debts)
                     --              and sb.bank_statement_date between '2021-08-10' and  '2021-09-11'
                         ) AS T
         Order by T.dateA
@@ -99,7 +99,7 @@
 
 
     <select id="selectDistinctServiceStdDebts" parameterType="com.studentslips.entities.StudentOverviewBalanceRequestDTO" resultType="int">
-        SELECT distinct service_id FROM PS_Students_Debts where student_id = #{id} and school_id=#{schoolId};
+        SELECT distinct service_id FROM PS_Students_Debts where student_id = #{id} and school_id= (Select school_id from PS_Students where id = #{seqNo});
     </select>
 
 </mapper>
